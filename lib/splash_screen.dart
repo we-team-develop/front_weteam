@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/main.dart';
+import 'package:front_weteam/view/login/login_main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +17,8 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const MyHomePage(
-                title: 'test',
-              )));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoginMain()));
     });
   }
 

@@ -17,4 +17,5 @@ class ImageData extends StatelessWidget {
 
 class ImagePath {
   static String get splash => 'assets/images/splash.png';
+  static String get appicon => 'assets/images/app_icon.png';
 }
