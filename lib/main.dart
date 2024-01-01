@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:front_weteam/splash_screen.dart';
 import 'package:get/get.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Future.delayed(const Duration(seconds: 3));
-  FlutterNativeSplash.remove();
-
+void main() {
   runApp(const MyApp());
 }
 
@@ -26,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false, // Debug 배너 없애기
     );
   }
