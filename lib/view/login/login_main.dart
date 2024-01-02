@@ -12,8 +12,9 @@ class LoginMain extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    var padding = MediaQuery.of(context).size.height * 0.01;
-    var horizontalPadding = MediaQuery.of(context).size.width * 0.06;
+    var padding = MediaQuery.of(context).size.height * 0.01; // 버튼 사이 패딩
+    var horizontalPadding =
+        MediaQuery.of(context).size.width * 0.06; // 버튼 양옆 패딩
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
