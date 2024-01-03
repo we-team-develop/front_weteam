@@ -167,3 +167,6 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,macos,android,dart
+
+*.env
+/lib/firebase_options.dart
