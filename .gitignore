@@ -167,3 +167,6 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,macos,android,dart
+
+### 네이버 로그인 API ###
+android/app/src/main/res/values/strings.xml
