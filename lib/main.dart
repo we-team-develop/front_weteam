@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/splash_screen.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() {
+  KakaoSdk.init(nativeAppKey: 'cbaa9e830b5eeee9794ea6dda548c4e8'); // kakaologin
   runApp(const MyApp());
 }
 

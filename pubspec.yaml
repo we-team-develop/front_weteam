@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.6
   flutter_native_splash: ^2.3.8
+  kakao_flutter_sdk: ^1.8.0
 
 dev_dependencies:
   flutter_test:
