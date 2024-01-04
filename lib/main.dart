@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
 import 'package:front_weteam/firebase_options.dart';
@@ -9,6 +10,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
   await dotenv.load(fileName: ".env"); // .env 파일 런타임에 가져오기
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

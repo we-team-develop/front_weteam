@@ -14,7 +14,7 @@ class LoginMain extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _body(context),
+      body: SafeArea(child: _body(context)),
     );
   }
 

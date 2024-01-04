@@ -19,7 +19,7 @@ class App extends GetView<BottomNavController> {
           controller.popAction();
         },
         child: Scaffold(
-          body: _body(),
+          body: SafeArea(child: _body()),
           bottomNavigationBar: _bottom(context),
         ),
       ),
