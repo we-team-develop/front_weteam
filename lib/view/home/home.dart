@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List ddayItems = [];
   int currentSliderIndex = 0;
+  bool isTeamListEmpty = true; // TODO: 팀플 비어있는지 확인하기, Controller 만들기
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,14 @@ class _HomeState extends State<Home> {
           height: 15,
         ),
         _indexIconList(),
-        const SizedBox(
+        if (!isTeamListEmpty) const SizedBox(
           height: 15,
         ),
-        const Divider(
+        if (!isTeamListEmpty) const Divider(
           color: Color(0xFFedecec),
           thickness: 0.7,
         ),
-        const SizedBox(
+        if (!isTeamListEmpty) const SizedBox(
           height: 25,
         ),
         _teamListWidget(),
@@ -207,8 +208,7 @@ class _HomeState extends State<Home> {
 
   Widget _teamListWidget() {
     // TODO: 데이터 형식에 맞게 ListView.builder 사용
-    bool isListEmpty = true; // TODO: 팀플 비어있는지 확인하기
-    if (isListEmpty) {
+    if (isTeamListEmpty) {
       return Expanded(
           child: SizedBox(
         width: double.infinity,
@@ -220,6 +220,7 @@ class _HomeState extends State<Home> {
               left: 0,
               right: 0,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(ImagePath.icPlus, height: 34, width: 34,),
                   const SizedBox(
