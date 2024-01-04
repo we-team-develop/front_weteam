@@ -330,7 +330,7 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Image.asset(ImagePath.icPinWhite), // TODO: 크기 조절
+                          Image.asset(ImagePath.icPinWhite, height: 10, width: 10,), // TODO: 크기 조절
                           Text(
                             name,
                             style: const TextStyle(
