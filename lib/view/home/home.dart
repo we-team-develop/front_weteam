@@ -39,16 +39,19 @@ class _HomeState extends State<Home> {
         const SizedBox(
           height: 15,
         ),
-        if (!isTeamListEmpty) const SizedBox(
-          height: 15,
-        ),
-        if (!isTeamListEmpty) const Divider(
-          color: Color(0xFFedecec),
-          thickness: 0.7,
-        ),
-        if (!isTeamListEmpty) const SizedBox(
-          height: 25,
-        ),
+        if (!isTeamListEmpty)
+          const SizedBox(
+            height: 15,
+          ),
+        if (!isTeamListEmpty)
+          const Divider(
+            color: Color(0xFFedecec),
+            thickness: 0.7,
+          ),
+        if (!isTeamListEmpty)
+          const SizedBox(
+            height: 25,
+          ),
         _teamListWidget(),
         _bottomBanner(),
       ],
@@ -183,7 +186,11 @@ class _HomeState extends State<Home> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(ImagePath.icPlus, height: 34, width: 34,),
+                  Image.asset(
+                    ImagePath.icPlus,
+                    height: 34,
+                    width: 34,
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -214,7 +221,7 @@ class _HomeState extends State<Home> {
         ),
       ));
     }
-    return const Expanded(
+    return Expanded(
         child: Column(
       children: [
         Expanded(
@@ -249,9 +256,43 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        SizedBox(
-          height: 21,
+        const SizedBox(height: 16),
+        AspectRatio(
+          aspectRatio: 330 / 49,
+          child: Container(
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  ImagePath.icPlusSquareLight,
+                  width: 21.22,
+                  height: 21.22,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  '팀플 추가하기',
+                  style: TextStyle(
+                    color: Color(0xFF333333),
+                    fontSize: 11,
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
+        const SizedBox(height: 16),
       ],
     ));
   }
