@@ -14,7 +14,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool hasFixedDDay = false;
-  int currentSliderIndex = 0;
   bool isTeamListEmpty = true; // TODO: 팀플 비어있는지 확인하기, Controller 만들기
 
   @override
@@ -226,7 +225,7 @@ class _HomeState extends State<Home> {
     return Expanded(
         child: Column(
       children: [
-        Expanded(
+        const Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
