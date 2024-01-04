@@ -13,45 +13,63 @@ class App extends GetView<BottomNavController> {
   Widget build(BuildContext context) {
     return Obx(
       () => PopScope(
+        // 뒤로가기 담당
         canPop: true,
         onPopInvoked: (didPop) {
           controller.popAction();
         },
         child: Scaffold(
           body: _body(),
-          bottomNavigationBar: _bottom(),
+          bottomNavigationBar: _bottom(context),
         ),
       ),
     );
   }
 
-  Widget _bottom() {
-    print('check bottom nav');
-    return NavigationBar(
-      selectedIndex: controller.index,
-      onDestinationSelected: (index) => controller.changeIndex(index),
-      destinations: [
-        NavigationDestination(
-          icon: ImageData(path: ImagePath.tpOff),
-          selectedIcon: ImageData(path: ImagePath.tpOn),
-          label: '진행팀플',
-        ),
-        NavigationDestination(
-          icon: ImageData(path: ImagePath.homeOff),
-          selectedIcon: ImageData(path: ImagePath.homeOn),
-          label: '홈',
-        ),
-        NavigationDestination(
-          icon: ImageData(path: ImagePath.myOff),
-          selectedIcon: ImageData(path: ImagePath.myOn),
-          label: '마이',
-        ),
-      ],
+  Widget _bottom(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.085,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5), // 색상
+            spreadRadius: 10, // 그림자 확산 범위
+            blurRadius: 15, // 그림자의 흐림 정도, 값이 클수록 흐릿해지면서 가장자리가 부드러워짐
+            offset: const Offset(0, 8), // 그림자 위치 y축으로 아래로 1만큼 감.
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
+        currentIndex: controller.index,
+        onTap: controller.changeIndex,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFFE2583E),
+        unselectedItemColor: const Color(0xFF999999),
+        backgroundColor: Colors.white,
+        items: [
+          BottomNavigationBarItem(
+              icon: ImageData(path: ImagePath.tpOff, width: 55, height: 55),
+              activeIcon:
+                  ImageData(path: ImagePath.tpOn, width: 55, height: 55),
+              label: '진행팀플'),
+          BottomNavigationBarItem(
+              icon: ImageData(path: ImagePath.homeOff, width: 55, height: 55),
+              activeIcon:
+                  ImageData(path: ImagePath.homeOn, width: 55, height: 55),
+              label: '홈'),
+          BottomNavigationBarItem(
+              icon: ImageData(path: ImagePath.myOff, width: 55, height: 55),
+              activeIcon:
+                  ImageData(path: ImagePath.myOn, width: 55, height: 55),
+              label: '마이'),
+        ],
+      ),
     );
   }
 
   Widget _body() {
-    print('check body()');
     return IndexedStack(
       index: controller.index,
       children: const [
