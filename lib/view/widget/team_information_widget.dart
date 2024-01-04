@@ -33,7 +33,7 @@ class TeamInformationWidget extends StatelessWidget {
                   _teamDescriptionWidget(description),
                   Row(
                     children: [
-                      _groupInfoWidget(memberSize),
+                      _teamMemberCountWidget(memberSize),
                       const SizedBox(
                         width: 31,
                       ),
@@ -90,7 +90,7 @@ class TeamInformationWidget extends StatelessWidget {
     );
   }
 
-  Widget _groupInfoWidget(int memberSize) {
+  Widget _teamMemberCountWidget(int memberSize) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.ideographic,
