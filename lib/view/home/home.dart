@@ -251,48 +251,55 @@ class _HomeState extends State<Home> {
         color: const Color(0xFFFFF1EF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Column(
+      child: Stack(
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '빠르고 간단하게 팀플 약속잡기!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 8,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
+                Column(
+                  children: [
+                    Text(
+                      '빠르고 간단하게 팀플 약속잡기!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 8,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '언제보까? 바로가기',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w800,
+                        height: 0,
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '언제보까? 바로가기',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w800,
-                    height: 0,
-                  ),
-                )
               ],
             ),
-            Container(
-                width: 47,
-                height: 45,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(),
-                child: Image.asset(ImagePath.bottomBannerIcon))
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 16,
+            child: Image.asset(
+              ImagePath.bottomBannerIcon,
+              width: 44,
+              height: 63,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -330,7 +337,12 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Image.asset(ImagePath.icPinWhite, height: 10, width: 10,), // TODO: 크기 조절
+                          Image.asset(
+                            ImagePath.icPinWhite,
+                            height: 10,
+                            width: 10,
+                          ),
+                          // TODO: 크기 조절
                           Text(
                             name,
                             style: const TextStyle(
