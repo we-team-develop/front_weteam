@@ -41,4 +41,5 @@ class ImagePath {
   static String get bellIcon => 'assets/images/bell_icon.png';
   static String get groupIcon => 'assets/images/group_icon.png';
   static String get bottomBannerIcon => 'assets/images/bottom_banner_icon.png';
+  static String get nextButton => 'assets/images/nextbutton.png';
 }

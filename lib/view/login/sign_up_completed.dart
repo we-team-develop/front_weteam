@@ -44,17 +44,20 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
             ],
           ),
         ),
-        // 임시 이동 버튼
+        // 다음 버튼
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.1),
+                bottom: MediaQuery.of(context).size.height * 0.08),
             child: GestureDetector(
                 onTap: () {
                   Get.to(() => const ProfileSettingPage());
                 },
-                child: _nextpagebutton()),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: _nextpagebutton(),
+                )),
           ),
         ),
       ],
@@ -62,10 +65,6 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   }
 
   Widget _nextpagebutton() {
-    return Container(
-      width: 10,
-      height: 10,
-      color: Colors.black,
-    );
+    return Image.asset(ImagePath.nextButton);
   }
 }
