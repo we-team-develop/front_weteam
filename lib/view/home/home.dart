@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
           height: 12,
         ),
         if (ddayItems.isEmpty) _noItemsCardWidget() else
-          const SizedBox(),
+          _ddayWidget("모션그래픽 1차 마감일까지", 1),
         const SizedBox(
           height: 15,
         ),
@@ -406,6 +406,71 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _ddayWidget(String name, int leftDays) {
+    String formattedDDay = leftDays.toString().padLeft(3, '0');
+    return AspectRatio(
+        aspectRatio: 330 / 176,
+        child: Container(
+          decoration: ShapeDecoration(
+            color: const Color(0xFFE2583E),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        throw UnimplementedError(); // TODO: 메뉴 구현
+                      },
+                      child: ImageData(path: ImagePath.icKebabWhite),
+                    )
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(ImagePath.icPinWhite), // TODO: 크기 조절
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontFamily: 'SanumSquareNeo',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        )
+                      ],
+                    ),
+                    Text(
+                      'D - $formattedDDay ',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 52,
+                        fontFamily: 'Cafe24Moyamoya',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )    )
     );
   }
 }
