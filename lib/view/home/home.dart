@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'NanumSquare Neo OTF',
+                        fontFamily: 'SanumSquareNeo',
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
@@ -123,39 +123,19 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'NanumSquare Neo OTF',
+                        fontFamily: 'SanumSquareNeo',
                         fontWeight: FontWeight.w700,
                         height: 0,
                       ),
                     ),
                     TextSpan(
-                      text: '해보세요!\n',
+                      text: '해보세요!\n언제든 수정가능합니다:)',
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'NanumSquare Neo OTF',
+                        fontFamily: 'SanumSquareNeo',
                         fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '최대 3개의 일정',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 11,
-                        fontFamily: 'NanumSquare Neo OTF',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '까지 설정 가능합니다:) ',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 11,
-                        fontFamily: 'NanumSquare Neo OTF',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
+                        height: 1.5,
                       ),
                     ),
                   ],
