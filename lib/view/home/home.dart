@@ -58,21 +58,7 @@ class _HomeState extends State<Home> {
   Widget _head() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [_title(), _bellIcon()],
-    );
-  }
-
-  Widget _title() {
-    return const Text(
-      'WE TEAM',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Color(0xFF333333),
-        fontSize: 16,
-        fontFamily: 'SBaggroB',
-        fontWeight: FontWeight.w400,
-        height: 0,
-      ),
+      children: [const AppTitleWidget(), _bellIcon()],
     );
   }
 
