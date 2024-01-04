@@ -58,6 +58,10 @@ flutter:
     - family: NanumSquareNeoBold
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Bd.otf
+    - family: Cafe24Moyamoya
+      fonts:
+        - asset: assets/fonts/Cafe24Moyamoya-Regular-v1.0.otf
+
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true
