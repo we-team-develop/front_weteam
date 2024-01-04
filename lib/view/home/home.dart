@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front_weteam/controller/mail_box_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
@@ -78,12 +79,16 @@ class _HomeState extends State<Home> {
   }
 
   Widget _bellIcon() {
-    return Container(
-        width: 24.65,
-        height: 22.99,
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(),
-        child: Image.asset(ImagePath.bellIcon));
+    return GetX<MailBoxController>(
+        init: MailBoxController(),
+        builder: (_) => Container(
+            width: 24.65,
+            height: 22.99,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(),
+            child: Image.asset(Get.find<MailBoxController>().mailBox().hasNew
+                ? ImagePath.bellIconNew
+                : ImagePath.bellIcon)));
   }
 
   Widget _noItemsCardWidget() {
