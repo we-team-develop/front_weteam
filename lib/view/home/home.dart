@@ -394,7 +394,6 @@ class _HomeState extends State<Home> {
                             height: 10,
                             width: 10,
                           ),
-                          // TODO: 크기 조절
                           Text(
                             name,
                             style: const TextStyle(
