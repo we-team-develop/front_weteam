@@ -52,7 +52,7 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
                 bottom: MediaQuery.of(context).size.height * 0.08),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const ProfileSettingPage());
+                  Get.to(() => ProfileSettingPage());
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),

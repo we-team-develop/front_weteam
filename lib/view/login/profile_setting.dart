@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/app.dart';
+import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
-class ProfileSettingPage extends StatefulWidget {
-  const ProfileSettingPage({super.key});
-
-  @override
-  State<ProfileSettingPage> createState() => _ProfileSettingPageState();
-}
-
-class _ProfileSettingPageState extends State<ProfileSettingPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class ProfileSettingPage extends StatelessWidget {
+  ProfileSettingPage({Key? key}) : super(key: key);
+  final ProfileController controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _body(),
+      body: _body(context),
     );
   }
 
-  Widget _body() {
+  Widget _body(BuildContext context) {
     return Stack(
       children: [
         Align(
@@ -79,36 +71,53 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
   }
 
   Widget _profileImage() {
-    double circleSize = 80.0;
+    double circleSize = 100.0;
+    double checkMarkSize = circleSize / 2;
 
-    List<String> imagePaths = [
-      ImagePath.profile1,
-      ImagePath.profile2,
-      ImagePath.profile3,
-      ImagePath.profile4,
-      ImagePath.profile5,
-      ImagePath.profile6,
-    ];
-
-    return GridView.count(
+    return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      mainAxisSpacing: 10.0,
-      crossAxisSpacing: 10.0,
-      children: List.generate(6, (index) {
-        return Container(
-          width: circleSize,
-          height: circleSize,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey[300],
-              image: DecorationImage(
-                image: AssetImage(imagePaths[index]),
-                fit: BoxFit.cover,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          childAspectRatio: 1 // 정사각형 비율
+          ),
+      itemCount: controller.imagePaths.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () => controller.selectProfile(index),
+          child: Obx(() => Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: circleSize,
+                    height: circleSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[300],
+                      image: DecorationImage(
+                        image: AssetImage(controller.imagePaths[index]),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  if (controller.isSelected[index])
+                    Positioned(
+                      top: (circleSize - checkMarkSize) / 2,
+                      bottom: (circleSize - checkMarkSize) / 2,
+                      left: (circleSize - checkMarkSize) / 2,
+                      right: (circleSize - checkMarkSize) / 2,
+                      child: Image.asset(
+                        ImagePath.check,
+                        width: checkMarkSize,
+                        height: checkMarkSize,
+                      ),
+                    ),
+                ],
               )),
         );
-      }),
+      },
     );
   }
 }
