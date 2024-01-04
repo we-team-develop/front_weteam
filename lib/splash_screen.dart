@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const LoginMain()));
@@ -24,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
+    /*SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);*/
     super.dispose();
   }
 
