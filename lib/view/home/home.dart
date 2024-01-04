@@ -199,7 +199,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget _indexIconList() {
-    if (ddayItems.isEmpty) return _indexIcon(true); // 비어 있으면 점 하나
+    if (ddayItems.isEmpty) return const SizedBox(height: 0); // 표시 안 함
 
     return ListView.builder(
       itemBuilder: (context, index) {
