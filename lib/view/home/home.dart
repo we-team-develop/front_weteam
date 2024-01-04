@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
 
   Widget _teamListWidget() {
     // TODO: 데이터 형식에 맞게 ListView.builder 사용
-    bool isListEmpty = true;
+    bool isListEmpty = true; // TODO: 팀플 비어있는지 확인하기
     if (isListEmpty) {
       return Expanded(
           child: SizedBox(
