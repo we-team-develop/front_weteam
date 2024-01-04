@@ -55,7 +55,7 @@ class TeamInformationWidget extends StatelessWidget {
   Widget _teamImgWidget(String img) {
     // TODO : 이미지 표시하기
     return Container(
-      width: 53,
+      width: 50,
       height: 50,
       decoration: ShapeDecoration(
         color: const Color(0xFFD9D9D9),
