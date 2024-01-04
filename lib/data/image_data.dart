@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 class ImageData extends StatelessWidget {
   final String path;
   final double width;
-  const ImageData({super.key, required this.path, this.width = 60});
+  final double height;
+  const ImageData(
+      {super.key, required this.path, this.width = 60, this.height = 60});
 
   @override
   Widget build(BuildContext context) {
