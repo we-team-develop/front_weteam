@@ -92,6 +92,8 @@ class TeamInformationWidget extends StatelessWidget {
 
   Widget _groupInfoWidget(int memberSize) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.ideographic,
       children: [
         Container(
             width: 6,
@@ -102,16 +104,21 @@ class TeamInformationWidget extends StatelessWidget {
         const SizedBox(
           width: 2,
         ),
-        Text(
-          "$memberSize",
-          style: const TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 8,
-            fontFamily: 'NanumSquare Neo OTF',
-            fontWeight: FontWeight.w700,
-            height: 0,
-          ),
-        ),
+        Column(
+          children: [
+            const SizedBox(height: 1,),
+            Text(
+              "$memberSize",
+              style: const TextStyle(
+                color: Color(0xFF333333),
+                fontSize: 8,
+                fontFamily: 'NanumSquare Neo OTF',
+                fontWeight: FontWeight.w700,
+                height: 0,
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
