@@ -52,16 +52,12 @@ flutter:
     - family: SBaggroL
       fonts:
       - asset: assets/fonts/SB 어그로 L.ttf
-    - family: SanumSquareNeo
+    - family: NanumSquareNeo
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Rg.otf
-    - family: SanumSquareNeoBold
+    - family: NanumSquareNeoBold
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Bd.otf
-    - family: Cafe24Moyamoya
-      fonts:
-        - asset: assets/fonts/Cafe24Moyamoya-Regular-v1.0.otf
-
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true

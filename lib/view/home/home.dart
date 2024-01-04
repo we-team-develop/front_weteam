@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'SanumSquareNeo',
+                        fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'SanumSquareNeo',
+                        fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w700,
                         height: 0,
                       ),
@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: 11,
-                        fontFamily: 'SanumSquareNeo',
+                        fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w400,
                         height: 1.5,
                       ),
@@ -259,7 +259,7 @@ class _HomeState extends State<Home> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 8,
-                    fontFamily: 'SanumSquareNeo',
+                    fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w400,
                     height: 0,
                   ),
@@ -273,7 +273,7 @@ class _HomeState extends State<Home> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 13,
-                    fontFamily: 'SanumSquareNeo',
+                    fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w800,
                     height: 0,
                   ),
@@ -331,7 +331,7 @@ class _HomeState extends State<Home> {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 10,
-                              fontFamily: 'SanumSquareNeo',
+                              fontFamily: 'NanumSquareNeo',
                               fontWeight: FontWeight.w400,
                               height: 0,
                             ),

@@ -70,7 +70,7 @@ class TeamInformationWidget extends StatelessWidget {
       style: const TextStyle(
         color: Color(0xFF333333),
         fontSize: 11,
-        fontFamily: 'SanumSquareNeo',
+        fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
         height: 0,
       ),
@@ -83,7 +83,7 @@ class TeamInformationWidget extends StatelessWidget {
       style: const TextStyle(
         color: Color(0xFF333333),
         fontSize: 7,
-        fontFamily: 'SanumSquareNeo',
+        fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,
       ),
@@ -129,7 +129,7 @@ class TeamInformationWidget extends StatelessWidget {
       style: TextStyle(
         color: Color(0xFF969696),
         fontSize: 7,
-        fontFamily: 'SanumSquareNeo',
+        fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,
       ),
