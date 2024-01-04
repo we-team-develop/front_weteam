@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/controller/mail_box_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List ddayItems = [];
+  bool hasFixedDDay = false;
   int currentSliderIndex = 0;
   bool isTeamListEmpty = true; // TODO: 팀플 비어있는지 확인하기, Controller 만들기
 
@@ -31,14 +32,13 @@ class _HomeState extends State<Home> {
         const SizedBox(
           height: 12,
         ),
-        if (ddayItems.isEmpty)
+        if (!hasFixedDDay)
           _noItemsCardWidget()
         else
           _ddayWidget("모션그래픽 1차 마감일까지", 1),
         const SizedBox(
           height: 15,
         ),
-        _indexIconList(),
         if (!isTeamListEmpty) const SizedBox(
           height: 15,
         ),
@@ -163,31 +163,6 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _indexIconList() {
-    if (ddayItems.isEmpty) return const SizedBox(height: 0); // 표시 안 함
-
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        bool enabled = currentSliderIndex == index;
-        return _indexIcon(enabled);
-      },
-      itemCount: ddayItems.length,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-    );
-  }
-
-  Widget _indexIcon(bool enabled) {
-    return Container(
-      width: 7,
-      height: 7,
-      decoration: ShapeDecoration(
-        color: enabled ? const Color(0xFF969696) : const Color(0xffe5e5e5),
-        shape: const OvalBorder(),
       ),
     );
   }
