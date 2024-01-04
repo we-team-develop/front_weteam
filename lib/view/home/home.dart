@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
@@ -28,7 +29,9 @@ class _HomeState extends State<Home> {
         const SizedBox(
           height: 12,
         ),
-        if (ddayItems.isEmpty) _noItemsCardWidget() else
+        if (ddayItems.isEmpty)
+          _noItemsCardWidget()
+        else
           _ddayWidget("모션그래픽 1차 마감일까지", 1),
         const SizedBox(
           height: 15,
@@ -164,7 +167,7 @@ class _HomeState extends State<Home> {
               ),
               Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
                   child: AspectRatio(
                     aspectRatio: 185 / 24,
                     child: Container(
@@ -222,143 +225,43 @@ class _HomeState extends State<Home> {
 
   Widget _teamListWidget() {
     // TODO: 데이터 형식에 맞게 ListView.builder 사용
-    return Expanded(
+    return const Expanded(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _teamWidget(
-                  "", '모션그래픽기획및제작', '기말 팀 영상 제작', 4, '2023.10.05~ 2024.12.08'),
-              _teamWidget("", '실감미디어콘텐츠개발', '기말 팀 프로젝트 : Unity AR룰러앱 제작', 4,
-                  '2023.10.05~ 2024.12.19'),
-              _teamWidget("", '머신러닝의이해와실제', '머신러닝 활용 프로그램 제작 프로젝트', 2,
-                  '2023.11.28~ 2024.12.08'),
-              _teamWidget(
-                  "", '빽스타2기', '빽다방서포터즈 팀작업', 4, '2023.07.01~ 2024.10.01'),
-            ],
-          ),
-        ));
-  }
-
-  Widget _teamWidget(String img, String title, String description,
-      int memberSize, String date) {
-    return SizedBox(
-      height: 53,
       child: Column(
         children: [
-          Expanded(child: Row(
-            children: [
-              _teamImgWidget(img),
-              const SizedBox(
-                width: 16,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _teamTitleWidget(title),
-                  _teamDescriptionWidget(description),
-                  Row(
-                    children: [
-                      _groupInfoWidget(memberSize),
-                      const SizedBox(
-                        width: 31,
-                      ),
-                      _dateWidget(date),
-                    ],
-                  )
-                ],
-              )
-            ],
-          )),
-          const SizedBox(
-            height: 12,
-          ),
+          TeamInformationWidget(
+              img: "",
+              title: '모션그래픽기획및제작',
+              description: '기말 팀 영상 제작',
+              memberSize: 4,
+              date: '2023.10.05~ 2024.12.08'),
+          TeamInformationWidget(
+              img: "",
+              title: '실감미디어콘텐츠개발',
+              description: '기말 팀 프로젝트 : Unity AR룰러앱 제작',
+              memberSize: 4,
+              date: '2023.10.05~ 2024.12.19'),
+          TeamInformationWidget(
+              img: "",
+              title: '머신러닝의이해와실제',
+              description: '머신러닝 활용 프로그램 제작 프로젝트',
+              memberSize: 2,
+              date: '2023.11.28~ 2024.12.08'),
+          TeamInformationWidget(
+              img: "",
+              title: '빽스타2기',
+              description: '빽다방서포터즈 팀작업',
+              memberSize: 4,
+              date: '2023.07.01~ 2024.10.01'),
         ],
       ),
-    );
-  }
-
-  Widget _teamImgWidget(String img) {
-    // TODO : 이미지 표시하기
-    return Container(
-      width: 53,
-      height: 50,
-      decoration: ShapeDecoration(
-        color: const Color(0xFFD9D9D9),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
-  }
-
-  Widget _teamTitleWidget(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        color: Color(0xFF333333),
-        fontSize: 11,
-        fontFamily: 'SanumSquareNeo',
-        fontWeight: FontWeight.w700,
-        height: 0,
-      ),
-    );
-  }
-
-  Widget _teamDescriptionWidget(String desc) {
-    return Text(
-      desc,
-      style: const TextStyle(
-        color: Color(0xFF333333),
-        fontSize: 7,
-        fontFamily: 'SanumSquareNeo',
-        fontWeight: FontWeight.w400,
-        height: 0,
-      ),
-    );
-  }
-
-  Widget _groupInfoWidget(int memberSize) {
-    return Row(
-      children: [
-        Container(
-            width: 6,
-            height: 8,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(),
-            child: Image.asset(ImagePath.groupIcon)),
-        const SizedBox(
-          width: 2,
-        ),
-        Text(
-          "$memberSize",
-          style: const TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 8,
-            fontFamily: 'NanumSquare Neo OTF',
-            fontWeight: FontWeight.w700,
-            height: 0,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _dateWidget(String date) {
-    return const Text(
-      '2023.11.28~ 2024.12.08',
-      style: TextStyle(
-        color: Color(0xFF969696),
-        fontSize: 7,
-        fontFamily: 'SanumSquareNeo',
-        fontWeight: FontWeight.w400,
-        height: 0,
-      ),
-    );
+    ));
   }
 
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,
-      height: 69,
+      height: 70,
       decoration: ShapeDecoration(
         color: const Color(0xFFFFF1EF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -414,63 +317,61 @@ class _HomeState extends State<Home> {
     return AspectRatio(
         aspectRatio: 330 / 176,
         child: Container(
-          decoration: ShapeDecoration(
-            color: const Color(0xFFE2583E),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+            decoration: ShapeDecoration(
+              color: const Color(0xFFE2583E),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
-          ),
-
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        throw UnimplementedError(); // TODO: 메뉴 구현
-                      },
-                      child: ImageData(path: ImagePath.icKebabWhite),
-                    )
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(ImagePath.icPinWhite), // TODO: 크기 조절
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'SanumSquareNeo',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        )
-                      ],
-                    ),
-                    Text(
-                      'D - $formattedDDay ',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 52,
-                        fontFamily: 'Cafe24Moyamoya',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          throw UnimplementedError(); // TODO: 메뉴 구현
+                        },
+                        child: ImageData(path: ImagePath.icKebabWhite),
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset(ImagePath.icPinWhite), // TODO: 크기 조절
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontFamily: 'SanumSquareNeo',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )    )
-    );
+                      Text(
+                        'D - $formattedDDay ',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 52,
+                          fontFamily: 'Cafe24Moyamoya',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )));
   }
 }
