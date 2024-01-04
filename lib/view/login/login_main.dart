@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:front_weteam/controller/login_controller.dart';
+import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-class LoginMain extends StatelessWidget {
+class LoginMain extends GetView<LoginController> {
   const LoginMain({super.key});
 
   @override
@@ -14,8 +18,9 @@ class LoginMain extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    var padding = MediaQuery.of(context).size.height * 0.01;
-    var horizontalPadding = MediaQuery.of(context).size.width * 0.06;
+    var padding = MediaQuery.of(context).size.height * 0.01; // 버튼 사이 패딩
+    var horizontalPadding =
+        MediaQuery.of(context).size.width * 0.06; // 버튼 양옆 패딩
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,9 +39,24 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(ImagePath.googlelogin),
               ),
               SizedBox(height: padding),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Image.asset(ImagePath.kakaologin),
+              GestureDetector(
+                onTap: () {
+                  Get.find<LoginController>().loginKakao((isSuccess) {
+                    if (isSuccess) {
+                      FirebaseAuth.instance.currentUser
+                          ?.getIdToken()
+                          .then((idToken) {
+                        // 백엔드에 보낼 idToken -> 이걸로 인증하세요
+                        print(idToken);
+                        print("로그인 성공!");
+                      });
+                    }
+                  });
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: Image.asset(ImagePath.kakaologin),
+                ),
               ),
               SizedBox(height: padding),
               GestureDetector(

@@ -168,5 +168,8 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,macos,android,dart
 
+*.env
+/lib/firebase_options.dart
+
 ### 네이버 로그인 API ###
 android/app/src/main/res/values/strings.xml
