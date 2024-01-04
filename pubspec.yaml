@@ -52,6 +52,12 @@ flutter:
     - family: SBaggroL
       fonts:
       - asset: assets/fonts/SB 어그로 L.ttf
+    - family: SanumSquareNeo
+      fonts:
+        - asset: assets/fonts/NanumSquareNeoOTF-Rg.otf
+    - family: SanumSquareNeoBold
+      fonts:
+        - asset: assets/fonts/NanumSquareNeoOTF-Bd.otf
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true
