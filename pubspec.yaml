@@ -19,6 +19,8 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_auth: ^4.15.3
   flutter_naver_login: ^1.8.0
+  http: ^1.1.2
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +33,25 @@ flutter:
   - assets/images/
   - .env
 
+  fonts:
+    - family: NanumGothic
+      fonts:
+      - asset: assets/fonts/NanumGothic.ttf
+    - family: NanumGothicBold
+      fonts:
+      - asset: assets/fonts/NanumGothicBold.ttf
+    - family: NanumGothicExtraBold
+      fonts:
+      - asset: assets/fonts/NanumGothicExtraBold.ttf
+    - family: SBaggroM
+      fonts:
+      - asset: assets/fonts/SB 어그로 M.ttf
+    - family: SBaggroB
+      fonts:
+      - asset: assets/fonts/SB 어그로 B.ttf
+    - family: SBaggroL
+      fonts:
+      - asset: assets/fonts/SB 어그로 L.ttf
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true

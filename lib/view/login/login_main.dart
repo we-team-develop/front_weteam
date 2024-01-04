@@ -5,7 +5,8 @@ import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
+import 'package:front_weteam/social/kakao.dart';
+import 'package:front_weteam/view/login/sign_up_completed.dart';
 
 class LoginMain extends GetView<LoginController> {
   const LoginMain({super.key});
@@ -77,9 +78,15 @@ class LoginMain extends GetView<LoginController> {
                 },
               ),
               SizedBox(height: padding),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Image.asset(ImagePath.applelogin),
+              // 임시 회원
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const SignUpCompleted());
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: Image.asset(ImagePath.applelogin),
+                ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.09),
             ],

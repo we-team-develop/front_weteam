@@ -24,14 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        //AppBar 설정
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0.0,
-        ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          //AppBar 설정
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            elevation: 0.0,
+          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData()),
       home: const SplashScreen(),
       debugShowCheckedModeBanner: false, // Debug 배너 없애기
       initialBinding: MainBindings(),

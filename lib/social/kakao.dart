@@ -54,12 +54,22 @@ class Kakao {
     } else {
       try {
         final token = await UserApi.instance.loginWithKakaoAccount();
+        print(await KakaoSdk.origin);
         print('카카오계정으로 로그인 성공');
         return token;
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
         return null;
       }
+    }
+  }
+
+  static Future<void> logout() async {
+    try {
+      await UserApi.instance.logout();
+      print('로그아웃 성공, SDK에서 토큰 삭제');
+    } catch (error) {
+      print('로그아웃 실패, SDK에서 토큰 삭제 $error');
     }
   }
 }
