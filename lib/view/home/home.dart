@@ -49,9 +49,6 @@ class _HomeState extends State<Home> {
           height: 25,
         ),
         _teamListWidget(),
-        const SizedBox(
-          height: 21,
-        ),
         _bottomBanner(),
       ],
     );
@@ -210,36 +207,90 @@ class _HomeState extends State<Home> {
 
   Widget _teamListWidget() {
     // TODO: 데이터 형식에 맞게 ListView.builder 사용
+    bool isListEmpty = true;
+    if (isListEmpty) {
+      return Expanded(
+          child: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Image.asset(ImagePath.icPlus, height: 34, width: 34,),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Text(
+                    '진행 중인  팀플이 없어요.\n지금 바로 생성해보세요!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: 11,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                      height: 1.5,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              right: 10,
+              bottom: 0,
+              child: Image.asset(
+                ImagePath.emptyTimiIcon,
+                width: 75.55,
+                height: 96,
+              ),
+            )
+          ],
+        ),
+      ));
+    }
     return const Expanded(
-        child: SingleChildScrollView(
-      child: Column(
-        children: [
-          TeamInformationWidget(
-              img: "",
-              title: '모션그래픽기획및제작',
-              description: '기말 팀 영상 제작',
-              memberSize: 4,
-              date: '2023.10.05~ 2024.12.08'),
-          TeamInformationWidget(
-              img: "",
-              title: '실감미디어콘텐츠개발',
-              description: '기말 팀 프로젝트 : Unity AR룰러앱 제작',
-              memberSize: 4,
-              date: '2023.10.05~ 2024.12.19'),
-          TeamInformationWidget(
-              img: "",
-              title: '머신러닝의이해와실제',
-              description: '머신러닝 활용 프로그램 제작 프로젝트',
-              memberSize: 2,
-              date: '2023.11.28~ 2024.12.08'),
-          TeamInformationWidget(
-              img: "",
-              title: '빽스타2기',
-              description: '빽다방서포터즈 팀작업',
-              memberSize: 4,
-              date: '2023.07.01~ 2024.10.01'),
-        ],
-      ),
+        child: Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TeamInformationWidget(
+                    img: "",
+                    title: '모션그래픽기획및제작',
+                    description: '기말 팀 영상 제작',
+                    memberSize: 4,
+                    date: '2023.10.05~ 2024.12.08'),
+                TeamInformationWidget(
+                    img: "",
+                    title: '실감미디어콘텐츠개발',
+                    description: '기말 팀 프로젝트 : Unity AR룰러앱 제작',
+                    memberSize: 4,
+                    date: '2023.10.05~ 2024.12.19'),
+                TeamInformationWidget(
+                    img: "",
+                    title: '머신러닝의이해와실제',
+                    description: '머신러닝 활용 프로그램 제작 프로젝트',
+                    memberSize: 2,
+                    date: '2023.11.28~ 2024.12.08'),
+                TeamInformationWidget(
+                    img: "",
+                    title: '빽스타2기',
+                    description: '빽다방서포터즈 팀작업',
+                    memberSize: 4,
+                    date: '2023.07.01~ 2024.10.01'),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 21,
+        ),
+      ],
     ));
   }
 

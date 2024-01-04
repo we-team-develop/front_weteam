@@ -44,4 +44,6 @@ class ImagePath {
   static String get bottomBannerIcon => 'assets/images/bottom_banner_icon.png';
   static String get icKebabWhite => 'assets/images/ic_kebab_white.png';
   static String get icPinWhite => 'assets/images/ic_pin_white.png';
+  static String get emptyTimiIcon => 'assets/images/empty_timi_icon.png';
+  static String get icPlus => 'assets/images/ic_plus.png';
 }
