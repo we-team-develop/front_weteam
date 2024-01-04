@@ -36,21 +36,21 @@ class _HomeState extends State<Home> {
           _noItemsCardWidget()
         else
           _ddayWidget("모션그래픽 1차 마감일까지", 1),
-        const SizedBox(
-          height: 15,
-        ),
         if (!isTeamListEmpty)
           const SizedBox(
             height: 15,
           ),
         if (!isTeamListEmpty)
-          const Divider(
-            color: Color(0xFFedecec),
-            thickness: 0.7,
+          const SizedBox(
+            height: 0.7,
+            width: double.infinity,
+            child: ColoredBox(
+              color: Color(0xFFD9D9D9),
+            ),
           ),
         if (!isTeamListEmpty)
           const SizedBox(
-            height: 25,
+            height: 15,
           ),
         _teamListWidget(),
         _bottomBanner(),
