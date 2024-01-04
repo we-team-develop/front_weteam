@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:front_weteam/controller/login_controller.dart';
 import 'package:front_weteam/controller/naver_login_controller.dart';
-import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 import 'package:front_weteam/social/kakao.dart';
