@@ -20,9 +20,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-            child: ColoredBox(color: const Color(0xFFFFFFFF), child: _body())));
+        body: ColoredBox(
+            color: const Color(0xFFFFFFFF),
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                child: _body())));
   }
 
   Widget _body() {
