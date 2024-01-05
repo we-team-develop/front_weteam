@@ -1,13 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:front_weteam/binding/main_bindings.dart';
+import 'package:front_weteam/firebase_options.dart';
+import 'package:front_weteam/splash_screen.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Future.delayed(const Duration(seconds: 3));
-  FlutterNativeSplash.remove();
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  await dotenv.load(fileName: ".env"); // .env 파일 런타임에 가져오기
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  KakaoSdk.init(nativeAppKey: dotenv.env['nativeAppKey']); // kakaologin
   runApp(const MyApp());
 }
 
@@ -18,36 +26,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        //AppBar 설정
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0.0,
-        ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          //AppBar 설정
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            elevation: 0.0,
+          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData()),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false, // Debug 배너 없애기
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      initialBinding: MainBindings(),
     );
   }
 }
