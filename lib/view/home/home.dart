@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front_weteam/controller/mail_box_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/dialog/home/add_team_dialog.dart';
+import 'package:front_weteam/dialog/home/check_remove_dday_dialog.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
@@ -190,7 +191,7 @@ class _HomeState extends State<Home> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      addTeamDialog();
+                      _showDialog(const AddTeamDialog());
                     },
                     child: Image.asset(
                       ImagePath.icPlus,
@@ -432,13 +433,13 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  void addTeamDialog() {
+  void _showDialog(Widget dialogWidget) {
     showDialog(
         context: context,
         //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
         //barrierDismissible: false,
         builder: (BuildContext context) {
-          return AddTeamDialog();
+          return dialogWidget;
         });
   }
 }
