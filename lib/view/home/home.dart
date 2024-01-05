@@ -146,9 +146,9 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   _showDialog(const AddDDayDialog());
                 },
-                child:               Padding(
+                child: Padding(
                     padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
                     child: AspectRatio(
                       aspectRatio: 185 / 24,
                       child: Container(
@@ -171,8 +171,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                    ))
-                ,
+                    )),
               )
             ],
           ),
@@ -273,38 +272,41 @@ class _HomeState extends State<Home> {
           ),
         ),
         const SizedBox(height: 16),
-        AspectRatio(
-          aspectRatio: 330 / 49,
-          child: Container(
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
-                borderRadius: BorderRadius.circular(8),
+        GestureDetector(
+          onTap: () => _showDialog(const AddDDayDialog()),
+          child: AspectRatio(
+            aspectRatio: 330 / 49,
+            child: Container(
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  ImagePath.icPlusSquareLight,
-                  width: 21.22,
-                  height: 21.22,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text(
-                  '팀플 추가하기',
-                  style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontSize: 11,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    ImagePath.icPlusSquareLight,
+                    width: 21.22,
+                    height: 21.22,
                   ),
-                )
-              ],
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  const Text(
+                    '팀플 추가하기',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: 11,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -460,7 +462,8 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       GestureDetector(
-                                          behavior: HitTestBehavior.translucent, // 여백 터치 안 되는 문제 수정
+                                          behavior: HitTestBehavior.translucent,
+                                          // 여백 터치 안 되는 문제 수정
                                           onTap: () {
                                             setState(() {
                                               showPopupMenu = false;
@@ -489,7 +492,8 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             color: Color(0xFFEEEEEE)),
                                       ),
                                       GestureDetector(
-                                        behavior: HitTestBehavior.translucent,  // 여백 터치 안 되는 문제 수정
+                                          behavior: HitTestBehavior.translucent,
+                                          // 여백 터치 안 되는 문제 수정
                                           onTap: () {
                                             setState(() {
                                               showPopupMenu = false;
@@ -497,7 +501,8 @@ class _DDayWidgetState extends State<DDayWidget> {
                                                   context: context,
                                                   //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
                                                   //barrierDismissible: false,
-                                                  builder: (BuildContext context) {
+                                                  builder:
+                                                      (BuildContext context) {
                                                     return const CheckRemoveDdayDialog();
                                                   });
                                             });
