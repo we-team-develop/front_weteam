@@ -41,8 +41,14 @@ class ImagePath {
   static String get tpOn => 'assets/images/tp_on.png';
   static String get tpOff => 'assets/images/tp_off.png';
   static String get bellIcon => 'assets/images/bell_icon.png';
+  static String get bellIconNew => 'assets/images/bell_icon_new.png';
   static String get groupIcon => 'assets/images/group_icon.png';
   static String get bottomBannerIcon => 'assets/images/bottom_banner_icon.png';
   static String get nextButton => 'assets/images/nextbutton.png';
   static String get check => 'assets/images/check.png';
+  static String get icKebabWhite => 'assets/images/ic_kebab_white.png';
+  static String get icPinWhite => 'assets/images/ic_pin_white.png';
+  static String get emptyTimiIcon => 'assets/images/empty_timi_icon.png';
+  static String get icPlus => 'assets/images/ic_plus.png';
+  static String get icPlusSquareLight => 'assets/images/ic_plus_square_light.png';
 }
