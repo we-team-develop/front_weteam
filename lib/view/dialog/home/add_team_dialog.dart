@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
+import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:get/get.dart';
 
 class AddTeamDialog extends StatefulWidget {
@@ -108,30 +109,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
         const SizedBox(
           height: 28,
         ),
-        GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            width: 185,
-            height: 25.60,
-            alignment: Alignment.center,
-            decoration: ShapeDecoration(
-              color: const Color(0xFFE2583E),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-            ),
-            child: const Text(
-              '확인',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
+        NormalButton(text: '확인', onTap: () => Get.back()),
       ],
     );
   }

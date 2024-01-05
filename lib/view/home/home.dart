@@ -5,6 +5,7 @@ import 'package:front_weteam/view/dialog/home/add_dday_dialog.dart';
 import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
+import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
 
@@ -142,37 +143,7 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 30,
               ),
-              GestureDetector(
-                onTap: () {
-                  _showDialog(const AddDDayDialog());
-                },
-                child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
-                    child: AspectRatio(
-                      aspectRatio: 185 / 24,
-                      child: Container(
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFE2583E),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            '중요 일정 추가하기',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontFamily: 'NanumGothicOTF',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
-              )
+              NormalButton(text: '중요 일정 추가하기', onTap: () => _showDialog(const AddDDayDialog())),
             ],
           ),
         ),
