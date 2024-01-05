@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:front_weteam/dialog/custom_check_dialog.dart';
+import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
 import 'package:get/get.dart';
 
 class CheckRemoveDdayDialog extends StatelessWidget {

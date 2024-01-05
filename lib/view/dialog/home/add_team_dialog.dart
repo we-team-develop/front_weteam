@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front_weteam/dialog/custom_big_dialog.dart';
+import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
 import 'package:get/get.dart';
 
