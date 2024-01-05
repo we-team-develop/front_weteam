@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/controller/mail_box_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/dialog/home/add_dday_dialog.dart';
 import 'package:front_weteam/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/dialog/home/check_remove_dday_dialog.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
@@ -141,32 +142,38 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
-                  child: AspectRatio(
-                    aspectRatio: 185 / 24,
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFFE2583E),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '중요 일정 추가하기',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'NanumGothicOTF',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+              GestureDetector(
+                onTap: () {
+                  _showDialog(const AddDDayDialog());
+                },
+                child:               Padding(
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 72),
+                    child: AspectRatio(
+                      aspectRatio: 185 / 24,
+                      child: Container(
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFE2583E),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            '중요 일정 추가하기',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontFamily: 'NanumGothicOTF',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ))
+                    ))
+                ,
+              )
             ],
           ),
         ),
