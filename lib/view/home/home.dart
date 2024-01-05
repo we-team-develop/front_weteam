@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         if (!hasFixedDDay)
           _noItemsCardWidget()
         else
-          _ddayWidget("모션그래픽 1차 마감일까지", 1),
+          const DDayWidget(name: "모션그래픽 1차 마감일까지", leftDays: 1),
         if (!isTeamListEmpty)
           const SizedBox(
             height: 15,
@@ -367,8 +367,42 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _ddayWidget(String name, int leftDays) {
-    String formattedDDay = leftDays.toString().padLeft(3, '0');
+  PopupMenuItem _menuItem(Widget widget) {
+    return PopupMenuItem(
+        padding: EdgeInsets.zero,
+        child: Center(
+          child: widget,
+        ));
+  }
+
+  void _showDialog(Widget dialogWidget) {
+    showDialog(
+        context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        //barrierDismissible: false,
+        builder: (BuildContext context) {
+          return dialogWidget;
+        });
+  }
+}
+
+class DDayWidget extends StatefulWidget {
+  final String name;
+  final int leftDays;
+
+  const DDayWidget({super.key, required this.name, required this.leftDays});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _DDayWidgetState();
+  }
+}
+
+class _DDayWidgetState extends State<DDayWidget> {
+  bool showPopupMenu = false;
+
+  @override
+  Widget build(BuildContext context) {
     return AspectRatio(
         aspectRatio: 330 / 176,
         child: Container(
@@ -386,12 +420,102 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          throw UnimplementedError(); // TODO: 메뉴 구현
-                        },
-                        child: ImageData(path: ImagePath.icKebabWhite),
-                      )
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showPopupMenu = !showPopupMenu; // 활성화 상태 반전
+                              });
+                            },
+                            child: ImageData(path: ImagePath.icKebabWhite),
+                          ),
+                          Visibility(
+                            visible: showPopupMenu,
+                            child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x23000000),
+                                      blurRadius: 4,
+                                      spreadRadius: 1,
+                                    )
+                                  ],
+                                ),
+                                child: IntrinsicHeight(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                          behavior: HitTestBehavior.translucent, // 여백 터치 안 되는 문제 수정
+                                          onTap: () {
+                                            setState(() {
+                                              showPopupMenu = false;
+                                            });
+                                          },
+                                          child: const SizedBox(
+                                            height: 21,
+                                            child: Center(
+                                              child: Text(
+                                                '수정하기',
+                                                style: TextStyle(
+                                                  color: Color(0xFF333333),
+                                                  fontSize: 8,
+                                                  fontFamily:
+                                                      'NanumSquare Neo OTF',
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 0,
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                      Container(
+                                        width: 67,
+                                        height: 0.50,
+                                        decoration: const BoxDecoration(
+                                            color: Color(0xFFEEEEEE)),
+                                      ),
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.translucent,  // 여백 터치 안 되는 문제 수정
+                                          onTap: () {
+                                            setState(() {
+                                              showPopupMenu = false;
+                                              showDialog(
+                                                  context: context,
+                                                  //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                                                  //barrierDismissible: false,
+                                                  builder: (BuildContext context) {
+                                                    return const CheckRemoveDdayDialog();
+                                                  });
+                                            });
+                                          },
+                                          child: const SizedBox(
+                                              height: 21,
+                                              child: Center(
+                                                child: Text(
+                                                  '삭제하기',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFE60000),
+                                                    fontSize: 8,
+                                                    fontFamily:
+                                                        'NanumSquare Neo OTF',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 0,
+                                                  ),
+                                                ),
+                                              ))),
+                                    ],
+                                  ),
+                                )),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                   Column(
@@ -406,7 +530,7 @@ class _HomeState extends State<Home> {
                             width: 10,
                           ),
                           Text(
-                            name,
+                            widget.name,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 10,
@@ -418,7 +542,7 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                       Text(
-                        'D - $formattedDDay ',
+                        'D - ${widget.leftDays.toString().padLeft(3, '0')} ',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 52,
@@ -432,15 +556,5 @@ class _HomeState extends State<Home> {
                 ],
               ),
             )));
-  }
-
-  void _showDialog(Widget dialogWidget) {
-    showDialog(
-        context: context,
-        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-        //barrierDismissible: false,
-        builder: (BuildContext context) {
-          return dialogWidget;
-        });
   }
 }
