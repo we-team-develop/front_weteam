@@ -439,6 +439,12 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             setState(() {
                                               showPopupMenu = false;
                                             });
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return const AddDDayDialog(); // TODO: D-Day 수정 Dialog 만들기
+                                                });
                                           },
                                           child: const SizedBox(
                                             height: 21,
