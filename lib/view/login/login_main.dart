@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:front_weteam/controller/google_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginMain extends StatelessWidget {
   const LoginMain({super.key});
@@ -27,9 +30,14 @@ class LoginMain extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Image.asset(ImagePath.googlelogin),
+              InkWell(
+                onTap: () {
+                  GoogleLoginController().signInWithGoogle();
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: Image.asset(ImagePath.googlelogin),
+                ),
               ),
               SizedBox(height: padding),
               Padding(
