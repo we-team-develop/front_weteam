@@ -95,12 +95,7 @@ class TeamInformationWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.ideographic,
       children: [
-        Container(
-            width: 6,
-            height: 8,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(),
-            child: Image.asset(ImagePath.icGroup)),
+        Image.asset(width: 6, height: 8, ImagePath.icGroup),
         const SizedBox(
           width: 2,
         ),

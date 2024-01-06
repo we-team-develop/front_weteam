@@ -74,14 +74,12 @@ class _HomeState extends State<Home> {
   Widget _bellIcon() {
     return GetX<MailBoxController>(
         init: MailBoxController(),
-        builder: (_) => Container(
+        builder: (_) => Image.asset(
             width: 24.65,
             height: 22.99,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(),
-            child: Image.asset(Get.find<MailBoxController>().mailBox().hasNew
+            Get.find<MailBoxController>().mailBox().hasNew
                 ? ImagePath.icBellNew
-                : ImagePath.icBell)));
+                : ImagePath.icBell));
   }
 
   Widget _noItemsCardWidget() {
