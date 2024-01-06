@@ -21,6 +21,7 @@ dependencies:
   flutter_naver_login: ^1.8.0
   http: ^1.1.2
   carousel_slider: ^4.2.1
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -52,12 +53,16 @@ flutter:
     - family: SBaggroL
       fonts:
       - asset: assets/fonts/SB 어그로 L.ttf
-    - family: SanumSquareNeo
+    - family: NanumSquareNeo
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Rg.otf
-    - family: SanumSquareNeoBold
+    - family: NanumSquareNeoBold
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Bd.otf
+    - family: Cafe24Moyamoya
+      fonts:
+        - asset: assets/fonts/Cafe24Moyamoya-Regular-v1.0.otf
+
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true

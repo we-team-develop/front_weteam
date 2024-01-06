@@ -19,6 +19,7 @@ class App extends GetView<BottomNavController> {
           controller.popAction();
         },
         child: Scaffold(
+          backgroundColor: const Color(0xFFFFFFFF),
           body: SafeArea(child: _body()),
           bottomNavigationBar: _bottom(context),
         ),
@@ -28,7 +29,7 @@ class App extends GetView<BottomNavController> {
 
   Widget _bottom(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.085,
+      height: MediaQuery.of(context).size.height * 0.080,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -47,22 +48,24 @@ class App extends GetView<BottomNavController> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFFE2583E),
         unselectedItemColor: const Color(0xFF999999),
+        selectedLabelStyle: const TextStyle(fontSize: 8),
+        unselectedLabelStyle: const TextStyle(fontSize: 8),
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.tpOff, width: 55, height: 55),
+              icon: ImageData(path: ImagePath.tpOff, width: 80, height: 80),
               activeIcon:
-                  ImageData(path: ImagePath.tpOn, width: 55, height: 55),
+                  ImageData(path: ImagePath.tpOn, width: 80, height: 80),
               label: '진행팀플'),
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.homeOff, width: 55, height: 55),
+              icon: ImageData(path: ImagePath.homeOff, width: 80, height: 80),
               activeIcon:
-                  ImageData(path: ImagePath.homeOn, width: 55, height: 55),
+                  ImageData(path: ImagePath.homeOn, width: 80, height: 80),
               label: '홈'),
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.myOff, width: 55, height: 55),
+              icon: ImageData(path: ImagePath.myOff, width: 80, height: 80),
               activeIcon:
-                  ImageData(path: ImagePath.myOn, width: 55, height: 55),
+                  ImageData(path: ImagePath.myOn, width: 80, height: 80),
               label: '마이'),
         ],
       ),

@@ -40,9 +40,19 @@ class ImagePath {
   static String get myOff => 'assets/images/my_off.png';
   static String get tpOn => 'assets/images/tp_on.png';
   static String get tpOff => 'assets/images/tp_off.png';
-  static String get bellIcon => 'assets/images/bell_icon.png';
-  static String get groupIcon => 'assets/images/group_icon.png';
   static String get bottomBannerIcon => 'assets/images/bottom_banner_icon.png';
   static String get nextButton => 'assets/images/nextbutton.png';
   static String get check => 'assets/images/check.png';
+  static String get icBell => 'assets/images/ic_bell.png';
+  static String get icBellNew => 'assets/images/ic_bell_new.png';
+  static String get icEmptyTimi => 'assets/images/ic_empty_timi.png';
+  static String get icGroup => 'assets/images/ic_group.png';
+  static String get icKebabWhite => 'assets/images/ic_kebab_white.png';
+  static String get icPinWhite => 'assets/images/ic_pin_white.png';
+  static String get icPlus => 'assets/images/ic_plus.png';
+  static String get icPlusSquareLight =>
+      'assets/images/ic_plus_square_light.png';
+  static String get tpBanner => 'assets/images/tp_banner.png';
+  static String get icRightGray30 => 'assets/images/ic_right_gray_30px.png';
+  static String get myNoTeamProjectTimi => 'assets/images/my_no_team_project_timi.png';
 }
