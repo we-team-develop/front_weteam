@@ -104,21 +104,15 @@ class TeamInformationWidget extends StatelessWidget {
         const SizedBox(
           width: 2,
         ),
-        Column(
-          children: [
-            const SizedBox(height: 1,),
-            Text(
-              "$memberSize",
-              style: const TextStyle(
-                color: Color(0xFF333333),
-                fontSize: 8,
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
-          ],
-        )
+        Text(
+          "$memberSize",
+          style: const TextStyle(
+            color: Color(0xFF333333),
+            fontSize: 7,
+            fontFamily: 'NanumSquareNeo',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ],
     );
   }
