@@ -10,7 +10,8 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: SystemUiOverlay.values);
   await dotenv.load(fileName: ".env"); // .env 파일 런타임에 가져오기
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
