@@ -8,7 +8,13 @@ class TeamInformationWidget extends StatelessWidget {
   final int memberSize;
   final String date;
 
-  const TeamInformationWidget({super.key, this.img = "", this.title = "", this.description = "", this.memberSize = 1, this.date = ""});
+  const TeamInformationWidget(
+      {super.key,
+      this.img = "",
+      this.title = "",
+      this.description = "",
+      this.memberSize = 1,
+      this.date = ""});
   @override
   Widget build(BuildContext context) {
     return _body();
@@ -19,7 +25,8 @@ class TeamInformationWidget extends StatelessWidget {
       height: 53,
       child: Column(
         children: [
-          Expanded(child: Row(
+          Expanded(
+              child: Row(
             children: [
               _teamImgWidget(img),
               const SizedBox(
@@ -106,7 +113,9 @@ class TeamInformationWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            const SizedBox(height: 1,),
+            const SizedBox(
+              height: 1,
+            ),
             Text(
               "$memberSize",
               style: const TextStyle(
@@ -135,5 +144,4 @@ class TeamInformationWidget extends StatelessWidget {
       ),
     );
   }
-
 }

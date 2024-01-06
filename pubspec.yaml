@@ -21,6 +21,7 @@ dependencies:
   flutter_naver_login: ^1.8.0
   http: ^1.1.2
   carousel_slider: ^4.2.1
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:

@@ -50,5 +50,7 @@ class ImagePath {
   static String get icPinWhite => 'assets/images/ic_pin_white.png';
   static String get emptyTimiIcon => 'assets/images/empty_timi_icon.png';
   static String get icPlus => 'assets/images/ic_plus.png';
-  static String get icPlusSquareLight => 'assets/images/ic_plus_square_light.png';
+  static String get icPlusSquareLight =>
+      'assets/images/ic_plus_square_light.png';
+  static String get tpBanner => 'assets/images/tp_banner.png';
 }

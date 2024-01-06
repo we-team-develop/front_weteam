@@ -21,9 +21,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
         body: ColoredBox(
             color: const Color(0xFFFFFFFF),
-            child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                child: _body())));
+            child:
+                Padding(padding: const EdgeInsets.all(15.0), child: _body())));
   }
 
   Widget _body() {
@@ -62,6 +61,7 @@ class _HomeState extends State<Home> {
   Widget _head() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [const AppTitleWidget(), _bellIcon()],
     );
   }
@@ -461,7 +461,7 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 TextField(
                   decoration: InputDecoration(
-                    // hint 설정
+                      // hint 설정
                       hintText: " 프로젝트명",
                       hintStyle: TextStyle(
                         fontFamily: "NanumSquareNeo",
@@ -485,8 +485,7 @@ class _HomeState extends State<Home> {
                       // Underline의 색을 변경합니다
                       focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFE2583E)),
-                      )
-                  ),
+                      )),
                   cursorColor: const Color(0xFFE2583E), // 깜빡이는 커서의 색 변경
                   maxLength: 20, // 최대 20자
                 ),
