@@ -112,7 +112,7 @@ class TeamInformationWidget extends StatelessWidget {
               style: const TextStyle(
                 color: Color(0xFF333333),
                 fontSize: 8,
-                fontFamily: 'NanumSquare Neo OTF',
+                fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w700,
                 height: 0,
               ),

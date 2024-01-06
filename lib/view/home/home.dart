@@ -455,7 +455,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                                   color: Color(0xFF333333),
                                                   fontSize: 8,
                                                   fontFamily:
-                                                      'NanumSquare Neo OTF',
+                                                      'NanumSquareNeo',
                                                   fontWeight: FontWeight.w400,
                                                   height: 0,
                                                 ),
@@ -476,8 +476,6 @@ class _DDayWidgetState extends State<DDayWidget> {
                                               showPopupMenu = false;
                                               showDialog(
                                                   context: context,
-                                                  //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-                                                  //barrierDismissible: false,
                                                   builder:
                                                       (BuildContext context) {
                                                     return const CheckRemoveDdayDialog();
@@ -493,7 +491,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                                     color: Color(0xFFE60000),
                                                     fontSize: 8,
                                                     fontFamily:
-                                                        'NanumSquare Neo OTF',
+                                                        'NanumSquareNeo',
                                                     fontWeight: FontWeight.w400,
                                                     height: 0,
                                                   ),
