@@ -102,32 +102,19 @@ class TeamInformationWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.ideographic,
       children: [
-        Container(
-            width: 6,
-            height: 8,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(),
-            child: Image.asset(ImagePath.groupIcon)),
+        Image.asset(width: 6, height: 8, ImagePath.icGroup),
         const SizedBox(
           width: 2,
         ),
-        Column(
-          children: [
-            const SizedBox(
-              height: 1,
-            ),
-            Text(
-              "$memberSize",
-              style: const TextStyle(
-                color: Color(0xFF333333),
-                fontSize: 8,
-                fontFamily: 'NanumSquare Neo OTF',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
-          ],
-        )
+        Text(
+          "$memberSize",
+          style: const TextStyle(
+            color: Color(0xFF333333),
+            fontSize: 7,
+            fontFamily: 'NanumSquareNeo',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ],
     );
   }
@@ -144,4 +131,5 @@ class TeamInformationWidget extends StatelessWidget {
       ),
     );
   }
+
 }
