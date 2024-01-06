@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
@@ -6,8 +7,6 @@ import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
 
 class MyPage extends GetView<MyController> {
-  final double padding = 15;
-
   const MyPage({super.key});
 
   @override
@@ -27,13 +26,11 @@ class MyPage extends GetView<MyController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
-
-      //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _head(),
-        const SizedBox(height: 16.0),
+        SizedBox(height: 16.0.h),
         _profileContainer(),
-        const SizedBox(height: 22),
+        SizedBox(height: 24.h),
         _bottomContainer(),
       ],
     );
@@ -41,8 +38,7 @@ class MyPage extends GetView<MyController> {
 
   Widget _head() {
     return Padding(
-        padding: EdgeInsets.fromLTRB(padding, padding, padding, 0),
-        child: const AppTitleWidget());
+        padding: EdgeInsets.only(left: 15.0.w), child: const AppTitleWidget());
   }
 
   Widget _profileContainer() {
@@ -54,16 +50,16 @@ class MyPage extends GetView<MyController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(width: 37.0),
+              SizedBox(width: 37.0.w),
               Container(
-                width: 82,
-                height: 82,
+                width: 82.w,
+                height: 82.h,
                 decoration: const ShapeDecoration(
                   color: Color(0xFFC4C4C4),
                   shape: OvalBorder(),
                 ),
               ),
-              const SizedBox(width: 33),
+              SizedBox(width: 33.w),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,24 +72,24 @@ class MyPage extends GetView<MyController> {
                     children: [
                       Text(
                         '${controller.getUserName()}님 ',
-                        style: const TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: 16,
+                        style: TextStyle(
+                          color: const Color(0xFF333333),
+                          fontSize: 16.sp,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
                           height: 1,
                         ),
                       ),
                       Image.asset(ImagePath.icRightGray30,
-                          width: 15, height: 15)
+                          width: 15.w, height: 15.h)
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 5.h),
                   Text(
                     controller.getUserDescription(),
-                    style: const TextStyle(
-                      color: Color(0xFF7E7E7E),
-                      fontSize: 10,
+                    style: TextStyle(
+                      color: const Color(0xFF7E7E7E),
+                      fontSize: 10.sp,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w400,
                     ),
@@ -108,10 +104,9 @@ class MyPage extends GetView<MyController> {
   Widget _bottomContainer() {
     return Expanded(
         child: Padding(
-      padding: EdgeInsets.fromLTRB(padding, 0, padding, padding),
+      padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        //mainAxisSize: MainAxisSize.max,
         children: [
           _bottomContainerTitle(),
           controller.hasCompletedTeamProjects()
@@ -133,9 +128,9 @@ class MyPage extends GetView<MyController> {
 
     return Text(
       text,
-      style: const TextStyle(
-        color: Color(0xFF333333),
-        fontSize: 14,
+      style: TextStyle(
+        color: const Color(0xFF333333),
+        fontSize: 14.sp,
         fontFamily: 'NanumGothic',
         fontWeight: FontWeight.w600,
       ),
@@ -156,7 +151,7 @@ class MyPage extends GetView<MyController> {
     return Column(
       children: [
         // 예시입니다
-        const SizedBox(height: 24),
+        SizedBox(height: 24.h),
         ...list
       ],
     );
@@ -167,8 +162,8 @@ class MyPage extends GetView<MyController> {
         child: Center(
             child: Image.asset(
       ImagePath.myNoTeamProjectTimi,
-      width: 113.37,
-      height: 171.44,
+      width: 113.37.w,
+      height: 171.44.h,
     )));
   }
 }

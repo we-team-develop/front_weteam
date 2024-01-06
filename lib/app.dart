@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/bottom_nav_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/home/home.dart';
@@ -28,7 +29,7 @@ class App extends GetView<BottomNavController> {
 
   Widget _bottom(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.080,
+      height: 56.h,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -47,24 +48,25 @@ class App extends GetView<BottomNavController> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFFE2583E),
         unselectedItemColor: const Color(0xFF999999),
-        selectedLabelStyle: const TextStyle(fontSize: 8),
-        unselectedLabelStyle: const TextStyle(fontSize: 8),
+        selectedLabelStyle: TextStyle(fontSize: 8.sp),
+        unselectedLabelStyle: TextStyle(fontSize: 8.sp),
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.tpOff, width: 80, height: 80),
+              icon: ImageData(path: ImagePath.tpOff, width: 50.w, height: 50.h),
               activeIcon:
-                  ImageData(path: ImagePath.tpOn, width: 80, height: 80),
+                  ImageData(path: ImagePath.tpOn, width: 50.w, height: 50.h),
               label: '진행팀플'),
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.homeOff, width: 80, height: 80),
+              icon:
+                  ImageData(path: ImagePath.homeOff, width: 50.w, height: 50.h),
               activeIcon:
-                  ImageData(path: ImagePath.homeOn, width: 80, height: 80),
+                  ImageData(path: ImagePath.homeOn, width: 50.w, height: 50.h),
               label: '홈'),
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.myOff, width: 80, height: 80),
+              icon: ImageData(path: ImagePath.myOff, width: 50.w, height: 50.h),
               activeIcon:
-                  ImageData(path: ImagePath.myOn, width: 80, height: 80),
+                  ImageData(path: ImagePath.myOn, width: 50.w, height: 50.h),
               label: '마이'),
         ],
       ),
@@ -74,10 +76,10 @@ class App extends GetView<BottomNavController> {
   Widget _body() {
     return IndexedStack(
       index: controller.index,
-      children: [
+      children: const [
         TeamPlay(),
-        const Home(),
-        const MyPage(),
+        Home(),
+        MyPage(),
       ],
     );
   }
