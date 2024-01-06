@@ -13,14 +13,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: SystemUiOverlay.values);
-  await dotenv.load(fileName: ".env"); // .env 파일 런타임에 가져오기
+  // 가로모드 X
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // .env 파일 런타임에 가져오기
+  await dotenv.load(fileName: ".env");
+
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   KakaoSdk.init(nativeAppKey: dotenv.env['nativeAppKey']); // kakaologin
-  // 가로모드 X
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const MyApp());
 }
 
