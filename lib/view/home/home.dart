@@ -80,8 +80,8 @@ class _HomeState extends State<Home> {
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(),
             child: Image.asset(Get.find<MailBoxController>().mailBox().hasNew
-                ? ImagePath.bellIconNew
-                : ImagePath.bellIcon)));
+                ? ImagePath.icBellNew
+                : ImagePath.icBell)));
   }
 
   Widget _noItemsCardWidget() {
@@ -198,7 +198,7 @@ class _HomeState extends State<Home> {
               right: 10,
               bottom: 0,
               child: Image.asset(
-                ImagePath.emptyTimiIcon,
+                ImagePath.icEmptyTimi,
                 width: 75.55,
                 height: 96,
               ),

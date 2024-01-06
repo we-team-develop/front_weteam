@@ -100,7 +100,7 @@ class TeamInformationWidget extends StatelessWidget {
             height: 8,
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(),
-            child: Image.asset(ImagePath.groupIcon)),
+            child: Image.asset(ImagePath.icGroup)),
         const SizedBox(
           width: 2,
         ),
