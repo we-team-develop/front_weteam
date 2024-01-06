@@ -7,7 +7,7 @@ class HomeController extends GetxController {
   }
 
   bool hasFixedDDay() {
-    return true; // DDAY 예시 표시 여부
+    return false; // DDAY 예시 표시 여부
   }
 
   bool isTeamListEmpty() {
