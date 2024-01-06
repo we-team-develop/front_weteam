@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/my/profile.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/team_information_widget.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,8 @@ class MyPage extends GetView<MyController> {
 
   Widget _head() {
     return Padding(
-        padding: EdgeInsets.only(left: 15.0.w), child: const AppTitleWidget());
+        padding: EdgeInsets.only(left: 15.0.w, top: 18.0.h),
+        child: const AppTitleWidget());
   }
 
   Widget _profileContainer() {
@@ -80,8 +82,13 @@ class MyPage extends GetView<MyController> {
                           height: 1,
                         ),
                       ),
-                      Image.asset(ImagePath.icRightGray30,
-                          width: 15.w, height: 15.h)
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const Profile());
+                        },
+                        child: Image.asset(ImagePath.icRightGray30,
+                            width: 15.w, height: 15.h),
+                      )
                     ],
                   ),
                   SizedBox(height: 5.h),

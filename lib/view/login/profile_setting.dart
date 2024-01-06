@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
 class ProfileSettingPage extends StatelessWidget {
@@ -45,7 +46,7 @@ class ProfileSettingPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 73.0.h),
-                _profileImage(),
+                const ProfileImageWidget(),
                 SizedBox(height: 143.0.h),
               ],
             ),
@@ -69,57 +70,6 @@ class ProfileSettingPage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _profileImage() {
-    double circleSize = 85.0;
-    double checkMarkSize = circleSize / 2;
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
-          childAspectRatio: 1 // 정사각형 비율
-          ),
-      itemCount: controller.imagePaths.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () => controller.selectProfile(index),
-          child: Obx(() => Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: circleSize.w,
-                    height: circleSize.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[300],
-                      image: DecorationImage(
-                        image: AssetImage(controller.imagePaths[index]),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  if (controller.isSelected[index])
-                    Positioned(
-                      top: (circleSize - checkMarkSize) / 2,
-                      bottom: (circleSize - checkMarkSize) / 2,
-                      left: (circleSize - checkMarkSize) / 2,
-                      right: (circleSize - checkMarkSize) / 2,
-                      child: Image.asset(
-                        ImagePath.check,
-                        width: checkMarkSize,
-                        height: checkMarkSize,
-                      ),
-                    ),
-                ],
-              )),
-        );
-      },
     );
   }
 }
