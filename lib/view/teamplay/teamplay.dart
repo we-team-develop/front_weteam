@@ -10,9 +10,7 @@ class TeamPlay extends GetView<TeamPlayController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(body: _body(context)),
-    );
+    return _body(context);
   }
 
   Widget _body(BuildContext context) {

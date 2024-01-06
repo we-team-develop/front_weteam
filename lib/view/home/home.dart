@@ -14,11 +14,7 @@ class Home extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ColoredBox(
-            color: const Color(0xFFFFFFFF),
-            child:
-                Padding(padding: const EdgeInsets.all(15.0), child: _body())));
+    return Padding(padding: const EdgeInsets.all(15.0), child: _body());
   }
 
   Widget _body() {

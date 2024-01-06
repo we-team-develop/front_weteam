@@ -13,6 +13,7 @@ class LoginMain extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(child: _body(context)),
     );
   }

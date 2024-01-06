@@ -12,7 +12,7 @@ class MyPage extends GetView<MyController> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(color: const Color(0xFFFFFFFF), child:CustomScrollView(
+    return CustomScrollView(
       physics: const ClampingScrollPhysics(),
       slivers: [
         SliverFillRemaining(
@@ -20,7 +20,7 @@ class MyPage extends GetView<MyController> {
           child: _body(),
         )
       ],
-    ));
+    );
   }
 
   Widget _body() {

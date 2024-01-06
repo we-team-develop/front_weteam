@@ -19,6 +19,7 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF),
       body: _body(),
     );
   }

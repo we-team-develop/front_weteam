@@ -11,6 +11,7 @@ class ProfileSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF),
       body: _body(context),
     );
   }
