@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/login_controller.dart';
 import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
-import 'package:front_weteam/social/kakao.dart';
 import 'package:front_weteam/view/login/sign_up_completed.dart';
 
 class LoginMain extends GetView<LoginController> {
@@ -20,8 +20,7 @@ class LoginMain extends GetView<LoginController> {
 
   Widget _body(BuildContext context) {
     var padding = MediaQuery.of(context).size.height * 0.01; // 버튼 사이 패딩
-    var horizontalPadding =
-        MediaQuery.of(context).size.width * 0.06; // 버튼 양옆 패딩
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,15 +28,20 @@ class LoginMain extends GetView<LoginController> {
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Image.asset(ImagePath.appicon),
+              child: Image.asset(
+                ImagePath.appicon,
+                width: 110.w,
+                height: 140.h,
+              ),
             ),
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Image.asset(ImagePath.googlelogin),
+              Image.asset(
+                ImagePath.googlelogin,
+                width: 302.w,
+                height: 39.h,
               ),
               SizedBox(height: padding),
               GestureDetector(
@@ -54,16 +58,18 @@ class LoginMain extends GetView<LoginController> {
                     }
                   });
                 },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  child: Image.asset(ImagePath.kakaologin),
+                child: Image.asset(
+                  ImagePath.kakaologin,
+                  width: 302.w,
+                  height: 39.h,
                 ),
               ),
               SizedBox(height: padding),
               GestureDetector(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  child: Image.asset(ImagePath.naverlogin),
+                child: Image.asset(
+                  ImagePath.naverlogin,
+                  width: 302.w,
+                  height: 39.h,
                 ),
                 onTap: () async {
                   NaverLoginController nlc = NaverLoginController();
@@ -83,9 +89,10 @@ class LoginMain extends GetView<LoginController> {
                 onTap: () {
                   Get.to(() => const SignUpCompleted());
                 },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  child: Image.asset(ImagePath.applelogin),
+                child: Image.asset(
+                  ImagePath.applelogin,
+                  width: 302.w,
+                  height: 39.h,
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.09),

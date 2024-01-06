@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
@@ -11,7 +12,6 @@ class ProfileSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
       body: _body(context),
     );
   }
@@ -22,33 +22,31 @@ class ProfileSettingPage extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: EdgeInsets.symmetric(horizontal: 26.0.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'WE TEAM',
                   style: TextStyle(
                     fontFamily: 'SBaggroB',
-                    color: Color(0xFFE2583E),
+                    color: const Color(0xFFE2583E),
                     fontWeight: FontWeight.bold,
-                    fontSize: 17.0,
+                    fontSize: 15.0.sp,
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                const Text(
-                  '팀원들에게 보여줄 프로필 사진을 선택해 주세요!',
+                Text(
+                  '팀원들에게 보여줄 프로필 사진을 선택해 주세요:)',
                   style: TextStyle(
                     fontFamily: 'NanumGothicBold',
-                    fontSize: 16.0,
+                    fontSize: 14.0.sp,
                   ),
                 ),
-                const SizedBox(height: 50.0),
+                SizedBox(height: 73.0.h),
                 _profileImage(),
-                const SizedBox(
-                  height: 100,
-                )
+                SizedBox(height: 143.0.h),
               ],
             ),
           ),
@@ -57,14 +55,17 @@ class ProfileSettingPage extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.08,
-                left: 15.0,
-                right: 15.0),
+              bottom: 67.h,
+            ),
             child: GestureDetector(
                 onTap: () {
                   Get.to(() => const App());
                 },
-                child: Image.asset(ImagePath.startweteambutton)),
+                child: Image.asset(
+                  ImagePath.startweteambutton,
+                  width: 330.w,
+                  height: 38.h,
+                )),
           ),
         ),
       ],
@@ -72,7 +73,7 @@ class ProfileSettingPage extends StatelessWidget {
   }
 
   Widget _profileImage() {
-    double circleSize = 100.0;
+    double circleSize = 85.0;
     double checkMarkSize = circleSize / 2;
 
     return GridView.builder(
@@ -92,8 +93,8 @@ class ProfileSettingPage extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: circleSize,
-                    height: circleSize,
+                    width: circleSize.w,
+                    height: circleSize.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.grey[300],

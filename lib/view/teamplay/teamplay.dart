@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
@@ -15,19 +16,19 @@ class TeamPlay extends GetView<TeamPlayController> {
 
   Widget _body(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 25.0),
+      padding: EdgeInsets.only(left: 15.0.w, right: 15.0.w, top: 25.0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AppTitleWidget(),
-          const SizedBox(
-            height: 22.0,
+          SizedBox(
+            height: 22.0.h,
           ),
-          const Text(
+          Text(
             '닉네임님이 진행중이신 팀플이에요!',
             style: TextStyle(
                 fontFamily: 'NanumGothic',
-                fontSize: 14.0,
+                fontSize: 14.0.sp,
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -35,11 +36,12 @@ class TeamPlay extends GetView<TeamPlayController> {
           ),
           Image.asset(
             ImagePath.tpBanner,
-            width: double.infinity,
+            width: 330.w,
+            height: 205.h,
             fit: BoxFit.cover,
           ),
-          const SizedBox(
-            height: 24.0,
+          SizedBox(
+            height: 24.0.h,
           ),
           _teamlist(),
         ],

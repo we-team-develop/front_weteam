@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
 import 'package:front_weteam/firebase_options.dart';
 import 'package:front_weteam/splash_screen.dart';
@@ -17,6 +18,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   KakaoSdk.init(nativeAppKey: dotenv.env['nativeAppKey']); // kakaologin
+  // 가로모드 X
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -25,18 +29,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-          //AppBar 설정
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            elevation: 0.0,
-          ),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData()),
-      home: const SplashScreen(),
-      debugShowCheckedModeBanner: false, // Debug 배너 없애기
-      initialBinding: MainBindings(),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 720),
+        builder: (context, child) => GetMaterialApp(
+              theme: ThemeData(
+                  //AppBar 설정
+                  appBarTheme: const AppBarTheme(
+                    centerTitle: true,
+                    elevation: 0.0,
+                  ),
+                  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+                  colorScheme:
+                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                  bottomNavigationBarTheme:
+                      const BottomNavigationBarThemeData()),
+              home: const SplashScreen(),
+              debugShowCheckedModeBanner: false, // Debug 배너 없애기
+              initialBinding: MainBindings(),
+            ));
   }
 }

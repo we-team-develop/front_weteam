@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/login/profile_setting.dart';
 import 'package:get/get.dart';
@@ -31,15 +32,19 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(ImagePath.appicon),
-              const SizedBox(
-                height: 25.0,
+              Image.asset(
+                ImagePath.appicon,
+                width: 110.w,
+                height: 140.h,
               ),
-              const Text(
+              SizedBox(
+                height: 21.0.h,
+              ),
+              Text(
                 'WE TEAM 회원가입이 완료되었습니다!',
                 style: TextStyle(
                   fontFamily: 'NanumGothicExtraBold',
-                  fontSize: 16.0,
+                  fontSize: 14.0.sp,
                 ),
               ),
             ],
@@ -49,16 +54,12 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.08),
+            padding: EdgeInsets.only(bottom: 67.0.h),
             child: GestureDetector(
                 onTap: () {
                   Get.to(() => ProfileSettingPage());
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: _nextpagebutton(),
-                )),
+                child: _nextpagebutton()),
           ),
         ),
       ],
@@ -66,6 +67,10 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   }
 
   Widget _nextpagebutton() {
-    return Image.asset(ImagePath.nextButton);
+    return Image.asset(
+      ImagePath.nextButton,
+      width: 330.w,
+      height: 38.h,
+    );
   }
 }
