@@ -15,7 +15,7 @@ class Home extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.all(15.0), child: _body());
+    return Padding(padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 15.h), child: _body());
   }
 
   Widget _body() {
