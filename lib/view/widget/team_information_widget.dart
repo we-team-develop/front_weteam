@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/data/image_data.dart';
 
 class TeamInformationWidget extends StatelessWidget {
@@ -22,16 +23,14 @@ class TeamInformationWidget extends StatelessWidget {
 
   Widget _body() {
     return SizedBox(
-      height: 53,
+      height: 53.h,
       child: Column(
         children: [
           Expanded(
               child: Row(
             children: [
               _teamImgWidget(img),
-              const SizedBox(
-                width: 16,
-              ),
+              SizedBox(width: 16.w),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,9 +40,7 @@ class TeamInformationWidget extends StatelessWidget {
                   Row(
                     children: [
                       _teamMemberCountWidget(memberSize),
-                      const SizedBox(
-                        width: 31,
-                      ),
+                      SizedBox(width: 31.w),
                       _dateWidget(date),
                     ],
                   )
@@ -51,9 +48,7 @@ class TeamInformationWidget extends StatelessWidget {
               )
             ],
           )),
-          const SizedBox(
-            height: 12,
-          ),
+          SizedBox(height: 12.h),
         ],
       ),
     );
@@ -62,8 +57,8 @@ class TeamInformationWidget extends StatelessWidget {
   Widget _teamImgWidget(String img) {
     // TODO : 이미지 표시하기
     return Container(
-      width: 50,
-      height: 50,
+      width: 50.w,
+      height: 50.h,
       decoration: ShapeDecoration(
         color: const Color(0xFFD9D9D9),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -74,9 +69,9 @@ class TeamInformationWidget extends StatelessWidget {
   Widget _teamTitleWidget(String title) {
     return Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         color: Color(0xFF333333),
-        fontSize: 11,
+        fontSize: 11.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
         height: 0,
@@ -87,9 +82,9 @@ class TeamInformationWidget extends StatelessWidget {
   Widget _teamDescriptionWidget(String desc) {
     return Text(
       desc,
-      style: const TextStyle(
+      style: TextStyle(
         color: Color(0xFF333333),
-        fontSize: 7,
+        fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,
@@ -102,15 +97,13 @@ class TeamInformationWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.ideographic,
       children: [
-        Image.asset(width: 6, height: 8, ImagePath.icGroup),
-        const SizedBox(
-          width: 2,
-        ),
+        Image.asset(width: 6.w, height: 8.h, ImagePath.icGroup),
+        SizedBox(width: 2.w),
         Text(
           "$memberSize",
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF333333),
-            fontSize: 7,
+            fontSize: 7.sp,
             fontFamily: 'NanumSquareNeo',
             fontWeight: FontWeight.w700,
           ),
@@ -120,11 +113,11 @@ class TeamInformationWidget extends StatelessWidget {
   }
 
   Widget _dateWidget(String date) {
-    return const Text(
+    return Text(
       '2023.11.28~ 2024.12.08',
       style: TextStyle(
         color: Color(0xFF969696),
-        fontSize: 7,
+        fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,

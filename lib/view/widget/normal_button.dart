@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NormalButton extends StatelessWidget {
   final String text;
@@ -11,8 +12,8 @@ class NormalButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 185,
-        height: 25.60,
+        width: 185.w,
+        height: 25.60.h,
         alignment: Alignment.center,
         decoration: ShapeDecoration(
           color: const Color(0xFFE2583E),
@@ -21,9 +22,9 @@ class NormalButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFFFFFFFF),
-            fontSize: 10,
+            fontSize: 10.sp,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.w700,
           ),

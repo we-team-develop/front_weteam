@@ -11,7 +11,7 @@ class HomeController extends GetxController {
   }
 
   bool isTeamListEmpty() {
-    return true; // true면 팀플 리스트 예시를 표시
+    return true; // false면 팀플 리스트 예시를 표시
   }
 
   Map? getDDay() {
