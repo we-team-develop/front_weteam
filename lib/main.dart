@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(360, 720),
-        builder: (context, child) => GetMaterialApp(
+        builder: (_, child) => GetMaterialApp(
               theme: ThemeData(
                   //AppBar 설정
                   appBarTheme: const AppBarTheme(
