@@ -54,5 +54,9 @@ class ImagePath {
       'assets/images/ic_plus_square_light.png';
   static String get tpBanner => 'assets/images/tp_banner.png';
   static String get icRightGray30 => 'assets/images/ic_right_gray_30px.png';
-  static String get myNoTeamProjectTimi => 'assets/images/my_no_team_project_timi.png';
+  static String get myNoTeamProjectTimi =>
+      'assets/images/my_no_team_project_timi.png';
+
+  static asset(String googlelogin,
+      {required double width, required double height}) {}
 }

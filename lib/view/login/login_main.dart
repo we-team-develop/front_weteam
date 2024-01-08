@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/google_login_controller.dart';
 import 'package:front_weteam/controller/login_controller.dart';
 import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
@@ -38,10 +39,15 @@ class LoginMain extends GetView<LoginController> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                ImagePath.googlelogin,
-                width: 302.w,
-                height: 39.h,
+              InkWell(
+                onTap: () {
+                  GoogleLoginController().signInWithGoogle();
+                },
+                child: Image.asset(
+                  ImagePath.googlelogin,
+                  width: 302.w,
+                  height: 39.h,
+                ),
               ),
               SizedBox(height: padding),
               GestureDetector(
