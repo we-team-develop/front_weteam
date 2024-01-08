@@ -53,20 +53,20 @@ class App extends GetView<BottomNavController> {
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.tpOff, width: 50.w, height: 50.h),
+              icon: ImageData(path: ImagePath.tpOff, width: 75.w, height: 75.h),
               activeIcon:
-                  ImageData(path: ImagePath.tpOn, width: 50.w, height: 50.h),
+                  ImageData(path: ImagePath.tpOn, width: 75.w, height: 75.h),
               label: '진행팀플'),
           BottomNavigationBarItem(
               icon:
-                  ImageData(path: ImagePath.homeOff, width: 50.w, height: 50.h),
+                  ImageData(path: ImagePath.homeOff, width: 75.w, height: 75.h),
               activeIcon:
-                  ImageData(path: ImagePath.homeOn, width: 50.w, height: 50.h),
+                  ImageData(path: ImagePath.homeOn, width: 75.w, height: 75.h),
               label: '홈'),
           BottomNavigationBarItem(
-              icon: ImageData(path: ImagePath.myOff, width: 50.w, height: 50.h),
+              icon: ImageData(path: ImagePath.myOff, width: 75.w, height: 75.h),
               activeIcon:
-                  ImageData(path: ImagePath.myOn, width: 50.w, height: 50.h),
+                  ImageData(path: ImagePath.myOn, width: 75.w, height: 75.h),
               label: '마이'),
         ],
       ),
