@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/my/profile.dart';
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/team_information_widget.dart';
+import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
 class MyPage extends GetView<MyController> {
@@ -147,12 +148,15 @@ class MyPage extends GetView<MyController> {
   Widget _bottomContainerTeamListWidget() {
     List<Widget> list = [];
 
+    TeamProject tp = const TeamProject(title: '앱디져🔥🔥🔥',
+        description: '앱디자인 강의 패러디앱 디자인 제작',
+        memberSize: 3,
+        date: '2023.01.02~ 2023.06.31');
+
+    TeamProjectWidget tpw = TeamProjectWidget(tp);
+
     for (int i = 0; i < 20; i++) {
-      list.add(const TeamInformationWidget(
-          title: '앱디져🔥🔥🔥',
-          description: '앱디자인 강의 패러디앱 디자인 제작',
-          memberSize: 3,
-          date: '2023.01.02~ 2023.06.31'));
+      list.add(tpw);
     }
 
     return Column(

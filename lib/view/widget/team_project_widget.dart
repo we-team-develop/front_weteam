@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/model/team_project.dart';
 
-class TeamInformationWidget extends StatelessWidget {
-  final String img;
-  final String title;
-  final String description;
-  final int memberSize;
-  final String date;
+class TeamProjectWidget extends StatelessWidget {
+  final TeamProject team;
 
-  const TeamInformationWidget(
-      {super.key,
-      this.img = "",
-      this.title = "",
-      this.description = "",
-      this.memberSize = 1,
-      this.date = ""});
+  const TeamProjectWidget(
+      this.team,
+      {super.key});
   @override
   Widget build(BuildContext context) {
     return _body();
@@ -29,19 +22,19 @@ class TeamInformationWidget extends StatelessWidget {
           Expanded(
               child: Row(
             children: [
-              _teamImgWidget(img),
+              _teamImgWidget(team.img),
               SizedBox(width: 16.w),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _teamTitleWidget(title),
-                  _teamDescriptionWidget(description),
+                  _teamTitleWidget(team.title),
+                  _teamDescriptionWidget(team.description),
                   Row(
                     children: [
-                      _teamMemberCountWidget(memberSize),
+                      _teamMemberCountWidget(team.memberSize),
                       SizedBox(width: 31.w),
-                      _dateWidget(date),
+                      _dateWidget(team.date),
                     ],
                   )
                 ],
@@ -70,7 +63,7 @@ class TeamInformationWidget extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        color: Color(0xFF333333),
+        color: const Color(0xFF333333),
         fontSize: 11.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
@@ -83,7 +76,7 @@ class TeamInformationWidget extends StatelessWidget {
     return Text(
       desc,
       style: TextStyle(
-        color: Color(0xFF333333),
+        color: const Color(0xFF333333),
         fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
@@ -102,7 +95,7 @@ class TeamInformationWidget extends StatelessWidget {
         Text(
           "$memberSize",
           style: TextStyle(
-            color: Color(0xFF333333),
+            color: const Color(0xFF333333),
             fontSize: 7.sp,
             fontFamily: 'NanumSquareNeo',
             fontWeight: FontWeight.w700,
@@ -116,7 +109,7 @@ class TeamInformationWidget extends StatelessWidget {
     return Text(
       '2023.11.28~ 2024.12.08',
       style: TextStyle(
-        color: Color(0xFF969696),
+        color: const Color(0xFF969696),
         fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
