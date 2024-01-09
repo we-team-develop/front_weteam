@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/dialog/home/add_dday_dialog.dart';
@@ -14,15 +15,15 @@ class Home extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.all(15.0), child: _body());
+    return Padding(padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 15.h), child: _body());
   }
 
   Widget _body() {
     return Column(
       children: [
         _head(),
-        const SizedBox(
-          height: 12,
+        SizedBox(
+          height: 12.h,
         ),
         const DDayWidget(),
         ...getTeamListBody(),
@@ -44,7 +45,7 @@ class Home extends GetView<HomeController> {
     List<Widget> ret = [];
 
     if (!controller.isTeamListEmpty()) { // 표시할 팀플이 있는지 확인
-      ret.add(const SizedBox(height: 15));
+      ret.add(SizedBox(height: 15.h));
       ret.add(const SizedBox(
         height: 0.7,
         width: double.infinity,
@@ -52,7 +53,7 @@ class Home extends GetView<HomeController> {
           color: Color(0xFFD9D9D9),
         ),
       ));
-      ret.add(const SizedBox(height: 15));
+      ret.add(SizedBox(height: 15.h));
     }
 
     return ret;
@@ -60,8 +61,8 @@ class Home extends GetView<HomeController> {
 
   Widget _bellIcon() {
     return Image.asset(
-            width: 24.65,
-            height: 22.99,
+            width: 24.65.w,
+            height: 22.99.h,
             controller.hasNewNotification()
                 ? ImagePath.icBellNew
                 : ImagePath.icBell);
@@ -89,19 +90,19 @@ class Home extends GetView<HomeController> {
                     },
                     child: Image.asset(
                       ImagePath.icPlus,
-                      height: 34,
-                      width: 34,
+                      height: 34.h,
+                      width: 34.w,
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 15.h,
                   ),
-                  const Text(
+                  Text(
                     '진행 중인  팀플이 없어요.\n지금 바로 생성해보세요!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF333333),
-                      fontSize: 11,
+                      fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
                       height: 1.5,
@@ -115,8 +116,8 @@ class Home extends GetView<HomeController> {
               bottom: 0,
               child: Image.asset(
                 ImagePath.icEmptyTimi,
-                width: 75.55,
-                height: 96,
+                width: 75.55.w,
+                height: 96.h,
               ),
             )
           ],
@@ -133,46 +134,43 @@ class Home extends GetView<HomeController> {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         GestureDetector(
           onTap: () => controller.popupDialog(const AddDDayDialog()),
-          child: AspectRatio(
-            aspectRatio: 330 / 49,
-            child: Container(
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
-                  borderRadius: BorderRadius.circular(8),
+          child: Container(
+            width: 330.w,
+            height: 49.h,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  ImagePath.icPlusSquareLight,
+                  width: 21.22.w,
+                  height: 21.22.h,
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    ImagePath.icPlusSquareLight,
-                    width: 21.22,
-                    height: 21.22,
+                SizedBox(width: 8.w),
+                Text(
+                  '팀플 추가하기',
+                  style: TextStyle(
+                    color: Color(0xFF333333),
+                    fontSize: 11.sp,
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  const Text(
-                    '팀플 추가하기',
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: 11,
-                      fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
       ],
     ));
   }
@@ -209,15 +207,15 @@ class Home extends GetView<HomeController> {
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,
-      height: 70,
+      height: 70.h,
       decoration: ShapeDecoration(
         color: const Color(0xFFFFF1EF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Stack(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 16.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -228,21 +226,19 @@ class Home extends GetView<HomeController> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 8,
+                        fontSize: 8.sp,
                         fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10.h),
                     Text(
                       '언제보까? 바로가기',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         fontFamily: 'NanumSquareNeoBold',
                         fontWeight: FontWeight.w900,
                         height: 0,
@@ -258,8 +254,8 @@ class Home extends GetView<HomeController> {
             right: 16,
             child: Image.asset(
               ImagePath.bottomBannerIcon,
-              width: 44,
-              height: 63,
+              width: 44.w,
+              height: 63.h,
             ),
           )
         ],
@@ -295,226 +291,223 @@ class _DDayWidgetState extends State<DDayWidget> {
   }
 
   Widget _ddayWidget() {
-    return AspectRatio(
-        aspectRatio: 330 / 176,
-        child: Container(
-            decoration: ShapeDecoration(
-              color: const Color(0xFFE2583E),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+        width: 330.w,
+        height: 176.h,
+        decoration: ShapeDecoration(
+          color: const Color(0xFFE2583E),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showPopupMenu = !showPopupMenu; // 활성화 상태 반전
-                              });
-                            },
-                            child: ImageData(path: ImagePath.icKebabWhite),
-                          ),
-                          Visibility(
-                            visible: showPopupMenu,
-                            child: Container(
-                                decoration: ShapeDecoration(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  shadows: const [
-                                    BoxShadow(
-                                      color: Color(0x23000000),
-                                      blurRadius: 4,
-                                      spreadRadius: 1,
-                                    )
-                                  ],
-                                ),
-                                child: IntrinsicHeight(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                          behavior: HitTestBehavior.translucent,
-                                          // 여백 터치 안 되는 문제 수정
-                                          onTap: () {
-                                            setState(() {
-                                              showPopupMenu = false;
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showPopupMenu = !showPopupMenu; // 활성화 상태 반전
+                          });
+                        },
+                        child: ImageData(path: ImagePath.icKebabWhite),
+                      ),
+                      Visibility(
+                        visible: showPopupMenu,
+                        child: Container(
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x23000000),
+                                  blurRadius: 4,
+                                  spreadRadius: 1,
+                                )
+                              ],
+                            ),
+                            child: IntrinsicHeight(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      // 여백 터치 안 되는 문제 수정
+                                      onTap: () {
+                                        setState(() {
+                                          showPopupMenu = false;
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder:
+                                                (BuildContext context) {
+                                              return const AddDDayDialog(); // TODO: D-Day 수정 Dialog 만들기
                                             });
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return const AddDDayDialog(); // TODO: D-Day 수정 Dialog 만들기
-                                                });
-                                          },
-                                          child: const SizedBox(
-                                            height: 21,
-                                            child: Center(
-                                              child: Text(
-                                                '수정하기',
-                                                style: TextStyle(
-                                                  color: Color(0xFF333333),
-                                                  fontSize: 8,
-                                                  fontFamily:
-                                                  'NanumSquareNeo',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
+                                      },
+                                      child: SizedBox(
+                                        height: 21.h,
+                                        child: Center(
+                                          child: Text(
+                                            '수정하기',
+                                            style: TextStyle(
+                                              color: Color(0xFF333333),
+                                              fontSize: 8.sp,
+                                              fontFamily:
+                                              'NanumSquareNeo',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0,
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                  Container(
+                                    width: 67.w,
+                                    height: 0.50.h,
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xFFEEEEEE)),
+                                  ),
+                                  GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      // 여백 터치 안 되는 문제 수정
+                                      onTap: () {
+                                        setState(() {
+                                          showPopupMenu = false;
+                                          showDialog(
+                                              context: context,
+                                              builder:
+                                                  (BuildContext context) {
+                                                return const CheckRemoveDdayDialog();
+                                              });
+                                        });
+                                      },
+                                      child: SizedBox(
+                                          height: 21.h,
+                                          child: Center(
+                                            child: Text(
+                                              '삭제하기',
+                                              style: TextStyle(
+                                                color: Color(0xFFE60000),
+                                                fontSize: 8.sp,
+                                                fontFamily:
+                                                'NanumSquareNeo',
+                                                fontWeight: FontWeight.w400,
+                                                height: 0,
                                               ),
                                             ),
-                                          )),
-                                      Container(
-                                        width: 67,
-                                        height: 0.50,
-                                        decoration: const BoxDecoration(
-                                            color: Color(0xFFEEEEEE)),
-                                      ),
-                                      GestureDetector(
-                                          behavior: HitTestBehavior.translucent,
-                                          // 여백 터치 안 되는 문제 수정
-                                          onTap: () {
-                                            setState(() {
-                                              showPopupMenu = false;
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return const CheckRemoveDdayDialog();
-                                                  });
-                                            });
-                                          },
-                                          child: const SizedBox(
-                                              height: 21,
-                                              child: Center(
-                                                child: Text(
-                                                  '삭제하기',
-                                                  style: TextStyle(
-                                                    color: Color(0xFFE60000),
-                                                    fontSize: 8,
-                                                    fontFamily:
-                                                    'NanumSquareNeo',
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 0,
-                                                  ),
-                                                ),
-                                              ))),
-                                    ],
-                                  ),
-                                )),
-                          )
-                        ],
-                      ),
+                                          ))),
+                                ],
+                              ),
+                            )),
+                      )
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            ImagePath.icPinWhite,
-                            height: 10,
-                            width: 10,
-                          ),
-                          Text(
-                            dday?['name'],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontFamily: 'NanumSquareNeo',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          )
-                        ],
+                      Image.asset(
+                        ImagePath.icPinWhite,
+                        height: 10.h,
+                        width: 10.w,
                       ),
                       Text(
-                        'D - ${dday?['leftDays'].toString().padLeft(3, '0')} ',
-                        style: const TextStyle(
+                        dday?['name'],
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 52,
-                          fontFamily: 'Cafe24Moyamoya',
+                          fontSize: 10.sp,
+                          fontFamily: 'NanumSquareNeo',
                           fontWeight: FontWeight.w400,
                           height: 0,
                         ),
                       )
                     ],
+                  ),
+                  Text(
+                    'D - ${dday?['leftDays'].toString().padLeft(3, '0')} ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 52.sp,
+                      fontFamily: 'Cafe24Moyamoya',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                    ),
                   )
                 ],
-              ),
-            )));
+              )
+            ],
+          ),
+        ));
   }
 
   Widget _noDDayWidget() {
-    return AspectRatio(
-      aspectRatio: 330 / 176,
-      child: Container(
-        decoration: ShapeDecoration(
-          color: const Color(0xFFFFF2EF),
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1, color: Color(0xFFE4E4E4)),
-            borderRadius: BorderRadius.circular(16),
-          ),
+    return Container(
+      width: 330.w,
+      height: 176.h,
+      decoration: ShapeDecoration(
+        color: const Color(0xFFFFF2EF),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 1.w, color: Color(0xFFE4E4E4)),
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '중요한 일정을 ',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 11,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '중요한 일정을 ',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: 11.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
                     ),
-                    TextSpan(
-                      text: '추가',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 11,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                      ),
+                  ),
+                  TextSpan(
+                    text: '추가',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: 11.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
                     ),
-                    TextSpan(
-                      text: '해보세요!\n언제든 수정가능합니다:)',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 11,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w400,
-                        height: 1.5,
-                      ),
+                  ),
+                  TextSpan(
+                    text: '해보세요!\n언제든 수정가능합니다:)',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: 11.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                      height: 1.5,
                     ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              NormalButton(text: '중요 일정 추가하기', onTap: () => Get.find<HomeController>().popupDialog(const AddDDayDialog())),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30.h),
+            NormalButton(text: '중요 일정 추가하기', onTap: () => Get.find<HomeController>().popupDialog(const AddDDayDialog())),
+          ],
         ),
       ),
     );
