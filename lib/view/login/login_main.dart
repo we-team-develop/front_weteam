@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/google_login_controller.dart';
 import 'package:front_weteam/controller/login_controller.dart';
-import 'package:front_weteam/controller/naver_login_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/util/api_service.dart';
 import 'package:get/get.dart';
 import 'package:front_weteam/view/login/sign_up_completed.dart';
 
@@ -78,7 +78,7 @@ class LoginMain extends GetView<LoginController> {
                   height: 39.h,
                 ),
                 onTap: () async {
-                  NaverLoginController nlc = NaverLoginController();
+                  ApiService nlc = ApiService();
                   bool success = await nlc.login();
 
                   bool isFirstLogin = true; // TODO: 첫번째 로그인인지 확인하는 로직 구현
