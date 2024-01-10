@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class GoogleLoginController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Rx<String> idToken = "".obs;
 
   Rx<User?> firebaseUser = Rx<User?>(null);
   RxBool isLoggedIn = false.obs; // 로그인 상태 변수
@@ -36,8 +37,9 @@ class GoogleLoginController extends GetxController {
         idToken: googleAuth.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential uc = await FirebaseAuth.instance.signInWithCredential(credential);
       Get.snackbar("로그인 성공", "Google 로그인에 성공했습니다.");
+      idToken.value = (await uc.user!.getIdToken())!;
     } catch (e) {
       Get.snackbar("로그인 에러", "로그인 중 오류가 발생했습니다: $e");
     }

@@ -41,7 +41,7 @@ class LoginMain extends GetView<LoginController> {
             children: [
               InkWell(
                 onTap: () {
-                  GoogleLoginController().signInWithGoogle();
+                  Get.find<GoogleLoginController>().signInWithGoogle();
                 },
                 child: Image.asset(
                   ImagePath.googlelogin,
@@ -70,6 +70,7 @@ class LoginMain extends GetView<LoginController> {
                   height: 39.h,
                 ),
               ),
+              Obx(() => SelectableText(Get.find<GoogleLoginController>().idToken.value)),
               SizedBox(height: padding),
               GestureDetector(
                 child: Image.asset(

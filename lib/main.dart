@@ -19,7 +19,7 @@ Future<void> main() async {
   // .env 파일 런타임에 가져오기
   await dotenv.load(fileName: ".env");
 
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   KakaoSdk.init(nativeAppKey: dotenv.env['nativeAppKey']); // kakaologin

@@ -17,16 +17,16 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -49,6 +49,17 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDHmXbjZ8rgHbXDNhMw50RrzB4qBkEN5Ak',
+    appId: '1:722879115497:web:fc77c18c32ff5847c1c078',
+    messagingSenderId: '722879115497',
+    projectId: 'weteam-1968a',
+    authDomain: 'weteam-1968a.firebaseapp.com',
+    databaseURL: 'https://weteam-1968a-default-rtdb.firebaseio.com',
+    storageBucket: 'weteam-1968a.appspot.com',
+    measurementId: 'G-R0DY4T1C37',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBc4I9eLDbOYxWfTtjWD6JrMymeTy7UQm0',
     appId: '1:722879115497:android:568c66ada86b4fb2c1c078',
@@ -56,17 +67,5 @@ class DefaultFirebaseOptions {
     projectId: 'weteam-1968a',
     databaseURL: 'https://weteam-1968a-default-rtdb.firebaseio.com',
     storageBucket: 'weteam-1968a.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBc10UyJz6B9Zr9qEgH7gnCjbVa6b3GGcY',
-    appId: '1:722879115497:ios:a60737dff2e659fcc1c078',
-    messagingSenderId: '722879115497',
-    projectId: 'weteam-1968a',
-    databaseURL: 'https://weteam-1968a-default-rtdb.firebaseio.com',
-    storageBucket: 'weteam-1968a.appspot.com',
-    androidClientId: '722879115497-23h6sich43q38hadja766mjmh2fo33et.apps.googleusercontent.com',
-    iosClientId: '722879115497-pn4plqtkckc7eshge430bavfp7t6gc3b.apps.googleusercontent.com',
-    iosBundleId: 'com.example.frontWeteam',
   );
 }
