@@ -1,29 +1,21 @@
-import 'package:front_weteam/social/kakao.dart';
-import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:front_weteam/social/create_firebase_custom_token.dart';
+import 'package:front_weteam/util/helper/auth_helper.dart';
 
-class LoginController extends GetxController {
-  // Kakao 로그인
-  void loginKakao(void Function(bool) callback) {
-    Kakao.login().then((isSuccess) {
-      callback(isSuccess);
-    });
-  }
-
-// Naver 로그인
-  Future<String> getToken() async {
+class NaverAuthHelper extends AuthHelper {
+  @override
+  Future<String?> getToken() async {
     if (!(await isLoggedIn())) {
       debugPrint("NaverLoginController: getToken이 호출되었지만 로그인 상태가 아님");
-      return "";
+      return null;
     }
 
-    return await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
+    return await FirebaseAuth.instance.currentUser?.getIdToken();
   }
 
-  Future<String> getAccessToken() async {
+  Future<String> getNaverAccessToken() async {
     final NaverAccessToken res = await FlutterNaverLogin.currentAccessToken;
     return res.accessToken;
   }
@@ -43,7 +35,7 @@ class LoginController extends GetxController {
         return false;
       }
 
-      String accessToken = await getAccessToken(); // 네이버 액세스 토큰을 받아옴
+      String accessToken = await getNaverAccessToken(); // 네이버 액세스 토큰을 받아옴
 
       // FirebaseToken 생성 시작
       final customToken = await createFirebaseCustomToken(
