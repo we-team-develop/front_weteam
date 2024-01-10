@@ -1,10 +1,12 @@
 import 'package:front_weteam/util/helper/auth_helper.dart';
+import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthService extends GetxService {
-  AuthHelper? helper = null;
+  AuthHelper? helper;
+  String? token;
 
   Future<bool> login(AuthHelper authHelper) async {
     try {
@@ -15,7 +17,13 @@ class AuthService extends GetxService {
       }
 
       helper = authHelper;
-      return helper!.login();
+      bool result = await helper!.login();
+      if (!result) return false;
+
+      this.token = await helper!.getToken();
+      Response rp = await WeteamAuthProvider().getCurrentUser();
+      print("!!!!!!!!!!!!!!!!!! ${rp.bodyString}");
+      return rp.statusCode == 200;
     } catch(e) {
       debugPrint("로그인 실패: $e");
       return false;

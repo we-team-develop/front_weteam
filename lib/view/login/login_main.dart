@@ -89,6 +89,10 @@ class LoginMain extends StatelessWidget {
   void login(AuthHelper helper) async {
     // TODO: 로그인 버튼 중복 클릭 방지
     bool result = await Get.find<AuthService>().login(helper);
-    if (result) Get.offAll(const SignUpCompleted());
+    if (result) {
+      Get.offAll(const SignUpCompleted());
+    } else {
+      Get.snackbar("로그인 실패", "로그인에 실패하였습니다");
+    }
   }
 }
