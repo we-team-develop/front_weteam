@@ -1,3 +1,4 @@
+import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
@@ -18,12 +19,20 @@ class AuthService extends GetxService {
 
       helper = authHelper;
       bool result = await helper!.login();
-      if (!result) return false;
+      if (!result) {
+        debugPrint("helper 로그인 실패");
+        return false;
+      }
 
-      this.token = await helper!.getToken();
-      Response rp = await WeteamAuthProvider().getCurrentUser();
-      print("!!!!!!!!!!!!!!!!!! ${rp.bodyString}");
-      return rp.statusCode == 200;
+      token = await helper!.getToken();
+      WeteamUser? user = await Get.find<WeteamAuthProvider>().getCurrentUser();
+      if (user != null) {
+        debugPrint('반갑습니다 ${user.username}님');
+        return true;
+      } else {
+        debugPrint("user값을 받아오지 못함!");
+        return false;
+      }
     } catch(e) {
       debugPrint("로그인 실패: $e");
       return false;
