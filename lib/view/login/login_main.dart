@@ -40,7 +40,7 @@ class LoginMain extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: () => login(GoogleAuthHelper()),
                 child: Image.asset(
                   ImagePath.googlelogin,
