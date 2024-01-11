@@ -11,12 +11,14 @@ class WeteamAuthProvider extends GetConnect {
     super.onInit();
 
     httpClient
-    ..baseUrl = 'http://15.164.221.170:9090/'
-    ..timeout = const Duration(seconds: 15);
+      ..baseUrl = 'http://15.164.221.170:9090/'
+      ..timeout = const Duration(seconds: 15);
   }
 
   Map<String, String> getHeader() {
-    Map<String, String> headers = {'Authorization': 'Bearer ${Get.find<AuthService>().token}'};
+    Map<String, String> headers = {
+      'Authorization': 'Bearer ${Get.find<AuthService>().token}'
+    };
 
     return headers;
   }
@@ -24,11 +26,13 @@ class WeteamAuthProvider extends GetConnect {
   Future<WeteamUser?> getCurrentUser() async {
     Response rp = await get('api/users', headers: getHeader());
     if (rp.statusCode != 200) {
-      debugPrint("statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
+      debugPrint(
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
       return null;
     }
 
     String? json = rp.bodyString;
+    print('$json');
     if (json == null) {
       debugPrint("bodyString is null");
       return null;

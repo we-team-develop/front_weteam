@@ -5,7 +5,7 @@ import 'package:front_weteam/util/helper/auth_helper.dart';
 class KakaoAuthHelper extends AuthHelper {
   @override
   Future<String?> getToken() async {
-    User? user = await FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     if (user == null) return null;
 
     return await user.getIdToken();
