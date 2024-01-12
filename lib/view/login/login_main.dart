@@ -45,7 +45,7 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(
                   ImagePath.googlelogin,
                   width: 302.w,
-                  height: 39.h,
+                  // height: 39.h,
                 ),
               ),
               SizedBox(height: padding),
