@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
@@ -23,5 +24,22 @@ class ProfileController extends GetxController {
 
   void togglePushNotification(bool value) {
     isPushNotificationEnabled.value = value;
+  }
+
+  final TextEditingController textController = TextEditingController();
+  final RxInt textLength = 0.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    textController.addListener(() {
+      textLength.value = textController.text.length;
+    });
+  }
+
+  @override
+  void onClose() {
+    textController.dispose();
+    super.onClose();
   }
 }

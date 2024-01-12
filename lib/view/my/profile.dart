@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/custom_switch.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
@@ -64,30 +65,63 @@ class Profile extends GetView<ProfileController> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 4.0.h),
-            child: Container(
-              width: 330.w,
-              height: 39.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0.r),
-                border: Border.all(
-                  color: const Color(0xFFEBE9E9),
-                  width: 1.w,
-                ),
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 9.0.w),
-                  child: Text(
-                    '티미대 버섯폭탄학과',
-                    style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontSize: 14.0.sp,
-                        color: const Color(0xFFC9C9C9)),
-                  ),
-                ),
-              ),
-            ),
+            child: GetBuilder<ProfileController>(
+                init: ProfileController(),
+                builder: (controller) {
+                  return Container(
+                    width: 330.w,
+                    height: 39.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0.r),
+                      border: Border.all(
+                        color: const Color(0xFFEBE9E9),
+                        width: 1.w,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 9.0.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: controller.textController,
+                                maxLength: 20,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: '티미대 벌집조형학과',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'NanumGothic',
+                                    fontSize: 14.sp,
+                                    color: const Color(0xffc9c9c9),
+                                  ),
+                                  counterText: '',
+                                ),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Obx(() => Padding(
+                                  padding: EdgeInsets.only(right: 9.0.w),
+                                  child: Text(
+                                    '${controller.textLength}/20',
+                                    style: TextStyle(
+                                      fontFamily: 'NanumGothic',
+                                      fontSize: 14.sp,
+                                      color: const Color(0xffc9c9c9),
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
           ),
           SizedBox(height: 24.h),
           Align(
@@ -120,7 +154,12 @@ class Profile extends GetView<ProfileController> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 15.0.w),
-                    child: _pushswitch(),
+                    child: CustomSwitch(
+                      onChanged: (value) {
+                        controller.togglePushNotification(value);
+                      },
+                      value: controller.isPushNotificationEnabled.value,
+                    ),
                   ),
                 ],
               ),
@@ -175,18 +214,5 @@ class Profile extends GetView<ProfileController> {
         ],
       ),
     );
-  }
-
-  Widget _pushswitch() {
-    return Obx(() => Switch(
-          activeColor: const Color(0xFFFFFFFF),
-          activeTrackColor: const Color(0xFFEB8673),
-          inactiveTrackColor: const Color(0xFFD9D9D9),
-          inactiveThumbColor: Colors.transparent,
-          value: controller.isPushNotificationEnabled.value,
-          onChanged: (value) {
-            controller.togglePushNotification(value);
-          },
-        ));
   }
 }
