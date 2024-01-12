@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/app.dart';
 import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/service/auth_service.dart';
@@ -88,9 +89,13 @@ class LoginMain extends StatelessWidget {
 
   void login(AuthHelper helper) async {
     // TODO: 로그인 버튼 중복 클릭 방지
-    bool result = await Get.find<AuthService>().login(helper);
-    if (result) {
-      Get.offAll(const SignUpCompleted());
+    LoginResult result = await Get.find<AuthService>().login(helper, checkNewUser: true);
+    if (result.isSuccess) {
+      if (result.isNewUser) {
+        Get.offAll(() => const SignUpCompleted());
+      } else {
+        Get.offAll(() => const App());
+      }
     } else {
       Get.snackbar("로그인 실패", "로그인에 실패하였습니다");
     }

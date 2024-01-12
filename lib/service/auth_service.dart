@@ -1,4 +1,5 @@
 import 'package:front_weteam/model/weteam_user.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
 
-  Future<bool> login(AuthHelper authHelper) async {
+  Future<LoginResult> login(AuthHelper authHelper, {bool checkNewUser = false}) async {
     try {
       if (helper != null) {
         if (await helper!.isLoggedIn()) {
@@ -21,21 +22,33 @@ class AuthService extends GetxService {
       bool result = await helper!.login();
       if (!result) {
         debugPrint("helper 로그인 실패");
-        return false;
+        return const LoginResult(isSuccess: false);
       }
 
       token = await helper!.getToken();
       WeteamUser? user = await Get.find<WeteamAuthProvider>().getCurrentUser();
       if (user != null) {
         debugPrint('반갑습니다 ${user.username}님');
-        return true;
+
+        if (checkNewUser) {
+          int? profileId = await Get.find<ApiService>().getMyProfiles();
+          if (profileId == null) {
+            debugPrint("로그인에 성공했으나 서버에서 프로필 id를 불러오지 못함");
+            return const LoginResult(isSuccess: false);
+          }
+
+          bool isNewUser = profileId == -1;
+          return LoginResult(isSuccess: true, user: user, isNewUser: isNewUser);
+        }
+
+        return LoginResult(isSuccess: true, user: user);
       } else {
         debugPrint("user값을 받아오지 못함!");
-        return false;
+        return const LoginResult(isSuccess: false);
       }
     } catch(e) {
       debugPrint("로그인 실패: $e");
-      return false;
+      return const LoginResult(isSuccess: false);
     }
   }
 
@@ -61,4 +74,12 @@ class AuthService extends GetxService {
       return false;
     }
   }
+}
+
+class LoginResult {
+  final WeteamUser? user;
+  final bool isSuccess;
+  final bool isNewUser;
+
+  const LoginResult({required this.isSuccess, this.isNewUser = false, this.user});
 }
