@@ -40,7 +40,7 @@ class MyPage extends GetView<MyController> {
 
   Widget _head() {
     return Padding(
-        padding: EdgeInsets.only(left: 15.0.w, top: 18.0.h),
+        padding: EdgeInsets.only(left: 15.0.w, top: 25.0.h),
         child: const AppTitleWidget());
   }
 
@@ -148,7 +148,8 @@ class MyPage extends GetView<MyController> {
   Widget _bottomContainerTeamListWidget() {
     List<Widget> list = [];
 
-    TeamProject tp = const TeamProject(title: '앱디져🔥🔥🔥',
+    TeamProject tp = const TeamProject(
+        title: '앱디져🔥🔥🔥',
         description: '앱디자인 강의 패러디앱 디자인 제작',
         memberSize: 3,
         date: '2023.01.02~ 2023.06.31');

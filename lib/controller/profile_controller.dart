@@ -12,11 +12,16 @@ class ProfileController extends GetxController {
   ]);
 
   var isSelected = List.generate(6, (index) => false).obs;
+  RxBool isPushNotificationEnabled = false.obs;
 
   void selectProfile(int index) {
     for (int i = 0; i < isSelected.length; i++) {
       isSelected[i] = i == index;
     }
     isSelected.refresh();
+  }
+
+  void togglePushNotification(bool value) {
+    isPushNotificationEnabled.value = value;
   }
 }
