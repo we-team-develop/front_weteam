@@ -187,39 +187,52 @@ class Profile extends GetView<ProfileController> {
           ),
           // 연결된 계정에 따른 버튼 변경
           Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h),
-    GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () => logout(),
-      child:          Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-          padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
-          child: Text(
-            '로그아웃',
-            style: TextStyle(
-                fontFamily: 'NanumGothic',
-                fontSize: 15.0.sp,
-                color: const Color(0xFF333333)),
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => logout(),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
+                child: Text(
+                  '로그아웃',
+                  style: TextStyle(
+                      fontFamily: 'NanumGothic',
+                      fontSize: 15.0.sp,
+                      color: const Color(0xFF333333)),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
-              child: Text(
-                '회원탈퇴',
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 15.0.sp,
-                    color: const Color(0xFFE60000)),
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => withdrawal(),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
+                child: Text(
+                  '회원탈퇴',
+                  style: TextStyle(
+                      fontFamily: 'NanumGothic',
+                      fontSize: 15.0.sp,
+                      color: const Color(0xFFE60000)),
+                ),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> withdrawal() async {
+    bool result = await Get.find<AuthService>().withdrawal();
+    if (result) { // 탈퇴 성공
+      Get.offAll(() => const LoginMain());
+    } else { // 탈퇴 실패
+      Get.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
+    }
   }
 
   Future<void> logout() async {

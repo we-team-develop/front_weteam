@@ -2,29 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:front_weteam/model/weteam_user.dart';
-import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
 
-class WeteamAuthProvider extends GetConnect {
+class WeteamAuthProvider extends CustomGetConnect {
   @override
   void onInit() {
     super.onInit();
 
     httpClient
-      ..baseUrl = 'http://15.164.221.170:9090/'
+      ..baseUrl = 'http://15.164.221.170:9090'
       ..timeout = const Duration(seconds: 15);
   }
 
-  Map<String, String> getHeader() {
-    Map<String, String> headers = {
-      'Authorization': 'Bearer ${Get.find<AuthService>().token}'
-    };
-
-    return headers;
-  }
-
   Future<WeteamUser?> getCurrentUser() async {
-    Response rp = await get('api/users', headers: getHeader());
+    Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
       debugPrint(
           "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
@@ -39,5 +31,16 @@ class WeteamAuthProvider extends GetConnect {
     }
 
     return WeteamUser.fromJson(jsonDecode(json));
+  }
+
+
+  Future<bool> withdrawal() async {
+    Response rp = await delete('/api/users');
+    if (rp.statusCode == 204) { // 탈퇴 성공시 204
+      return true;
+    } else {
+      debugPrint(rp.bodyString);
+      return false;
+    }
   }
 }

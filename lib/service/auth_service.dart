@@ -75,6 +75,24 @@ class AuthService extends GetxService {
       return false;
     }
   }
+
+  Future<bool> withdrawal() async {
+    try {
+      if (helper == null) return false;
+      bool result = await Get.find<WeteamAuthProvider>().withdrawal();
+
+      if (!result) {
+        debugPrint("회원 탈퇴 api가 false를 반환함");
+        return false;
+      }
+
+      await logout();
+      return true;
+    } catch (e) {
+      debugPrint("회원탈퇴 중 예외발생: $e");
+      return false;
+    }
+  }
 }
 
 class LoginResult {
