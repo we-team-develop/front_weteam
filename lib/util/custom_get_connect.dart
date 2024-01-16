@@ -37,9 +37,12 @@ class CustomGetConnect extends GetConnect {
         Decoder<T>? decoder,
         Progress? uploadProgress,
       }) {
-    if (headers != null && !headers.containsKey('Authorization')) {
+
+    headers ??= {};
+    if (!headers.containsKey('Authorization')) {
       headers['Authorization'] = 'Bearer ${Get.find<AuthService>().token}';
     }
+
     return super.post<T>(
       url,
       body,
