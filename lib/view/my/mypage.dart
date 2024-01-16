@@ -2,9 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/my/profile.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
+import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
@@ -54,14 +56,23 @@ class MyPage extends GetView<MyController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 37.0.w),
-              Container(
-                width: 82.w,
-                height: 82.h,
-                decoration: const ShapeDecoration(
-                  color: Color(0xFFC4C4C4),
-                  shape: OvalBorder(),
-                ),
-              ),
+              FutureBuilder(future: Get.find<ApiService>().getMyProfiles(), builder: (context, snapshot) { // TODO:  ID 캐싱
+                if (snapshot.hasData) {
+                  int? id = snapshot.data;
+                  if (id != null) {
+                    return ProfileImageWidget(id: id);
+                  }
+                }
+
+                return Container(
+                  width: 82.w,
+                  height: 82.h,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFFC4C4C4),
+                    shape: OvalBorder(),
+                  ),
+                );
+              },),
               SizedBox(width: 33.w),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

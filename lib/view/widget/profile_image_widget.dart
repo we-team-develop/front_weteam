@@ -4,14 +4,14 @@ import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
-class ProfileImageWidget extends GetView<ProfileController> {
-  const ProfileImageWidget({super.key});
+double circleSize = 85.0.w;
+double checkMarkSize = circleSize / 2;
+
+class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
+  const ProfileImageSelectContainerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double circleSize = 85.0.w;
-    double checkMarkSize = circleSize / 2;
-
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -27,18 +27,7 @@ class ProfileImageWidget extends GetView<ProfileController> {
           child: Obx(() => Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    width: circleSize,
-                    height: circleSize,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[300],
-                      image: DecorationImage(
-                        image: AssetImage(controller.imagePaths[index]),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  ProfileImageWidget(id: index),
                   if (controller.isSelected[index])
                     Positioned(
                       top: (circleSize - checkMarkSize) / 2,
@@ -57,4 +46,33 @@ class ProfileImageWidget extends GetView<ProfileController> {
       },
     );
   }
+}
+
+class ProfileImageWidget extends StatefulWidget {
+  final int id;
+  const ProfileImageWidget({super.key, required this.id});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ProfileImageWidgetState();
+  }
+}
+
+class _ProfileImageWidgetState extends State<ProfileImageWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: circleSize,
+      height: circleSize,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey[300],
+        image: DecorationImage(
+          image: AssetImage(Get.find<ProfileController>().imagePaths[widget.id]),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
 }

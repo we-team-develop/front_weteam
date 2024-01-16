@@ -47,7 +47,7 @@ class ProfileSettingPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 73.0.h),
-                const ProfileImageWidget(),
+                const ProfileImageSelectContainerWidget(),
                 SizedBox(height: 143.0.h),
               ],
             ),

@@ -48,7 +48,7 @@ class Profile extends GetView<ProfileController> {
               ),
             ),
           ),
-          const ProfileImageWidget(),
+          const ProfileImageSelectContainerWidget(),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
