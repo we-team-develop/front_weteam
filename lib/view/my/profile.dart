@@ -213,17 +213,17 @@ class Profile extends GetView<ProfileController> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Padding(
-          padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
-          child: Text(
-            '로그아웃',
-            style: TextStyle(
-                fontFamily: 'NanumGothic',
-                fontSize: 15.0.sp,
-                color: const Color(0xFF333333)),
+                padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
+                child: Text(
+                  '로그아웃',
+                  style: TextStyle(
+                      fontFamily: 'NanumGothic',
+                      fontSize: 15.0.sp,
+                      color: const Color(0xFF333333)),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () => withdrawal(),
@@ -248,18 +248,22 @@ class Profile extends GetView<ProfileController> {
 
   Future<void> withdrawal() async {
     bool result = await Get.find<AuthService>().withdrawal();
-    if (result) { // 탈퇴 성공
+    if (result) {
+      // 탈퇴 성공
       Get.offAll(() => const LoginMain());
-    } else { // 탈퇴 실패
+    } else {
+      // 탈퇴 실패
       Get.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
     }
   }
 
   Future<void> logout() async {
     bool result = await Get.find<AuthService>().logout();
-    if (result) { // 로그아웃 성공
+    if (result) {
+      // 로그아웃 성공
       Get.offAll(() => const LoginMain());
-    } else { // 로그아웃 실패
+    } else {
+      // 로그아웃 실패
       Get.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
     }
   }
