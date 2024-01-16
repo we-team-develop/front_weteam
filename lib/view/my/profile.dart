@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
 import 'package:front_weteam/view/login/login_main.dart';
 import 'package:front_weteam/view/widget/custom_switch.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
@@ -187,12 +188,31 @@ class Profile extends GetView<ProfileController> {
           ),
           // 연결된 계정에 따른 버튼 변경
           Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h),
-    GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () => logout(),
-      child:          Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              showDialog(
+                  context: Get.context!,
+                  //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                  //barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return CustomCheckDialog(
+                      title: "정말 로그아웃 하시겠습니까?",
+                      content: "다시 돌아올 거라 믿어요😢",
+                      denyName: '아니오',
+                      admitName: '로그아웃',
+                      denyCallback: () {
+                        Get.back();
+                      },
+                      admitCallback: () {
+                        logout();
+                      },
+                    );
+                  });
+            },
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
           padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
           child: Text(
             '로그아웃',
