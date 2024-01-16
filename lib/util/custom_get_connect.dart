@@ -53,4 +53,27 @@ class CustomGetConnect extends GetConnect {
       uploadProgress: uploadProgress,
     );
   }
+
+  @override
+  Future<Response<T>> delete<T>(
+      String url, {
+        Map<String, String>? headers,
+        String? contentType,
+        Map<String, dynamic>? query,
+        Decoder<T>? decoder,
+      }) {
+
+    headers ??= {};
+    if (!headers.containsKey('Authorization')) {
+      headers['Authorization'] = 'Bearer ${Get.find<AuthService>().token}';
+    }
+
+    return super.delete(
+      url,
+      headers: headers,
+      contentType: contentType,
+      query: query,
+      decoder: decoder,
+    );
+  }
 }
