@@ -57,6 +57,7 @@ class AuthService extends GetxService {
       if (helper == null) return true; // false?
       if (!await helper!.logout()) return false; // 플랫폼별 로그아웃
       await FirebaseAuth.instance.signOut(); // firebase 로그아웃
+      token = null;
 
       return true;
     } catch (e) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/view/login/login_main.dart';
 import 'package:front_weteam/view/widget/custom_switch.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
@@ -185,19 +187,23 @@ class Profile extends GetView<ProfileController> {
           ),
           // 연결된 계정에 따른 버튼 변경
           Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
-              child: Text(
-                '로그아웃',
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 15.0.sp,
-                    color: const Color(0xFF333333)),
-              ),
-            ),
+    GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () => logout(),
+      child:          Align(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: 15.0.w, top: 24.0.h),
+          child: Text(
+            '로그아웃',
+            style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontSize: 15.0.sp,
+                color: const Color(0xFF333333)),
           ),
+        ),
+      ),
+    ),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
@@ -214,5 +220,14 @@ class Profile extends GetView<ProfileController> {
         ],
       ),
     );
+  }
+
+  Future<void> logout() async {
+    bool result = await Get.find<AuthService>().logout();
+    if (result) { // 로그아웃 성공
+      Get.offAll(() => const LoginMain());
+    } else { // 로그아웃 실패
+      Get.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
+    }
   }
 }

@@ -54,7 +54,7 @@ class NaverAuthHelper extends AuthHelper {
   @override
   Future<bool> logout() async {
     try {
-      await FlutterNaverLogin.logOut();
+      await FlutterNaverLogin.logOutAndDeleteToken();
       return true;
     } catch (error) {
       return false;
