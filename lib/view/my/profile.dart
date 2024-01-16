@@ -193,8 +193,6 @@ class Profile extends GetView<ProfileController> {
             onTap: () {
               showDialog(
                   context: Get.context!,
-                  //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-                  //barrierDismissible: false,
                   builder: (BuildContext context) {
                     return CustomCheckDialog(
                       title: "정말 로그아웃 하시겠습니까?",
@@ -204,8 +202,8 @@ class Profile extends GetView<ProfileController> {
                       denyCallback: () {
                         Get.back();
                       },
-                      admitCallback: () {
-                        logout();
+                      admitCallback: () async {
+                        await logout();
                       },
                     );
                   });
@@ -226,7 +224,24 @@ class Profile extends GetView<ProfileController> {
           ),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => withdrawal(),
+            onTap: () {
+              showDialog(
+                  context: Get.context!,
+                  builder: (BuildContext context) {
+                    return CustomCheckDialog(
+                      title: "정말 탈퇴하겠습니까?",
+                      content: "위팀과 함께한 모든 추억이 사라집니다😢",
+                      denyName: '취소',
+                      admitName: '탈퇴',
+                      denyCallback: () {
+                        Get.back();
+                      },
+                      admitCallback: () async {
+                        await withdrawal();
+                      },
+                    );
+                  });
+            },
             child: Align(
               alignment: Alignment.topLeft,
               child: Padding(
