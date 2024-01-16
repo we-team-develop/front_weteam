@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomCheckDialog extends StatelessWidget {
   final String title; // 예시: 정말 로그아웃 하시겠습니까?
@@ -7,8 +8,8 @@ class CustomCheckDialog extends StatelessWidget {
   final String admitName;
   final int denyColorInt;
   final int admitColorInt;
-  final VoidCallback? denyCallback;
-  final VoidCallback? admitCallback;
+  final Function()? denyCallback;
+  final Function()? admitCallback;
 
   const CustomCheckDialog(
       {super.key,
@@ -68,7 +69,7 @@ class CustomCheckDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _button(denyName, denyColorInt, denyCallback),
+              _Button(name: denyName, colorInt: denyColorInt, callback: denyCallback),
               Container(
                 width: 0.5,
                 height: 40,
@@ -76,33 +77,66 @@ class CustomCheckDialog extends StatelessWidget {
                   color: Color(0xFFDCDCDC),
                 ),
               ),
-              _button(admitName, admitColorInt, admitCallback)
+              _Button(name: admitName, colorInt: admitColorInt, callback: admitCallback)
             ],
           )),
         ],
       ),
     );
   }
+}
 
-  Widget _button(String name, int colorInt, VoidCallback? callback) {
+class _Button extends StatelessWidget {
+  final String name;
+  final int colorInt;
+  final Function? callback;
+  final Rx<bool> loading = false.obs; // 로딩 여부 확인
+
+  _Button({required this.name, required this.colorInt, this.callback});
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: callback ?? () {},
+        onTap: () => callCallback(),
         //behavior: HitTestBehavior.translucent, // 모든 곳 터치 되도록
         child: Center(
-          child: Text(
-            name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(colorInt),
-              fontSize: 12,
-              fontFamily: 'NanumSquareNeo',
-              fontWeight: FontWeight.w700,
-              height: 0,
+          child: Obx(
+            () => loading.value ? const CircularProgressIndicator() : Text(
+              name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(colorInt),
+                fontSize: 12,
+                fontFamily: 'NanumSquareNeo',
+                fontWeight: FontWeight.w700,
+                height: 0,
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
+  void callCallback() async {
+    if (callback == null && loading.value) {
+      return;
+    }
+
+    loading.value = true; // 로딩 상태 true
+    loading.refresh(); // 조금 더 확실하게 update
+
+    try {
+      dynamic ret = callback!.call();
+      if (ret is Future) await ret; // 비동기 함수일경우 await
+    } catch (e, st) {
+      debugPrint("$e");
+      debugPrintStack(stackTrace: st);
+    }
+
+    loading.value = false;
+    loading.refresh();
+  }
+
 }
