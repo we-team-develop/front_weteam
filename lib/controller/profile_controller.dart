@@ -22,6 +22,14 @@ class ProfileController extends GetxController {
     isSelected.refresh();
   }
 
+  int? getSelectedProfileId() {
+    for (int i = 0; i < isSelected.length; i++) {
+      if (isSelected[i]) return i;
+    }
+
+    return null;
+  }
+
   void togglePushNotification(bool value) {
     isPushNotificationEnabled.value = value;
   }

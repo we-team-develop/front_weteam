@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
@@ -60,7 +61,12 @@ class ProfileSettingPage extends StatelessWidget {
             ),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const App());
+                  int? id = controller.getSelectedProfileId();
+                  if (id == null) {
+                    Get.snackbar("", "사용할 프로필 이미지를 선택해주세요");
+                    return;
+                  }
+                  setProfile(id);
                 },
                 child: Image.asset(
                   ImagePath.startweteambutton,
@@ -71,5 +77,13 @@ class ProfileSettingPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> setProfile(int id) async {
+    if (await Get.find<ApiService>().createUserProfiles(id)) {
+      Get.to(() => const App());
+    } else {
+      Get.snackbar("죄송합니다", "문제가 발생했습니다");
+    }
   }
 }
