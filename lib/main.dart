@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                   ),
                   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
                   colorScheme:
-                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                      ColorScheme.fromSeed(seedColor: const Color(0XFFE2583E)),
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: const SplashScreen(),
