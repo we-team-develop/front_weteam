@@ -26,7 +26,7 @@ class TeamPlay extends GetView<TeamPlayController> {
             height: 22.0.h,
           ),
           Text(
-            '닉네임님이 진행중이신 팀플이에요!',
+            '${controller.getUserName()}님이 진행중이신 팀플이에요!',
             style: TextStyle(
                 fontFamily: 'NanumGothic',
                 fontSize: 14.0.sp,
