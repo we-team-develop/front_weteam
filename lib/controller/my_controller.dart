@@ -1,12 +1,18 @@
 import 'package:get/get.dart';
 
+import '../service/auth_service.dart';
+
 class MyController extends GetxController {
   String getUserName() {
-    return "차혜빈";
+    return Get.find<AuthService>().user?.username ?? "";
   }
 
-  String getUserDescription() {
-    return "미입력";
+  String getUserOrganization() {
+    String? organization = Get.find<AuthService>().user?.organization;
+    if (organization == null || organization.trim().isEmpty) {
+      return "미입력";
+    }
+    return organization;
   }
 
   String getUserImgUrl() {

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
+  WeteamUser? user;
 
   Future<LoginResult> login(AuthHelper authHelper, {bool checkNewUser = false}) async {
     try {
@@ -27,6 +28,8 @@ class AuthService extends GetxService {
 
       token = await helper!.getToken();
       WeteamUser? user = await Get.find<WeteamAuthProvider>().getCurrentUser();
+      this.user = user;
+
       if (user != null) {
         debugPrint('반갑습니다 ${user.username}님');
 
@@ -58,6 +61,7 @@ class AuthService extends GetxService {
       if (!await helper!.logout()) return false; // 플랫폼별 로그아웃
       await FirebaseAuth.instance.signOut(); // firebase 로그아웃
       token = null;
+      user = null;
 
       return true;
     } catch (e) {

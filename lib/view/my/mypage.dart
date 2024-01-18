@@ -105,7 +105,7 @@ class MyPage extends GetView<MyController> {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    controller.getUserDescription(),
+                    controller.getUserOrganization(),
                     style: TextStyle(
                       color: const Color(0xFF7E7E7E),
                       fontSize: 10.sp,
