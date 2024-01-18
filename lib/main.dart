@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
 import 'package:front_weteam/firebase_options.dart';
-import 'package:front_weteam/splash_screen.dart';
+import 'package:front_weteam/view/login/login_main.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                       ColorScheme.fromSeed(seedColor: const Color(0XFFE2583E)),
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
-              home: const SplashScreen(),
+              home: const LoginMain(),
               debugShowCheckedModeBanner: false, // Debug 배너 없애기
               initialBinding: MainBindings(),
             ));
