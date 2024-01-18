@@ -11,15 +11,15 @@ import 'package:get/get.dart';
 class MainBindings implements Bindings {
   @override
   void dependencies() {
+    Get.put(AuthService());
+    Get.put(ApiService());
+
     Get.put(BottomNavController());
 
     Get.put(HomeController());
     Get.put(MyController());
     Get.put(ProfileController());
     Get.put(TeamPlayController());
-
-    Get.put(AuthService());
-    Get.put(ApiService());
 
     Get.put(WeteamAuthProvider());
   }

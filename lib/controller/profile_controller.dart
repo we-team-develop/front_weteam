@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
+import '../service/auth_service.dart';
+
 class ProfileController extends GetxController {
   RxList<String> imagePaths = RxList<String>([
     ImagePath.profile1,
@@ -32,6 +34,18 @@ class ProfileController extends GetxController {
 
   void togglePushNotification(bool value) {
     isPushNotificationEnabled.value = value;
+  }
+
+  String _getUserOrganization() {
+    String? organization = Get.find<AuthService>().user?.organization;
+    if (organization == null || organization.trim().isEmpty) {
+      return "";
+    }
+    return organization;
+  }
+
+  void updateOrganization() {
+    textController.text = _getUserOrganization();
   }
 
   final TextEditingController textController = TextEditingController();

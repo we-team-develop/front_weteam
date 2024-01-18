@@ -13,6 +13,12 @@ class Profile extends GetView<ProfileController> {
   const Profile({super.key});
 
   @override
+  StatelessElement createElement() {
+    controller.updateOrganization();
+    return super.createElement();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
