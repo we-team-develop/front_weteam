@@ -15,10 +15,12 @@ class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          mainAxisSpacing: 10.0.h,
-          crossAxisSpacing: 10.0.w,
+          mainAxisSpacing: 0.0.h,
+          crossAxisSpacing: 0.0.w,
           childAspectRatio: 1), // 정사각형 비율
       itemCount: controller.imagePaths.length,
       itemBuilder: (context, index) {
@@ -29,17 +31,11 @@ class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
                 children: [
                   ProfileImageWidget(id: index),
                   if (controller.isSelected[index])
-                    Positioned(
-                      top: (circleSize - checkMarkSize) / 2,
-                      bottom: (circleSize - checkMarkSize) / 2,
-                      left: (circleSize - checkMarkSize) / 2,
-                      right: (circleSize - checkMarkSize) / 2,
-                      child: Image.asset(
-                        ImagePath.check,
-                        width: checkMarkSize,
-                        height: checkMarkSize,
-                      ),
-                    ),
+                    Image.asset(
+                      ImagePath.check,
+                      width: checkMarkSize,
+                      height: checkMarkSize,
+                    )
                 ],
               )),
         );
