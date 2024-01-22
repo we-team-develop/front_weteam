@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../main.dart';
+import '../model/weteam_user.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
   final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
@@ -15,6 +16,37 @@ class ApiService extends CustomGetConnect implements GetxService {
     httpClient
       ..baseUrl = _baseUrl
       ..timeout = const Duration(seconds: 15);
+  }
+
+  Future<WeteamUser?> getCurrentUser() async {
+    Response rp = await get('/api/users');
+    if (rp.statusCode != 200) {
+      debugPrint(
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
+      return null;
+    }
+
+    String? json = rp.bodyString;
+    print('$json');
+    if (json == null) {
+      debugPrint("bodyString is null");
+      return null;
+    }
+
+    sharedPreferences.setString(SharedPreferencesKeys.weteamUserJson ,json);
+
+    return WeteamUser.fromJson(jsonDecode(json));
+  }
+
+
+  Future<bool> withdrawal() async {
+    Response rp = await delete('/api/users');
+    if (rp.statusCode == 204) { // 탈퇴 성공시 204
+      return true;
+    } else {
+      debugPrint(rp.bodyString);
+      return false;
+    }
   }
 
   // 프로필 없으면 (회원가입 x) -1 반환

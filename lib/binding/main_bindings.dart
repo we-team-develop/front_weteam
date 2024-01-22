@@ -5,7 +5,6 @@ import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
 
 class MainBindings implements Bindings {
@@ -20,7 +19,5 @@ class MainBindings implements Bindings {
     Get.put(MyController());
     Get.put(ProfileController());
     Get.put(TeamPlayController());
-
-    Get.put(WeteamAuthProvider());
   }
 }

@@ -8,7 +8,6 @@ import 'package:front_weteam/util/helper/google_auth_helper.dart';
 import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
 import 'package:front_weteam/util/helper/naver_auth_helper.dart';
 import 'package:front_weteam/util/mem_cache.dart';
-import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +59,7 @@ class AuthService extends GetxService {
 
       token = await helper!.getToken();
       print(token);
-      WeteamUser? user = await Get.find<WeteamAuthProvider>().getCurrentUser();
+      WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
       this.user = user;
 
       if (user != null) {
@@ -119,7 +118,7 @@ class AuthService extends GetxService {
   Future<bool> withdrawal() async {
     try {
       if (helper == null) return false;
-      bool result = await Get.find<WeteamAuthProvider>().withdrawal();
+      bool result = await Get.find<ApiService>().withdrawal();
 
       if (!result) {
         debugPrint("회원 탈퇴 api가 false를 반환함");
