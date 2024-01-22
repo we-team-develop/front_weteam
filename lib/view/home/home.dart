@@ -32,7 +32,7 @@ class Home extends GetView<HomeController> {
               hasScrollBody: false,
               child: Column(
                 children: [
-                  const DDayWidget(),
+                  Obx(() => DDayWidget(hasDDay: controller.hasDDay.value)),
                   _getTeamProjectListBody(),
                   _bottomBanner(),
                   SizedBox(height: 15.h)
@@ -276,7 +276,8 @@ class Home extends GetView<HomeController> {
 }
 
 class DDayWidget extends StatefulWidget {
-  const DDayWidget({super.key});
+  final bool hasDDay;
+  const DDayWidget({super.key, required this.hasDDay});
 
   @override
   State<StatefulWidget> createState() {
@@ -286,19 +287,41 @@ class DDayWidget extends StatefulWidget {
 
 class _DDayWidgetState extends State<DDayWidget> {
   bool showPopupMenu = false;
-  Map? dday;
-
-  _DDayWidgetState() {
-    dday = Get.find<HomeController>().getDDay();
-  }
+  DDayData? dday;
+  String leftDays = "";
 
   @override
   Widget build(BuildContext context) {
-    if (Get.find<HomeController>().hasFixedDDay()) {
+    if (widget.hasDDay) {
+      dday = Get.find<HomeController>().getDDay();
+      updateLeftDays();
       return _ddayWidget();
     } else {
       return _noDDayWidget();
     }
+  }
+
+  void updateLeftDays() {
+    assert(dday != null);
+
+    String tmp = "D";
+    String numStr = "";
+    DateTime now = DateTime.now();
+    Duration diff = dday!.end.difference(now);
+
+    numStr = diff.inDays.toString().padLeft(3, '0');
+    bool hasMoreDays = dday!.end.millisecondsSinceEpoch - now.millisecondsSinceEpoch > 0;
+    if (hasMoreDays) {
+      tmp += " - $numStr";
+    } else if (diff.inDays == 0) {
+      tmp += "-DAY";
+    } else {
+      tmp += " + $numStr";
+    }
+
+    setState(() {
+      leftDays = tmp;
+    });
   }
 
   Widget _ddayWidget() {
@@ -436,7 +459,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                         width: 10.w,
                       ),
                       Text(
-                        dday?['name'],
+                        "${dday?.name} ",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10.sp,
@@ -448,7 +471,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                     ],
                   ),
                   Text(
-                    'D - ${dday?['leftDays'].toString().padLeft(3, '0')} ',
+                    '$leftDays ',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 52.sp,

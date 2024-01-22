@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final String hint;
   final int? maxLength;
+  final TextEditingController? controller;
 
-  CustomTextField({super.key, this.hint = "", this.maxLength});
+  const CustomTextField({super.key, this.hint = "", this.maxLength, this.controller});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,6 +19,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       decoration: InputDecoration(
           // 기본 제공 카운터 제거
           counterText: "",

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/home_controller.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
 import 'package:front_weteam/view/widget/normal_button.dart';
@@ -17,6 +21,10 @@ class AddDDayDialog extends StatefulWidget {
 }
 
 class _AddDDayDialogState extends State<AddDDayDialog> {
+  TextEditingController teController = TextEditingController();
+  bool isSaving = false;
+  bool warningVisible = false;
+  String warningContent = "";
   DateTime startTime = DateTime.now();
   DateTime endTime = DateTime.now();
 
@@ -27,7 +35,7 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomTextField(hint: '디데이명', maxLength: 20),
+            CustomTextField(hint: '디데이명', maxLength: 20, controller: teController),
             SizedBox(height: 20.h),
             ConstrainedBox(
                 constraints: BoxConstraints(minWidth: 304.w),
@@ -92,12 +100,73 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
             SizedBox(
               height: 30.h,
             ),
-            NormalButton(text: '확인', onTap: () => onTapButton()),
+            Visibility(
+                visible: warningVisible,
+                child: Text(
+                  warningContent,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFFE2583E),
+                      fontFamily: 'NanumSquareNeo',
+                      fontSize: 10.sp),
+                )),
+            SizedBox(
+              height: 5.h,
+            ),
+            NormalButton(
+                text: '확인',
+                onTap: () async {
+                  if (isSaving) return;
+
+              isSaving = true;
+              try {
+                await onTapButton();
+              } catch(e, st) {
+                print(e);
+                debugPrintStack(stackTrace: st);
+              }
+              isSaving = false;
+            }),
           ],
         ));
   }
 
-  void onTapButton() {
+  Future<void> onTapButton() async {
+    if (endTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch < 0) {
+      setState(() {
+        warningContent = '시작일은 종료일보다 빠를 수 없어요!';
+        warningVisible = true;
+      });
+      return;
+    }
+
+    String name = teController.text.trim();
+    if (name.isEmpty) {
+      setState(() {
+        warningContent = '디데이명을 입력해주세요!';
+        warningVisible = true;
+      });
+      return;
+    }
+
+    Map map = {
+      'name': name,
+      'start': {
+        'year': startTime.year,
+        'month': startTime.month,
+        'day': startTime.day,
+      },
+      'end': {
+        'year': endTime.year,
+        'month': endTime.month,
+        'day': endTime.day,
+      },
+    };
+
+    await sharedPreferences.setString(SharedPreferencesKeys.dDayData, jsonEncode(map));
+    HomeController hc = Get.find<HomeController>();
+    hc.dDayData = hc.getDDay();
+    hc.hasDDay.value = hc.dDayData != null;
     Get.back();
   }
 }
