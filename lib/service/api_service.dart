@@ -20,17 +20,27 @@ class ApiService extends CustomGetConnect implements GetxService {
   // 프로필 없으면 (회원가입 x) -1 반환
   Future<int?> getMyProfiles() async {
     Response rp = await get('/api/profiles'); // 회원가입 미완료시 404
-    if (rp.statusCode == 200 || rp.statusCode == 404) {
-      if (rp.statusCode == 404) {
+
+    String? body = rp.bodyString!;
+    Map responseData = jsonDecode(body);
+
+    int? statusCode = responseData['statusCode'] ?? rp.statusCode;
+    if (statusCode == 200 || statusCode == 404 || statusCode == 500) {
+
+      if (statusCode == 404) {
         return -1;
       }
-
-      String? body = rp.bodyString!;
-      Map responseData = jsonDecode(body);
+      if (statusCode == 500) {
+        if (responseData['message'] != null) {
+          if (responseData['message'].contains('조회할')) return -1;
+        } else {
+          return null;
+        }
+      }
 
       return responseData['imageIdx'];
     } else {
-      debugPrint("프로필 사진 ID를 가져오지 못함 : 서버가 ${rp.statusCode}으로 응답함");
+      debugPrint("프로필 사진 ID를 가져오지 못함 : 서버가 $statusCode으로 응답함");
       return null;
     }
   }
