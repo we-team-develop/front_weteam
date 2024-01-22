@@ -56,25 +56,30 @@ class MyPage extends GetView<MyController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 37.0.w),
-              FutureBuilder(future: Get.find<ApiService>().getMyProfiles(), builder: (context, snapshot) { // TODO:  ID 캐싱
-                if (snapshot.hasData) {
-                  int? id = snapshot.data;
-                  if (id != null) {
-                    return ProfileImageWidget(id: id);
+              FutureBuilder(
+                future: Get.find<ApiService>().getMyProfiles(),
+                builder: (context, snapshot) {
+                  // TODO:  ID 캐싱
+                  if (snapshot.hasData) {
+                    int? id = snapshot.data;
+                    if (id != null) {
+                      return ProfileImageWidget(id: id);
+                    }
                   }
-                }
 
-                return Container(
-                  width: 82.w,
-                  height: 82.h,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFC4C4C4),
-                    shape: OvalBorder(),
-                  ),
-                );
-              },),
+                  return Container(
+                    width: 82.w,
+                    height: 82.h,
+                    decoration: const ShapeDecoration(
+                      color: Color(0xFFC4C4C4),
+                      shape: OvalBorder(),
+                    ),
+                  );
+                },
+              ),
               SizedBox(width: 33.w),
-              Column(
+              Expanded(
+                  child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -84,16 +89,18 @@ class MyPage extends GetView<MyController> {
                     textBaseline: TextBaseline.ideographic,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      Flexible(
+                          child: Text(
                         '${controller.getUserName()}님 ',
                         style: TextStyle(
                           color: const Color(0xFF333333),
                           fontSize: 16.sp,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                           height: 1,
                         ),
-                      ),
+                      )),
                       GestureDetector(
                         onTap: () {
                           Get.to(() => const Profile());
@@ -114,7 +121,7 @@ class MyPage extends GetView<MyController> {
                     ),
                   )
                 ],
-              )
+              ))
             ],
           ),
         ));
