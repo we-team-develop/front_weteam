@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:front_weteam/controller/home_controller.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +14,11 @@ class CheckRemoveDdayDialog extends StatelessWidget {
       content: "해당 디데이는 완전히 삭제됩니다",
       denyName: "취소",
       admitName: "삭제",
-      admitCallback: () => Get.back(),
+      admitCallback: () async {
+        await sharedPreferences.remove(SharedPreferencesKeys.dDayData);
+        Get.find<HomeController>().updateDDay();
+        Get.back();
+      },
       denyCallback: () => Get.back(),
     );
   }
