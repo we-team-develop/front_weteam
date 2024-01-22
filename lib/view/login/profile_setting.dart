@@ -7,6 +7,8 @@ import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
+import '../../main.dart';
+
 class ProfileSettingPage extends StatelessWidget {
   ProfileSettingPage({Key? key}) : super(key: key);
   final ProfileController controller = Get.put(ProfileController());
@@ -81,6 +83,7 @@ class ProfileSettingPage extends StatelessWidget {
 
   Future<void> setProfile(int id) async {
     if (await Get.find<ApiService>().createUserProfiles(id)) {
+      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
       Get.to(() => const App());
     } else {
       Get.snackbar("죄송합니다", "문제가 발생했습니다");

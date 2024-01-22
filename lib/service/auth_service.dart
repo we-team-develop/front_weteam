@@ -1,6 +1,13 @@
+import 'dart:convert';
+
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/util/helper/auth_helper.dart';
+import 'package:front_weteam/util/helper/google_auth_helper.dart';
+import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
+import 'package:front_weteam/util/helper/naver_auth_helper.dart';
+import 'package:front_weteam/util/mem_cache.dart';
 import 'package:front_weteam/util/provider/weteam_auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +17,31 @@ class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
   WeteamUser? user;
+
+
+  @override
+  void onInit() {
+    dynamic firebaseIdToken = MemCache.get(MemCacheKey.firebaseAuthIdToken);
+    dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
+    if (firebaseIdToken != null && userJson != null) {
+      token = firebaseIdToken;
+      user = WeteamUser.fromJson(jsonDecode(userJson));
+
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      if (uid.startsWith('naver')) {
+        helper = NaverAuthHelper();
+        print("네이버");
+      } else if (uid.startsWith('kakao')) {
+        helper = KakaoAuthHelper();
+        print("카카오");
+      } else {
+        helper = GoogleAuthHelper();
+        print("구글");
+      }
+    }
+
+    super.onInit();
+  }
 
   Future<LoginResult> login(AuthHelper authHelper, {bool checkNewUser = false}) async {
     try {
@@ -27,6 +59,7 @@ class AuthService extends GetxService {
       }
 
       token = await helper!.getToken();
+      print(token);
       WeteamUser? user = await Get.find<WeteamAuthProvider>().getCurrentUser();
       this.user = user;
 
@@ -62,6 +95,9 @@ class AuthService extends GetxService {
       await FirebaseAuth.instance.signOut(); // firebase 로그아웃
       token = null;
       user = null;
+
+      sharedPreferences.remove(SharedPreferencesKeys.weteamUserJson);
+      sharedPreferences.remove(SharedPreferencesKeys.isRegistered);
 
       return true;
     } catch (e) {

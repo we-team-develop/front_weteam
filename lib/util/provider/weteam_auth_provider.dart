@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,8 @@ class WeteamAuthProvider extends CustomGetConnect {
       debugPrint("bodyString is null");
       return null;
     }
+
+    sharedPreferences.setString(SharedPreferencesKeys.weteamUserJson ,json);
 
     return WeteamUser.fromJson(jsonDecode(json));
   }
