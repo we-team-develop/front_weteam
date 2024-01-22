@@ -47,39 +47,10 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> createUserProfiles(int imageIdx) async {
     Response rp = await post('/api/profiles/$imageIdx', {});
-    print(rp.bodyString);
     if (rp.statusCode != 201) {
       return false;
     } else {
       return true;
     }
   }
-
-/*// GET requests 메소드 예제
-  Future<http.Response> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$_baseUrl$endpoint'));
-    return response;
-  }
-
-  // POST requests 메소드 예제
-  Future<http.Response> post(String endpoint, dynamic body) async {
-    final response = await http.post(
-      Uri.parse('$_baseUrl$endpoint'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(body),
-    );
-    return response;
-  }
-
-  // send idToken to the server for authentication 메소드 예제
-  Future<http.Response> authenticateWithIdToken(String idToken) async {
-    final response = await http.post(
-      Uri.parse('$_baseUrl/your-authentication-endpoint'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'idToken': idToken}),
-    );
-    return response;
-  }
-*/
-
 }
