@@ -85,4 +85,16 @@ class ApiService extends CustomGetConnect implements GetxService {
       return true;
     }
   }
+
+  Future<bool> createTeamProject(String name, DateTime startedAt, DateTime endedAt, String explanation) async {
+    Map data = {
+      'name': name,
+      'startedAt': "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+      'endedAt': "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+      'explanation': explanation
+    };
+    Response rp = await post('/api/projects', data);
+    print(rp.bodyString);
+    return rp.statusCode == 201;
+  }
 }

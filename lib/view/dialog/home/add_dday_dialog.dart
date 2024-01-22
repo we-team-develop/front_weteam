@@ -83,7 +83,7 @@ class _DDayDialogState extends State<DDayDialog> {
                     )),
                     Container(
                       width: 1,
-                      height: 20.h,
+                      height: 90.h,
                       margin: EdgeInsets.symmetric(horizontal: 21.w),
                       decoration: const BoxDecoration(
                         color: Color(0xFFDCDCDC),
