@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/dialog/home/add_dday_dialog.dart';
+import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
 import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
