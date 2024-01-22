@@ -116,52 +116,51 @@ class MyPage extends GetView<MyController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _bottomContainerTitle(),
-          controller.hasCompletedTeamProjects()
-              ? _bottomContainerTeamListWidget()
-              : _bottomContainerEmpty()
+          Obx(() {
+            if (controller.tpList.value != null && controller.tpList.value!.projectList.isNotEmpty) {
+              return _bottomContainerTeamListWidget();
+            } else {
+             return _bottomContainerEmpty();
+            }
+          }),
         ],
       ),
     ));
   }
 
   Widget _bottomContainerTitle() {
-    String text;
+    return Obx(() {
+      String text;
 
-    if (controller.hasCompletedTeamProjects()) {
-      text = "${controller.getUserName()}님이 완료한 팀플들이에요!";
-    } else {
-      text = "${controller.getUserName()}님은 완료한 팀플이 없어요!";
-    }
+      if (controller.tpList.value != null &&
+          controller.tpList.value!.projectList.isNotEmpty) {
+        text = "${controller.getUserName()}님이 완료한 팀플들이에요!";
+      } else {
+        text = "${controller.getUserName()}님은 완료한 팀플이 없어요!";
+      }
 
-    return Text(
-      text,
-      style: TextStyle(
-        color: const Color(0xFF333333),
-        fontSize: 14.sp,
-        fontFamily: 'NanumGothic',
-        fontWeight: FontWeight.w600,
-      ),
-    );
+      return Text(
+        text,
+        style: TextStyle(
+          color: const Color(0xFF333333),
+          fontSize: 14.sp,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w600,
+        ),
+      );
+    });
   }
 
   Widget _bottomContainerTeamListWidget() {
+    List tpList = controller.tpList.value!.projectList;
     List<Widget> list = [];
 
-    TeamProject tp = const TeamProject(
-        title: '앱디져🔥🔥🔥',
-        description: '앱디자인 강의 패러디앱 디자인 제작',
-        memberSize: 3,
-        date: '2023.01.02~ 2023.06.31');
-
-    TeamProjectWidget tpw = TeamProjectWidget(tp);
-
-    for (int i = 0; i < 20; i++) {
-      list.add(tpw);
+    for (int i = 0; i < tpList.length; i++) {
+      list.add(TeamProjectWidget(tpList[i]));
     }
 
     return Column(
       children: [
-        // 예시입니다
         SizedBox(height: 24.h),
         ...list
       ],

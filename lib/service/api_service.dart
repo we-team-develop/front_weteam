@@ -112,7 +112,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.statusCode == 201;
   }
 
-  Future<GetTeamProjectListResult?> getTeamProjectList(int page, bool done, String direction, String field) async {
+  Future<GetTeamProjectListResult?> getTeamProjectList(int page, bool done, String direction, String field, {String? cacheKey}) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
       'size': 10.toString(),
@@ -122,7 +122,9 @@ class ApiService extends CustomGetConnect implements GetxService {
     });
     if (!rp.isOk) return null;
 
-    sharedPreferences.setString(SharedPreferencesKeys.teamProjectJson, rp.bodyString!);
+    if (cacheKey != null) {
+      sharedPreferences.setString(cacheKey, rp.bodyString!);
+    }
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 

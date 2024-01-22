@@ -16,7 +16,7 @@ class HomeController extends GetxController {
     super.onInit();
     updateDDay();
 
-    String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectJson);
+    String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
     if (tpListCache != null) {
       tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
     }
@@ -39,7 +39,9 @@ class HomeController extends GetxController {
   }
   
   Future<void> updateTeamProjectList() async {
-    GetTeamProjectListResult? result = await Get.find<ApiService>().getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE');
+    GetTeamProjectListResult? result = await Get.find<ApiService>()
+        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE',
+            cacheKey: SharedPreferencesKeys.teamProjectListJson);
     if (result != null) {
       tpList.value = result;
     }

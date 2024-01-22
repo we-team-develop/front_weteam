@@ -106,5 +106,6 @@ class SharedPreferencesKeys {
   static const String dDayData = "dday_data";
 
   static const String weteamUserJson = "weteam_user_json";
-  static const String teamProjectJson = "team_project_json";
+  static const String teamProjectListJson = "team_project_list_json";
+  static const String teamProjectDoneListJson = "team_project_done_list_json";
 }
