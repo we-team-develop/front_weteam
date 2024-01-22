@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
+import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
@@ -236,6 +237,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
     if (success) {
       await Get.find<HomeController>().updateTeamProjectList();
       Get.back();
+      Get.find<TeamPlayController>().updateTeamProjectList();
     } else {
       setState(() {
         warningVisible = true;
