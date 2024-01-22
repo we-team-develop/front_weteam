@@ -108,4 +108,5 @@ class SharedPreferencesKeys {
   static const String weteamUserJson = "weteam_user_json";
   static const String teamProjectListJson = "team_project_list_json";
   static const String teamProjectDoneListJson = "team_project_done_list_json";
+  static const String teamProjectNotDoneListJson = "team_project_not_done_list_json";
 }
