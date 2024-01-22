@@ -83,7 +83,8 @@ class ProfileSettingPage extends StatelessWidget {
 
   Future<void> setProfile(int id) async {
     if (await Get.find<ApiService>().createUserProfiles(id)) {
-      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
+      await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
+      await sharedPreferences.setInt(SharedPreferencesKeys.userProfileIndex, id);
       Get.to(() => const App());
     } else {
       Get.snackbar("죄송합니다", "문제가 발생했습니다");

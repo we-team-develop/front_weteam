@@ -87,6 +87,16 @@ class ApiService extends CustomGetConnect implements GetxService {
     }
   }
 
+  Future<bool> changeUserProfiles(int imageIdx) async {
+    Response rp = await patch('/api/profiles/$imageIdx', {});
+    print(rp.statusCode);
+    if (rp.statusCode != 200) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   Future<bool> createTeamProject(String name, DateTime startedAt,
       DateTime endedAt, String explanation) async {
     Map data = {

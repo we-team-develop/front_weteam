@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,8 @@ class ProfileController extends GetxController {
     ImagePath.profile5,
     ImagePath.profile6,
   ]);
+
+
 
   var isSelected = List.generate(6, (index) => false).obs;
   RxBool isPushNotificationEnabled = false.obs;
@@ -62,6 +65,15 @@ class ProfileController extends GetxController {
       Get.find<AuthService>().user.value!.organization = organization;
     }
 
+    int? profile = getSelectedProfileId();
+    if (profile != null && Get.find<AuthService>().user.value!.profile != profile) {
+      if(await Get.find<ApiService>().changeUserProfiles(profile)) {
+        // 성공시
+        print('$profile !');
+        await sharedPreferences.setInt(SharedPreferencesKeys.userProfileIndex, profile);
+      }
+    }
+
     Get.find<AuthService>().user.value = await Get.find<ApiService>().getCurrentUser();
   }
 
@@ -74,6 +86,7 @@ class ProfileController extends GetxController {
     textController.addListener(() {
       textLength.value = textController.text.length;
     });
+    selectProfile(Get.find<AuthService>().user.value!.profile);
   }
 
   @override

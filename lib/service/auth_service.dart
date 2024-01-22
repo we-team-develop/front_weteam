@@ -39,6 +39,7 @@ class AuthService extends GetxService {
       }
     }
 
+    Get.put(ApiService());
     Get.find<ApiService>().getCurrentUser().then((value) {
       if (value != null) user.value = value;
     });

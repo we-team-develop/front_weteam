@@ -57,27 +57,7 @@ class MyPage extends GetView<MyController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 37.0.w),
-              FutureBuilder(
-                future: Get.find<ApiService>().getMyProfiles(),
-                builder: (context, snapshot) {
-                  // TODO:  ID 캐싱
-                  if (snapshot.hasData) {
-                    int? id = snapshot.data;
-                    if (id != null) {
-                      return ProfileImageWidget(id: id);
-                    }
-                  }
-
-                  return Container(
-                    width: 82.w,
-                    height: 82.h,
-                    decoration: const ShapeDecoration(
-                      color: Color(0xFFC4C4C4),
-                      shape: OvalBorder(),
-                    ),
-                  );
-                },
-              ),
+              Obx(() => ProfileImageWidget(id: Get.find<AuthService>().user.value?.profile ?? 0)),
               SizedBox(width: 33.w),
               Expanded(
                   child: Column(
