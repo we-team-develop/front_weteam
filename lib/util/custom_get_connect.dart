@@ -73,4 +73,27 @@ class CustomGetConnect extends GetConnect {
       decoder: decoder,
     );
   }
+
+  @override
+  Future<Response<T>> patch<T>(
+      String url,
+      dynamic body, {
+        String? contentType,
+        Map<String, String>? headers,
+        Map<String, dynamic>? query,
+        Decoder<T>? decoder,
+        Progress? uploadProgress,
+      }) async {
+    headers = await putTokenToHeaders(headers);
+
+    return await httpClient.patch<T>(
+      url,
+      body: body,
+      headers: headers,
+      contentType: contentType,
+      query: query,
+      decoder: decoder,
+      uploadProgress: uploadProgress,
+    );
+  }
 }
