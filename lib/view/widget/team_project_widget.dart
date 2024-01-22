@@ -107,7 +107,7 @@ class TeamProjectWidget extends StatelessWidget {
 
   Widget _dateWidget(String date) {
     return Text(
-      '2023.11.28~ 2024.12.08',
+      team.date,
       style: TextStyle(
         color: const Color(0xFF969696),
         fontSize: 7.sp,

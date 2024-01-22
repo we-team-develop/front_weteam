@@ -4,13 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
 
+import '../service/api_service.dart';
+
 class HomeController extends GetxController {
+  int teamProjectPage = 0;
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
+  final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
 
   @override
   void onInit() {
     super.onInit();
     updateDDay();
+
+    String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectJson);
+    if (tpListCache != null) {
+      tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
+    }
   }
 
   bool hasNewNotification() {
@@ -28,10 +37,17 @@ class HomeController extends GetxController {
     DDayData dDayData = DDayData.fromJson(data);
     this.dDayData.value = dDayData;
   }
-
-  bool isTeamListEmpty() {
-    return true; // false면 팀플 리스트 예시를 표시
+  
+  Future<void> updateTeamProjectList() async {
+    GetTeamProjectListResult? result = await Get.find<ApiService>().getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE');
+    if (result != null) {
+      tpList.value = result;
+    }
   }
+
+/*  bool isTeamListEmpty() {
+    return true; // false면 팀플 리스트 예시를 표시
+  }*/
 
   void popupDialog(Widget dialogWidget) { // TODO: 이게 여기 있어도 되나요
     showDialog(

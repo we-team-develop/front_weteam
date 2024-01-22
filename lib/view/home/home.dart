@@ -16,6 +16,12 @@ class Home extends GetView<HomeController> {
   const Home({super.key});
 
   @override
+  StatelessElement createElement() {
+    controller.updateTeamProjectList();
+    return super.createElement();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 0), child: _body());
   }
@@ -64,39 +70,41 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _getTeamProjectListBody() {
-    if (controller.isTeamListEmpty()) {
-      // 팀플 없으면
-      return _noTeamProjectWidget();
-    }
+    return Obx(() {
+      if (controller.tpList.value == null || controller.tpList.value!.projectList.isEmpty) {
+        // 팀플 없으면
+        return _noTeamProjectWidget();
+      }
 
-    return Expanded(
-        child: Column(
-      children: [
-        // Divider
-        SizedBox(height: 15.h),
-        const SizedBox(
-          height: 0.7,
-          width: double.infinity,
-          child: ColoredBox(
-            color: Color(0xFFD9D9D9),
-          ),
-        ),
-        SizedBox(height: 15.h),
+      return Expanded(
+          child: Column(
+            children: [
+              // Divider
+              SizedBox(height: 15.h),
+              const SizedBox(
+                height: 0.7,
+                width: double.infinity,
+                child: ColoredBox(
+                  color: Color(0xFFD9D9D9),
+                ),
+              ),
+              SizedBox(height: 15.h),
 
-        // 팀플 목록
-        Expanded(child: TeamProjectColumn(getTeamListExample())),
+              // 팀플 목록
+              Expanded(child: TeamProjectColumn(controller.tpList.value!.projectList)),
 
-        // 팀플 추가하기 버튼
-        SizedBox(height: 16.h),
-        _addTeamProjectBigButton(),
-        SizedBox(height: 16.h),
-      ],
-    ));
+              // 팀플 추가하기 버튼
+              SizedBox(height: 16.h),
+              _addTeamProjectBigButton(),
+              SizedBox(height: 16.h),
+            ],
+          ));
+    });
   }
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const DDayDialog()),
+      onTap: () => controller.popupDialog(const AddTeamDialog()),
       child: Container(
         width: 330.w,
         height: 49.h,

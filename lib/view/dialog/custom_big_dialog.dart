@@ -29,7 +29,7 @@ class CustomBigDialog extends StatelessWidget {
   }
 }
 
-class DateText extends StatelessWidget {
+/*class DateText extends StatelessWidget {
   const DateText({super.key});
 
   @override
@@ -45,4 +45,4 @@ class DateText extends StatelessWidget {
     );
   }
 
-}
+}*/

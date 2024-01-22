@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'dart:convert';
 
 import '../main.dart';
+import '../model/team_project.dart';
 import '../model/weteam_user.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
@@ -22,7 +23,8 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
       debugPrint(
-          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url
+              .toString()}");
       return null;
     }
 
@@ -33,7 +35,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       return null;
     }
 
-    sharedPreferences.setString(SharedPreferencesKeys.weteamUserJson ,json);
+    sharedPreferences.setString(SharedPreferencesKeys.weteamUserJson, json);
 
     return WeteamUser.fromJson(jsonDecode(json));
   }
@@ -58,7 +60,6 @@ class ApiService extends CustomGetConnect implements GetxService {
 
     int? statusCode = responseData['statusCode'] ?? rp.statusCode;
     if (statusCode == 200 || statusCode == 404 || statusCode == 500) {
-
       if (statusCode == 404) {
         return -1;
       }
@@ -86,15 +87,51 @@ class ApiService extends CustomGetConnect implements GetxService {
     }
   }
 
-  Future<bool> createTeamProject(String name, DateTime startedAt, DateTime endedAt, String explanation) async {
+  Future<bool> createTeamProject(String name, DateTime startedAt,
+      DateTime endedAt, String explanation) async {
     Map data = {
       'name': name,
-      'startedAt': "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
-      'endedAt': "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+      'startedAt': "${startedAt.year}-${startedAt.month.toString().padLeft(
+          2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+      'endedAt': "${endedAt.year}-${endedAt.month.toString().padLeft(
+          2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
     Response rp = await post('/api/projects', data);
     print(rp.bodyString);
     return rp.statusCode == 201;
+  }
+
+  Future<GetTeamProjectListResult?> getTeamProjectList(int page, bool done, String direction, String field) async {
+    Response rp = await get('/api/projects', query: {
+      'page': page.toString(),
+      'size': 10.toString(),
+      'done': done.toString(),
+      'direction': direction,
+      'field': field
+    });
+    if (!rp.isOk) return null;
+
+    sharedPreferences.setString(SharedPreferencesKeys.teamProjectJson, rp.bodyString!);
+    return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
+  }
+}
+
+class GetTeamProjectListResult {
+  final int totalPages;
+  final int totalElements;
+  final List<TeamProject> projectList;
+
+  const GetTeamProjectListResult(
+      {required this.totalPages, required this.totalElements, required this.projectList});
+
+  factory GetTeamProjectListResult.fromJson(Map data) {
+    List tpList = data['projectList'];
+    return GetTeamProjectListResult(totalPages: data['totalPages'],
+        totalElements: data['totalElements'],
+        projectList: List<TeamProject>.generate(
+            tpList.length, (index) => TeamProject.fromJson(tpList[index])
+        )
+    );
   }
 }

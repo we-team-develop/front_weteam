@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
@@ -234,6 +234,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
 
     bool success = await Get.find<ApiService>().createTeamProject(name, startTime, endTime, content);
     if (success) {
+      await Get.find<HomeController>().updateTeamProjectList();
       Get.back();
     } else {
       setState(() {

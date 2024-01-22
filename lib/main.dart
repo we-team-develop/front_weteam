@@ -92,7 +92,9 @@ class MyApp extends StatelessWidget {
 }
 
 class SharedPreferencesKeys {
-  static const String weteamUserJson = "weteam_user_json";
   static const String isRegistered = "is_registered";
   static const String dDayData = "dday_data";
+
+  static const String weteamUserJson = "weteam_user_json";
+  static const String teamProjectJson = "team_project_json";
 }
