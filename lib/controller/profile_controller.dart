@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 
 import '../service/auth_service.dart';
@@ -37,7 +38,7 @@ class ProfileController extends GetxController {
   }
 
   String _getUserOrganization() {
-    String? organization = Get.find<AuthService>().user?.organization;
+    String? organization = Get.find<AuthService>().user.value?.organization;
     if (organization == null || organization.trim().isEmpty) {
       return "";
     }
@@ -46,6 +47,22 @@ class ProfileController extends GetxController {
 
   void updateOrganization() {
     textController.text = _getUserOrganization();
+  }
+
+  // 소속
+  Future<void> saveProfiles() async {
+    String organization = textController.text;
+    if (_getUserOrganization() != organization) {
+      if (!await Get.find<ApiService>().setUserOraganization(organization)) {
+        // 한번 더 재시도
+        if (!await Get.find<ApiService>().setUserOraganization(organization)) {
+          Get.snackbar("죄송합니다", "소속을 변경하지 못했습니다");
+        }
+      }
+      Get.find<AuthService>().user.value!.organization = organization;
+    }
+
+    Get.find<AuthService>().user.value = await Get.find<ApiService>().getCurrentUser();
   }
 
   final TextEditingController textController = TextEditingController();

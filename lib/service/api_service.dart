@@ -115,6 +115,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     sharedPreferences.setString(SharedPreferencesKeys.teamProjectJson, rp.bodyString!);
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
+
+  Future<bool> setUserOraganization(String organization) async {
+    Response rp = await patch('/api/users/${Uri.encodeComponent(organization)}', {});
+    return rp.statusCode == 204;
+  }
 }
 
 class GetTeamProjectListResult {

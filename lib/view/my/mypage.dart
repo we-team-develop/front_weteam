@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/service/api_service.dart';
+import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/view/my/profile.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
@@ -111,15 +112,15 @@ class MyPage extends GetView<MyController> {
                     ],
                   ),
                   SizedBox(height: 5.h),
-                  Text(
-                    controller.getUserOrganization(),
-                    style: TextStyle(
-                      color: const Color(0xFF7E7E7E),
-                      fontSize: 10.sp,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
+                  Obx(() => Text(
+                      Get.find<AuthService>().user.value?.organization ?? '미입력',
+                      style: TextStyle(
+                        color: const Color(0xFF7E7E7E),
+                        fontSize: 10.sp,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )),
                 ],
               ))
             ],

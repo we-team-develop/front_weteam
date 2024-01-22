@@ -15,7 +15,7 @@ import 'package:flutter/cupertino.dart';
 class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
-  WeteamUser? user;
+  Rxn<WeteamUser> user = Rxn<WeteamUser>();
 
 
   @override
@@ -24,7 +24,7 @@ class AuthService extends GetxService {
     dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
     if (firebaseIdToken != null && userJson != null) {
       token = firebaseIdToken;
-      user = WeteamUser.fromJson(jsonDecode(userJson));
+      user.value = WeteamUser.fromJson(jsonDecode(userJson));
 
       String uid = FirebaseAuth.instance.currentUser!.uid;
       if (uid.startsWith('naver')) {
@@ -38,6 +38,10 @@ class AuthService extends GetxService {
         print("구글");
       }
     }
+
+    Get.find<ApiService>().getCurrentUser().then((value) {
+      if (value != null) user.value = value;
+    });
 
     super.onInit();
   }
@@ -60,7 +64,7 @@ class AuthService extends GetxService {
       token = await helper!.getToken();
       print(token);
       WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
-      this.user = user;
+      this.user.value = user;
 
       if (user != null) {
         debugPrint('반갑습니다 ${user.username}님');
@@ -93,7 +97,7 @@ class AuthService extends GetxService {
       if (!await helper!.logout()) return false; // 플랫폼별 로그아웃
       await FirebaseAuth.instance.signOut(); // firebase 로그아웃
       token = null;
-      user = null;
+      user.value = null;
 
       sharedPreferences.remove(SharedPreferencesKeys.weteamUserJson);
       sharedPreferences.remove(SharedPreferencesKeys.isRegistered);

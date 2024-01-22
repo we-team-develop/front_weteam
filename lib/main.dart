@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
+import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/firebase_options.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/util/mem_cache.dart';
@@ -56,6 +57,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   late Widget home;
+  String lastPage = '';
 
   MyApp({super.key});
 
@@ -85,6 +87,13 @@ class MyApp extends StatelessWidget {
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: home,
+              routingCallback: (v) {
+                if (v == null) return;
+                if (v.isBack == true && lastPage.contains("Profile")) {
+                  Get.find<ProfileController>().saveProfiles();
+                }
+                lastPage = v.current;
+              },
               debugShowCheckedModeBanner: false, // Debug 배너 없애기
               initialBinding: MainBindings(),
             ));
