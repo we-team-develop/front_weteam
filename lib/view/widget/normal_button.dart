@@ -23,7 +23,7 @@ class NormalButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: const Color(0xFFFFFFFF),
             fontSize: 10.sp,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.w700,

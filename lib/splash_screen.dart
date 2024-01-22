@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/login/login_main.dart';
 

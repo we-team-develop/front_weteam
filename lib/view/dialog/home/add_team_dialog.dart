@@ -27,7 +27,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
       mainAxisSize: MainAxisSize.min, // 이거 없으면 dialog가 엄청 길어요
       crossAxisAlignment: CrossAxisAlignment.center, // 중앙 정렬
       children: <Widget>[
-        CustomTextField(hint: "프로젝트명", maxLength: 20,),
+        const CustomTextField(hint: "프로젝트명", maxLength: 20,),
         const SizedBox(
           height: 12,
         ),
@@ -43,7 +43,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            DateText()
+            const DateText()
           ],
         ),
         const SizedBox(
@@ -61,7 +61,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            DateText()
+            const DateText()
           ],
         ),
         const SizedBox(
