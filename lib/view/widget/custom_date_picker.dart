@@ -21,7 +21,11 @@ class CustomDatePicker extends StatefulWidget {
 class _CustomDatePickerState extends State<CustomDatePicker> {
   final Rx<DateTime> _current = DateTime.now().obs;
 
-
+  @override
+  void initState() {
+    _current.value = widget.init;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

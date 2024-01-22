@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
@@ -32,7 +34,7 @@ class Home extends GetView<HomeController> {
               hasScrollBody: false,
               child: Column(
                 children: [
-                  Obx(() => DDayWidget(hasDDay: controller.hasDDay.value)),
+                  Obx(() => DDayWidget(dDayData: controller.dDayData.value)),
                   _getTeamProjectListBody(),
                   _bottomBanner(),
                   SizedBox(height: 15.h)
@@ -95,7 +97,7 @@ class Home extends GetView<HomeController> {
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const AddDDayDialog()),
+      onTap: () => controller.popupDialog(const DDayDialog()),
       child: Container(
         width: 330.w,
         height: 49.h,
@@ -276,8 +278,8 @@ class Home extends GetView<HomeController> {
 }
 
 class DDayWidget extends StatefulWidget {
-  final bool hasDDay;
-  const DDayWidget({super.key, required this.hasDDay});
+  final DDayData? dDayData;
+  const DDayWidget({super.key, this.dDayData});
 
   @override
   State<StatefulWidget> createState() {
@@ -292,8 +294,8 @@ class _DDayWidgetState extends State<DDayWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.hasDDay) {
-      dday = Get.find<HomeController>().getDDay();
+    if (widget.dDayData != null) {
+      dday = widget.dDayData;
       updateLeftDays();
       return _ddayWidget();
     } else {
@@ -306,14 +308,16 @@ class _DDayWidgetState extends State<DDayWidget> {
 
     String tmp = "D";
     String numStr = "";
-    DateTime now = DateTime.now();
-    Duration diff = dday!.end.difference(now);
+    DateTime now = DateTime.now().copyWith(hour: 0, minute: 0,second: 0, microsecond: 0, millisecond: 0);
 
-    numStr = diff.inDays.toString().padLeft(3, '0');
-    bool hasMoreDays = dday!.end.millisecondsSinceEpoch - now.millisecondsSinceEpoch > 0;
+    int diffDays = dday!.end.difference(now).inDays;
+    bool hasMoreDays = diffDays > 0;
+    if (diffDays < 0) diffDays *= -1; // 절댓값
+
+    numStr = diffDays.toString().padLeft(3, '0');
     if (hasMoreDays) {
       tmp += " - $numStr";
-    } else if (diff.inDays == 0) {
+    } else if (diffDays == 0) {
       tmp += "-DAY";
     } else {
       tmp += " + $numStr";
@@ -385,7 +389,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             context: context,
                                             builder:
                                                 (BuildContext context) {
-                                              return const AddDDayDialog(); // TODO: D-Day 수정 Dialog 만들기
+                                              return DDayDialog(dDayData: Get.find<HomeController>().dDayData.value); // TODO: D-Day 수정 Dialog 만들기
                                             });
                                       },
                                       child: SizedBox(
@@ -540,7 +544,7 @@ class _DDayWidgetState extends State<DDayWidget> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 30.h),
-            NormalButton(text: '중요 일정 추가하기', onTap: () => Get.find<HomeController>().popupDialog(const AddDDayDialog())),
+            NormalButton(text: '중요 일정 추가하기', onTap: () => Get.find<HomeController>().popupDialog(const DDayDialog())),
           ],
         ),
       ),

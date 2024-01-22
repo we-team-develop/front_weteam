@@ -11,16 +11,18 @@ import 'package:get/get.dart';
 
 import '../../widget/custom_date_picker.dart';
 
-class AddDDayDialog extends StatefulWidget {
-  const AddDDayDialog({super.key});
+class DDayDialog extends StatefulWidget {
+  final DDayData? dDayData;
+  const DDayDialog({super.key, this.dDayData});
 
   @override
   State<StatefulWidget> createState() {
-    return _AddDDayDialogState();
+    return _DDayDialogState();
   }
 }
 
-class _AddDDayDialogState extends State<AddDDayDialog> {
+class _DDayDialogState extends State<DDayDialog> {
+  String title = "";
   TextEditingController teController = TextEditingController();
   bool isSaving = false;
   bool warningVisible = false;
@@ -28,10 +30,25 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
   DateTime startTime = DateTime.now();
   DateTime endTime = DateTime.now();
 
+
+  @override
+  void initState() {
+    if (widget.dDayData != null) {
+      title = '디데이 수정';
+      teController.text = widget.dDayData!.name;
+      startTime = widget.dDayData!.start;
+      endTime = widget.dDayData!.end;
+    } else { // 디데이 없음
+      title = '디데이 추가';
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBigDialog(
-        title: '디데이 추가',
+        title: title,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -58,7 +75,7 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
                         CustomDatePicker(
                             start: DateTime(1980, 1, 1),
                             end: DateTime(2090, 12, 31),
-                            init: DateTime.now(),
+                            init: startTime,
                             onChangeListener: (v) {
                               startTime = v;
                             }),
@@ -89,7 +106,7 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
                         CustomDatePicker(
                             start: DateTime(1980, 1, 1),
                             end: DateTime(2090, 12, 31),
-                            init: DateTime.now(),
+                            init: endTime,
                             onChangeListener: (v) {
                               endTime = v;
                             }),
@@ -165,8 +182,8 @@ class _AddDDayDialogState extends State<AddDDayDialog> {
 
     await sharedPreferences.setString(SharedPreferencesKeys.dDayData, jsonEncode(map));
     HomeController hc = Get.find<HomeController>();
-    hc.dDayData = hc.getDDay();
-    hc.hasDDay.value = hc.dDayData != null;
+    hc.updateDDay();
+    Get.find<HomeController>().update();
     Get.back();
   }
 }

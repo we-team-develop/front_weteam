@@ -5,27 +5,28 @@ import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  Rx<bool> hasDDay = false.obs;
-  DDayData? dDayData;
+  final Rxn<DDayData> dDayData = Rxn<DDayData>();
 
   @override
   void onInit() {
     super.onInit();
-    dDayData = getDDay();
-    hasDDay.value = dDayData != null;
+    updateDDay();
   }
 
   bool hasNewNotification() {
     return false;
   }
 
-  DDayData? getDDay() {
+  void updateDDay() {
     String? json = sharedPreferences.getString(SharedPreferencesKeys.dDayData);
-    if (json == null) return null;
+    if (json == null) {
+      this.dDayData.value = null;
+      return;
+    }
 
     Map data = jsonDecode(json);
     DDayData dDayData = DDayData.fromJson(data);
-    return dDayData;
+    this.dDayData.value = dDayData;
   }
 
   bool isTeamListEmpty() {
