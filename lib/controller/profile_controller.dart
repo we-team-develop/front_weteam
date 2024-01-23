@@ -86,7 +86,6 @@ class ProfileController extends GetxController {
     textController.addListener(() {
       textLength.value = textController.text.length;
     });
-    selectProfile(Get.find<AuthService>().user.value!.profile);
   }
 
   @override

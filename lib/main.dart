@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home = Get.find<AuthService>().user == null ? const LoginMain() : const App();
+    home = Get.find<AuthService>().user.value == null ? const LoginMain() : const App();
 
     return super.createElement();
   }

@@ -92,7 +92,7 @@ class LoginMain extends StatelessWidget {
     // TODO: 로그인 버튼 중복 클릭 방지
     LoginResult result = await Get.find<AuthService>().login(helper, checkNewUser: true);
     if (result.isSuccess) {
-      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, result.isNewUser);
+      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, !result.isNewUser);
       if (result.isNewUser) {
         Get.offAll(() => const SignUpCompleted());
       } else {
