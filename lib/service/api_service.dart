@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:front_weteam/model/weteam_notification.dart';
 import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -132,6 +133,26 @@ class ApiService extends CustomGetConnect implements GetxService {
   Future<bool> setUserOraganization(String organization) async {
     Response rp = await patch('/api/users/${Uri.encodeComponent(organization)}', {});
     return rp.statusCode == 204;
+  }
+
+  Future<List<WeteamNotification>?> getAlarms(int page) async {
+    Map<String, dynamic> query = {
+      'page': page.toString(),
+      'size': 20.toString(),
+      'sort': 'asc'
+    };
+
+    Response rp = await get('/api/alarms', query: query);
+    if (!rp.isOk) return null;
+
+    List alarmList = jsonDecode(rp.bodyString ?? '{}')['alarmList'] ?? [];
+    List<WeteamNotification> ret = [];
+
+    for (var element in alarmList) {
+      ret.add(WeteamNotification.fromJson(element));
+    }
+
+    return ret;
   }
 }
 
