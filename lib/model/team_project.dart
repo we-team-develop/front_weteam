@@ -19,6 +19,7 @@ class TeamProject {
         id: data['id'],
         title: data['name'],
         description: data['explanation'],
+        date: "${data['startedAt']} ~ ${data['endedAt']}",
         memberSize: data['headCount']);
   }
 }

@@ -125,6 +125,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     if (cacheKey != null) {
       sharedPreferences.setString(cacheKey, rp.bodyString!);
     }
+    print(rp.bodyString);
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
