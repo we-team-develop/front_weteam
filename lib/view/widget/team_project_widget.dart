@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
+import 'package:front_weteam/view/teamplay/team_project_detail_page.dart';
+import 'package:get/get.dart';
 
 class TeamProjectWidget extends StatelessWidget {
   final TeamProject team;
@@ -11,38 +13,37 @@ class TeamProjectWidget extends StatelessWidget {
       {super.key});
   @override
   Widget build(BuildContext context) {
-    return _body();
-  }
-
-  Widget _body() {
-    return SizedBox(
-      height: 53.h,
-      child: Column(
-        children: [
-          Expanded(
-              child: Row(
-            children: [
-              _teamImgWidget(team.img),
-              SizedBox(width: 16.w),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _teamTitleWidget(team.title),
-                  _teamDescriptionWidget(team.description),
-                  Row(
-                    children: [
-                      _teamMemberCountWidget(team.memberSize),
-                      SizedBox(width: 31.w),
-                      _dateWidget(team.date),
-                    ],
-                  )
-                ],
-              )
-            ],
-          )),
-          SizedBox(height: 12.h),
-        ],
+    return GestureDetector(
+      onTap: () => Get.to(TeamProjectDetailPage(team)),
+      behavior: HitTestBehavior.translucent,
+      child: SizedBox(
+        height: 53.h,
+        child: Column(
+          children: [
+            Expanded(
+                child: Row(
+                  children: [
+                    _teamImgWidget(team.img),
+                    SizedBox(width: 16.w),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _teamTitleWidget(team.title),
+                        _teamDescriptionWidget(team.description),
+                        Row(
+                          children: [
+                            _teamMemberCountWidget(team.memberSize),
+                            SizedBox(width: 31.w),
+                            _dateWidget(team.date),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +65,7 @@ class TeamProjectWidget extends StatelessWidget {
       title,
       style: TextStyle(
         color: const Color(0xFF333333),
-        fontSize: 11.sp,
+        fontSize: 12.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
         height: 0,
@@ -77,7 +78,7 @@ class TeamProjectWidget extends StatelessWidget {
       desc,
       style: TextStyle(
         color: const Color(0xFF333333),
-        fontSize: 7.sp,
+        fontSize: 9.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,
@@ -87,7 +88,7 @@ class TeamProjectWidget extends StatelessWidget {
 
   Widget _teamMemberCountWidget(int memberSize) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.baseline,
+      crossAxisAlignment: CrossAxisAlignment.center,
       textBaseline: TextBaseline.ideographic,
       children: [
         Image.asset(width: 6.w, height: 8.h, ImagePath.icGroup),
@@ -96,7 +97,7 @@ class TeamProjectWidget extends StatelessWidget {
           "$memberSize",
           style: TextStyle(
             color: const Color(0xFF333333),
-            fontSize: 7.sp,
+            fontSize: 9.sp,
             fontFamily: 'NanumSquareNeo',
             fontWeight: FontWeight.w700,
           ),
@@ -110,7 +111,7 @@ class TeamProjectWidget extends StatelessWidget {
       team.date,
       style: TextStyle(
         color: const Color(0xFF969696),
-        fontSize: 7.sp,
+        fontSize: 9.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,
