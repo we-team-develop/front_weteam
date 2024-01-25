@@ -1,3 +1,5 @@
+import 'package:front_weteam/model/weteam_user.dart';
+
 class TeamProject {
   final int id;
   final String img;
@@ -5,6 +7,8 @@ class TeamProject {
   final String description;
   final int memberSize;
   final String date;
+  final bool done;
+  final WeteamUser host;
 
   const TeamProject(
       {this.id = -1,
@@ -12,7 +16,9 @@ class TeamProject {
       this.title = "",
       this.description = "",
       this.memberSize = -1, // 입력 안 된 경우를 구분할 수 있어야 함
-      this.date = ""});
+      this.date = "",
+        this.done = false,
+      required this.host});
 
   factory TeamProject.fromJson(Map data) {
     return TeamProject(
@@ -20,6 +26,8 @@ class TeamProject {
         title: data['name'],
         description: data['explanation'],
         date: "${data['startedAt']} ~ ${data['endedAt']}",
-        memberSize: data['headCount']);
+        memberSize: data['headCount'],
+        done: data['done'],
+        host: WeteamUser.fromJson(data['host'] ?? {}));
   }
 }

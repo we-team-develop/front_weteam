@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
 import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
+import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
 import 'package:front_weteam/view/home/notification_page.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/normal_button.dart';
@@ -198,36 +197,6 @@ class Home extends GetView<HomeController> {
           ),
         ));
   }
-
-  List<TeamProject> getTeamListExample() {
-     return [
-      const TeamProject(
-          img: "",
-          title: '모션그래픽기획및제작',
-          description: '기말 팀 영상 제작',
-          memberSize: 4,
-          date: '2023.10.05~ 2024.12.08'),
-      const TeamProject(
-          img: "",
-          title: '실감미디어콘텐츠개발',
-          description: '기말 팀 프로젝트 : Unity AR룰러앱 제작',
-          memberSize: 4,
-          date: '2023.10.05~ 2024.12.19'),
-      const TeamProject(
-          img: "",
-          title: '머신러닝의이해와실제',
-          description: '머신러닝 활용 프로그램 제작 프로젝트',
-          memberSize: 2,
-          date: '2023.11.28~ 2024.12.08'),
-      const TeamProject(
-          img: "",
-          title: '빽스타2기',
-          description: '빽다방서포터즈 팀작업',
-          memberSize: 4,
-          date: '2023.07.01~ 2024.10.01'),
-    ];
-  }
-
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,
