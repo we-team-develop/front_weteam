@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
@@ -37,13 +38,20 @@ Future<void> main() async {
 
   // SharedPreferences 로드 대기
   sharedPreferences = await sharedPreferencesFuture;
-  
+
   // Firebase 초기화 대기
   await firebaseFuture;
-  bool? isRegistered = sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
+  await _init();
+
+  runApp(Phoenix(child: MyApp()));
+}
+
+Future<void> _init() async {
+  bool? isRegistered =
+      sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
   if (isRegistered == true) {
-    String? weteamUserJson = sharedPreferences.getString(
-        SharedPreferencesKeys.weteamUserJson);
+    String? weteamUserJson =
+        sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
 
     User? fbUser = FirebaseAuth.instance.currentUser;
     if (fbUser != null && weteamUserJson != null) {
@@ -51,8 +59,6 @@ Future<void> main() async {
       MemCache.put(MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
     }
   }
-
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -109,4 +115,12 @@ class SharedPreferencesKeys {
   static const String teamProjectListJson = "team_project_list_json";
   static const String teamProjectDoneListJson = "team_project_done_list_json";
   static const String teamProjectNotDoneListJson = "team_project_not_done_list_json";
+}
+
+Future<void> resetApp() async {
+  Get.deleteAll(force: true);
+  MemCache.clear();
+  _init();
+  Phoenix.rebirth(Get.context!);
+  Get.reset();
 }

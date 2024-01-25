@@ -16,16 +16,28 @@ class ProfileController extends GetxController {
     ImagePath.profile6,
   ]);
 
-
-
   var isSelected = List.generate(6, (index) => false).obs;
+
+  RxList<Color> backgroundColors = RxList<Color>([
+    const Color(0xFF9C879E),
+    const Color(0xFF94A4F9),
+    const Color(0xFFFFC7EF),
+    const Color(0xFF87B3DB),
+    const Color(0xFFF9FB8C),
+    const Color(0xFFED9696),
+  ]);
+
   RxBool isPushNotificationEnabled = false.obs;
 
   void selectProfile(int index) {
-    for (int i = 0; i < isSelected.length; i++) {
-      isSelected[i] = i == index;
-    }
-    isSelected.refresh();
+    Future.microtask(() {
+      for (int i = 0; i < isSelected.length; i++) {
+        isSelected[i] = i == index;
+      }
+      sharedPreferences.setInt(
+          SharedPreferencesKeys.userProfileIndex, index);
+      isSelected.refresh();
+    });
   }
 
   int? getSelectedProfileId() {
@@ -66,15 +78,18 @@ class ProfileController extends GetxController {
     }
 
     int? profile = getSelectedProfileId();
-    if (profile != null && Get.find<AuthService>().user.value!.profile != profile) {
-      if(await Get.find<ApiService>().changeUserProfiles(profile)) {
+    if (profile != null &&
+        Get.find<AuthService>().user.value!.profile != profile) {
+      if (await Get.find<ApiService>().changeUserProfiles(profile)) {
         // 성공시
         print('$profile !');
-        await sharedPreferences.setInt(SharedPreferencesKeys.userProfileIndex, profile);
+        await sharedPreferences.setInt(
+            SharedPreferencesKeys.userProfileIndex, profile);
       }
     }
 
-    Get.find<AuthService>().user.value = await Get.find<ApiService>().getCurrentUser();
+    Get.find<AuthService>().user.value =
+        await Get.find<ApiService>().getCurrentUser();
   }
 
   final TextEditingController textController = TextEditingController();

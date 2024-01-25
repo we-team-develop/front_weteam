@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/app.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/service/api_service.dart';
@@ -68,7 +67,7 @@ class ProfileSettingPage extends StatelessWidget {
                     Get.snackbar("", "사용할 프로필 이미지를 선택해주세요");
                     return;
                   }
-                  setProfile(id);
+                  setProfile(id, context);
                 },
                 child: Image.asset(
                   ImagePath.startweteambutton,
@@ -81,11 +80,11 @@ class ProfileSettingPage extends StatelessWidget {
     );
   }
 
-  Future<void> setProfile(int id) async {
+  Future<void> setProfile(int id, BuildContext context) async {
     if (await Get.find<ApiService>().createUserProfiles(id)) {
       await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
       await sharedPreferences.setInt(SharedPreferencesKeys.userProfileIndex, id);
-      Get.to(() => const App());
+      await resetApp();
     } else {
       Get.snackbar("죄송합니다", "문제가 발생했습니다");
     }

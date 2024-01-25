@@ -14,6 +14,12 @@ class MyPage extends GetView<MyController> {
   const MyPage({super.key});
 
   @override
+  StatelessElement createElement() {
+    Get.put(MyController());
+    return super.createElement();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       physics: const ClampingScrollPhysics(),
@@ -56,7 +62,8 @@ class MyPage extends GetView<MyController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 37.0.w),
-              Obx(() => ProfileImageWidget(id: Get.find<AuthService>().user.value?.profile ?? 0)),
+              Obx(() => ProfileImageWidget(
+                  id: Get.find<AuthService>().user.value?.profile ?? 0)),
               SizedBox(width: 33.w),
               Expanded(
                   child: Column(
@@ -92,14 +99,15 @@ class MyPage extends GetView<MyController> {
                   ),
                   SizedBox(height: 5.h),
                   Obx(() => Text(
-                      Get.find<AuthService>().user.value?.organization ?? '미입력',
-                      style: TextStyle(
-                        color: const Color(0xFF7E7E7E),
-                        fontSize: 10.sp,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )),
+                        Get.find<AuthService>().user.value?.organization ??
+                            '미입력',
+                        style: TextStyle(
+                          color: const Color(0xFF7E7E7E),
+                          fontSize: 10.sp,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )),
                 ],
               ))
             ],
@@ -116,10 +124,11 @@ class MyPage extends GetView<MyController> {
         children: [
           _bottomContainerTitle(),
           Obx(() {
-            if (controller.tpList.value != null && controller.tpList.value!.projectList.isNotEmpty) {
+            if (controller.tpList.value != null &&
+                controller.tpList.value!.projectList.isNotEmpty) {
               return _bottomContainerTeamListWidget();
             } else {
-             return _bottomContainerEmpty();
+              return _bottomContainerEmpty();
             }
           }),
         ],

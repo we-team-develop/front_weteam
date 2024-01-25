@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
-import 'package:front_weteam/view/login/login_main.dart';
 import 'package:front_weteam/view/widget/custom_switch.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
@@ -227,7 +227,7 @@ class Profile extends GetView<ProfileController> {
     bool result = await Get.find<AuthService>().withdrawal();
     if (result) {
       // 탈퇴 성공
-      Get.offAll(() => const LoginMain());
+      resetApp();
     } else {
       // 탈퇴 실패
       Get.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
@@ -238,7 +238,7 @@ class Profile extends GetView<ProfileController> {
     bool result = await Get.find<AuthService>().logout();
     if (result) {
       // 로그아웃 성공
-      Get.offAll(() => const LoginMain());
+      resetApp();
     } else {
       // 로그아웃 실패
       Get.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
