@@ -51,7 +51,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const _CustomDivider(),
-                    Obx(() => TeamProjectWidget(controller.teama.value)),
+                    Obx(() => TeamProjectWidget(controller.tp.value)),
                     const _CustomDivider(),
                     Obx(() {
                       if (controller.userList.isEmpty) {
@@ -104,7 +104,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
   }
 
   bool amIOwner() {
-    return controller.teama.value.host.id == projectUser.user.id;
+    return controller.tp.value.host.id == projectUser.user.id;
   }
 
   @override
@@ -233,7 +233,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
       children: [
         Visibility(
             // 어드민 전용 설정
-            visible: controller.teama.value.host.id ==
+            visible: controller.tp.value.host.id ==
                 Get.find<AuthService>().user.value!.id,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +249,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 ),
                 SizedBox(height: 14.h),
                 Visibility(
-                    visible: controller.teama.value.done,
+                    visible: controller.tp.value.done,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -257,7 +257,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                       ],
                     )),
                 Visibility(
-                    visible: !controller.teama.value.done,
+                    visible: !controller.tp.value.done,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -268,13 +268,13 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return TeamProjectDialog(
-                                        teamData: controller.teama.value);
+                                        teamData: controller.tp.value);
                                   });
                             }),
                         _TextButton(
                             text: '강제 퇴장 시키기',
                             onTap: () {
-                              if (controller.teama.value.memberSize == 1) {
+                              if (controller.tp.value.memberSize == 1) {
                                 Get.snackbar("", '강제 퇴장할 팀원이 없습니다');
                                 return;
                               }
@@ -289,7 +289,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
             )),
         Visibility(
             // 공통
-            visible: !controller.teama.value.done,
+            visible: !controller.tp.value.done,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -473,7 +473,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
           behavior: HitTestBehavior.translucent,
           onTap: () async {
             bool result = await Get.find<ApiService>()
-                .changeUserTeamProjectRole(controller.teama.value, tec.text);
+                .changeUserTeamProjectRole(controller.tp.value, tec.text);
             ;
             if (result) {
               Get.back();

@@ -274,7 +274,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       widget.teamData!.endedAt = endTime;*/
       success = await Get.find<ApiService>().editTeamProject(newTp);
       if (success) {
-        Get.find<TeamProjectDetailPageController>().teama.value = newTp;
+        Get.find<TeamProjectDetailPageController>().tp.value = newTp;
       }
     }
     if (success) {
