@@ -192,6 +192,11 @@ class ApiService extends CustomGetConnect implements GetxService {
 
     return rp.statusCode == 204;
   }
+
+  Future<bool> kickUserFromTeamProject(int teamUserId) async {
+    Response rp = await delete('/api/project-users/$teamUserId}');
+    return rp.statusCode == 204;
+  }
 }
 
 class GetTeamProjectListResult {
