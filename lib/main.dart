@@ -41,7 +41,7 @@ Future<void> main() async {
 
   // Firebase 초기화 대기
   await firebaseFuture;
-  _init();
+  await _init();
 
   runApp(Phoenix(child: MyApp()));
 }
