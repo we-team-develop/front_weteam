@@ -54,9 +54,9 @@ class ProfileController extends GetxController {
   Future<void> saveProfiles() async {
     String organization = textController.text;
     if (_getUserOrganization() != organization) {
-      if (!await Get.find<ApiService>().setUserOraganization(organization)) {
+      if (!await Get.find<ApiService>().setUserOrganization(organization)) {
         // 한번 더 재시도
-        if (!await Get.find<ApiService>().setUserOraganization(organization)) {
+        if (!await Get.find<ApiService>().setUserOrganization(organization)) {
           Get.snackbar("죄송합니다", "소속을 변경하지 못했습니다");
         }
       }
@@ -87,7 +87,6 @@ class ProfileController extends GetxController {
     textController.addListener(() {
       textLength.value = textController.text.length;
     });
-    selectProfile(Get.find<AuthService>().user.value!.profile);
   }
 
   @override

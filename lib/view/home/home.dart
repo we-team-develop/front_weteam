@@ -7,6 +7,7 @@ import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
 import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
+import 'package:front_weteam/view/home/notification_page.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:front_weteam/view/widget/team_project_column.dart';
@@ -61,12 +62,15 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _bellIcon() {
-    return Image.asset(
-            width: 24.65.w,
-            height: 22.99.h,
-            controller.hasNewNotification()
-                ? ImagePath.icBellNew
-                : ImagePath.icBell);
+    return GestureDetector(
+      onTap: () => Get.to(() => const NotificationPage()),
+      child: Image.asset(
+          width: 24.65.w,
+          height: 22.99.h,
+          controller.hasNewNotification()
+              ? ImagePath.icBellNew
+              : ImagePath.icBell)
+    );
   }
 
   Widget _getTeamProjectListBody() {

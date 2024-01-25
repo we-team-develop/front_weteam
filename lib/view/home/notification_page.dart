@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/notification_controller.dart';
+import 'package:front_weteam/model/weteam_notification.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+class NotificationPage extends GetView<NotificationController> {
+  const NotificationPage({super.key});
+
+  @override
+  StatelessElement createElement() {
+    Get.put(NotificationController());
+    return super.createElement();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+      body: Column(
+        children: [
+          SizedBox(height: 16.h),
+          const Center(
+            child: Text(
+              '알림',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Expanded(
+              child: PagedListView<int, WeteamNotification>(
+            pagingController: controller.getPagingController(),
+            builderDelegate: PagedChildBuilderDelegate<WeteamNotification>(
+              itemBuilder: (context, item, index) =>
+                  NotificationContainer(item),
+              noItemsFoundIndicatorBuilder: (context) => const Center(
+                child: Text(
+                  "아직 받은 알림이 없어요!",
+                  style: TextStyle(fontFamily: "NanumSquareNeo"),
+                ),
+              ),
+            ),
+            prototypeItem: const NotificationContainer(
+                WeteamNotification(id: 0, status: "", date: "", read: false)),
+          )),
+        ],
+      ),
+    ));
+  }
+}
+
+class NotificationContainer extends StatelessWidget {
+  final WeteamNotification notification;
+
+  const NotificationContainer(this.notification, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
+      color: notification.read ? Colors.transparent : const Color(0xFFFFF2EF),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            notification.getTitle(),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14.sp,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            notification.getContent(),
+            style: TextStyle(
+              color: const Color(0xFF333333),
+              fontSize: 11.sp,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          SizedBox(height: 5.h),
+          Text(
+            notification.date,
+            style: TextStyle(
+              color: const Color(0xFF8B8B8B),
+              fontSize: 10.sp,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w300,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
