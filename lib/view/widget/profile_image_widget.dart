@@ -57,18 +57,22 @@ class ProfileImageWidget extends StatefulWidget {
 class _ProfileImageWidgetState extends State<ProfileImageWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: circleSize,
-      height: circleSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.grey[300],
-        image: DecorationImage(
-          image: AssetImage(Get.find<ProfileController>().imagePaths[widget.id]),
-          fit: BoxFit.cover,
-        ),
-      ),
+    return GetBuilder<ProfileController>(
+      builder: (controller) {
+        Color backgroundColor = controller.backgroundColors[widget.id];
+        return Container(
+          width: circleSize,
+          height: circleSize,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: backgroundColor,
+            image: DecorationImage(
+              image: AssetImage(controller.imagePaths[widget.id]),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      },
     );
   }
-
 }
