@@ -17,15 +17,27 @@ class ProfileController extends GetxController {
   ]);
 
   var isSelected = List.generate(6, (index) => false).obs;
+
+  RxList<Color> backgroundColors = RxList<Color>([
+    const Color(0xFF9C879E),
+    const Color(0xFF94A4F9),
+    const Color(0xFFFFC7EF),
+    const Color(0xFF87B3DB),
+    const Color(0xFFF9FB8C),
+    const Color(0xFFED9696),
+  ]);
+
   RxBool isPushNotificationEnabled = false.obs;
 
   void selectProfile(int index) {
-    for (int i = 0; i < isSelected.length; i++) {
-      isSelected[i] = i == index;
-    }
-    sharedPreferences.setInt(
-        SharedPreferencesKeys.userProfileIndex, index);
-    isSelected.refresh();
+    Future.microtask(() {
+      for (int i = 0; i < isSelected.length; i++) {
+        isSelected[i] = i == index;
+      }
+      sharedPreferences.setInt(
+          SharedPreferencesKeys.userProfileIndex, index);
+      isSelected.refresh();
+    });
   }
 
   int? getSelectedProfileId() {
