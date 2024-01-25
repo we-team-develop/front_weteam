@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
@@ -28,9 +29,11 @@ class _TeamProjectColumnState extends State<TeamProjectColumn> {
 
   List<Widget> _buildTeamProjectWidgetList() {
     List<Widget> ret = [];
+    Widget gap = SizedBox(height: 12.h);
 
     for (int i = 0; i < widget.tpList.length; i++) {
       ret.add(TeamProjectWidget(widget.tpList[i]));
+      ret.add(gap);
     }
 
     return ret;

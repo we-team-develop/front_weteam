@@ -4,8 +4,9 @@ import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
+
+import '../widget/team_project_column.dart';
 
 class TeamPlay extends GetView<TeamPlayController> {
   const TeamPlay({super.key});
@@ -80,10 +81,7 @@ class TeamPlay extends GetView<TeamPlayController> {
             }
 
             List<TeamProject> tpList = controller.tpList.value!.projectList;
-            return Column(
-              children: List<Widget>.generate(
-                  tpList.length, (index) => TeamProjectWidget(tpList[index])),
-            );
+            return TeamProjectColumn(tpList);
           }))
     ]));
   }
