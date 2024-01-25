@@ -4,16 +4,17 @@ import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 
 class TeamProjectDetailPageController extends GetxController {
-  final TeamProject team;
+  late final Rx<TeamProject> teama;
   Rx<List<WeteamProjectUser>> userList = Rx<List<WeteamProjectUser>>([]);
 
-  TeamProjectDetailPageController(this.team) {
+  TeamProjectDetailPageController(TeamProject team) {
+    teama = team.obs;
     fetchUserList();
   }
 
   // 성공 여부 반환
   Future<bool> fetchUserList() async {
-    List<WeteamProjectUser>? list = await Get.find<ApiService>().getProjectUsers(team.id);
+    List<WeteamProjectUser>? list = await Get.find<ApiService>().getProjectUsers(teama.value.id);
     if (list == null || list.isEmpty) return false; // 비어있으면 서버 오류로 판단
 
     userList.value = list;

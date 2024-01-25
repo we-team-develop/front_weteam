@@ -4,6 +4,7 @@ import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_project_user.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
@@ -47,7 +48,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const _CustomDivider(),
-                        TeamProjectWidget(tp),
+                        Obx(() => TeamProjectWidget(controller.teama.value)),
                         const _CustomDivider(),
 
                         Obx(() {
@@ -130,12 +131,8 @@ class _UserContainer extends StatelessWidget {
           ),
         ),
         Visibility(
-            visible: Get
-                .find<TeamProjectDetailPageController>()
-                .team
-                .host
-                .id ==
-                projectUser.user.id,
+            visible: Get.find<TeamProjectDetailPageController>()
+                    .teama.value.host.id == projectUser.user.id,
             child: Positioned(
                 right: 0,
                 left: 0,
@@ -197,7 +194,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
 
       children: [
         Visibility( // 어드민 전용 설정
-            visible: controller.team.host.id == Get
+            visible: controller.teama.value.host.id == Get
                 .find<AuthService>()
                 .user
                 .value!
@@ -216,7 +213,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 ),
                 SizedBox(height: 14.h),
                 Visibility(
-                    visible: controller.team.done,
+                    visible: controller.teama.value.done,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -224,11 +221,17 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                       ],
                     )),
                 Visibility(
-                    visible: !controller.team.done,
+                    visible: !controller.teama.value.done,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _TextButton(text: '팀플 정보 수정', onTap: () {}),
+                        _TextButton(text: '팀플 정보 수정', onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return TeamProjectDialog(teamData: controller.teama.value);
+                              });
+                        }),
                         _TextButton(text: '강제 퇴장 시키기', onTap: () {}),
                         _TextButton(text: '호스트 권한 넘기기', onTap: () {}),
                         SizedBox(height: 23.h)
@@ -239,7 +242,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
             )),
 
         Visibility( // 공통
-            visible: !controller.team.done,
+            visible: !controller.teama.value.done,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

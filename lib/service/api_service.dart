@@ -104,14 +104,26 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = {
       'name': name,
       'startedAt':
-          "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+      "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
       'endedAt':
-          "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+      "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
     Response rp = await post('/api/projects', data);
-    print(rp.bodyString);
     return rp.statusCode == 201;
+  }
+
+  Future<bool> editTeamProject(TeamProject tp) async {
+    Map data = {
+      'name': tp.title,
+      'startedAt':
+      "${tp.startedAt.year}-${tp.startedAt.month.toString().padLeft(2, '0')}-${tp.startedAt.day.toString().padLeft(2, '0')}",
+      'endedAt':
+      "${tp.endedAt.year}-${tp.endedAt.month.toString().padLeft(2, '0')}-${tp.endedAt.day.toString().padLeft(2, '0')}",
+      'explanation': tp.description
+    };
+    Response rp = await patch('/api/projects/${tp.id}', data);
+    return rp.statusCode == 204;
   }
 
   Future<GetTeamProjectListResult?> getTeamProjectList(

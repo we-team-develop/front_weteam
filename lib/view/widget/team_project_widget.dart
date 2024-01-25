@@ -35,7 +35,7 @@ class TeamProjectWidget extends StatelessWidget {
                           children: [
                             _teamMemberCountWidget(team.memberSize),
                             SizedBox(width: 31.w),
-                            _dateWidget(team.date),
+                            _dateWidget(),
                           ],
                         )
                       ],
@@ -106,9 +106,9 @@ class TeamProjectWidget extends StatelessWidget {
     );
   }
 
-  Widget _dateWidget(String date) {
+  Widget _dateWidget() {
     return Text(
-      team.date,
+        "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
       style: TextStyle(
         color: const Color(0xFF969696),
         fontSize: 9.sp,
@@ -117,6 +117,10 @@ class TeamProjectWidget extends StatelessWidget {
         height: 0,
       ),
     );
+  }
+  
+  String _formattedDateTime(DateTime dt) {
+    return "${dt.year}-${dt.month}-${dt.day}";
   }
 
 }

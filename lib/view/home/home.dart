@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
 import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
 import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
+import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
 import 'package:front_weteam/view/home/notification_page.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/normal_button.dart';
@@ -107,7 +107,7 @@ class Home extends GetView<HomeController> {
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const AddTeamDialog()),
+      onTap: () => controller.popupDialog(const TeamProjectDialog()),
       child: Container(
         width: 330.w,
         height: 49.h,
@@ -159,7 +159,7 @@ class Home extends GetView<HomeController> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        controller.popupDialog(const AddTeamDialog());
+                        controller.popupDialog(const TeamProjectDialog());
                       },
                       child: Image.asset(
                         ImagePath.icPlus,

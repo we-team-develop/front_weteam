@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/home_controller.dart';
+import 'package:front_weteam/controller/team_project_detail_page_controller.dart';
 import 'package:front_weteam/controller/tp_controller.dart';
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/widget/custom_text_field.dart';
@@ -10,16 +12,17 @@ import 'package:get/get.dart';
 
 import '../../widget/custom_date_picker.dart';
 
-class AddTeamDialog extends StatefulWidget {
-  const AddTeamDialog({super.key});
+class TeamProjectDialog extends StatefulWidget {
+  final TeamProject? teamData;
+  const TeamProjectDialog({super.key, this.teamData});
 
   @override
   State<StatefulWidget> createState() {
-    return _AddTeamDialog();
+    return _TeamProjectDialogState();
   }
 }
 
-class _AddTeamDialog extends State<AddTeamDialog> {
+class _TeamProjectDialogState extends State<TeamProjectDialog> {
   final int maxContentLength = 25;
 
   final maxTitleLength = 20;
@@ -37,9 +40,27 @@ class _AddTeamDialog extends State<AddTeamDialog> {
 
   bool isSaving = false;
 
+  String title = "";
+
+
+  @override
+  void initState() {
+    if (widget.teamData != null) {
+      title = '팀플 정보 수정';
+      titleController.text = widget.teamData!.title;
+      contentController.text = widget.teamData!.description;
+      startTime = widget.teamData!.startedAt;
+      endTime = widget.teamData!.endedAt;
+    } else {
+      title = '팀플 추가';
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomBigDialog(title: '팀플 추가', child: _body());
+    return CustomBigDialog(title: title, child: _body());
   }
 
   Widget _body() {
@@ -233,7 +254,29 @@ class _AddTeamDialog extends State<AddTeamDialog> {
       return;
     }
 
-    bool success = await Get.find<ApiService>().createTeamProject(name, startTime, endTime, content);
+    late bool success;
+    if (widget.teamData == null) {
+      success = await Get.find<ApiService>().createTeamProject(name, startTime, endTime, content);
+    } else {
+      TeamProject newTp = TeamProject(id: widget.teamData!.id,
+        host: widget.teamData!.host,
+        endedAt: endTime,
+        startedAt: startTime,
+        memberSize: widget.teamData!.memberSize,
+        description: contentController.text,
+        title: titleController.text,
+        done: endTime.difference(DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0)).inDays.isNegative,
+        img: widget.teamData!.img
+      );
+      /*widget.teamData!.title = titleController.text.trim();
+      widget.teamData!.description = contentController.text.trim();
+      widget.teamData!.startedAt = startTime;
+      widget.teamData!.endedAt = endTime;*/
+      success = await Get.find<ApiService>().editTeamProject(newTp);
+      if (success) {
+        Get.find<TeamProjectDetailPageController>().teama.value = newTp;
+      }
+    }
     if (success) {
       await Get.find<HomeController>().updateTeamProjectList();
       Get.back();
