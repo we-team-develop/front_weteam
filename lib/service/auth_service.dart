@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:front_weteam/main.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/service/api_service.dart';
@@ -9,8 +11,6 @@ import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
 import 'package:front_weteam/util/helper/naver_auth_helper.dart';
 import 'package:front_weteam/util/mem_cache.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 
 class AuthService extends GetxService {
   AuthHelper? helper;
@@ -75,6 +75,8 @@ class AuthService extends GetxService {
           if (profileId == null) {
             debugPrint("로그인에 성공했으나 서버에서 프로필 id를 불러오지 못함");
             return const LoginResult(isSuccess: false);
+          } else {
+            this.user.value!.profile = profileId;
           }
 
           bool isNewUser = profileId == -1;
@@ -100,8 +102,10 @@ class AuthService extends GetxService {
       token = null;
       user.value = null;
 
-      sharedPreferences.remove(SharedPreferencesKeys.weteamUserJson);
-      sharedPreferences.remove(SharedPreferencesKeys.isRegistered);
+      /*sharedPreferences.remove(SharedPreferencesKeys.weteamUserJson);
+      sharedPreferences.remove(SharedPreferencesKeys.isRegistered);*/
+      debugPrint("SharedPreferences의 데이터를 모두 삭제하는 중");
+      await sharedPreferences.clear();
 
       return true;
     } catch (e) {

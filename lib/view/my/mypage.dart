@@ -2,10 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/my_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/view/my/profile.dart';
-import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/app_title_widget.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
@@ -13,6 +11,12 @@ import 'package:get/get.dart';
 
 class MyPage extends GetView<MyController> {
   const MyPage({super.key});
+
+  @override
+  StatelessElement createElement() {
+    Get.put(MyController());
+    return super.createElement();
+  }
 
   @override
   Widget build(BuildContext context) {

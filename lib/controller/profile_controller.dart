@@ -23,6 +23,8 @@ class ProfileController extends GetxController {
     for (int i = 0; i < isSelected.length; i++) {
       isSelected[i] = i == index;
     }
+    sharedPreferences.setInt(
+        SharedPreferencesKeys.userProfileIndex, index);
     isSelected.refresh();
   }
 

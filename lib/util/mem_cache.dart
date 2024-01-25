@@ -16,6 +16,10 @@ class MemCache {
   static remove(MemCacheKey key) {
     return _map.remove(key);
   }
+
+  static void clear() {
+    _map.clear();
+  }
 }
 
 enum MemCacheKey {
