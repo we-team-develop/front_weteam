@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class TeamProjectDetailPageController extends GetxController {
   late final Rx<TeamProject> teama;
-  Rx<List<WeteamProjectUser>> userList = Rx<List<WeteamProjectUser>>([]);
+  RxList<WeteamProjectUser> userList = RxList<WeteamProjectUser>();
 
   TeamProjectDetailPageController(TeamProject team) {
     teama = team.obs;
@@ -17,7 +17,8 @@ class TeamProjectDetailPageController extends GetxController {
     List<WeteamProjectUser>? list = await Get.find<ApiService>().getProjectUsers(teama.value.id);
     if (list == null || list.isEmpty) return false; // 비어있으면 서버 오류로 판단
 
-    userList.value = list;
+    userList.clear();
+    userList.addAll(list);
     return true;
   }
 }

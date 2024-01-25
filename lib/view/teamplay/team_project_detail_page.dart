@@ -3,12 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_project_user.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
 import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
 import '../../controller/team_project_detail_page_controller.dart';
+import '../widget/custom_text_field.dart';
 
 class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   final TeamProject tp;
@@ -52,7 +55,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         const _CustomDivider(),
 
                         Obx(() {
-                          if (controller.userList.value.isEmpty) {
+                          if (controller.userList.isEmpty) {
                             return const CircularProgressIndicator();
                           } else {
                             return _UserListView();
@@ -151,42 +154,47 @@ class _UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<_UserListView> {
-  Rx<List<_UserContainer>> userContainerList = Rx<List<_UserContainer>>([]);
+  RxList<_UserContainer> userContainerList = RxList<_UserContainer>();
 
   @override
   void initState() {
     buildList();
+    Get.find<TeamProjectDetailPageController>().userList.listen((p0) {
+      buildList();
+    });
     return super.initState();
   }
 
   Future<void> buildList() async {
+    userContainerList.clear();
+
     List<WeteamProjectUser> userList =
         Get
             .find<TeamProjectDetailPageController>()
-            .userList
-            .value;
+            .userList;
     List<_UserContainer> newUserContainerList = [];
     for (WeteamProjectUser user in userList) {
       newUserContainerList.add(_UserContainer(user));
     }
 
-    userContainerList.value = newUserContainerList;
+    userContainerList.addAll(newUserContainerList);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() =>
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.start,
-          spacing: 10.w,
-          runAlignment: WrapAlignment.start,
-          runSpacing: 5.h,
-          children: userContainerList.value,
-        ));
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.start,
+      spacing: 10.w,
+      runAlignment: WrapAlignment.start,
+      runSpacing: 5.h,
+      children: userContainerList,
+    );
   }
 }
 
 class _BottomWidget extends GetView<TeamProjectDetailPageController> {
+  TextEditingController changeRoleTEC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -256,7 +264,13 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                   ),
                 ),
                 SizedBox(height: 14.h),
-                _TextButton(text: '내 역할 변경하기', onTap: () {}),
+                _TextButton(text: '내 역할 변경하기', onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomBigDialog(title: '내 역할 변경', child: _ChangeRoleDialog(changeRoleTEC));
+                      });
+                }),
               ],
             ))
       ],
@@ -286,6 +300,59 @@ class _TextButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+}
+
+class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
+  final TextEditingController tec;
+
+  const _ChangeRoleDialog(this.tec);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomTextField(hint: "역할명", maxLength: 10, controller: tec),
+        SizedBox(height: 35.h),
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () async {
+            bool result = await Get.find<ApiService>().changeUserTeamProjectRole(controller.teama.value, tec.text);;
+            if (result) {
+              Get.back();
+              controller.fetchUserList();
+            } else {
+              Get.snackbar("죄송합니다", "역할을 설정하지 못했습니다");
+            }
+          },
+          child: Container(
+            width: 185.w,
+            height: 32.h,
+            decoration: ShapeDecoration(
+              color: const Color(0xFFE2583E),
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(8)),
+            ),
+            child: Center(
+              child: Text(
+                '확인',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.sp,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 

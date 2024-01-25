@@ -183,6 +183,15 @@ class ApiService extends CustomGetConnect implements GetxService {
 
     return ret;
   }
+
+  Future<bool> changeUserTeamProjectRole(TeamProject team, String role) async {
+    Response rp = await patch('/api/project-users', {}, query: {
+      'projectId': team.id.toString(),
+      'role': role
+    });
+
+    return rp.statusCode == 204;
+  }
 }
 
 class GetTeamProjectListResult {
