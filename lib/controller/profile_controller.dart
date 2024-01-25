@@ -99,16 +99,6 @@ class ProfileController extends GetxController {
     textController.addListener(() {
       textLength.value = textController.text.length;
     });
-    Future.microtask(() {
-      var authService = Get.find<AuthService>();
-      var user = authService.user.value;
-      if (user != null) {
-        for (int i = 0; i < isSelected.length; i++) {
-          isSelected[i] = i == user.profile;
-        }
-        isSelected.refresh();
-      }
-    });
   }
 
   @override
