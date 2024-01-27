@@ -208,7 +208,7 @@ class ApiService extends CustomGetConnect implements GetxService {
         query += '&';
       }
     }
-    Response rp = await delete('/api/project-users?$query}');
+    Response rp = await delete('/api/project-users?$query');
     return rp.statusCode == 204;
   }
 
