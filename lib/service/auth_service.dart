@@ -24,6 +24,7 @@ class AuthService extends GetxService {
     dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
     if (firebaseIdToken != null && userJson != null) {
       token = firebaseIdToken;
+      debugPrint(token);
       user.value = WeteamUser.fromJson(jsonDecode(userJson));
       if (user.value!.profile == null) {
         user.value = null; // 로그인 취소
