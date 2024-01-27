@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../../controller/team_project_detail_page_controller.dart';
 import '../widget/custom_text_field.dart';
+import '../widget/profile_image_widget.dart';
 
 class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   final TeamProject tp;
@@ -176,13 +177,11 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: 48.49.w,
                   height: 48.49.h,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
-                    shape: OvalBorder(),
-                  ),
+                  child: ProfileImageWidget(
+                      id: projectUser.user.profile?.imageIdx ?? 0),
                 ),
                 SizedBox(height: 7.h),
                 Text(
