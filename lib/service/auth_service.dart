@@ -25,6 +25,10 @@ class AuthService extends GetxService {
     if (firebaseIdToken != null && userJson != null) {
       token = firebaseIdToken;
       user.value = WeteamUser.fromJson(jsonDecode(userJson));
+      if (user.value!.profile == null) {
+        user.value = null; // 로그인 취소
+        return;
+      }
 
       String uid = FirebaseAuth.instance.currentUser!.uid;
       if (uid.startsWith('naver')) {
@@ -47,7 +51,7 @@ class AuthService extends GetxService {
     super.onInit();
   }
 
-  Future<LoginResult> login(AuthHelper authHelper, {bool checkNewUser = false}) async {
+  Future<LoginResult> login(AuthHelper authHelper) async {
     try {
       if (helper != null) {
         if (await helper!.isLoggedIn()) {
@@ -70,20 +74,8 @@ class AuthService extends GetxService {
       if (user != null) {
         debugPrint('반갑습니다 ${user.username}님');
 
-        if (checkNewUser) {
-          int? profileId = await Get.find<ApiService>().getMyProfiles();
-          if (profileId == null) {
-            debugPrint("로그인에 성공했으나 서버에서 프로필 id를 불러오지 못함");
-            return const LoginResult(isSuccess: false);
-          } else {
-            this.user.value!.profile = profileId;
-          }
-
-          bool isNewUser = profileId == -1;
-          return LoginResult(isSuccess: true, user: user, isNewUser: isNewUser);
-        }
-
-        return LoginResult(isSuccess: true, user: user);
+        bool isNewUser = (user.profile == null);
+        return LoginResult(isSuccess: true, user: user, isNewUser: isNewUser);
       } else {
         debugPrint("user값을 받아오지 못함!");
         return const LoginResult(isSuccess: false);
@@ -140,6 +132,20 @@ class AuthService extends GetxService {
       debugPrint("회원탈퇴 중 예외발생: $e");
       return false;
     }
+  }
+
+  Future<WeteamUser?> updateUser() async {
+    try {
+      WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
+      if (user != null) {
+        this.user.value = user;
+        return this.user.value;
+      }
+    } catch (e, st) {
+      debugPrint("$e");
+      debugPrintStack(stackTrace: st);
+    }
+    return null;
   }
 }
 
