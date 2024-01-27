@@ -7,14 +7,17 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
 import 'package:front_weteam/binding/main_bindings.dart';
+import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/controller/profile_controller.dart';
 import 'package:front_weteam/firebase_options.dart';
+import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/util/mem_cache.dart';
 import 'package:front_weteam/view/login/login_main.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
 late SharedPreferences sharedPreferences;
 
@@ -67,12 +70,35 @@ class MyApp extends StatelessWidget {
 
   MyApp({super.key});
 
-
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home = Get.find<AuthService>().user.value == null ? const LoginMain() : const App();
+    home = Get.find<AuthService>().user.value != null ? const App() : const LoginMain();
 
+    linkStream.listen((event) async {
+      if (event == null) return;
+      bool isLoggedIn = Get.find<AuthService>().user.value != null;
+      Uri uri = Uri.parse(event);
+
+      String host = uri.host;
+      String path = uri.path;
+      Map<String, String> query = uri.queryParameters;
+
+      if (host == "projects") {
+        if (path.startsWith("/acceptInvite")) {
+          int projectId = int.parse(query['project_id'] ?? '-1');
+          if (!isLoggedIn) return;
+
+          bool success = await Get.find<ApiService>().acceptInvite(projectId);
+          if (success) {
+            Get.find<HomeController>().updateTeamProjectList();
+            Get.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
+          } else {
+            Get.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
+          }
+        }
+      }
+    });
     return super.createElement();
   }
 

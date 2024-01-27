@@ -211,6 +211,12 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await delete('/api/project-users?$query}');
     return rp.statusCode == 204;
   }
+
+  Future<bool> acceptInvite(int projectId) async {
+    Response rp = await patch('/api/project-users/$projectId', {});
+    debugPrint(rp.bodyString);
+    return rp.statusCode == 204;
+  }
 }
 
 class GetTeamProjectListResult {
