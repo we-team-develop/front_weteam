@@ -7,6 +7,7 @@ import 'package:front_weteam/model/weteam_project_user.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
+import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
 import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
@@ -59,17 +60,27 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                   controller.tp.value.host.id !=
                                       Get.find<AuthService>().user.value!.id)
                               ? Positioned(
-                            top: 0,
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  exitOrDeleteTeamProject();
-                                },
-                                child: Image.asset(ImagePath.icHostoutGray,
-                                    width: 21.w, height: 21.h)
-                                ,
-                              )                          )
+                                  top: 0,
+                                  bottom: 0,
+                                  right: 0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              CustomCheckDialog(
+                                                  title: '정말 팀플을 나갈까요?',
+                                                  content: '이 작업은 되돌릴 수 없어요.',
+                                                  admitName: '예',
+                                                  denyName: '아니요',
+                                                  denyCallback: () =>
+                                                      Get.back(),
+                                                  admitCallback:
+                                                      exitOrDeleteTeamProject));
+                                    },
+                                    child: Image.asset(ImagePath.icHostoutGray,
+                                        width: 21.w, height: 21.h),
+                                  ))
                               : const SizedBox(),
                         ])),
                     const _CustomDivider(),
@@ -115,6 +126,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       bool success = await Get.find<ApiService>().deleteTeamProject(tp.id);
       if (success) {
         await Get.find<HomeController>().updateTeamProjectList();
+        Get.back();
         Get.back();
         Get.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
       } else {
