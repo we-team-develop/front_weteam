@@ -411,22 +411,23 @@ class _KickModeBottomPanel extends GetView<TeamProjectDetailPageController> {
 
   Future<void> kickAll() async {
     ApiService service = Get.find<ApiService>();
-    List<Future> results = [];
+    List<int> toKickIds = [];
     for (Widget widget in controller.userContainerList) {
       _UserContainer uc = widget as _UserContainer;
       if (uc.kickSelected.isTrue) {
-        results.add(service.kickUserFromTeamProject(uc.projectUser.id));
+        toKickIds.add(uc.projectUser.id);
       }
     }
 
-    int success = 0;
-    for (Future result in results) {
-      if (await result == true) success++;
-    }
+    bool success = await service.kickUserFromTeamProject(toKickIds);
 
-    Get.snackbar("$success명을 성공적으로 강제 퇴장했어요", "총 ${results.length} 명 중");
-    controller.fetchUserList();
-    controller.isKickMode.value = false;
+    if (success) {
+      Get.snackbar("강제 퇴장 성공", "총 ${toKickIds.length}명을 강제 퇴장했어요");
+      controller.fetchUserList();
+      controller.isKickMode.value = false;
+    } else {
+      Get.snackbar("강제 퇴장 실패", "오류가 발생했습니다");
+    }
   }
 }
 

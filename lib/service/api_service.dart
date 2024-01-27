@@ -193,8 +193,16 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.statusCode == 204;
   }
 
-  Future<bool> kickUserFromTeamProject(int teamUserId) async {
-    Response rp = await delete('/api/project-users/$teamUserId}');
+  Future<bool> kickUserFromTeamProject(List<int> teamUserIdList) async {
+    String query = "";
+    for (int i = 0; i < teamUserIdList.length; i++) {
+      int teamUserId = teamUserIdList[i];
+      query += 'projectUserIdList=$teamUserId';
+      if (i != teamUserIdList.length - 1) {
+        query += '&';
+      }
+    }
+    Response rp = await delete('/api/project-users?$query}');
     return rp.statusCode == 204;
   }
 }
