@@ -34,6 +34,11 @@ class WTM extends GetView<WTMController> {
                 child: Column(
                   children: [
                     _wtmbody(),
+                    Image.asset(
+                      ImagePath.makewtmbutton,
+                      width: 330.w,
+                      height: 49.h,
+                    )
                   ],
                 ),
               )
