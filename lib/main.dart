@@ -107,7 +107,6 @@ class MyApp extends StatelessWidget {
 }
 
 class SharedPreferencesKeys {
-  static const String userProfileIndex = "user_profile_index";
   static const String isRegistered = "is_registered";
   static const String dDayData = "dday_data";
 

@@ -15,7 +15,7 @@ class Profile extends GetView<ProfileController> {
   @override
   StatelessElement createElement() {
     controller.updateOrganization();
-    controller.selectProfile(Get.find<AuthService>().user.value!.profile);
+    controller.selectProfile(Get.find<AuthService>().user.value!.profile?.imageIdx ?? 0);
     return super.createElement();
   }
 

@@ -63,7 +63,7 @@ class MyPage extends GetView<MyController> {
             children: [
               SizedBox(width: 37.0.w),
               Obx(() => ProfileImageWidget(
-                  id: Get.find<AuthService>().user.value?.profile ?? 0)),
+                  id: Get.find<AuthService>().user.value?.profile?.imageIdx ?? 0)),
               SizedBox(width: 33.w),
               Expanded(
                   child: Column(
