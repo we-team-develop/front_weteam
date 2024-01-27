@@ -53,7 +53,25 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const _CustomDivider(),
-                    Obx(() => TeamProjectWidget(controller.tp.value)),
+                    Obx(() => Stack(children: [
+                          TeamProjectWidget(controller.tp.value),
+                          (controller.tp.value.memberSize == 1 ||
+                                  controller.tp.value.host.id !=
+                                      Get.find<AuthService>().user.value!.id)
+                              ? Positioned(
+                            top: 0,
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  exitOrDeleteTeamProject();
+                                },
+                                child: Image.asset(ImagePath.icHostoutGray,
+                                    width: 21.w, height: 21.h)
+                                ,
+                              )                          )
+                              : const SizedBox(),
+                        ])),
                     const _CustomDivider(),
                     Obx(() {
                       if (controller.userList.isEmpty) {
@@ -90,6 +108,21 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         ),
       ),
     );
+  }
+
+  Future<void> exitOrDeleteTeamProject() async {
+    if (tp.host.id == Get.find<AuthService>().user.value!.id) {
+      bool success = await Get.find<ApiService>().deleteTeamProject(tp.id);
+      if (success) {
+        await Get.find<HomeController>().updateTeamProjectList();
+        Get.back();
+        Get.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
+      } else {
+        Get.snackbar("삭제 실패", '팀플을 삭제하지 못했어요.');
+      }
+    } else {
+      throw UnimplementedError(); // 나가기 기능
+    }
   }
 
   Future<void> changeHost() async {

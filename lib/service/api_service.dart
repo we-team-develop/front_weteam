@@ -217,6 +217,12 @@ class ApiService extends CustomGetConnect implements GetxService {
     debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
+
+  Future<bool> deleteTeamProject(int projectId) async {
+    Response rp = await delete('/api/projects/$projectId');
+    debugPrint(rp.bodyString);
+    return rp.statusCode == 200;
+  }
 }
 
 class GetTeamProjectListResult {
