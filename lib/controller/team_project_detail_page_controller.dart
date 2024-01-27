@@ -9,10 +9,15 @@ class TeamProjectDetailPageController extends GetxController {
   RxList<WeteamProjectUser> userList = RxList<WeteamProjectUser>();
   RxList<Widget> userContainerList = RxList<Widget>();
   RxBool isKickMode = RxBool(false);
+  RxBool isChangeHostMode = RxBool(false);
+  Rx<int> selectedNewHost = Rx<int>(-1);
 
   TeamProjectDetailPageController(TeamProject team) {
     tp = team.obs;
     fetchUserList();
+    isChangeHostMode.listen((p0) {
+      if (p0 == false) selectedNewHost.value = -1; // 호스트 변경모드 꺼지면 -1로 초기화
+    });
   }
 
   // 성공 여부 반환

@@ -193,6 +193,12 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.statusCode == 204;
   }
 
+  Future<bool> changeTeamProjectHost(int projectId, int userId) async {
+    Response rp = await patch('/api/projects/$projectId/$userId', {});
+    print(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
   Future<bool> kickUserFromTeamProject(List<int> teamUserIdList) async {
     String query = "";
     for (int i = 0; i < teamUserIdList.length; i++) {
