@@ -334,13 +334,24 @@ class _UserListViewState extends State<_UserListView> {
   Future<void> buildList() async {
     controller.userContainerList.clear();
 
-    List<WeteamProjectUser> userList =
-        Get.find<TeamProjectDetailPageController>().userList;
+    List<WeteamProjectUser> userList = controller.userList;
     List<_UserContainer> newUserContainerList = [];
-    for (WeteamProjectUser user in userList) {
-      newUserContainerList.add(_UserContainer(user));
+    WeteamProjectUser? host;
+    for (WeteamProjectUser projectUser in userList) {
+      if (projectUser.user.id == controller.tp.value.host.id) {
+        host = projectUser;
+        continue;
+      }
+      newUserContainerList.add(_UserContainer(projectUser));
     }
 
+    newUserContainerList.sort((a, b) {
+      String userA = a.projectUser.user.username ?? "";
+      String userB = b.projectUser.user.username ?? "";
+      return userA.compareTo(userB);
+    });
+
+    if (host != null) controller.userContainerList.add(_UserContainer(host));
     controller.userContainerList.addAll(newUserContainerList);
   }
 
