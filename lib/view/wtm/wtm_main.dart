@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/wtm/wtm_create.dart';
 import 'package:get/get.dart';
 
 class WTM extends GetView<WTMController> {
@@ -99,10 +100,15 @@ class WTM extends GetView<WTMController> {
   }
 
   Widget _newWTMButton() {
-    return Image.asset(
-      ImagePath.makewtmbutton,
-      width: 330.w,
-      height: 49.h,
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => const WTMCreate());
+      },
+      child: Image.asset(
+        ImagePath.makewtmbutton,
+        width: 330.w,
+        height: 49.h,
+      ),
     );
   }
 }

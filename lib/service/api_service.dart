@@ -24,8 +24,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
       debugPrint(
-          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url
-              .toString()}");
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
       return null;
     }
 
@@ -41,10 +40,10 @@ class ApiService extends CustomGetConnect implements GetxService {
     return WeteamUser.fromJson(jsonDecode(json));
   }
 
-
   Future<bool> withdrawal() async {
     Response rp = await delete('/api/users');
-    if (rp.statusCode == 204) { // 탈퇴 성공시 204
+    if (rp.statusCode == 204) {
+      // 탈퇴 성공시 204
       return true;
     } else {
       debugPrint(rp.bodyString);
@@ -102,10 +101,10 @@ class ApiService extends CustomGetConnect implements GetxService {
       DateTime endedAt, String explanation) async {
     Map data = {
       'name': name,
-      'startedAt': "${startedAt.year}-${startedAt.month.toString().padLeft(
-          2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
-      'endedAt': "${endedAt.year}-${endedAt.month.toString().padLeft(
-          2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+      'startedAt':
+          "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+      'endedAt':
+          "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
     Response rp = await post('/api/projects', data);
@@ -113,7 +112,9 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.statusCode == 201;
   }
 
-  Future<GetTeamProjectListResult?> getTeamProjectList(int page, bool done, String direction, String field, {String? cacheKey}) async {
+  Future<GetTeamProjectListResult?> getTeamProjectList(
+      int page, bool done, String direction, String field,
+      {String? cacheKey}) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
       'size': 10.toString(),
@@ -131,7 +132,8 @@ class ApiService extends CustomGetConnect implements GetxService {
   }
 
   Future<bool> setUserOrganization(String organization) async {
-    Response rp = await patch('/api/users/${Uri.encodeComponent(organization)}', {});
+    Response rp =
+        await patch('/api/users/${Uri.encodeComponent(organization)}', {});
     return rp.statusCode == 204;
   }
 
@@ -162,15 +164,38 @@ class GetTeamProjectListResult {
   final List<TeamProject> projectList;
 
   const GetTeamProjectListResult(
-      {required this.totalPages, required this.totalElements, required this.projectList});
+      {required this.totalPages,
+      required this.totalElements,
+      required this.projectList});
 
   factory GetTeamProjectListResult.fromJson(Map data) {
     List tpList = data['projectList'];
-    return GetTeamProjectListResult(totalPages: data['totalPages'],
+    return GetTeamProjectListResult(
+        totalPages: data['totalPages'],
         totalElements: data['totalElements'],
         projectList: List<TeamProject>.generate(
-            tpList.length, (index) => TeamProject.fromJson(tpList[index])
-        )
-    );
+            tpList.length, (index) => TeamProject.fromJson(tpList[index])));
+  }
+}
+
+// WTMProjectList
+
+class GetWTMProjectListResult {
+  final int totalPages;
+  final int totalElements;
+  final List<TeamProject> projectList;
+
+  const GetWTMProjectListResult(
+      {required this.totalPages,
+      required this.totalElements,
+      required this.projectList});
+
+  factory GetWTMProjectListResult.fromJson(Map data) {
+    List wtmList = data['wtmList'];
+    return GetWTMProjectListResult(
+        totalPages: data['totalPages'],
+        totalElements: data['totalElements'],
+        projectList: List<TeamProject>.generate(
+            wtmList.length, (index) => TeamProject.fromJson(wtmList[index])));
   }
 }
