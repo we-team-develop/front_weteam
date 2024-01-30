@@ -100,15 +100,10 @@ class WTM extends GetView<WTMController> {
   }
 
   Widget _newWTMButton() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const WTMCreate());
-      },
-      child: Image.asset(
-        ImagePath.makewtmbutton,
-        width: 330.w,
-        height: 49.h,
-      ),
+    return Image.asset(
+      ImagePath.makewtmbutton,
+      width: 330.w,
+      height: 49.h,
     );
   }
 }

@@ -44,6 +44,7 @@ class ImagePath {
   static String get nextButton => 'assets/images/nextbutton.png';
   static String get check => 'assets/images/check.png';
   static String get icBell => 'assets/images/ic_bell.png';
+  static String get icSearch => 'assets/images/ic_search.png';
   static String get icBellNew => 'assets/images/ic_bell_new.png';
   static String get icEmptyTimi => 'assets/images/ic_empty_timi.png';
   static String get wtmEmptyTimi => 'assets/images/wtm_empty_timi.png';
