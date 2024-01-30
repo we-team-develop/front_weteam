@@ -33,10 +33,24 @@ class WTMCreate extends GetView<WTMController> {
           SizedBox(height: 14.h),
           Row(
             children: [
-              _tplist("진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플"),
-              _tplist("완료된 팀플", controller.selectedtpList.value == "완료된 팀플"),
+              Expanded(
+                  child: _tplist(
+                      "진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플")),
+              Expanded(
+                  child: _tplist(
+                      "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
             ],
           ),
+          Center(
+              child: Column(
+            children: [
+              _checkBox(),
+              SizedBox(
+                height: 16.h,
+              ),
+              _nextText(),
+            ],
+          )),
         ],
       );
     });
@@ -78,12 +92,13 @@ class WTMCreate extends GetView<WTMController> {
     return GestureDetector(
       onTap: () => controller.setSelectedtpList(text),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
               color: isSelected ? const Color(0xFFE2583E) : Colors.transparent,
-              width: 3.w,
+              width: 2.w,
             ),
           ),
         ),
@@ -93,9 +108,55 @@ class WTMCreate extends GetView<WTMController> {
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
             color:
-                isSelected ? const Color(0xFFE2583E) : const Color(0xFF333333),
+                isSelected ? const Color(0xFFE2583E) : const Color(0xFFc9c9c9),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _checkBox() {
+    return Container(
+      width: 330.w,
+      height: 46.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.r),
+        color: const Color(0xffd9d9d9),
+      ),
+      child: Center(
+        child: Text(
+          '선택 완료',
+          style: TextStyle(
+            fontSize: 15.sp,
+            fontFamily: 'NanumGothicExtraBold',
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _nextText() {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '팀플을 미선택 할래요. ',
+            style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.bold,
+                fontSize: 10.sp),
+          ),
+          Text(
+            '다음으로',
+            style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                fontSize: 10.sp),
+          ),
+        ],
       ),
     );
   }

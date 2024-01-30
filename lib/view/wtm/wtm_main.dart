@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/binding/wtm_bindings.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/wtm/wtm_create.dart';
@@ -36,7 +37,12 @@ class WTM extends GetView<WTMController> {
                     _wtmbody(),
                     Padding(
                       padding: EdgeInsets.only(bottom: 25.h),
-                      child: _newWTMButton(),
+                      child: GestureDetector(
+                          onTap: () {
+                            Get.to(() => const WTMCreate(),
+                                binding: WTMCreateBinding());
+                          },
+                          child: _newWTMButton()),
                     ),
                   ],
                 ),
