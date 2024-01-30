@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/main.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +33,6 @@ class ProfileController extends GetxController {
       for (int i = 0; i < isSelected.length; i++) {
         isSelected[i] = i == index;
       }
-      sharedPreferences.setInt(SharedPreferencesKeys.userProfileIndex, index);
       isSelected.refresh();
     });
   }
@@ -76,15 +74,10 @@ class ProfileController extends GetxController {
       Get.find<AuthService>().user.value!.organization = organization;
     }
 
-    int? profile = getSelectedProfileId();
-    if (profile != null &&
-        Get.find<AuthService>().user.value!.profile != profile) {
-      if (await Get.find<ApiService>().changeUserProfiles(profile)) {
-        // 성공시
-        print('$profile !');
-        await sharedPreferences.setInt(
-            SharedPreferencesKeys.userProfileIndex, profile);
-      }
+    int? profileId = getSelectedProfileId();
+    if (profileId != null &&
+        Get.find<AuthService>().user.value!.profile?.imageIdx != profileId) {
+      await Get.find<ApiService>().changeUserProfiles(profileId);
     }
 
     Get.find<AuthService>().user.value =

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/app.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:front_weteam/util/helper/google_auth_helper.dart';
 import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
 import 'package:front_weteam/util/helper/naver_auth_helper.dart';
-import 'package:get/get.dart';
 import 'package:front_weteam/view/login/sign_up_completed.dart';
+import 'package:get/get.dart';
 
 class LoginMain extends StatelessWidget {
   const LoginMain({super.key});
@@ -90,7 +90,7 @@ class LoginMain extends StatelessWidget {
 
   void login(AuthHelper helper) async {
     // TODO: 로그인 버튼 중복 클릭 방지
-    LoginResult result = await Get.find<AuthService>().login(helper, checkNewUser: true);
+    LoginResult result = await Get.find<AuthService>().login(helper);
     if (result.isSuccess) {
       sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, !result.isNewUser);
       if (result.isNewUser) {
