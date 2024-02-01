@@ -14,13 +14,6 @@ class WTMCreate extends GetView<WTMController> {
   final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
 
   @override
-  StatelessElement createElement() {
-    controller.updateTeamProject(controller.selectedtpList.value == "완료된 팀플");
-
-    return super.createElement();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
