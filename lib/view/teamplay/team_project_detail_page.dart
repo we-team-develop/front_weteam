@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controller/home_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
+import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
 import '../../model/weteam_project_user.dart';
@@ -186,7 +187,7 @@ class _CustomDivider extends StatelessWidget {
       width: double.infinity,
       height: 1,
       margin: EdgeInsets.symmetric(vertical: 20.h),
-      color: const Color(0xFFEBE8E8),
+      color: AppColors.G_01,
     );
   }
 }
@@ -232,7 +233,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                 Text(
                   "${projectUser.user.username}",
                   style: TextStyle(
-                    color: const Color(0xFF333333),
+                    color: AppColors.Black,
                     fontSize: 10.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w700,
@@ -243,7 +244,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                   projectUser.role ?? "미입력",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: const Color(0xFF676767),
+                    color: AppColors.G_05,
                     fontSize: 9.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w400,
@@ -286,7 +287,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                       decoration: ShapeDecoration(
                         color: controller.selectedNewHost.value ==
                                 projectUser.user.id
-                            ? const Color(0xFFEB8673)
+                            ? AppColors.Orange_03
                             : Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -306,7 +307,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                             color: controller.selectedNewHost.value ==
                                     projectUser.user.id
                                 ? Colors.white
-                                : const Color(0xFF333333),
+                                : AppColors.Black,
                             fontSize: 8.sp,
                             fontFamily: 'NanumSquareNeo',
                             fontWeight: FontWeight.w400,
@@ -397,7 +398,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 Text(
                   '팀플방 관리실 | 호스트',
                   style: TextStyle(
-                    color: const Color(0xFF333333),
+                    color: AppColors.Black,
                     fontSize: 14.sp,
                     fontFamily: 'NanumGothic',
                     fontWeight: FontWeight.w600,
@@ -461,7 +462,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 Text(
                   '팀플방 관리실 | 공통',
                   style: TextStyle(
-                    color: const Color(0xFF333333),
+                    color: AppColors.Black,
                     fontSize: 14.sp,
                     fontFamily: 'NanumGothic',
                     fontWeight: FontWeight.w600,
@@ -507,7 +508,7 @@ class _CancelOrActionBottomPanel
         Text(
           '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
           style: TextStyle(
-            color: const Color(0xFF333333),
+            color: AppColors.Black,
             fontSize: 10.sp,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.w400,
@@ -525,7 +526,7 @@ class _CancelOrActionBottomPanel
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
                       side:
-                          const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                          const BorderSide(width: 1, color: AppColors.G_02),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -533,7 +534,7 @@ class _CancelOrActionBottomPanel
                     child: Text(
                       '취소',
                       style: TextStyle(
-                        color: const Color(0xFF333333),
+                        color: AppColors.Black,
                         fontSize: 12.sp,
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w800,
@@ -562,7 +563,7 @@ class _CancelOrActionBottomPanel
               child: Container(
                 height: 38.h,
                 decoration: ShapeDecoration(
-                  color: const Color(0xFFE2583E),
+                  color: AppColors.MainOrange,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
@@ -601,7 +602,7 @@ class _TextButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: const Color(0xE2333333),
+            color: AppColors.Black,
             fontSize: 13.sp,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.w400,
@@ -642,7 +643,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
             width: 185.w,
             height: 32.h,
             decoration: ShapeDecoration(
-              color: const Color(0xFFE2583E),
+              color: AppColors.MainOrange,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8)),
             ),
