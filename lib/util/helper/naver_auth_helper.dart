@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
-import 'package:front_weteam/social/create_firebase_custom_token.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
+
+import '../../social/create_firebase_custom_token.dart';
+import 'auth_helper.dart';
 
 class NaverAuthHelper extends AuthHelper {
   @override

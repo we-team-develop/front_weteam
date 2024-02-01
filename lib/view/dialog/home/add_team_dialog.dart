@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
-import 'package:front_weteam/view/widget/custom_text_field.dart';
-import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/home_controller.dart';
+import '../../../controller/tp_controller.dart';
+import '../../../data/color_data.dart';
+import '../../../service/api_service.dart';
 import '../../widget/custom_date_picker.dart';
+import '../../widget/custom_text_field.dart';
+import '../../widget/normal_button.dart';
+import '../custom_big_dialog.dart';
 
 class AddTeamDialog extends StatefulWidget {
   const AddTeamDialog({super.key});
@@ -77,7 +78,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                         side:
-                        const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                        const BorderSide(width: 1, color: AppColors.G_02),
                         borderRadius: BorderRadius.circular(8)),
                   ),
                   child: TextField(
@@ -91,7 +92,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                       contentPadding: EdgeInsets.all(0),
                       isDense: true,
                     ),
-                    cursorColor: const Color(0xFFE2583E), // 깜빡이는 커서의 색 변경
+                    cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
                     style: const TextStyle(fontSize: 13),
                     onChanged: (newV) {
                       setState(() {
@@ -105,7 +106,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                 bottom: 10,
                 child: Text(
               // TextField 오른쪽에 counter
-              "${inputValue.length} / ${maxContentLength}",
+              "${inputValue.length} / $maxContentLength",
               style: TextStyle(
                 color: Colors.black.withOpacity(0.5),
                 fontSize: 10,
@@ -151,7 +152,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                   height: 90.h,
                   margin: EdgeInsets.symmetric(horizontal: 21.w),
                   decoration: const BoxDecoration(
-                    color: Color(0xFFDCDCDC),
+                    color: AppColors.G_02,
                   ),
                 ),
                 Flexible(
@@ -187,7 +188,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
             child: Text(warningContent,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: const Color(0xFFE2583E),
+              color: AppColors.MainOrange,
               fontFamily: 'NanumSquareNeo',
               fontSize: 10.sp))),
         NormalButton(text: '확인', onTap: () async {

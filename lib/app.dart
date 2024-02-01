@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/bottom_nav_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/view/home/home.dart';
-import 'package:front_weteam/view/my/mypage.dart';
-import 'package:front_weteam/view/teamplay/teamplay.dart';
 import 'package:get/get.dart';
+
+import 'controller/bottom_nav_controller.dart';
+import 'data/color_data.dart';
+import 'data/image_data.dart';
+import 'view/home/home.dart';
+import 'view/my/mypage.dart';
+import 'view/teamplay/teamplay.dart';
 
 class App extends GetView<BottomNavController> {
   const App({super.key});
@@ -46,8 +48,8 @@ class App extends GetView<BottomNavController> {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFFE2583E),
-        unselectedItemColor: const Color(0xFF999999),
+        selectedItemColor: AppColors.MainOrange,
+        unselectedItemColor: AppColors.G_04,
         selectedLabelStyle: TextStyle(fontSize: 8.sp),
         unselectedLabelStyle: TextStyle(fontSize: 8.sp),
         backgroundColor: Colors.white,

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
-import 'package:front_weteam/controller/wtm_controller.dart';
-import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/view/widget/team_project_column.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
+
+import '../../controller/tp_controller.dart';
+import '../../controller/wtm_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
 
 class WTMCreate extends GetView<WTMController> {
   WTMCreate({Key? key}) : super(key: key);
@@ -96,7 +95,7 @@ class WTMCreate extends GetView<WTMController> {
       padding: EdgeInsets.only(right: 8.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: const Color(0xFFd9d9d9), width: 1.w),
+        border: Border.all(color: AppColors.G_02, width: 1.w),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -120,7 +119,7 @@ class WTMCreate extends GetView<WTMController> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isSelected ? const Color(0xFFE2583E) : Colors.transparent,
+              color: isSelected ? AppColors.MainOrange : Colors.transparent,
               width: 2.w,
             ),
           ),
@@ -142,7 +141,7 @@ class WTMCreate extends GetView<WTMController> {
       height: 46.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        color: const Color(0xffd9d9d9),
+        color: AppColors.G_02,
       ),
       child: Center(
         child: Text(

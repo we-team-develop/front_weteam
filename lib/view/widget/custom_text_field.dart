@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/color_data.dart';
+
 class CustomTextField extends StatefulWidget {
   final String hint;
   final int? maxLength;
@@ -47,12 +49,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
 
           // 각종 색 변경
-          focusColor: const Color(0xFFE2583E),
-          fillColor: const Color(0xFFE2583E),
-          prefixIconColor: const Color(0xFFE2583E),
-          suffixIconColor: const Color(0xFFE2583E),
-          hoverColor: const Color(0xFFE2583E),
-          iconColor: const Color(0xFFE2583E),
+          focusColor: AppColors.MainOrange,
+          fillColor: AppColors.MainOrange,
+          prefixIconColor: AppColors.MainOrange,
+          suffixIconColor: AppColors.MainOrange,
+          hoverColor: AppColors.MainOrange,
+          iconColor: AppColors.MainOrange,
 
           // hint와 underline 사이의 공간 제거
           contentPadding: const EdgeInsets.all(0),
@@ -60,9 +62,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
           // Underline의 색을 변경합니다
           focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color(0xFFE2583E)),
+            borderSide: BorderSide(color: AppColors.MainOrange),
           )),
-      cursorColor: const Color(0xFFE2583E), // 깜빡이는 커서의 색 변경
+      cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
       maxLength: widget.maxLength, // 최대 20자
 
       onChanged: (newV) {

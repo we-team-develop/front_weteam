@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
+
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
 
 class TeamProjectWidget extends StatelessWidget {
   final TeamProject team;
@@ -53,7 +55,7 @@ class TeamProjectWidget extends StatelessWidget {
       width: 50.w,
       height: 50.h,
       decoration: ShapeDecoration(
-        color: const Color(0xFFD9D9D9),
+        color: AppColors.G_02,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
@@ -63,7 +65,7 @@ class TeamProjectWidget extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        color: const Color(0xFF333333),
+        color: AppColors.Black,
         fontSize: 11.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
@@ -76,7 +78,7 @@ class TeamProjectWidget extends StatelessWidget {
     return Text(
       desc,
       style: TextStyle(
-        color: const Color(0xFF333333),
+        color: AppColors.Black,
         fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
@@ -95,7 +97,7 @@ class TeamProjectWidget extends StatelessWidget {
         Text(
           "$memberSize",
           style: TextStyle(
-            color: const Color(0xFF333333),
+            color: AppColors.Black,
             fontSize: 7.sp,
             fontFamily: 'NanumSquareNeo',
             fontWeight: FontWeight.w700,
@@ -109,7 +111,7 @@ class TeamProjectWidget extends StatelessWidget {
     return Text(
       team.date,
       style: TextStyle(
-        color: const Color(0xFF969696),
+        color: AppColors.G_04,
         fontSize: 7.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,

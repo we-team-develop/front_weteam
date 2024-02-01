@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
+
+import '../../controller/profile_controller.dart';
+import '../../data/image_data.dart';
 
 double circleSize = 85.0.w;
 double checkMarkSize = circleSize / 2;

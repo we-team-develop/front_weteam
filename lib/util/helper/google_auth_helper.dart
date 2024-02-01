@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'auth_helper.dart';
 
 class GoogleAuthHelper extends AuthHelper {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

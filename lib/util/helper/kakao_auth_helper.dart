@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:front_weteam/social/kakao.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
+
+import '../../social/kakao.dart';
+import 'auth_helper.dart';
 
 class KakaoAuthHelper extends AuthHelper {
   @override

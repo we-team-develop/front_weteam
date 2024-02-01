@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/color_data.dart';
+
 class CustomBigDialog extends StatelessWidget {
   final String title;
   final Widget child;
@@ -9,8 +11,8 @@ class CustomBigDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: const Color(0xFFFFFFFF),
-      surfaceTintColor: const Color(0xFFFFFFFF),
+      backgroundColor: AppColors.White,
+      surfaceTintColor: AppColors.White,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       //Dialog Main Title
@@ -18,7 +20,7 @@ class CustomBigDialog extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: Color(0xFF333333),
+          color: AppColors.Black,
           fontSize: 12,
           fontFamily: 'NanumSquareNeo',
           fontWeight: FontWeight.w800,

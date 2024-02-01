@@ -5,16 +5,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/app.dart';
-import 'package:front_weteam/binding/main_bindings.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/firebase_options.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/util/mem_cache.dart';
-import 'package:front_weteam/view/login/login_main.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'app.dart';
+import 'binding/main_bindings.dart';
+import 'controller/profile_controller.dart';
+import 'data/color_data.dart';
+import 'firebase_options.dart';
+import 'service/auth_service.dart';
+import 'util/mem_cache.dart';
+import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
 
@@ -87,9 +89,9 @@ class MyApp extends StatelessWidget {
                     centerTitle: true,
                     elevation: 0.0,
                   ),
-                  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+                  scaffoldBackgroundColor: AppColors.White,
                   colorScheme:
-                      ColorScheme.fromSeed(seedColor: const Color(0XFFE2583E)),
+                      ColorScheme.fromSeed(seedColor: AppColors.MainOrange),
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: home,

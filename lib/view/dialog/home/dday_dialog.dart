@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
-import 'package:front_weteam/view/widget/custom_text_field.dart';
-import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/home_controller.dart';
+import '../../../data/color_data.dart';
+import '../../../main.dart';
 import '../../widget/custom_date_picker.dart';
+import '../../widget/custom_text_field.dart';
+import '../../widget/normal_button.dart';
+import '../custom_big_dialog.dart';
 
 class DDayDialog extends StatefulWidget {
   final DDayData? dDayData;
@@ -86,7 +87,7 @@ class _DDayDialogState extends State<DDayDialog> {
                       height: 90.h,
                       margin: EdgeInsets.symmetric(horizontal: 21.w),
                       decoration: const BoxDecoration(
-                        color: Color(0xFFDCDCDC),
+                        color: AppColors.G_02,
                       ),
                     ),
                     Flexible(
@@ -123,7 +124,7 @@ class _DDayDialogState extends State<DDayDialog> {
                   warningContent,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: const Color(0xFFE2583E),
+                      color: AppColors.MainOrange,
                       fontFamily: 'NanumSquareNeo',
                       fontSize: 10.sp),
                 )),

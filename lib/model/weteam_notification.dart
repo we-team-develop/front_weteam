@@ -1,5 +1,5 @@
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/model/weteam_user.dart';
+import 'team_project.dart';
+import 'weteam_user.dart';
 
 class WeteamNotification {
   final int id;
