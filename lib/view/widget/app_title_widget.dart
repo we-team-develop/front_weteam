@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/color_data.dart';
+
 class AppTitleWidget extends StatelessWidget {
   const AppTitleWidget({super.key});
 
@@ -10,7 +12,7 @@ class AppTitleWidget extends StatelessWidget {
       'WE TEAM',
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: const Color(0xFF333333),
+        color: AppColors.Black,
         fontSize: 16.sp,
         fontFamily: 'SBaggroB',
         fontWeight: FontWeight.w400,

@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/color_data.dart';
+
 late SharedPreferences sharedPreferences;
 
 Future<void> main() async {
@@ -87,9 +89,9 @@ class MyApp extends StatelessWidget {
                     centerTitle: true,
                     elevation: 0.0,
                   ),
-                  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+                  scaffoldBackgroundColor: AppColors.White,
                   colorScheme:
-                      ColorScheme.fromSeed(seedColor: const Color(0XFFE2583E)),
+                      ColorScheme.fromSeed(seedColor: AppColors.MainOrange),
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: home,

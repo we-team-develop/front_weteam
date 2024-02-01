@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/color_data.dart';
+
 class CustomSwitch extends StatefulWidget {
   final Function(bool value) onChanged;
   final bool value;
@@ -19,9 +21,9 @@ class CustomSwitch extends StatefulWidget {
     this.trackWidth = 44,
     this.toggleWidth = 21,
     this.toggleHeight = 21,
-    this.trackActiveColor = const Color(0xffEB8673),
+    this.trackActiveColor = AppColors.Orange_03,
     this.trackInActiveColor = const Color(0xffcccccc),
-    this.toggleActiveColor = const Color(0xffffffff),
+    this.toggleActiveColor = AppColors.White,
   });
   @override
   _CustomSwitchState createState() => _CustomSwitchState();

@@ -8,6 +8,7 @@ import 'package:front_weteam/view/widget/custom_text_field.dart';
 import 'package:front_weteam/view/widget/normal_button.dart';
 import 'package:get/get.dart';
 
+import '../../../data/color_data.dart';
 import '../../widget/custom_date_picker.dart';
 
 class AddTeamDialog extends StatefulWidget {
@@ -77,7 +78,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                         side:
-                        const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                        const BorderSide(width: 1, color: AppColors.G_02),
                         borderRadius: BorderRadius.circular(8)),
                   ),
                   child: TextField(
@@ -91,7 +92,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                       contentPadding: EdgeInsets.all(0),
                       isDense: true,
                     ),
-                    cursorColor: const Color(0xFFE2583E), // 깜빡이는 커서의 색 변경
+                    cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
                     style: const TextStyle(fontSize: 13),
                     onChanged: (newV) {
                       setState(() {
@@ -151,7 +152,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                   height: 90.h,
                   margin: EdgeInsets.symmetric(horizontal: 21.w),
                   decoration: const BoxDecoration(
-                    color: Color(0xFFDCDCDC),
+                    color: AppColors.G_02,
                   ),
                 ),
                 Flexible(
@@ -187,7 +188,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
             child: Text(warningContent,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: const Color(0xFFE2583E),
+              color: AppColors.MainOrange,
               fontFamily: 'NanumSquareNeo',
               fontSize: 10.sp))),
         NormalButton(text: '확인', onTap: () async {

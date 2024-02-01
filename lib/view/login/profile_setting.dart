@@ -6,6 +6,7 @@ import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
 import '../../main.dart';
 
 class ProfileSettingPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class ProfileSettingPage extends StatelessWidget {
                   'WE TEAM',
                   style: TextStyle(
                     fontFamily: 'SBaggroB',
-                    color: const Color(0xFFE2583E),
+                    color: AppColors.MainOrange,
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0.sp,
                   ),

@@ -4,6 +4,8 @@ import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/login/profile_setting.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
+
 class SignUpCompleted extends StatefulWidget {
   const SignUpCompleted({super.key});
 
@@ -20,7 +22,7 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: AppColors.White,
       body: _body(),
     );
   }

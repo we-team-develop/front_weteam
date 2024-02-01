@@ -11,13 +11,15 @@ import 'package:front_weteam/util/helper/naver_auth_helper.dart';
 import 'package:front_weteam/view/login/sign_up_completed.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
+
 class LoginMain extends StatelessWidget {
   const LoginMain({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: AppColors.White,
       body: SafeArea(child: _body(context)),
     );
   }

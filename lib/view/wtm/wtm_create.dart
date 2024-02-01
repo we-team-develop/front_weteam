@@ -77,7 +77,7 @@ class WTMCreate extends GetView<WTMController> {
       padding: EdgeInsets.only(right: 8.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: const Color(0xFFd9d9d9), width: 1.w),
+        border: Border.all(color: AppColors.G_02, width: 1.w),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -104,7 +104,7 @@ class WTMCreate extends GetView<WTMController> {
               border: Border(
                 bottom: BorderSide(
                   color:
-                      isSelected ? const Color(0xFFE2583E) : Colors.transparent,
+                      isSelected ? AppColors.MainOrange : Colors.transparent,
                   width: 2.w,
                 ),
               ),
@@ -128,7 +128,7 @@ class WTMCreate extends GetView<WTMController> {
       height: 46.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        color: const Color(0xffd9d9d9),
+        color: AppColors.G_02,
       ),
       child: Center(
         child: Text(

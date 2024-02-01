@@ -5,6 +5,8 @@ import 'package:front_weteam/model/weteam_notification.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../data/color_data.dart';
+
 class NotificationPage extends GetView<NotificationController> {
   const NotificationPage({super.key});
 
@@ -66,7 +68,7 @@ class NotificationContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
-      color: notification.read ? Colors.transparent : const Color(0xFFFFF2EF),
+      color: notification.read ? Colors.transparent : AppColors.Orange_01,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,7 +85,7 @@ class NotificationContainer extends StatelessWidget {
           Text(
             notification.getContent(),
             style: TextStyle(
-              color: const Color(0xFF333333),
+              color: AppColors.Black,
               fontSize: 11.sp,
               fontFamily: 'NanumGothic',
               fontWeight: FontWeight.w300,
@@ -93,7 +95,7 @@ class NotificationContainer extends StatelessWidget {
           Text(
             notification.date,
             style: TextStyle(
-              color: const Color(0xFF8B8B8B),
+              color: AppColors.G_04,
               fontSize: 10.sp,
               fontFamily: 'NanumGothic',
               fontWeight: FontWeight.w300,

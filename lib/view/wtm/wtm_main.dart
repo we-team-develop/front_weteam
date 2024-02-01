@@ -6,6 +6,8 @@ import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/wtm/wtm_create.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
+
 class WTM extends GetView<WTMController> {
   const WTM({super.key});
 
@@ -89,7 +91,7 @@ class WTM extends GetView<WTMController> {
                     '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: const Color(0xFF333333),
+                      color: AppColors.Black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
