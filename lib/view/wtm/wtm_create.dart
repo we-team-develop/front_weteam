@@ -6,6 +6,7 @@ import '../../controller/tp_controller.dart';
 import '../../controller/wtm_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
+import '../widget/team_project_widget.dart';
 
 class WTMCreate extends GetView<WTMController> {
   WTMCreate({Key? key}) : super(key: key);
@@ -28,7 +29,6 @@ class WTMCreate extends GetView<WTMController> {
 
   Widget _body() {
     return Obx(() {
-      TeamProjectColumn(controller.tpList);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
