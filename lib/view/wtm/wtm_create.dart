@@ -14,6 +14,13 @@ class WTMCreate extends GetView<WTMController> {
   final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
 
   @override
+  StatelessElement createElement() {
+    controller.updateTeamProject(controller.selectedtpList.value == "완료된 팀플");
+
+    return super.createElement();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
@@ -45,15 +52,17 @@ class WTMCreate extends GetView<WTMController> {
                 children: [
                   _tplist(
                       "진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플"),
-                  ...controller.tpList.map((teamProject) {
-                    return TeamProjectWidget(teamProject);
-                  }).toList(),
                 ],
               )),
               Expanded(
                   child: _tplist(
                       "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
             ],
+          ),
+          Column(
+            children: controller.tpList.map((teamProject) {
+              return TeamProjectWidget(teamProject);
+            }).toList(),
           ),
           Center(
               child: Column(
