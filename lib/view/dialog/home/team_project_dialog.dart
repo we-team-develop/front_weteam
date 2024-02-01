@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/home_controller.dart';
+import '../../../controller/team_project_detail_page_controller.dart';
 import '../../../controller/tp_controller.dart';
 import '../../../data/color_data.dart';
+import '../../../model/team_project.dart';
 import '../../../service/api_service.dart';
 import '../../widget/custom_date_picker.dart';
 import '../../widget/custom_text_field.dart';

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/model/weteam_project_user.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/view/dialog/custom_big_dialog.dart';
-import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
-import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
+import '../../controller/home_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../../model/weteam_project_user.dart';
+import '../../service/api_service.dart';
+import '../../service/auth_service.dart';
+import '../dialog/custom_big_dialog.dart';
+import '../dialog/custom_check_dialog.dart';
+import '../dialog/home/team_project_dialog.dart';
 import '../widget/custom_text_field.dart';
 import '../widget/profile_image_widget.dart';
+import '../widget/team_project_widget.dart';
 
 class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   final TeamProject tp;

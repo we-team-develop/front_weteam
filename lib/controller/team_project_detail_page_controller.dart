@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/model/weteam_project_user.dart';
-import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
+
+import '../model/team_project.dart';
+import '../model/weteam_project_user.dart';
+import '../service/api_service.dart';
 
 class TeamProjectDetailPageController extends GetxController {
   late final Rx<TeamProject> tp;

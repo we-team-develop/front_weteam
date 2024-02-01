@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,10 +5,9 @@ import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../model/team_project.dart';
-import '../dialog/home/add_team_dialog.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';
 import '../dialog/home/dday_dialog.dart';
+import '../dialog/home/team_project_dialog.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/normal_button.dart';
 import '../widget/team_project_column.dart';

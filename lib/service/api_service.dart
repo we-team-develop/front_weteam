@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:front_weteam/model/weteam_notification.dart';
-import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
 import '../model/team_project.dart';
 import '../model/weteam_notification.dart';
+import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../util/custom_get_connect.dart';
 

@@ -12,9 +12,11 @@ import 'package:uni_links/uni_links.dart';
 
 import 'app.dart';
 import 'binding/main_bindings.dart';
+import 'controller/home_controller.dart';
 import 'controller/profile_controller.dart';
 import 'data/color_data.dart';
 import 'firebase_options.dart';
+import 'service/api_service.dart';
 import 'service/auth_service.dart';
 import 'util/mem_cache.dart';
 import 'view/login/login_main.dart';

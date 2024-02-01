@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import '../../controller/my_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
+import '../../model/team_project.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/profile_image_widget.dart';
-import '../widget/team_project_widget.dart';
+import '../widget/team_project_column.dart';
 import 'profile.dart';
 
 class MyPage extends GetView<MyController> {

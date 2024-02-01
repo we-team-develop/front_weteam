@@ -1,4 +1,6 @@
-import 'package:front_weteam/model/weteam_user.dart';
+
+
+import 'weteam_user.dart';
 
 class TeamProject {
   int id;
