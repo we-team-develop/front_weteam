@@ -1,14 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/my_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/view/my/profile.dart';
-import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/profile_image_widget.dart';
-import 'package:front_weteam/view/widget/team_project_column.dart';
 import 'package:get/get.dart';
+
+import '../../controller/my_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../service/auth_service.dart';
+import '../widget/app_title_widget.dart';
+import '../widget/profile_image_widget.dart';
+import '../widget/team_project_widget.dart';
+import 'profile.dart';
 
 class MyPage extends GetView<MyController> {
   const MyPage({super.key});
@@ -56,7 +57,7 @@ class MyPage extends GetView<MyController> {
     return AspectRatio(
         aspectRatio: 360 / 135,
         child: Container(
-          decoration: const BoxDecoration(color: Color(0xFFFFF2EF)),
+          decoration: const BoxDecoration(color: AppColors.Orange_01),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +81,7 @@ class MyPage extends GetView<MyController> {
                           child: Text(
                         '${controller.getUserName()}님 ',
                         style: TextStyle(
-                          color: const Color(0xFF333333),
+                          color: AppColors.Black,
                           fontSize: 16.sp,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
@@ -102,7 +103,7 @@ class MyPage extends GetView<MyController> {
                         Get.find<AuthService>().user.value?.organization ??
                             '미입력',
                         style: TextStyle(
-                          color: const Color(0xFF7E7E7E),
+                          color: AppColors.G_04,
                           fontSize: 10.sp,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w400,
@@ -150,7 +151,7 @@ class MyPage extends GetView<MyController> {
       return Text(
         text,
         style: TextStyle(
-          color: const Color(0xFF333333),
+          color: AppColors.Black,
           fontSize: 14.sp,
           fontFamily: 'NanumGothic',
           fontWeight: FontWeight.w600,

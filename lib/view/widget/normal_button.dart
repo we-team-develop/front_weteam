@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/color_data.dart';
+
 class NormalButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
@@ -16,14 +18,14 @@ class NormalButton extends StatelessWidget {
         height: 25.60.h,
         alignment: Alignment.center,
         decoration: ShapeDecoration(
-          color: const Color(0xFFE2583E),
+          color: AppColors.MainOrange,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8)),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: const Color(0xFFFFFFFF),
+            color: AppColors.White,
             fontSize: 10.sp,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.w700,

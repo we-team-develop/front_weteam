@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
+
+import '../../controller/home_controller.dart';
+import '../../model/team_project.dart';
+import 'team_project_widget.dart';
 
 class TeamProjectColumn extends StatefulWidget {
   final List<TeamProject> tpList;

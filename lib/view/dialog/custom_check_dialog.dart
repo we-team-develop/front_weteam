@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
+
 class CustomCheckDialog extends StatelessWidget {
   final String title; // 예시: 정말 로그아웃 하시겠습니까?
   final String content; // 예시: 다시 돌아올 거라 믿어요😢
@@ -27,8 +29,8 @@ class CustomCheckDialog extends StatelessWidget {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       titlePadding: const EdgeInsets.fromLTRB(40, 28, 40, 5),
-      backgroundColor: const Color(0xFFFFFFFF),
-      surfaceTintColor: const Color(0xFFFFFFFF),
+      backgroundColor: AppColors.White,
+      surfaceTintColor: AppColors.White,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       //Dialog Main Title
@@ -36,7 +38,7 @@ class CustomCheckDialog extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: Color(0xFF333333),
+          color: AppColors.Black,
           fontSize: 12,
           fontFamily: 'NanumSquareNeo',
           fontWeight: FontWeight.w700,
@@ -49,7 +51,7 @@ class CustomCheckDialog extends StatelessWidget {
           Text(content,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Color(0xFF333333),
+                color: AppColors.Black,
                 fontSize: 10,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w400,
@@ -61,7 +63,7 @@ class CustomCheckDialog extends StatelessWidget {
             width: double.infinity,
             height: 0.5,
             decoration: const BoxDecoration(
-              color: Color(0xFFDCDCDC),
+              color: AppColors.G_02,
             ),
           ),
           IntrinsicHeight(
@@ -74,7 +76,7 @@ class CustomCheckDialog extends StatelessWidget {
                 width: 0.5,
                 height: 40,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFDCDCDC),
+                    color: AppColors.G_02
                 ),
               ),
               _Button(name: admitName, colorInt: admitColorInt, callback: admitCallback)

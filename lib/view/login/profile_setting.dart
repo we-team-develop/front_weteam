@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
+import '../../controller/profile_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
 import '../../main.dart';
+import '../../service/api_service.dart';
+import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
   ProfileSettingPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class ProfileSettingPage extends StatelessWidget {
                   'WE TEAM',
                   style: TextStyle(
                     fontFamily: 'SBaggroB',
-                    color: const Color(0xFFE2583E),
+                    color: AppColors.MainOrange,
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0.sp,
                   ),

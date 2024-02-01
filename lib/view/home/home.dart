@@ -1,16 +1,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
-import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
-import 'package:front_weteam/view/dialog/home/team_project_dialog.dart';
-import 'package:front_weteam/view/home/notification_page.dart';
-import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/normal_button.dart';
-import 'package:front_weteam/view/widget/team_project_column.dart';
 import 'package:get/get.dart';
+
+import '../../controller/home_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../dialog/home/add_team_dialog.dart';
+import '../dialog/home/check_remove_dday_dialog.dart';
+import '../dialog/home/dday_dialog.dart';
+import '../widget/app_title_widget.dart';
+import '../widget/normal_button.dart';
+import '../widget/team_project_column.dart';
+import '../wtm/wtm_main.dart';
+import 'notification_page.dart';
 
 class Home extends GetView<HomeController> {
   const Home({super.key});
@@ -23,7 +27,8 @@ class Home extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 0), child: _body());
+    return Padding(
+        padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 0), child: _body());
   }
 
   Widget _body() {
@@ -33,7 +38,8 @@ class Home extends GetView<HomeController> {
         SizedBox(
           height: 12.h,
         ),
-        Expanded(child: CustomScrollView(
+        Expanded(
+            child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
               hasScrollBody: false,
@@ -41,7 +47,11 @@ class Home extends GetView<HomeController> {
                 children: [
                   Obx(() => DDayWidget(dDayData: controller.dDayData.value)),
                   _getTeamProjectListBody(),
-                  _bottomBanner(),
+                  GestureDetector(
+                      onTap: () {
+                        Get.to(() => const WTM());
+                      },
+                      child: _bottomBanner()),
                   SizedBox(height: 15.h)
                 ],
               ),
@@ -62,46 +72,47 @@ class Home extends GetView<HomeController> {
 
   Widget _bellIcon() {
     return GestureDetector(
-      onTap: () => Get.to(() => const NotificationPage()),
-      child: Image.asset(
-          width: 24.65.w,
-          height: 22.99.h,
-          controller.hasNewNotification()
-              ? ImagePath.icBellNew
-              : ImagePath.icBell)
-    );
+        onTap: () => Get.to(() => const NotificationPage()),
+        child: Image.asset(
+            width: 24.65.w,
+            height: 22.99.h,
+            controller.hasNewNotification()
+                ? ImagePath.icBellNew
+                : ImagePath.icBell));
   }
 
   Widget _getTeamProjectListBody() {
     return Obx(() {
-      if (controller.tpList.value == null || controller.tpList.value!.projectList.isEmpty) {
+      if (controller.tpList.value == null ||
+          controller.tpList.value!.projectList.isEmpty) {
         // 팀플 없으면
         return _noTeamProjectWidget();
       }
 
       return Expanded(
           child: Column(
-            children: [
-              // Divider
-              SizedBox(height: 15.h),
-              const SizedBox(
-                height: 0.7,
-                width: double.infinity,
-                child: ColoredBox(
-                  color: Color(0xFFD9D9D9),
-                ),
-              ),
-              SizedBox(height: 15.h),
+        children: [
+          // Divider
+          SizedBox(height: 15.h),
+          const SizedBox(
+            height: 0.7,
+            width: double.infinity,
+            child: ColoredBox(
+              color: AppColors.G_02,
+            ),
+          ),
+          SizedBox(height: 15.h),
 
-              // 팀플 목록
-              Expanded(child: TeamProjectColumn(controller.tpList.value!.projectList)),
+          // 팀플 목록
+          Expanded(
+              child: TeamProjectColumn(controller.tpList.value!.projectList)),
 
-              // 팀플 추가하기 버튼
-              SizedBox(height: 16.h),
-              _addTeamProjectBigButton(),
-              SizedBox(height: 16.h),
-            ],
-          ));
+          // 팀플 추가하기 버튼
+          SizedBox(height: 16.h),
+          _addTeamProjectBigButton(),
+          SizedBox(height: 16.h),
+        ],
+      ));
     });
   }
 
@@ -114,7 +125,7 @@ class Home extends GetView<HomeController> {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+            side: const BorderSide(width: 1, color: AppColors.G_02),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
@@ -130,7 +141,7 @@ class Home extends GetView<HomeController> {
             Text(
               '팀플 추가하기',
               style: TextStyle(
-                color: const Color(0xFF333333),
+                color: AppColors.Black,
                 fontSize: 11.sp,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w700,
@@ -146,63 +157,63 @@ class Home extends GetView<HomeController> {
   Widget _noTeamProjectWidget() {
     return Expanded(
         child: SizedBox(
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 0,
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        controller.popupDialog(const TeamProjectDialog());
-                      },
-                      child: Image.asset(
-                        ImagePath.icPlus,
-                        height: 34.h,
-                        width: 34.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Text(
-                      '진행 중인  팀플이 없어요.\n지금 바로 생성해보세요!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: const Color(0xFF333333),
-                        fontSize: 11.sp,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w400,
-                        height: 1.5,
-                      ),
-                    )
-                  ],
+      width: double.infinity,
+      child: Stack(
+        children: [
+          Positioned(
+            bottom: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    controller.popupDialog(const TeamProjectDialog());
+                  },
+                  child: Image.asset(
+                    ImagePath.icPlus,
+                    height: 34.h,
+                    width: 34.w,
+                  ),
                 ),
-              ),
-              Positioned(
-                right: 10,
-                bottom: 0,
-                child: Image.asset(
-                  ImagePath.icEmptyTimi,
-                  width: 75.55.w,
-                  height: 96.h,
+                SizedBox(
+                  height: 15.h,
                 ),
-              )
-            ],
+                Text(
+                  '진행 중인  팀플이 없어요.\n지금 바로 생성해보세요!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.Black,
+                    fontSize: 11.sp,
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.w400,
+                    height: 1.5,
+                  ),
+                )
+              ],
+            ),
           ),
-        ));
+          Positioned(
+            right: 10,
+            bottom: 0,
+            child: Image.asset(
+              ImagePath.icEmptyTimi,
+              width: 75.55.w,
+              height: 96.h,
+            ),
+          )
+        ],
+      ),
+    ));
   }
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,
       height: 70.h,
       decoration: ShapeDecoration(
-        color: const Color(0xFFFFF1EF),
+        color: AppColors.Orange_01,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Stack(
@@ -288,7 +299,8 @@ class _DDayWidgetState extends State<DDayWidget> {
 
     String tmp = "D";
     String numStr = "";
-    DateTime now = DateTime.now().copyWith(hour: 0, minute: 0,second: 0, microsecond: 0, millisecond: 0);
+    DateTime now = DateTime.now().copyWith(
+        hour: 0, minute: 0, second: 0, microsecond: 0, millisecond: 0);
 
     int diffDays = dday!.end.difference(now).inDays;
     bool hasMoreDays = diffDays > 0;
@@ -313,7 +325,7 @@ class _DDayWidgetState extends State<DDayWidget> {
         width: 330.w,
         height: 176.h,
         decoration: ShapeDecoration(
-          color: const Color(0xFFE2583E),
+          color: AppColors.MainOrange,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -355,8 +367,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                             child: IntrinsicHeight(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   GestureDetector(
                                       behavior: HitTestBehavior.translucent,
@@ -367,9 +378,12 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         });
                                         showDialog(
                                             context: context,
-                                            builder:
-                                                (BuildContext context) {
-                                              return DDayDialog(dDayData: Get.find<HomeController>().dDayData.value); // TODO: D-Day 수정 Dialog 만들기
+                                            builder: (BuildContext context) {
+                                              return DDayDialog(
+                                                  dDayData: Get.find<
+                                                          HomeController>()
+                                                      .dDayData
+                                                      .value); // TODO: D-Day 수정 Dialog 만들기
                                             });
                                       },
                                       child: SizedBox(
@@ -378,10 +392,9 @@ class _DDayWidgetState extends State<DDayWidget> {
                                           child: Text(
                                             '수정하기',
                                             style: TextStyle(
-                                              color: const Color(0xFF333333),
+                                              color: AppColors.Black,
                                               fontSize: 8.sp,
-                                              fontFamily:
-                                              'NanumSquareNeo',
+                                              fontFamily: 'NanumSquareNeo',
                                               fontWeight: FontWeight.w400,
                                               height: 0,
                                             ),
@@ -392,7 +405,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                     width: 67.w,
                                     height: 0.50.h,
                                     decoration: const BoxDecoration(
-                                        color: Color(0xFFEEEEEE)),
+                                        color: AppColors.G_02),
                                   ),
                                   GestureDetector(
                                       behavior: HitTestBehavior.translucent,
@@ -402,8 +415,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                           showPopupMenu = false;
                                           showDialog(
                                               context: context,
-                                              builder:
-                                                  (BuildContext context) {
+                                              builder: (BuildContext context) {
                                                 return const CheckRemoveDdayDialog();
                                               });
                                         });
@@ -414,10 +426,9 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             child: Text(
                                               '삭제하기',
                                               style: TextStyle(
-                                                color: const Color(0xFFE60000),
+                                                color: AppColors.Red,
                                                 fontSize: 8.sp,
-                                                fontFamily:
-                                                'NanumSquareNeo',
+                                                fontFamily: 'NanumSquareNeo',
                                                 fontWeight: FontWeight.w400,
                                                 height: 0,
                                               ),
@@ -476,9 +487,9 @@ class _DDayWidgetState extends State<DDayWidget> {
       width: 330.w,
       height: 176.h,
       decoration: ShapeDecoration(
-        color: const Color(0xFFFFF2EF),
+        color: AppColors.Orange_01,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1.w, color: const Color(0xFFE4E4E4)),
+          side: BorderSide(width: 1.w, color: AppColors.G_02),
           borderRadius: BorderRadius.circular(16),
         ),
       ),
@@ -492,7 +503,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '중요한 일정을 ',
                     style: TextStyle(
-                      color: const Color(0xFF333333),
+                      color: AppColors.Black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
@@ -502,7 +513,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '추가',
                     style: TextStyle(
-                      color: const Color(0xFF333333),
+                      color: AppColors.Black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w700,
@@ -512,7 +523,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '해보세요!\n언제든 수정가능합니다:)',
                     style: TextStyle(
-                      color: const Color(0xFF333333),
+                      color: AppColors.Black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
@@ -524,7 +535,10 @@ class _DDayWidgetState extends State<DDayWidget> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 30.h),
-            NormalButton(text: '중요 일정 추가하기', onTap: () => Get.find<HomeController>().popupDialog(const DDayDialog())),
+            NormalButton(
+                text: '중요 일정 추가하기',
+                onTap: () =>
+                    Get.find<HomeController>().popupDialog(const DDayDialog())),
           ],
         ),
       ),

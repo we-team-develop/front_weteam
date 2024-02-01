@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:front_weteam/model/weteam_notification.dart';
-import 'package:front_weteam/model/weteam_project_user.dart';
 import 'package:front_weteam/util/custom_get_connect.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
 import '../model/team_project.dart';
+import '../model/weteam_notification.dart';
 import '../model/weteam_user.dart';
+import '../util/custom_get_connect.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
   final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
@@ -110,6 +111,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       'explanation': explanation
     };
     Response rp = await post('/api/projects', data);
+    print(rp.bodyString);
     return rp.statusCode == 201;
   }
 
@@ -242,5 +244,28 @@ class GetTeamProjectListResult {
         totalElements: data['totalElements'],
         projectList: List<TeamProject>.generate(
             tpList.length, (index) => TeamProject.fromJson(tpList[index])));
+  }
+}
+
+
+// WTMProjectList
+
+class GetWTMProjectListResult {
+  final int totalPages;
+  final int totalElements;
+  final List<TeamProject> projectList;
+
+  const GetWTMProjectListResult(
+      {required this.totalPages,
+      required this.totalElements,
+      required this.projectList});
+
+  factory GetWTMProjectListResult.fromJson(Map data) {
+    List wtmList = data['wtmList'];
+    return GetWTMProjectListResult(
+        totalPages: data['totalPages'],
+        totalElements: data['totalElements'],
+        projectList: List<TeamProject>.generate(
+            wtmList.length, (index) => TeamProject.fromJson(wtmList[index])));
   }
 }

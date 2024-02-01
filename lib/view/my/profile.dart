@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
-import 'package:front_weteam/view/widget/custom_switch.dart';
-import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
+
+import '../../controller/profile_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../main.dart';
+import '../../service/auth_service.dart';
+import '../dialog/custom_check_dialog.dart';
+import '../widget/custom_switch.dart';
+import '../widget/profile_image_widget.dart';
 
 class Profile extends GetView<ProfileController> {
   const Profile({super.key});
@@ -51,7 +53,7 @@ class Profile extends GetView<ProfileController> {
                   fontFamily: 'NanumGothic',
                   fontSize: 14.0.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF969696)),
+                  color: AppColors.G_04),
             ),
             const ProfileImageSelectContainerWidget(),
             SizedBox(height: 4.0.h),
@@ -61,7 +63,7 @@ class Profile extends GetView<ProfileController> {
                   fontFamily: 'NanumGothic',
                   fontSize: 14.0.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF969696)),
+                  color: AppColors.G_04),
             ),
             SizedBox(height: 4.0.h),
             Container(
@@ -70,7 +72,7 @@ class Profile extends GetView<ProfileController> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0.r),
                 border: Border.all(
-                  color: const Color(0xFFEBE9E9),
+                  color: AppColors.G_01,
                   width: 1.0.w,
                 ),
               ),
@@ -90,7 +92,7 @@ class Profile extends GetView<ProfileController> {
                             hintStyle: TextStyle(
                               fontFamily: 'NanumGothic',
                               fontSize: 14.sp,
-                              color: const Color(0xffc9c9c9),
+                              color: AppColors.G_06,
                             ),
                             counterText: '',
                           ),
@@ -108,7 +110,7 @@ class Profile extends GetView<ProfileController> {
                               style: TextStyle(
                                 fontFamily: 'NanumGothic',
                                 fontSize: 14.sp,
-                                color: const Color(0xffc9c9c9),
+                                color: AppColors.G_06,
                               ),
                             ),
                           )),
@@ -124,7 +126,7 @@ class Profile extends GetView<ProfileController> {
                   fontFamily: 'NanumGothic',
                   fontSize: 14.0.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF969696)),
+                  color: AppColors.G_04),
             ),
             SizedBox(height: 16.0.h),
             Row(
@@ -135,7 +137,7 @@ class Profile extends GetView<ProfileController> {
                   style: TextStyle(
                       fontFamily: 'NanumGothic',
                       fontSize: 15.0.sp,
-                      color: const Color(0xFF333333)),
+                      color: AppColors.Black),
                 ),
                 CustomSwitch(
                   onChanged: (value) {
@@ -152,7 +154,7 @@ class Profile extends GetView<ProfileController> {
                   fontFamily: 'NanumGothic',
                   fontSize: 14.0.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF969696)),
+                  color: AppColors.G_04),
             ),
             SizedBox(height: 14.h),
             // TODO: 연결된 계정에 따른 버튼 변경
@@ -184,7 +186,7 @@ class Profile extends GetView<ProfileController> {
                     fontFamily: 'NanumGothic',
                     fontSize: 15.0.sp,
                     fontWeight: FontWeight.w400,
-                    color: const Color(0xFF333333)),
+                    color: AppColors.Black),
               ),
             ),
             SizedBox(height: 16.0.h),
@@ -214,7 +216,7 @@ class Profile extends GetView<ProfileController> {
                     fontFamily: 'NanumGothic',
                     fontSize: 15.0.sp,
                     fontWeight: FontWeight.w400,
-                    color: const Color(0xFFE60000)),
+                    color: AppColors.Red),
               ),
             ),
           ],

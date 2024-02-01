@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../data/color_data.dart';
+
 class CustomDatePicker extends StatefulWidget {
   final Function(DateTime dt) onChangeListener;
 
@@ -97,7 +99,7 @@ class _CustomPicker extends StatelessWidget {
           itemBuilder: (context, index) {
             return Text(items[index],
                 style: TextStyle(
-                  color: const Color(0xFF333333),
+                  color: AppColors.Black,
                   fontSize: 16.sp,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w400,

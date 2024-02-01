@@ -2,15 +2,16 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/model/weteam_user.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
-import 'package:front_weteam/util/helper/google_auth_helper.dart';
-import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
-import 'package:front_weteam/util/helper/naver_auth_helper.dart';
-import 'package:front_weteam/util/mem_cache.dart';
 import 'package:get/get.dart';
+
+import '../main.dart';
+import '../model/weteam_user.dart';
+import '../util/helper/auth_helper.dart';
+import '../util/helper/google_auth_helper.dart';
+import '../util/helper/kakao_auth_helper.dart';
+import '../util/helper/naver_auth_helper.dart';
+import '../util/mem_cache.dart';
+import 'api_service.dart';
 
 class AuthService extends GetxService {
   AuthHelper? helper;

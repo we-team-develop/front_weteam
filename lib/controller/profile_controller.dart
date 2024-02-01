@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 
+import '../data/color_data.dart';
+import '../data/image_data.dart';
+import '../service/api_service.dart';
 import '../service/auth_service.dart';
 
 class ProfileController extends GetxController {
@@ -18,12 +19,12 @@ class ProfileController extends GetxController {
   var isSelected = List.generate(6, (index) => false).obs;
 
   RxList<Color> backgroundColors = RxList<Color>([
-    const Color(0xFF9C879E),
-    const Color(0xFF94A4F9),
-    const Color(0xFFFFC7EF),
-    const Color(0xFF87B3DB),
-    const Color(0xFFF9FB8C),
-    const Color(0xFFED9696),
+    AppColors.Purple,
+    AppColors.Blue_02,
+    AppColors.Pink_01,
+    AppColors.Blue_01,
+    AppColors.Yellow_01,
+    AppColors.Pink_02,
   ]);
 
   RxBool isPushNotificationEnabled = false.obs;

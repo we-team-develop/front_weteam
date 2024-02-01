@@ -1,6 +1,6 @@
-import 'package:front_weteam/social/kakao.dart';
 import 'package:get/get.dart';
 
+import '../social/kakao.dart';
 
 class LoginController extends GetxController {
   // Kakao 로그인
