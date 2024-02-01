@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
+import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
@@ -111,12 +112,9 @@ class WTMCreate extends GetView<WTMController> {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                color: isSelected
-                    ? const Color(0xFFE2583E)
-                    : const Color(0xFFc9c9c9),
-              ),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                  color: isSelected ? AppColors.MainOrange : AppColors.G_02),
             ),
           ),
         ],
