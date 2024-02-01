@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
 class WTMCreate extends GetView<WTMController> {
-  const WTMCreate({Key? key}) : super(key: key);
+  WTMCreate({Key? key}) : super(key: key);
+
+  final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,26 +94,32 @@ class WTMCreate extends GetView<WTMController> {
   Widget _tplist(String text, bool isSelected) {
     return GestureDetector(
       onTap: () => controller.setSelectedtpList(text),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 8.h),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isSelected ? const Color(0xFFE2583E) : Colors.transparent,
-              width: 2.w,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(bottom: 8.h),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color:
+                      isSelected ? const Color(0xFFE2583E) : Colors.transparent,
+                  width: 2.w,
+                ),
+              ),
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+                color: isSelected
+                    ? const Color(0xFFE2583E)
+                    : const Color(0xFFc9c9c9),
+              ),
             ),
           ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.bold,
-            color:
-                isSelected ? const Color(0xFFE2583E) : const Color(0xFFc9c9c9),
-          ),
-        ),
+        ],
       ),
     );
   }
