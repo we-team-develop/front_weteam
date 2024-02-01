@@ -106,7 +106,7 @@ class _AddTeamDialog extends State<AddTeamDialog> {
                 bottom: 10,
                 child: Text(
               // TextField 오른쪽에 counter
-              "${inputValue.length} / ${maxContentLength}",
+              "${inputValue.length} / $maxContentLength",
               style: TextStyle(
                 color: Colors.black.withOpacity(0.5),
                 fontSize: 10,
