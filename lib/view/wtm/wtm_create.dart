@@ -4,6 +4,8 @@ import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/team_project_column.dart';
+import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
 class WTMCreate extends GetView<WTMController> {
@@ -20,6 +22,7 @@ class WTMCreate extends GetView<WTMController> {
 
   Widget _body() {
     return Obx(() {
+      TeamProjectColumn(controller.tpList);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,8 +41,15 @@ class WTMCreate extends GetView<WTMController> {
           Row(
             children: [
               Expanded(
-                  child: _tplist(
-                      "진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플")),
+                  child: Column(
+                children: [
+                  _tplist(
+                      "진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플"),
+                  ...controller.tpList.map((teamProject) {
+                    return TeamProjectWidget(teamProject);
+                  }).toList(),
+                ],
+              )),
               Expanded(
                   child: _tplist(
                       "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
@@ -95,29 +105,24 @@ class WTMCreate extends GetView<WTMController> {
   Widget _tplist(String text, bool isSelected) {
     return GestureDetector(
       onTap: () => controller.setSelectedtpList(text),
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: 8.h),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color:
-                      isSelected ? const Color(0xFFE2583E) : Colors.transparent,
-                  width: 2.w,
-                ),
-              ),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: isSelected ? AppColors.MainOrange : AppColors.G_02),
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(bottom: 8.h),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: isSelected ? const Color(0xFFE2583E) : Colors.transparent,
+              width: 2.w,
             ),
           ),
-        ],
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.bold,
+              color: isSelected ? AppColors.MainOrange : AppColors.G_02),
+        ),
       ),
     );
   }
