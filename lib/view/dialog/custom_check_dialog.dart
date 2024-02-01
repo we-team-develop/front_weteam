@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front_weteam/data/color_data.dart';
 import 'package:get/get.dart';
+
+import '../../data/color_data.dart';
 
 class CustomCheckDialog extends StatelessWidget {
   final String title; // 예시: 정말 로그아웃 하시겠습니까?

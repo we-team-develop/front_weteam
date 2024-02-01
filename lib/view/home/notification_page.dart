@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/notification_controller.dart';
-import 'package:front_weteam/model/weteam_notification.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../controller/notification_controller.dart';
 import '../../data/color_data.dart';
+import '../../model/weteam_notification.dart';
 
 class NotificationPage extends GetView<NotificationController> {
   const NotificationPage({super.key});

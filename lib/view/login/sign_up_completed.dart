@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/view/login/profile_setting.dart';
 import 'package:get/get.dart';
 
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import 'profile_setting.dart';
 
 class SignUpCompleted extends StatefulWidget {
   const SignUpCompleted({super.key});

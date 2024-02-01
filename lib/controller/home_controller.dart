@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
 
+import '../main.dart';
 import '../service/api_service.dart';
 
 class HomeController extends GetxController {

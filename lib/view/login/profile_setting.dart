@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
+import '../../controller/profile_controller.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
 import '../../main.dart';
+import '../../service/api_service.dart';
+import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
   ProfileSettingPage({Key? key}) : super(key: key);

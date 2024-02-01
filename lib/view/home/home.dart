@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/dialog/home/add_team_dialog.dart';
-import 'package:front_weteam/view/dialog/home/check_remove_dday_dialog.dart';
-import 'package:front_weteam/view/dialog/home/dday_dialog.dart';
-import 'package:front_weteam/view/home/notification_page.dart';
-import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/normal_button.dart';
-import 'package:front_weteam/view/widget/team_project_column.dart';
-import 'package:front_weteam/view/wtm/wtm_main.dart';
 import 'package:get/get.dart';
 
+import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../dialog/home/add_team_dialog.dart';
+import '../dialog/home/check_remove_dday_dialog.dart';
+import '../dialog/home/dday_dialog.dart';
+import '../widget/app_title_widget.dart';
+import '../widget/normal_button.dart';
+import '../widget/team_project_column.dart';
+import '../wtm/wtm_main.dart';
+import 'notification_page.dart';
 
 class Home extends GetView<HomeController> {
   const Home({super.key});

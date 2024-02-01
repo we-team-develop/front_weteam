@@ -1,10 +1,11 @@
-import 'package:front_weteam/controller/bottom_nav_controller.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/service/auth_service.dart';
 import 'package:get/get.dart';
+
+import '../controller/bottom_nav_controller.dart';
+import '../controller/home_controller.dart';
+import '../controller/profile_controller.dart';
+import '../controller/tp_controller.dart';
+import '../service/api_service.dart';
+import '../service/auth_service.dart';
 
 class MainBindings implements Bindings {
   @override

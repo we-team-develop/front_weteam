@@ -1,8 +1,8 @@
-import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../model/weteam_notification.dart';
+import '../service/api_service.dart';
 
 class NotificationController extends GetxController {
   late PagingController<int, WeteamNotification> _pagingController;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/widget/app_title_widget.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
+import '../../controller/tp_controller.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../widget/app_title_widget.dart';
+import '../widget/team_project_widget.dart';
 
 class TeamPlay extends GetView<TeamPlayController> {
   const TeamPlay({super.key});

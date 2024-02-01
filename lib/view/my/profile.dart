@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/profile_controller.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/view/dialog/custom_check_dialog.dart';
-import 'package:front_weteam/view/widget/custom_switch.dart';
-import 'package:front_weteam/view/widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
+import '../../controller/profile_controller.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../main.dart';
+import '../../service/auth_service.dart';
+import '../dialog/custom_check_dialog.dart';
+import '../widget/custom_switch.dart';
+import '../widget/profile_image_widget.dart';
 
 class Profile extends GetView<ProfileController> {
   const Profile({super.key});

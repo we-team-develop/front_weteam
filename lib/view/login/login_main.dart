@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/app.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/main.dart';
-import 'package:front_weteam/service/auth_service.dart';
-import 'package:front_weteam/util/helper/auth_helper.dart';
-import 'package:front_weteam/util/helper/google_auth_helper.dart';
-import 'package:front_weteam/util/helper/kakao_auth_helper.dart';
-import 'package:front_weteam/util/helper/naver_auth_helper.dart';
-import 'package:front_weteam/view/login/sign_up_completed.dart';
 import 'package:get/get.dart';
 
+import '../../app.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../main.dart';
+import '../../service/auth_service.dart';
+import '../../util/helper/auth_helper.dart';
+import '../../util/helper/google_auth_helper.dart';
+import '../../util/helper/kakao_auth_helper.dart';
+import '../../util/helper/naver_auth_helper.dart';
+import 'sign_up_completed.dart';
 
 class LoginMain extends StatelessWidget {
   const LoginMain({super.key});

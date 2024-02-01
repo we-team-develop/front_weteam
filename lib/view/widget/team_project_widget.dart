@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
 
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
 
 class TeamProjectWidget extends StatelessWidget {
   final TeamProject team;
