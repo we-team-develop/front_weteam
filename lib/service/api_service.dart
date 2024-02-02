@@ -26,7 +26,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
       debugPrint(
-          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()} ${rp.bodyString}");
       return null;
     }
 
@@ -109,6 +109,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
+    print(data);
     Response rp = await post('/api/projects', data);
     print(rp.bodyString);
     return rp.statusCode == 201;
@@ -222,7 +223,7 @@ class ApiService extends CustomGetConnect implements GetxService {
   Future<bool> deleteTeamProject(int projectId) async {
     Response rp = await delete('/api/projects/$projectId');
     debugPrint(rp.bodyString);
-    return rp.statusCode == 200;
+    return rp.statusCode == 204;
   }
 }
 
