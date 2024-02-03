@@ -116,6 +116,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
 
   Future<void> exitOrDeleteTeamProject() async {
     if (controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+      // 팀플 삭제
       bool success = await Get.find<ApiService>().deleteTeamProject(controller.tp.value.id);
       if (success) {
         await Get.find<HomeController>().updateTeamProjectList();
@@ -126,7 +127,16 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         Get.snackbar("삭제 실패", '팀플을 삭제하지 못했어요.');
       }
     } else {
-      throw UnimplementedError(); // 나가기 기능
+      // 팀플 탈퇴
+      bool success = await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
+      if (success) {
+        await Get.find<HomeController>().updateTeamProjectList();
+        Get.back();
+        Get.back();
+        Get.snackbar("탈퇴 성공", '팀플을 탈퇴했습니다.');
+      } else {
+        Get.snackbar("삭제 실패", '팀플을 탈퇴하지 못했어요.');
+      }
     }
   }
 }
