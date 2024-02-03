@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
 
       if (host == "projects") {
         if (path.startsWith("/acceptInvite")) {
-          int projectId = int.parse(query['project_id'] ?? '-1');
+          int projectId = int.parse(query['id'] ?? '-1');
           if (!isLoggedIn) return;
 
           bool success = await Get.find<ApiService>().acceptInvite(projectId);
