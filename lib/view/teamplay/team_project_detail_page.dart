@@ -93,7 +93,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
                             actionButtonText: '퇴출하기',
-                            action: kickAll,
+                            action: controller.kickSelectedUser,
                             cancelAction: () =>
                                 controller.isKickMode.value = false))),
                     Obx(() => Visibility(
@@ -101,7 +101,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '호스트 권한을 넘기고 있습니다.',
                             actionButtonText: '호스트넘기기',
-                            action: changeHost,
+                            action: controller.changeHost,
                             cancelAction: () =>
                                 controller.isChangeHostMode.value = false)))
                   ],
@@ -127,45 +127,6 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       }
     } else {
       throw UnimplementedError(); // 나가기 기능
-    }
-  }
-
-  Future<void> changeHost() async {
-    if (controller.selectedNewHost.value == -1) {
-      Get.snackbar("호스트 권한을 넘길 수 없습니다", '호스트 권한을 받을 유저를 선택해주세요');
-      return;
-    }
-
-    bool success = await Get.find<ApiService>()
-        .changeTeamProjectHost(controller.tp.value.id, controller.selectedNewHost.value);
-    if (success) {
-      await Get.find<HomeController>().updateTeamProjectList();
-      controller.isChangeHostMode.value = false;
-      Get.back();
-      Get.snackbar("호스트 변경 성공", "호스트 권한을 성공적으로 넘겼습니다");
-    } else {
-      Get.snackbar("호스트 변경 실패", "오류가 발생했습니다");
-    }
-  }
-
-  Future<void> kickAll() async {
-    ApiService service = Get.find<ApiService>();
-    List<int> toKickIds = [];
-    for (Widget widget in controller.userContainerList) {
-      _UserContainer uc = widget as _UserContainer;
-      if (uc.kickSelected.isTrue) {
-        toKickIds.add(uc.projectUser.id);
-      }
-    }
-
-    bool success = await service.kickUserFromTeamProject(toKickIds);
-
-    if (success) {
-      Get.snackbar("강제 퇴장 성공", "총 ${toKickIds.length}명을 강제 퇴장했어요");
-      controller.fetchUserList();
-      controller.isKickMode.value = false;
-    } else {
-      Get.snackbar("강제 퇴장 실패", "오류가 발생했습니다");
     }
   }
 }
@@ -194,6 +155,9 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
         kickSelected.value = false; // 강퇴모드 꺼지면 선택 해제
       }
     });
+    controller.selectedKickUser.listen((p0) {
+      if (p0 != projectUser.id) kickSelected.value = false;
+    });
   }
 
   bool amIOwner() {
@@ -207,6 +171,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
       onTap: () {
         if (controller.isKickMode.isTrue && !amIOwner()) {
           kickSelected.value = !kickSelected.value;
+          controller.selectedKickUser.value = kickSelected.value ? projectUser.id : -1;
         }
       },
       child: Stack(
