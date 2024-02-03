@@ -232,8 +232,13 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.statusCode == 204;
   }
 
-  Future<bool> readNotiAll() async {
+  Future<bool> readAlarmsAll() async {
     Response rp = await patch('/api/alarms', {});
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> readAlarm(int id) async {
+    Response rp = await patch('/api/alarms/$id', {});
     return rp.statusCode == 204;
   }
 }
