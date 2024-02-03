@@ -22,7 +22,7 @@ class WeteamNotification {
     return WeteamNotification(
       id: data['id'],
       status: data['status'],
-      date: "2023.01.01", // TODO: 서버에서 받아오기
+      date: data['date'],
       read: data['read'],
       user: data['user'] != null ? WeteamUser.fromJson(data['user']) : null,
       project:
