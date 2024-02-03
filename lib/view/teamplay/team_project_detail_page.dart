@@ -631,15 +631,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () async {
-            bool result = await Get.find<ApiService>()
-                .changeUserTeamProjectRole(controller.tp.value, tec.text);
-            ;
-            if (result) {
-              Get.back();
-              controller.fetchUserList();
-            } else {
-              Get.snackbar("죄송합니다", "역할을 설정하지 못했습니다");
-            }
+            await setRole();
           },
           child: Container(
             width: 185.w,
@@ -665,5 +657,21 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
         )
       ],
     );
+  }
+  
+  Future<void> setRole() async {
+    String newRole = tec.text.trim();
+    if (newRole.isEmpty) {
+      Get.snackbar("역할을 입력해주세요", "");
+      return;
+    }
+    bool result = await Get.find<ApiService>()
+        .changeUserTeamProjectRole(controller.tp.value, newRole);
+    if (result) {
+      Get.back();
+      controller.fetchUserList();
+    } else {
+      Get.snackbar("죄송합니다", "역할을 설정하지 못했습니다");
+    }
   }
 }
