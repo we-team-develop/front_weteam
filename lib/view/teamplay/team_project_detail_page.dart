@@ -7,7 +7,6 @@ import '../../controller/home_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../model/team_project.dart';
 import '../../model/weteam_project_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
@@ -19,16 +18,7 @@ import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
 
 class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
-  final TeamProject tp;
-
-  const TeamProjectDetailPage(this.tp, {super.key});
-
-  @override
-  StatelessElement createElement() {
-    Get.put(TeamProjectDetailPageController(tp));
-
-    return super.createElement();
-  }
+  const TeamProjectDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +115,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   Future<void> exitOrDeleteTeamProject() async {
-    if (tp.host.id == Get.find<AuthService>().user.value!.id) {
-      bool success = await Get.find<ApiService>().deleteTeamProject(tp.id);
+    if (controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+      bool success = await Get.find<ApiService>().deleteTeamProject(controller.tp.value.id);
       if (success) {
         await Get.find<HomeController>().updateTeamProjectList();
         Get.back();
@@ -147,7 +137,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
     }
 
     bool success = await Get.find<ApiService>()
-        .changeTeamProjectHost(tp.id, controller.selectedNewHost.value);
+        .changeTeamProjectHost(controller.tp.value.id, controller.selectedNewHost.value);
     if (success) {
       await Get.find<HomeController>().updateTeamProjectList();
       controller.isChangeHostMode.value = false;

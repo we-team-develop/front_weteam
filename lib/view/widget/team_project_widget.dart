@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
@@ -16,7 +17,7 @@ class TeamProjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(TeamProjectDetailPage(team)),
+      onTap: () => Get.to(GetBuilder(builder: (controller) => TeamProjectDetailPage(), init: TeamProjectDetailPageController(team),)),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
