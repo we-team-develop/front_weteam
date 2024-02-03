@@ -1,37 +1,80 @@
-import 'package:flutter/widgets.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
-import '../../controller/my_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../model/team_project.dart';
+import '../../main.dart';
+import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_column.dart';
 import 'profile.dart';
 
-class MyPage extends GetView<MyController> {
+class MyPage extends StatelessWidget {
   const MyPage({super.key});
 
   @override
+  Widget build(BuildContext context) {
+    return UserInfoPage(user: Get.find<AuthService>().user, isOtherUser: false);
+  }
+}
+
+class UserInfoPage extends StatelessWidget {
+  final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+  final Rxn<WeteamUser> user;
+  final bool isOtherUser;
+
+  UserInfoPage({super.key, required this.user, required this.isOtherUser});
+
+  @override
   StatelessElement createElement() {
-    Get.put(MyController());
+    fetchTeamProjectList();
     return super.createElement();
+  }
+
+  Future<void> fetchTeamProjectList() async {
+    GetTeamProjectListResult? result;
+
+    if (!isOtherUser) {
+      String? json = sharedPreferences.getString(
+          SharedPreferencesKeys.teamProjectDoneListJson);
+      if (json != null) {
+        tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json));
+      }
+
+      result = await Get.find<ApiService>()
+          .getTeamProjectList(0, true, 'DESC', 'DONE',
+          cacheKey: SharedPreferencesKeys
+              .teamProjectDoneListJson);
+    } else {
+      result = await Get.find<ApiService>()
+          .getTeamProjectList(0, true, 'DESC', 'DONE');
+    }
+
+    if (result != null) {
+      tpList.value = result;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const ClampingScrollPhysics(),
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: _body(),
-        )
-      ],
-    );
+    return SafeArea(
+        child: Scaffold(
+      body: CustomScrollView(
+        physics: const ClampingScrollPhysics(),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: _body(),
+          )
+        ],
+      ),
+    ));
   }
 
   Widget _body() {
@@ -55,20 +98,20 @@ class MyPage extends GetView<MyController> {
   }
 
   Widget _profileContainer() {
-    return AspectRatio(
-        aspectRatio: 360 / 135,
-        child: Container(
-          decoration: const BoxDecoration(color: AppColors.Orange_01),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(width: 37.0.w),
-              Obx(() => ProfileImageWidget(
-                  id: Get.find<AuthService>().user.value?.profile?.imageIdx ?? 0)),
-              SizedBox(width: 33.w),
-              Expanded(
-                  child: Column(
+    return Container(
+      width: 360.w,
+      height: 135.h,
+      decoration: const BoxDecoration(color: AppColors.Orange_01),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(width: 37.0.w),
+          Obx(() => ProfileImageWidget(
+              id: user.value!.profile?.imageIdx ?? 0)),
+          SizedBox(width: 33.w),
+          Expanded(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,41 +123,42 @@ class MyPage extends GetView<MyController> {
                     children: [
                       Flexible(
                           child: Text(
-                        '${controller.getUserName()}님 ',
-                        style: TextStyle(
-                          color: AppColors.Black,
-                          fontSize: 16.sp,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                          height: 1,
-                        ),
-                      )),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const Profile());
-                        },
-                        child: Image.asset(ImagePath.icRightGray30,
-                            width: 15.w, height: 15.h),
-                      )
+                            '${user.value!.username}님 ',
+                            style: TextStyle(
+                              color: AppColors.Black,
+                              fontSize: 16.sp,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis,
+                              height: 1,
+                            ),
+                          )),
+                      Visibility(
+                          visible: !isOtherUser,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => const Profile());
+                            },
+                            child: Image.asset(ImagePath.icRightGray30,
+                                width: 15.w, height: 15.h),
+                          ))
                     ],
                   ),
                   SizedBox(height: 5.h),
                   Obx(() => Text(
-                        Get.find<AuthService>().user.value?.organization ??
-                            '미입력',
-                        style: TextStyle(
-                          color: AppColors.G_04,
-                          fontSize: 10.sp,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      )),
+                    user.value!.organization ?? '미입력',
+                    style: TextStyle(
+                      color: AppColors.G_04,
+                      fontSize: 10.sp,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )),
                 ],
               ))
-            ],
-          ),
-        ));
+        ],
+      ),
+    );
   }
 
   Widget _bottomContainer() {
@@ -126,8 +170,8 @@ class MyPage extends GetView<MyController> {
         children: [
           _bottomContainerTitle(),
           Obx(() {
-            if (controller.tpList.value != null &&
-                controller.tpList.value!.projectList.isNotEmpty) {
+            if (tpList.value != null &&
+                tpList.value!.projectList.isNotEmpty) {
               return _bottomContainerTeamListWidget();
             } else {
               return _bottomContainerEmpty();
@@ -142,11 +186,11 @@ class MyPage extends GetView<MyController> {
     return Obx(() {
       String text;
 
-      if (controller.tpList.value != null &&
-          controller.tpList.value!.projectList.isNotEmpty) {
-        text = "${controller.getUserName()}님이 완료한 팀플들이에요!";
+      if (tpList.value != null &&
+          tpList.value!.projectList.isNotEmpty) {
+        text = "${user.value!.username}님이 완료한 팀플들이에요!";
       } else {
-        text = "${controller.getUserName()}님은 완료한 팀플이 없어요!";
+        text = "${user.value!.username}님은 완료한 팀플이 없어요!";
       }
 
       return Text(
@@ -162,12 +206,10 @@ class MyPage extends GetView<MyController> {
   }
 
   Widget _bottomContainerTeamListWidget() {
-    List<TeamProject> tpList = controller.tpList.value!.projectList;
-
     return Column(
       children: [
         SizedBox(height: 24.h),
-        Expanded(child: TeamProjectColumn(tpList))
+        Expanded(child: TeamProjectColumn(tpList.value!.projectList))
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/view/my/mypage.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -182,6 +183,13 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
         if (controller.isKickMode.isTrue && !amIOwner()) {
           kickSelected.value = !kickSelected.value;
           controller.selectedKickUser.value = kickSelected.value ? projectUser.id : -1;
+        }
+
+        if (controller.isKickMode.isFalse && controller.isChangeHostMode.isFalse) {
+          if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
+            Get.to(
+                UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+          }
         }
       },
       child: Stack(
