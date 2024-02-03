@@ -5,6 +5,7 @@ import '../model/team_project.dart';
 
 class WTMController extends GetxController {
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
+  final Rxn<TeamProject> selectedTeamProject = Rxn();
   final RxList<TeamProject> tpList = RxList();
   RxString selectedtpList = '진행중인 팀플'.obs;
 
@@ -12,6 +13,8 @@ class WTMController extends GetxController {
     selectedtpList.value = tpList;
     bool done = tpList == "완료된 팀플";
     updateTeamProject(done);
+    selectedTeamProject.value = null;
+    selectedTeamProject.refresh();
   }
 
   Future<void> updateTeamProject(bool done) async {
