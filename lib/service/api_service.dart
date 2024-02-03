@@ -157,7 +157,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map<String, dynamic> query = {
       'page': page.toString(),
       'size': 20.toString(),
-      'sort': 'asc'
+      'sort': 'desc'
     };
 
     Response rp = await get('/api/alarms', query: query);
@@ -229,6 +229,11 @@ class ApiService extends CustomGetConnect implements GetxService {
   Future<bool> exitTeamProject(int projectId) async {
     Response rp = await delete('/api/project-users/$projectId');
     debugPrint(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> readNotiAll() async {
+    Response rp = await patch('/api/alarms', {});
     return rp.statusCode == 204;
   }
 }

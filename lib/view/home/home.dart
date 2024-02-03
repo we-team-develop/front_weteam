@@ -69,14 +69,17 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _bellIcon() {
-    return GestureDetector(
-        onTap: () => Get.to(() => const NotificationPage()),
+    return Obx(() => GestureDetector(
+        onTap: () {
+          Get.to(() => const NotificationPage());
+          controller.hasNewNoti.value = false;
+        },
         child: Image.asset(
             width: 24.65.w,
             height: 22.99.h,
-            controller.hasNewNotification()
+            controller.hasNewNoti.isTrue
                 ? ImagePath.icBellNew
-                : ImagePath.icBell));
+                : ImagePath.icBell)));
   }
 
   Widget _getTeamProjectListBody() {

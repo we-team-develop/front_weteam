@@ -13,6 +13,7 @@ class NotificationController extends GetxController {
     super.onInit();
     _init();
 
+    Get.find<ApiService>().readNotiAll();
     _pagingController.addPageRequestListener((pageKey) async {
       List<WeteamNotification>? newList = await _fetchPage(pageKey);
       if (newList == null) {

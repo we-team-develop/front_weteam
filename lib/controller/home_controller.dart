@@ -4,18 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
+import '../model/weteam_notification.dart';
 import '../service/api_service.dart';
 
 class HomeController extends GetxController {
   int teamProjectPage = 0;
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
   final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+  final RxBool hasNewNoti = RxBool(false);
 
   @override
   void onInit() {
     super.onInit();
     tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     updateDDay();
+    checkNotification();
 
     String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
     if (tpListCache != null) {
@@ -23,8 +26,13 @@ class HomeController extends GetxController {
     }
   }
 
-  bool hasNewNotification() {
-    return false;
+  Future<void> checkNotification() async {
+    List<WeteamNotification>? list = await Get.find<ApiService>().getAlarms(0);
+    if (list != null && list.isNotEmpty) {
+      hasNewNoti.value = !list[0].read;
+    } else {
+      hasNewNoti.value = false;
+    }
   }
 
   void updateDDay() {
