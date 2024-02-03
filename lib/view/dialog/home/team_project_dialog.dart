@@ -15,7 +15,8 @@ import '../custom_big_dialog.dart';
 
 class TeamProjectDialog extends StatefulWidget {
   final TeamProject? teamData;
-  const TeamProjectDialog({super.key, this.teamData});
+  final TeamProjectDialogMode mode;
+  const TeamProjectDialog({super.key, this.teamData, required this.mode});
 
   @override
   State<StatefulWidget> createState() {
@@ -45,12 +46,17 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
 
   @override
   void initState() {
-    if (widget.teamData != null) {
-      title = '팀플 정보 수정';
+    if (widget.mode != TeamProjectDialogMode.add) {
       titleController.text = widget.teamData!.title;
       contentController.text = widget.teamData!.description;
       startTime = widget.teamData!.startedAt;
       endTime = widget.teamData!.endedAt;
+
+      if (widget.mode == TeamProjectDialogMode.edit) {
+        title = '팀플 정보 수정';
+      } else {
+        title = '팀플 기간 연장';
+      }
     } else {
       title = '팀플 추가';
     }
@@ -68,78 +74,104 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       mainAxisSize: MainAxisSize.min, // 이거 없으면 dialog가 엄청 길어요
       crossAxisAlignment: CrossAxisAlignment.center, // 중앙 정렬
       children: <Widget>[
-        CustomTextField(hint: "팀플명", maxLength: 20, controller: titleController),
+        Visibility(
+          visible: widget.mode != TeamProjectDialogMode.revive,
+            child: CustomTextField(hint: "팀플명", maxLength: 20, controller: titleController)),
+        Visibility(
+            visible: widget.mode == TeamProjectDialogMode.revive,
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('프로젝트명',
+                        style: TextStyle(
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 12.sp,
+                            color: AppColors.G_05
+                        )),
+                    Text(' ${widget.teamData?.title}',
+                        style: TextStyle(
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.Black
+                        )),
+                  ],
+                )
+              ],
+            )),
         SizedBox(
           height: 12.h,
         ),
-        Row(
-          // 상세내용이 왼쪽 정렬
-          children: [
-            Text(
-              '상세내용',
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.6),
-                fontSize: 12,
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Stack(
-          children: [
-            ConstrainedBox(
-                constraints: BoxConstraints(minHeight: 60.h, minWidth: 260.w),
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                        side:
-                        const BorderSide(width: 1, color: AppColors.G_02),
-                        borderRadius: BorderRadius.circular(8)),
+        Visibility(
+          visible: widget.mode != TeamProjectDialogMode.revive,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '상세내용',
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.6),
+                    fontSize: 12,
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.w700,
                   ),
-                  child: TextField(
-                    controller: contentController,
-                    maxLines: 5,
-                    maxLength: maxContentLength,
-                    decoration: const InputDecoration(
-                      counterText: "",
-                      border: InputBorder.none,
-                      // 여백 제거
-                      contentPadding: EdgeInsets.all(0),
-                      isDense: true,
-                    ),
-                    cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
-                    style: const TextStyle(fontSize: 13),
-                    onChanged: (newV) {
-                      setState(() {
-                        inputValue = newV;
-                      });
-                    },
-                  ),
-                )),
-            Positioned(
-              right: 10,
-                bottom: 10,
-                child: Text(
-              // TextField 오른쪽에 counter
-              "${inputValue.length} / $maxContentLength",
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.5),
-                fontSize: 10,
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.w400,
-                height: 0.26,
-              ),
-            ))
-          ],
-        ),
-        SizedBox(
-          height: 24.h,
-        ),
+                ),
+                const SizedBox(height: 4),
+                Stack(
+                  children: [
+                    ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: 60.h, minWidth: 260.w),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                                side:
+                                const BorderSide(width: 1, color: AppColors.G_02),
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: TextField(
+                            controller: contentController,
+                            maxLines: 5,
+                            maxLength: maxContentLength,
+                            decoration: const InputDecoration(
+                              counterText: "",
+                              border: InputBorder.none,
+                              // 여백 제거
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                            ),
+                            cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
+                            style: const TextStyle(fontSize: 13),
+                            onChanged: (newV) {
+                              setState(() {
+                                inputValue = newV;
+                              });
+                            },
+                          ),
+                        )),
+                    Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: Text(
+                          // TextField 오른쪽에 counter
+                          "${inputValue.length} / $maxContentLength",
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                            fontSize: 10,
+                            fontFamily: 'NanumSquareNeo',
+                            fontWeight: FontWeight.w400,
+                            height: 0.26,
+                          ),
+                        ))
+                  ],
+                ),
+                SizedBox(
+                  height: 24.h,
+                )
+              ],
+            )),
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: 304.w),
             child: Row(
@@ -158,14 +190,26 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                           ),
                         ),
                         SizedBox(height: 15.h),
-                        CustomDatePicker(
+                        Visibility(
+                          visible: widget.mode != TeamProjectDialogMode.revive,
+                        child: CustomDatePicker(
                             start: DateTime(1980, 1, 1),
                             end: DateTime(2090, 12, 31),
                             init: startTime,
                             onChangeListener: (v) {
                               startTime = v;
-                            }),
-                      ],
+                            })),
+                        Visibility(
+                            visible: widget.mode == TeamProjectDialogMode.revive,
+                            child: Text(
+                              "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontFamily: 'NanumSquareNeo',
+                                fontWeight: FontWeight.bold
+                              ),
+                            ))
+                  ],
                     )),
                 Container(
                   width: 1,
@@ -204,6 +248,21 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
           height: 34.h,
         ),
         Visibility(
+          visible: widget.mode == TeamProjectDialogMode.revive,
+            child: Column(
+              children: [
+                Text(
+                  '※ 종료일은 금일 이후 날짜부터 변경 가능합니다.',
+                  style: TextStyle(
+                      color: AppColors.G_05,
+                      fontFamily: 'NanumSquareNeo',
+                      fontSize: 10.sp
+                  ),
+                ),
+                SizedBox(height: 23.h)
+              ],
+            )),
+        Visibility(
           visible: warningVisible,
             child: Text(warningContent,
           style: TextStyle(
@@ -215,7 +274,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
           if (isSaving) return;
           isSaving = true;
           try {
-            addTeamProject();
+            updateTeamProject();
           } catch (e, st) {
             debugPrint('$e');
             debugPrintStack(stackTrace: st);
@@ -226,7 +285,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
     );
   }
 
-  Future<void> addTeamProject() async {
+  Future<void> updateTeamProject() async {
     String name = titleController.text.trim();
     String content = contentController.text.trim();
 
@@ -252,6 +311,16 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
         warningContent = "시작일은 종료일보다 빠를 수 없어요!";
       });
       return;
+    }
+
+    if (widget.mode == TeamProjectDialogMode.revive) {
+      if (endTime.difference(DateTime.now()).inSeconds.isNegative) {
+        setState(() {
+          warningVisible = true;
+          warningContent = "종료일이 잘못 되었습니다.";
+        });
+        return;
+      }
     }
 
     late bool success;
@@ -289,4 +358,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       return;
     }
   }
+}
+
+enum TeamProjectDialogMode {
+  add, edit, revive
 }

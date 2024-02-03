@@ -116,7 +116,7 @@ class Home extends GetView<HomeController> {
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const TeamProjectDialog()),
+      onTap: () => controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add)),
       child: Container(
         width: 330.w,
         height: 49.h,
@@ -168,7 +168,7 @@ class Home extends GetView<HomeController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.popupDialog(const TeamProjectDialog());
+                    controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add));
                   },
                   child: Image.asset(
                     ImagePath.icPlus,

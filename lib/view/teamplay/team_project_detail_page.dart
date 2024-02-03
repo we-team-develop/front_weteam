@@ -363,11 +363,11 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-            // 어드민 전용 설정
+          // 어드민 전용 설정
             visible: controller.tp.value.host.id ==
                 Get.find<AuthService>().user.value!.id,
             child: Column(
@@ -412,7 +412,9 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _TextButton(text: '팀플 기간 연장 (팀플 복구)', onTap: () {}),
+                        _TextButton(text: '팀플 기간 연장 (팀플 복구)', onTap: () {
+                          showDialog(context: context, builder: (BuildContext context) => TeamProjectDialog(mode: TeamProjectDialogMode.revive, teamData: controller.tp.value));
+                        }),
                       ],
                     )),
                 Visibility(
@@ -427,7 +429,8 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return TeamProjectDialog(
-                                        teamData: controller.tp.value);
+                                        teamData: controller.tp.value,
+                                        mode: TeamProjectDialogMode.edit);
                                   });
                             }),
                         _TextButton(
@@ -438,7 +441,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                 return;
                               }
                               controller.isKickMode.value =
-                                  !controller.isKickMode.value;
+                              !controller.isKickMode.value;
                             }),
                         _TextButton(
                             text: '호스트 권한 넘기기',
@@ -456,7 +459,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
               ],
             )),
         Visibility(
-            // 공통
+          // 공통
             visible: !controller.tp.value.done,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -485,7 +488,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
               ],
             ))
       ],
-    );
+    ));
   }
 }
 
