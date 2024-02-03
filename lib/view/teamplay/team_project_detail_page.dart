@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../controller/home_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
@@ -92,6 +93,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         return _UserListView();
                       }
                     }),
+
                     Obx(() => Visibility(
                         visible: controller.isKickMode.isFalse &&
                             controller.isChangeHostMode.isFalse,
@@ -395,6 +397,30 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 24.h),
+                GestureDetector(
+                  onTap: () {
+                    String? userName = Get.find<AuthService>().user.value?.username;
+                    String teamProjectName = controller.tp.value.title;
+                    int teamProjectId = controller.tp.value.id;
+                    Share.share('$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$teamProjectId');
+                  },
+                  child: Container(
+                    width: 330.w,
+                    height: 40.h,
+                    decoration: const BoxDecoration(
+                      color: AppColors.MainOrange,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: Center(
+                        child: Text('팀원 초대하기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'NanumGothicExtraBold',
+                                fontSize: 15.sp))),
+                  ),
+                ),
+                SizedBox(height: 24.h),
                 Text(
                   '팀플방 관리실 | 호스트',
                   style: TextStyle(
