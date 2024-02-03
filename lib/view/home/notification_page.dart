@@ -50,8 +50,6 @@ class NotificationPage extends GetView<NotificationController> {
                 ),
               ),
             ),
-            prototypeItem: const NotificationContainer(
-                WeteamNotification(id: 0, status: "", date: "", read: false)),
           )),
         ],
       ),
