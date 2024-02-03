@@ -322,6 +322,9 @@ class _UserListViewState extends State<_UserListView> {
         host = projectUser;
         continue;
       }
+      if (!projectUser.enable) {
+        continue;
+      }
       newUserContainerList.add(_UserContainer(projectUser));
     }
 
