@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:front_weteam/data/color_data.dart';
+import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
 
 import '../model/team_project.dart';
 import '../model/weteam_project_user.dart';
 import '../service/api_service.dart';
-import 'home_controller.dart';
 
 class TeamProjectDetailPageController extends GetxController {
   late final Rx<TeamProject> tp;
@@ -43,7 +43,7 @@ class TeamProjectDetailPageController extends GetxController {
     bool success = await Get.find<ApiService>()
         .changeTeamProjectHost(tp.value.id, selectedNewHost.value);
     if (success) {
-      await Get.find<HomeController>().updateTeamProjectList();
+      await updateTeamProjectLists();
       isChangeHostMode.value = false;
       Get.back();
       Get.snackbar("호스트 변경 성공", "호스트 권한을 성공적으로 넘겼습니다");

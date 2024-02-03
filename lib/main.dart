@@ -22,6 +22,7 @@ import 'util/mem_cache.dart';
 import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
+List<Function()> tpListUpdateRequiredListenerList = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,6 +64,18 @@ Future<void> _init() async {
       MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
       MemCache.put(MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
     }
+  }
+}
+
+Future<void> updateTeamProjectLists() async {
+  List<Future> futures = [];
+  for (Function() func in tpListUpdateRequiredListenerList) {
+    dynamic ret = func.call();
+    if (ret is Future) futures.add(ret);
+  }
+
+  for (Future ft in futures) {
+    await ft;
   }
 }
 

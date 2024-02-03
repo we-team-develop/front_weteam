@@ -12,6 +12,7 @@ class TeamPlayController extends GetxController {
   @override
   void onInit() {
     updateTeamProjectList();
+    tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     super.onInit();
   }
 

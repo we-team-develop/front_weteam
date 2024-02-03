@@ -4,10 +4,10 @@ import 'package:front_weteam/view/my/mypage.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../controller/home_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
+import '../../main.dart';
 import '../../model/weteam_project_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
@@ -120,7 +120,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       // 팀플 삭제
       bool success = await Get.find<ApiService>().deleteTeamProject(controller.tp.value.id);
       if (success) {
-        await Get.find<HomeController>().updateTeamProjectList();
+        await updateTeamProjectLists();
         Get.back();
         Get.back();
         Get.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
@@ -131,7 +131,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       // 팀플 탈퇴
       bool success = await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
       if (success) {
-        await Get.find<HomeController>().updateTeamProjectList();
+        await updateTeamProjectLists();
         Get.back();
         Get.back();
         Get.snackbar("탈퇴 성공", '팀플을 탈퇴했습니다.');

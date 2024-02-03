@@ -14,6 +14,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     updateDDay();
 
     String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);

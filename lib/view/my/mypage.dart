@@ -34,6 +34,9 @@ class UserInfoPage extends StatelessWidget {
   @override
   StatelessElement createElement() {
     fetchTeamProjectList();
+    if (!isOtherUser) {
+      tpListUpdateRequiredListenerList.add(fetchTeamProjectList);
+    }
     return super.createElement();
   }
 
