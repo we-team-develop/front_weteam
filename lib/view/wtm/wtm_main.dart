@@ -41,8 +41,7 @@ class WTM extends GetView<WTMController> {
                       padding: EdgeInsets.only(bottom: 25.h),
                       child: GestureDetector(
                           onTap: () {
-                            Get.to(() => WTMCreate(),
-                                binding: WTMCreateBinding());
+                            Get.to(() => WTMCreate());
                           },
                           child: _newWTMButton()),
                     ),

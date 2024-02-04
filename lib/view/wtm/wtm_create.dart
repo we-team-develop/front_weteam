@@ -10,19 +10,48 @@ import 'package:get/get.dart';
 class WTMCreate extends GetView<WTMController> {
   WTMCreate({super.key});
 
+  final overlayKey = GlobalKey();
+
   final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
 
   @override
   Widget build(BuildContext context) {
-    Get.put(WTMController());
-
+    print('check build method');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('showOverlay is being called');
+      showOverlay(context);
+    });
     return Scaffold(
+      key: overlayKey,
       body: _body(),
     );
   }
 
+  void showOverlay(BuildContext context) {
+    OverlayEntry overlayEntry = OverlayEntry(
+      builder: (context) => Stack(
+        children: [
+          const Opacity(
+            opacity: 0.5,
+            child: ModalBarrier(dismissible: true, color: Colors.black),
+          ),
+          Center(
+            child: Container(
+              width: 100,
+              height: 100,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Overlay.of(context).insert(overlayEntry);
+  }
+
   Widget _body() {
     return Obx(() {
+      print('check obx');
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +81,8 @@ class WTMCreate extends GetView<WTMController> {
                       "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
             ],
           ),
-          Expanded(child:           Padding(
+          Expanded(
+              child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
             child: SingleChildScrollView(
               child: Column(
@@ -62,35 +92,33 @@ class WTMCreate extends GetView<WTMController> {
                       child: Row(children: [
                         Expanded(child: TeamProjectWidget(teamProject)),
                         SizedBox(width: 16.w),
-                        GestureDetector(
-                            onTap: () {
-                              controller.selectedTeamProject.value = teamProject;
-                            },
-                            child: Obx(() {
-                              bool isSelected =
-                                  controller.selectedTeamProject.value?.id ==
-                                      teamProject.id;
-                              return Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 9.w, vertical: 4.h),
-                                decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? AppColors.Orange_03
-                                        : AppColors.G_02,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Center(
-                                    child: Text(
-                                      '선택',
-                                      style: TextStyle(
-                                          color: isSelected
-                                              ? AppColors.White
-                                              : AppColors.G_05,
-                                          fontFamily: 'NanumSquareNeo',
-                                          fontSize: 9.sp,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              );
-                            }))
+                        GestureDetector(onTap: () {
+                          controller.selectedTeamProject.value = teamProject;
+                        }, child: Obx(() {
+                          bool isSelected =
+                              controller.selectedTeamProject.value?.id ==
+                                  teamProject.id;
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 9.w, vertical: 4.h),
+                            decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.Orange_03
+                                    : AppColors.G_02,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                                child: Text(
+                              '선택',
+                              style: TextStyle(
+                                  color: isSelected
+                                      ? AppColors.White
+                                      : AppColors.G_05,
+                                  fontFamily: 'NanumSquareNeo',
+                                  fontSize: 9.sp,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          );
+                        }))
                       ]));
                 }).toList(),
               ),
@@ -169,23 +197,25 @@ class WTMCreate extends GetView<WTMController> {
 
   Widget _checkBox() {
     return Obx(() => Container(
-      width: 330.w,
-      height: 46.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        color: controller.selectedTeamProject.value != null ? AppColors.MainOrange : AppColors.G_02,
-      ),
-      child: Center(
-        child: Text(
-          '선택 완료',
-          style: TextStyle(
-            fontSize: 15.sp,
-            fontFamily: 'NanumGothicExtraBold',
-            color: Colors.white,
+          width: 330.w,
+          height: 46.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.r),
+            color: controller.selectedTeamProject.value != null
+                ? AppColors.MainOrange
+                : AppColors.G_02,
           ),
-        ),
-      ),
-    ));
+          child: Center(
+            child: Text(
+              '선택 완료',
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontFamily: 'NanumGothicExtraBold',
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget _nextText() {
