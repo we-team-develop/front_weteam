@@ -52,19 +52,57 @@ class WTMCreate extends GetView<WTMController> {
                       "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
             ],
           ),
-          Column(
-            children: controller.tpList.map((teamProject) {
-              return TeamProjectWidget(teamProject);
-            }).toList(),
-          ),
+          Expanded(child:           Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
+            child: SingleChildScrollView(
+              child: Column(
+                children: controller.tpList.map((teamProject) {
+                  return Padding(
+                      padding: EdgeInsets.only(bottom: 12.h),
+                      child: Row(children: [
+                        Expanded(child: TeamProjectWidget(teamProject)),
+                        SizedBox(width: 16.w),
+                        GestureDetector(
+                            onTap: () {
+                              controller.selectedTeamProject.value = teamProject;
+                            },
+                            child: Obx(() {
+                              bool isSelected =
+                                  controller.selectedTeamProject.value?.id ==
+                                      teamProject.id;
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 9.w, vertical: 4.h),
+                                decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? AppColors.Orange_03
+                                        : AppColors.G_02,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                    child: Text(
+                                      '선택',
+                                      style: TextStyle(
+                                          color: isSelected
+                                              ? AppColors.White
+                                              : AppColors.G_05,
+                                          fontFamily: 'NanumSquareNeo',
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              );
+                            }))
+                      ]));
+                }).toList(),
+              ),
+            ),
+          )),
           Center(
               child: Column(
             children: [
               _checkBox(),
-              SizedBox(
-                height: 16.h,
-              ),
+              SizedBox(height: 16.h),
               _nextText(),
+              SizedBox(height: 15.h),
             ],
           )),
         ],
@@ -130,12 +168,12 @@ class WTMCreate extends GetView<WTMController> {
   }
 
   Widget _checkBox() {
-    return Container(
+    return Obx(() => Container(
       width: 330.w,
       height: 46.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        color: AppColors.G_02,
+        color: controller.selectedTeamProject.value != null ? AppColors.MainOrange : AppColors.G_02,
       ),
       child: Center(
         child: Text(
@@ -147,7 +185,7 @@ class WTMCreate extends GetView<WTMController> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Widget _nextText() {
@@ -159,6 +197,7 @@ class WTMCreate extends GetView<WTMController> {
             '팀플을 미선택 할래요. ',
             style: TextStyle(
                 fontFamily: 'NanumGothic',
+                color: AppColors.G_05,
                 fontWeight: FontWeight.bold,
                 fontSize: 10.sp),
           ),
@@ -167,6 +206,7 @@ class WTMCreate extends GetView<WTMController> {
             style: TextStyle(
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.bold,
+                color: AppColors.G_05,
                 decoration: TextDecoration.underline,
                 fontSize: 10.sp),
           ),
