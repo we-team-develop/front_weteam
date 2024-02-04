@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/tp_controller.dart';
+import 'package:front_weteam/controller/wtm_controller.dart';
+import 'package:front_weteam/data/color_data.dart';
+import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
-import '../../controller/tp_controller.dart';
-import '../../controller/wtm_controller.dart';
-import '../../data/color_data.dart';
-import '../../data/image_data.dart';
-import '../widget/team_project_widget.dart';
-
 class WTMCreate extends GetView<WTMController> {
-  WTMCreate({Key? key}) : super(key: key);
+  WTMCreate({super.key});
 
   final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
 
   @override
   Widget build(BuildContext context) {
+    Get.put(WTMController());
+
     return Scaffold(
       body: _body(),
     );

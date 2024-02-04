@@ -1,7 +1,6 @@
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:get/get.dart';
-
-import '../model/team_project.dart';
 
 class WTMController extends GetxController {
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
@@ -23,11 +22,5 @@ class WTMController extends GetxController {
     } else {
       Get.snackbar('문제가 발생했습니다', '팀플 목록을 불러오지 못했습니다');
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    setSelectedtpList(selectedtpList.value);
   }
 }
