@@ -11,15 +11,14 @@ class WTMCreate extends GetView<WTMController> {
   WTMCreate({super.key});
 
   final overlayKey = GlobalKey();
-
   final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
+
+  final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
 
   @override
   Widget build(BuildContext context) {
-    print('check build method');
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('showOverlay is being called');
-      showOverlay(context);
+      _showOverlay(context);
     });
     return Scaffold(
       key: overlayKey,
@@ -27,31 +26,93 @@ class WTMCreate extends GetView<WTMController> {
     );
   }
 
-  void showOverlay(BuildContext context) {
-    OverlayEntry overlayEntry = OverlayEntry(
-      builder: (context) => Stack(
-        children: [
-          const Opacity(
-            opacity: 0.5,
-            child: ModalBarrier(dismissible: true, color: Colors.black),
-          ),
-          Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              color: Colors.white,
+  void _showOverlay(BuildContext context) {
+    _overlayEntry.value = OverlayEntry(
+      builder: (context) => Scaffold(
+        body: Stack(
+          children: [
+            const Opacity(
+              opacity: 0.5,
+              child: ModalBarrier(dismissible: true, color: Colors.black),
             ),
-          ),
-        ],
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 19.w, top: 44.h),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                        onTap: () => _removeOverlay(),
+                        child: Image.asset(
+                          ImagePath.wtmcross,
+                          width: 15.75.w,
+                          height: 15.75.h,
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 50.w, top: 103.h),
+                  child: Text.rich(
+                    TextSpan(children: [
+                      TextSpan(
+                        text: '언제보까는 \n',
+                        style: TextStyle(
+                            decorationThickness: 0,
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 13.sp,
+                            color: AppColors.White),
+                      ),
+                      TextSpan(
+                        text: '팀원 간 ',
+                        style: TextStyle(
+                            decorationThickness: 0,
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 13.sp,
+                            color: AppColors.White),
+                      ),
+                      TextSpan(
+                        text: '일정을 조율',
+                        style: TextStyle(
+                            decorationThickness: 0,
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.White),
+                      ),
+                      TextSpan(
+                        text: '할 수 있는 기능이에요',
+                        style: TextStyle(
+                            decorationThickness: 0,
+                            fontFamily: 'NanumSquareNeo',
+                            fontSize: 13.sp,
+                            color: AppColors.White),
+                      ),
+                    ]),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 125.0),
+                  child: Center(child: Image.asset(ImagePath.wtmtutorial1)),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
 
-    Overlay.of(context).insert(overlayEntry);
+    Overlay.of(context).insert(_overlayEntry.value!);
+  }
+
+  void _removeOverlay() {
+    _overlayEntry.value?.remove();
+    _overlayEntry.value = null;
   }
 
   Widget _body() {
     return Obx(() {
-      print('check obx');
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

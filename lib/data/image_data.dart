@@ -59,6 +59,8 @@ class ImagePath {
   static String get myNoTeamProjectTimi =>
       'assets/images/my_no_team_project_timi.png';
   static String get makewtmbutton => 'assets/images/make_wtm_button.png';
+  static String get wtmtutorial1 => 'assets/images/tutorial_1.png';
+  static String get wtmcross => 'assets/images/wtm_cross.png';
 
   static asset(String googlelogin,
       {required double width, required double height}) {}
