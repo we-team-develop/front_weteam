@@ -6,6 +6,7 @@ import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WTMCreate extends GetView<WTMController> {
   WTMCreate({super.key});
@@ -27,6 +28,8 @@ class WTMCreate extends GetView<WTMController> {
   }
 
   void _showOverlay(BuildContext context) {
+    final PageController pageController = PageController();
+
     _overlayEntry.value = OverlayEntry(
       builder: (context) => Scaffold(
         body: Stack(
@@ -35,68 +38,107 @@ class WTMCreate extends GetView<WTMController> {
               opacity: 0.5,
               child: ModalBarrier(dismissible: true, color: Colors.black),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 19.w, top: 44.h),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                        onTap: () => _removeOverlay(),
-                        child: Image.asset(
-                          ImagePath.wtmcross,
-                          width: 15.75.w,
-                          height: 15.75.h,
-                        )),
-                  ),
+            Center(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: PageView(
+                  controller: pageController,
+                  children: [
+                    // 첫 페이지
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 19.w, top: 44.h),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                                onTap: () => _removeOverlay(),
+                                child: Image.asset(
+                                  ImagePath.wtmcross,
+                                  width: 15.75.w,
+                                  height: 15.75.h,
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 50.w, top: 103.h),
+                          child: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                text: '언제보까는 \n',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '팀원 간 ',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '일정을 조율',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '할 수 있는 기능이에요',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                            ]),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 125.0),
+                          child: Center(
+                              child: Image.asset(ImagePath.wtmtutorial1)),
+                        ),
+                      ],
+                    ),
+                    // 두 번째 페이지
+                    Center(
+                      child: Container(
+                        width: 50.w,
+                        height: 50.h,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 50.w, top: 103.h),
-                  child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                        text: '언제보까는 \n',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            color: AppColors.White),
-                      ),
-                      TextSpan(
-                        text: '팀원 간 ',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            color: AppColors.White),
-                      ),
-                      TextSpan(
-                        text: '일정을 조율',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.White),
-                      ),
-                      TextSpan(
-                        text: '할 수 있는 기능이에요',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            color: AppColors.White),
-                      ),
-                    ]),
-                  ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.1,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: SmoothPageIndicator(
+                  controller: pageController, // PageController
+                  count: 2, // 페이지 수
+                  effect: const WormEffect(), // 원하는 효과
+                  onDotClicked: (index) {
+                    pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 125.0),
-                  child: Center(child: Image.asset(ImagePath.wtmtutorial1)),
-                ),
-              ],
+              ),
             ),
           ],
         ),
