@@ -53,17 +53,24 @@ Future<void> main() async {
 }
 
 Future<void> _init() async {
-  bool? isRegistered =
-      sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
-  if (isRegistered == true) {
-    String? weteamUserJson =
-        sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
+  try {
+    bool? isRegistered =
+        sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
+    if (isRegistered == true) {
+      String? weteamUserJson =
+          sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
 
-    User? fbUser = FirebaseAuth.instance.currentUser;
-    if (fbUser != null && weteamUserJson != null) {
-      MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
-      MemCache.put(MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
+      User? fbUser = FirebaseAuth.instance.currentUser;
+      if (fbUser != null && weteamUserJson != null) {
+        MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
+        MemCache.put(
+            MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
+      }
     }
+  } catch (e, st) {
+    print("앱 초기화 실패 : $e\n$st");
+    MemCache.put(MemCacheKey.weteamUserJson, null);
+    MemCache.put(MemCacheKey.firebaseAuthIdToken, null);
   }
 }
 
