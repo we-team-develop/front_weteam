@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
 import '../data/color_data.dart';
@@ -81,8 +82,11 @@ class ProfileController extends GetxController {
       await Get.find<ApiService>().changeUserProfiles(profileId);
     }
 
-    Get.find<AuthService>().user.value =
-        await Get.find<ApiService>().getCurrentUser();
+    WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
+    if (user != null) {
+      Get.find<AuthService>().user.value = user;
+    }
+
   }
 
   final TextEditingController textController = TextEditingController();
