@@ -35,13 +35,13 @@ class AuthService extends GetxService {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       if (uid.startsWith('naver')) {
         helper = NaverAuthHelper();
-        print("네이버");
+        debugPrint("네이버");
       } else if (uid.startsWith('kakao')) {
         helper = KakaoAuthHelper();
-        print("카카오");
+        debugPrint("카카오");
       } else {
         helper = GoogleAuthHelper();
-        print("구글");
+        debugPrint("구글");
       }
     }
 
@@ -69,7 +69,7 @@ class AuthService extends GetxService {
       }
 
       token = await helper!.getToken();
-      print(token);
+      debugPrint(token);
       WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
       this.user.value = user;
 

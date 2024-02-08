@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -280,15 +282,26 @@ class DDayWidget extends StatefulWidget {
 }
 
 class _DDayWidgetState extends State<DDayWidget> {
+  Timer? timer;
   bool showPopupMenu = false;
-  DDayData? dday;
   String leftDays = "";
+
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 1), (t) => updateLeftDays());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     if (widget.dDayData != null) {
-      dday = widget.dDayData;
-      updateLeftDays();
       return _ddayWidget();
     } else {
       return _noDDayWidget();
@@ -296,29 +309,27 @@ class _DDayWidgetState extends State<DDayWidget> {
   }
 
   void updateLeftDays() {
-    assert(dday != null);
+    if (widget.dDayData == null) return;
 
-    String tmp = "D";
-    String numStr = "";
     DateTime now = DateTime.now().copyWith(
         hour: 0, minute: 0, second: 0, microsecond: 0, millisecond: 0);
+    int dayDiff = widget.dDayData!.end.difference(now).inDays.abs();
+    String numStr = dayDiff.toString().padLeft(3, '0');
 
-    int diffDays = dday!.end.difference(now).inDays;
-    bool hasMoreDays = diffDays > 0;
-    if (diffDays < 0) diffDays *= -1; // 절댓값
-
-    numStr = diffDays.toString().padLeft(3, '0');
-    if (hasMoreDays) {
-      tmp += " - $numStr";
-    } else if (diffDays == 0) {
-      tmp += "-DAY";
+    String updatedLeftDays = "";
+    if (now.isBefore(widget.dDayData!.end)) {
+      updatedLeftDays = "D - $numStr";
+    } else if (dayDiff == 0) {
+      updatedLeftDays = "D-DAY";
     } else {
-      tmp += " + $numStr";
+      updatedLeftDays = "D + $numStr";
     }
 
-    setState(() {
-      leftDays = tmp;
-    });
+    if (leftDays != updatedLeftDays) {
+      setState(() {
+        leftDays = updatedLeftDays;
+      });
+    }
   }
 
   Widget _ddayWidget() {
@@ -455,7 +466,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                         width: 10.w,
                       ),
                       Text(
-                        "${dday?.name} ",
+                        "${widget.dDayData?.name} ",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10.sp,

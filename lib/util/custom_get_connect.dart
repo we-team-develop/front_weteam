@@ -1,7 +1,41 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class CustomGetConnect extends GetConnect {
+  /// API 요청에 대한 정보를 로깅합니다.
+  ///
+  /// * 디버그 상태일 때만 출력합니다
+  Future<void> _printResponseInfo(Response rp) async {
+    // 출력을 원하지 않는 경우 아래 변수의 값을 false로 변경하세요.
+    bool enabled = true;
+    // 디버그 상태 체크
+    if (!kDebugMode || !enabled) {
+      return;
+    }
+
+    String? url = rp.request?.url.toString(); // 요청 url
+    Map? requestHeader = {};
+    requestHeader.addAll(rp.request?.headers ?? {}); // 요청 헤더
+
+    // 요청 헤더에 토큰이 있다면 생략시킵니다. (스팸 방지)
+    String? authorization = requestHeader['Authorization'];
+    if (authorization != null && authorization.length > 10) {
+      requestHeader['Authorization'] = "${(authorization as String).substring(0, 10)}...(생략됨)";
+    }
+
+    int? statusCode = rp.statusCode; // 응답 코드
+    String? bodyString = rp.bodyString; // 응답 bodyString
+    bool isOk = rp.isOk;
+
+    log(
+        "=========== $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
+    name: 'API 요청 정보',
+    time: DateTime.now());
+  }
+
   Future<Map<String, String>?> putTokenToHeaders(
       Map<String, String>? headers) async {
     headers ??= {};
@@ -23,13 +57,16 @@ class CustomGetConnect extends GetConnect {
   }) async {
     headers = await putTokenToHeaders(headers);
 
-    return await super.get<T>(
+    Response<T> rp = await super.get<T>(
       url,
       headers: headers,
       contentType: contentType,
       query: query,
       decoder: decoder,
     );
+
+    _printResponseInfo(rp);
+    return rp;
   }
 
   @override
@@ -44,7 +81,7 @@ class CustomGetConnect extends GetConnect {
   }) async {
     headers = await putTokenToHeaders(headers);
 
-    return await super.post<T>(
+    Response<T> rp = await super.post<T>(
       url,
       body,
       headers: headers,
@@ -53,6 +90,9 @@ class CustomGetConnect extends GetConnect {
       decoder: decoder,
       uploadProgress: uploadProgress,
     );
+
+    _printResponseInfo(rp);
+    return rp;
   }
 
   @override
@@ -65,13 +105,16 @@ class CustomGetConnect extends GetConnect {
   }) async {
     headers = await putTokenToHeaders(headers);
 
-    return await super.delete(
+    Response<T> rp = await super.delete(
       url,
       headers: headers,
       contentType: contentType,
       query: query,
       decoder: decoder,
     );
+
+    _printResponseInfo(rp);
+    return rp;
   }
 
   @override
@@ -86,7 +129,7 @@ class CustomGetConnect extends GetConnect {
       }) async {
     headers = await putTokenToHeaders(headers);
 
-    return await httpClient.patch<T>(
+    Response<T> rp = await httpClient.patch<T>(
       url,
       body: body,
       headers: headers,
@@ -95,5 +138,8 @@ class CustomGetConnect extends GetConnect {
       decoder: decoder,
       uploadProgress: uploadProgress,
     );
+
+    _printResponseInfo(rp);
+    return rp;
   }
 }
