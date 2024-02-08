@@ -141,12 +141,16 @@ class MyApp extends StatelessWidget {
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: home,
-              routingCallback: (v) {
-                if (v == null) return;
-                if (v.isBack == true && lastPage.contains("Profile")) {
-                  Get.find<ProfileController>().saveProfiles();
+              routingCallback: (routing) {
+                if (routing == null) return;
+
+                // 뒤로가기 액션이고 마지막 페이지가 Profile였을 때
+                if (routing.isBack == true && lastPage.contains("Profile")) {
+                  Get.find<ProfileController>().saveChanges();
                 }
-                lastPage = v.current;
+
+                // 현재 페이지의 정보를 기록합니다.
+                lastPage = routing.current;
               },
               debugShowCheckedModeBanner: false, // Debug 배너 없애기
               initialBinding: MainBindings(),

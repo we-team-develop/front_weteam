@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front_weteam/model/weteam_profile.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
@@ -63,30 +64,64 @@ class ProfileController extends GetxController {
     textController.text = _getUserOrganization();
   }
 
-  // 소속
-  Future<void> saveProfiles() async {
+  Future<void> saveOrganization(String organization) async {
+    WeteamUser user = Get.find<AuthService>().user.value!;
+    // 서버에 요청하기 전, 변경사항을 로컬에 적용
+    user.organization = organization;
+    Get.find<AuthService>().user.refresh();
+
+    // 서버에 저장합니다.
+    // TODO: api 요청 실패에 대한 예외처리
+    await Get.find<ApiService>().setUserOrganization(organization);
+  }
+
+  Future<void> saveProfile(int id) async {
+    WeteamUser user = Get.find<AuthService>().user.value!;
+    // 서버에 요청하기 전, 변경사항을 로컬에 적용
+    user.profile = WeteamProfile(userId: user.profile!.userId, imageIdx: id);
+    Get.find<AuthService>().user.refresh();
+
+    // 서버에 프로필을 저장합니다.
+    // TODO: api 요청 실패에 대한 예외처리
+    await Get.find<ApiService>().changeUserProfiles(id);
+  }
+
+  /// 변경사항을 저장하는 메소드
+  ///
+  /// * 변경사항이 없는 경우 api 요청을 보내지 않습니다.
+  /// * 변경사항이 있으면 서버로부터 유저 정보를 최신화합니다.
+  Future<void> saveChanges() async {
+    WeteamUser user = Get.find<AuthService>().user.value!;
     String organization = textController.text;
+    int selectedProfileId = getSelectedProfileId() ?? 0;
+
+    Future? organizationFuture;
+    Future? profileFuture;
+
+    // 소속이 바뀌었는지 확인합니다.
     if (_getUserOrganization() != organization) {
-      if (!await Get.find<ApiService>().setUserOrganization(organization)) {
-        // 한번 더 재시도
-        if (!await Get.find<ApiService>().setUserOrganization(organization)) {
-          Get.snackbar("죄송합니다", "소속을 변경하지 못했습니다");
-        }
+      organizationFuture = saveOrganization(organization);
+    }
+
+    // 프로필이 바뀌었는지 확인합니다.
+    if (user.profile!.imageIdx != selectedProfileId) {
+      profileFuture = saveProfile(selectedProfileId);
+    }
+
+    // 보낸 요청들이 끝날 때까지 기다립니다
+    await organizationFuture;
+    await profileFuture;
+
+    // 변경사항이 있었다면, 서버로부터 유저 정보를 최신화합니다.
+    if (organizationFuture != null && profileFuture != null) {
+      // 유저 정보를 서버에서 불러옵니다.
+      WeteamUser? updatedUser = await Get.find<ApiService>().getCurrentUser();
+      // 서버에서 성공적으로 불러왔을 때만 적용합니다.
+      if (updatedUser != null) {
+        Get.find<AuthService>().user.value = updatedUser;
+        Get.find<AuthService>().user.refresh();
       }
-      Get.find<AuthService>().user.value!.organization = organization;
     }
-
-    int? profileId = getSelectedProfileId();
-    if (profileId != null &&
-        Get.find<AuthService>().user.value!.profile?.imageIdx != profileId) {
-      await Get.find<ApiService>().changeUserProfiles(profileId);
-    }
-
-    WeteamUser? user = await Get.find<ApiService>().getCurrentUser();
-    if (user != null) {
-      Get.find<AuthService>().user.value = user;
-    }
-
   }
 
   final TextEditingController textController = TextEditingController();
