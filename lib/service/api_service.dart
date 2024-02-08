@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -25,15 +24,11 @@ class ApiService extends CustomGetConnect implements GetxService {
   Future<WeteamUser?> getCurrentUser() async {
     Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
-      debugPrint(
-          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()} ${rp.bodyString}");
       return null;
     }
 
     String? json = rp.bodyString;
-    debugPrint('$json');
     if (json == null) {
-      debugPrint("bodyString is null");
       return null;
     }
 
@@ -48,7 +43,6 @@ class ApiService extends CustomGetConnect implements GetxService {
       // 탈퇴 성공시 204
       return true;
     } else {
-      debugPrint(rp.bodyString);
       return false;
     }
   }
@@ -75,7 +69,6 @@ class ApiService extends CustomGetConnect implements GetxService {
 
       return responseData['imageIdx'];
     } else {
-      debugPrint("프로필 사진 ID를 가져오지 못함 : 서버가 $statusCode으로 응답함");
       return null;
     }
   }
@@ -91,7 +84,6 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> changeUserProfiles(int imageIdx) async {
     Response rp = await patch('/api/profiles/$imageIdx', {});
-    debugPrint("${rp.statusCode}");
     if (rp.statusCode != 200) {
       return false;
     } else {
@@ -109,9 +101,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
-    debugPrint("$data");
     Response rp = await post('/api/projects', data);
-    debugPrint(rp.bodyString);
     return rp.statusCode == 201;
   }
 
@@ -144,7 +134,6 @@ class ApiService extends CustomGetConnect implements GetxService {
     if (cacheKey != null) {
       sharedPreferences.setString(cacheKey, rp.bodyString!);
     }
-    debugPrint(rp.bodyString);
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
@@ -178,8 +167,6 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/project-users/$projectId');
     if (!rp.isOk) return null;
 
-    debugPrint(rp.bodyString);
-
     List data = jsonDecode(rp.bodyString ?? '[]');
     List<WeteamProjectUser> ret = List<WeteamProjectUser>.generate(
         data.length, (index) => WeteamProjectUser.fromJson(data[index]));
@@ -198,7 +185,6 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> changeTeamProjectHost(int projectId, int userId) async {
     Response rp = await patch('/api/projects/$projectId/$userId', {});
-    debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
 
@@ -217,19 +203,16 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> acceptInvite(int projectId) async {
     Response rp = await patch('/api/project-users/$projectId', {});
-    debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
 
   Future<bool> deleteTeamProject(int projectId) async {
     Response rp = await delete('/api/projects/$projectId');
-    debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
 
   Future<bool> exitTeamProject(int projectId) async {
     Response rp = await delete('/api/project-users/$projectId');
-    debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
 
