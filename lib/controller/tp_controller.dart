@@ -11,7 +11,9 @@ class TeamPlayController extends GetxController {
 
   @override
   void onInit() {
-    updateTeamProjectList();
+    if (Get.find<AuthService>().user.value != null) {
+      updateTeamProjectList();
+    }
     tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     super.onInit();
   }
