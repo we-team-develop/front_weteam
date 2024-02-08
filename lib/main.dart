@@ -8,17 +8,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'app.dart';
 import 'binding/main_bindings.dart';
+import 'controller/home_controller.dart';
 import 'controller/profile_controller.dart';
 import 'data/color_data.dart';
 import 'firebase_options.dart';
+import 'service/api_service.dart';
 import 'service/auth_service.dart';
 import 'util/mem_cache.dart';
 import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
+List<Function()> tpListUpdateRequiredListenerList = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,18 +67,53 @@ Future<void> _init() async {
   }
 }
 
+Future<void> updateTeamProjectLists() async {
+  List<Future> futures = [];
+  for (Function() func in tpListUpdateRequiredListenerList) {
+    dynamic ret = func.call();
+    if (ret is Future) futures.add(ret);
+  }
+
+  for (Future ft in futures) {
+    await ft;
+  }
+}
+
 class MyApp extends StatelessWidget {
   late Widget home;
   String lastPage = '';
 
   MyApp({super.key});
 
-
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home = Get.find<AuthService>().user.value == null ? const LoginMain() : const App();
+    home = Get.find<AuthService>().user.value != null ? const App() : const LoginMain();
 
+    linkStream.listen((event) async {
+      if (event == null) return;
+      bool isLoggedIn = Get.find<AuthService>().user.value != null;
+      Uri uri = Uri.parse(event);
+
+      String host = uri.host;
+      String path = uri.path;
+      Map<String, String> query = uri.queryParameters;
+
+      if (host == "projects") {
+        if (path.startsWith("/acceptInvite")) {
+          int projectId = int.parse(query['id'] ?? '-1');
+          if (!isLoggedIn) return;
+
+          bool success = await Get.find<ApiService>().acceptInvite(projectId);
+          if (success) {
+            Get.find<HomeController>().updateTeamProjectList();
+            Get.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
+          } else {
+            Get.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
+          }
+        }
+      }
+    });
     return super.createElement();
   }
 

@@ -8,6 +8,7 @@ import '../../data/image_data.dart';
 import '../../model/team_project.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/team_project_widget.dart';
+import '../widget/team_project_column.dart';
 
 class TeamPlay extends GetView<TeamPlayController> {
   const TeamPlay({super.key});
@@ -82,10 +83,7 @@ class TeamPlay extends GetView<TeamPlayController> {
             }
 
             List<TeamProject> tpList = controller.tpList.value!.projectList;
-            return Column(
-              children: List<Widget>.generate(
-                  tpList.length, (index) => TeamProjectWidget(tpList[index])),
-            );
+            return TeamProjectColumn(tpList);
           }))
     ]));
   }

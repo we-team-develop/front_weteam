@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/service/api_service.dart';
+import 'package:front_weteam/view/teamplay/team_project_detail_page.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../controller/notification_controller.dart';
+import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../model/weteam_notification.dart';
 
@@ -50,8 +53,6 @@ class NotificationPage extends GetView<NotificationController> {
                 ),
               ),
             ),
-            prototypeItem: const NotificationContainer(
-                WeteamNotification(id: 0, status: "", date: "", read: false)),
           )),
         ],
       ),
@@ -66,42 +67,53 @@ class NotificationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
-      color: notification.read ? Colors.transparent : AppColors.Orange_01,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            notification.getTitle(),
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.bold,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        Get.find<ApiService>().readAlarm(notification.id);
+        if (notification.project != null) {
+          Get.to(GetBuilder(
+              builder: (controller) => const TeamProjectDetailPage(),
+              init: TeamProjectDetailPageController(notification.project!)));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
+        color: notification.read ? Colors.transparent : AppColors.Orange_01,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              notification.getTitle(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14.sp,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            notification.getContent(),
-            style: TextStyle(
-              color: AppColors.Black,
-              fontSize: 11.sp,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w300,
+            SizedBox(height: 4.h),
+            Text(
+              notification.getContent(),
+              style: TextStyle(
+                color: AppColors.Black,
+                fontSize: 11.sp,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w300,
+              ),
             ),
-          ),
-          SizedBox(height: 5.h),
-          Text(
-            notification.date,
-            style: TextStyle(
-              color: AppColors.G_04,
-              fontSize: 10.sp,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w300,
-            ),
-          )
-        ],
+            SizedBox(height: 5.h),
+            Text(
+              notification.date,
+              style: TextStyle(
+                color: AppColors.G_04,
+                fontSize: 10.sp,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w300,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

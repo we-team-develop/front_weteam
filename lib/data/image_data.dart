@@ -61,6 +61,11 @@ class ImagePath {
   static String get makewtmbutton => 'assets/images/make_wtm_button.png';
   static String get wtmtutorial1 => 'assets/images/tutorial_1.png';
   static String get wtmcross => 'assets/images/wtm_cross.png';
+  static String get icSolarCrownBold => 'assets/images/ic_solar_crown-bold.png';
+  static String get icCheckWhite => 'assets/images/ic_check_white.png';
+  static String get icCheckWhiteActivated =>
+      'assets/images/ic_check_white_activated.png';
+  static String get icHostoutGray => 'assets/images/ic_hostout_gray.png';
 
   static asset(String googlelogin,
       {required double width, required double height}) {}

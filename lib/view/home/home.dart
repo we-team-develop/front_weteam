@@ -5,10 +5,9 @@ import 'package:get/get.dart';
 import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../model/team_project.dart';
-import '../dialog/home/add_team_dialog.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';
 import '../dialog/home/dday_dialog.dart';
+import '../dialog/home/team_project_dialog.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/normal_button.dart';
 import '../widget/team_project_column.dart';
@@ -70,14 +69,17 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _bellIcon() {
-    return GestureDetector(
-        onTap: () => Get.to(() => const NotificationPage()),
+    return Obx(() => GestureDetector(
+        onTap: () {
+          Get.to(() => const NotificationPage());
+          controller.hasNewNoti.value = false;
+        },
         child: Image.asset(
             width: 24.65.w,
             height: 22.99.h,
-            controller.hasNewNotification()
+            controller.hasNewNoti.isTrue
                 ? ImagePath.icBellNew
-                : ImagePath.icBell));
+                : ImagePath.icBell)));
   }
 
   Widget _getTeamProjectListBody() {
@@ -117,7 +119,7 @@ class Home extends GetView<HomeController> {
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const AddTeamDialog()),
+      onTap: () => controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add)),
       child: Container(
         width: 330.w,
         height: 49.h,
@@ -169,7 +171,7 @@ class Home extends GetView<HomeController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.popupDialog(const AddTeamDialog());
+                    controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add));
                   },
                   child: Image.asset(
                     ImagePath.icPlus,
@@ -207,36 +209,6 @@ class Home extends GetView<HomeController> {
       ),
     ));
   }
-
-  List<TeamProject> getTeamListExample() {
-    return [
-      const TeamProject(
-          img: "",
-          title: '모션그래픽기획및제작',
-          description: '기말 팀 영상 제작',
-          memberSize: 4,
-          date: '2023.10.05~ 2024.12.08'),
-      const TeamProject(
-          img: "",
-          title: '실감미디어콘텐츠개발',
-          description: '기말 팀 프로젝트 : Unity AR룰러앱 제작',
-          memberSize: 4,
-          date: '2023.10.05~ 2024.12.19'),
-      const TeamProject(
-          img: "",
-          title: '머신러닝의이해와실제',
-          description: '머신러닝 활용 프로그램 제작 프로젝트',
-          memberSize: 2,
-          date: '2023.11.28~ 2024.12.08'),
-      const TeamProject(
-          img: "",
-          title: '빽스타2기',
-          description: '빽다방서포터즈 팀작업',
-          memberSize: 4,
-          date: '2023.07.01~ 2024.10.01'),
-    ];
-  }
-
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,

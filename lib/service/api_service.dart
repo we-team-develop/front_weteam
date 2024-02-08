@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../main.dart';
 import '../model/team_project.dart';
 import '../model/weteam_notification.dart';
+import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../util/custom_get_connect.dart';
 
@@ -25,7 +26,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/users');
     if (rp.statusCode != 200) {
       debugPrint(
-          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()}");
+          "statusCode가 200이 아님 (${rp.statusCode} ,,, ${rp.request!.url.toString()} ${rp.bodyString}");
       return null;
     }
 
@@ -103,24 +104,39 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = {
       'name': name,
       'startedAt':
-          "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+      "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
       'endedAt':
-          "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+      "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
+    print(data);
     Response rp = await post('/api/projects', data);
     print(rp.bodyString);
     return rp.statusCode == 201;
   }
 
+  Future<bool> editTeamProject(TeamProject tp) async {
+    Map data = {
+      'name': tp.title,
+      'startedAt':
+      "${tp.startedAt.year}-${tp.startedAt.month.toString().padLeft(2, '0')}-${tp.startedAt.day.toString().padLeft(2, '0')}",
+      'endedAt':
+      "${tp.endedAt.year}-${tp.endedAt.month.toString().padLeft(2, '0')}-${tp.endedAt.day.toString().padLeft(2, '0')}",
+      'explanation': tp.description
+    };
+    Response rp = await patch('/api/projects/${tp.id}', data);
+    return rp.statusCode == 204;
+  }
+
   Future<GetTeamProjectListResult?> getTeamProjectList(
-      int page, bool done, String direction, String field,
+      int page, bool done, String direction, String field, int userId,
       {String? cacheKey}) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
       'size': 10.toString(),
       'done': done.toString(),
       'direction': direction,
+      'userId': userId.toString(),
       'field': field
     });
     if (!rp.isOk) return null;
@@ -142,7 +158,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map<String, dynamic> query = {
       'page': page.toString(),
       'size': 20.toString(),
-      'sort': 'asc'
+      'sort': 'desc'
     };
 
     Response rp = await get('/api/alarms', query: query);
@@ -156,6 +172,75 @@ class ApiService extends CustomGetConnect implements GetxService {
     }
 
     return ret;
+  }
+
+  Future<List<WeteamProjectUser>?> getProjectUsers(int projectId) async {
+    Response rp = await get('/api/project-users/$projectId');
+    if (!rp.isOk) return null;
+
+    print(rp.bodyString);
+
+    List data = jsonDecode(rp.bodyString ?? '[]');
+    List<WeteamProjectUser> ret = List<WeteamProjectUser>.generate(
+        data.length, (index) => WeteamProjectUser.fromJson(data[index]));
+
+    return ret;
+  }
+
+  Future<bool> changeUserTeamProjectRole(TeamProject team, String role) async {
+    Response rp = await patch('/api/project-users', {}, query: {
+      'projectId': team.id.toString(),
+      'role': role
+    });
+
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> changeTeamProjectHost(int projectId, int userId) async {
+    Response rp = await patch('/api/projects/$projectId/$userId', {});
+    print(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> kickUserFromTeamProject(List<int> teamUserIdList) async {
+    String query = "";
+    for (int i = 0; i < teamUserIdList.length; i++) {
+      int teamUserId = teamUserIdList[i];
+      query += 'projectUserIdList=$teamUserId';
+      if (i != teamUserIdList.length - 1) {
+        query += '&';
+      }
+    }
+    Response rp = await delete('/api/project-users?$query');
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> acceptInvite(int projectId) async {
+    Response rp = await patch('/api/project-users/$projectId', {});
+    debugPrint(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> deleteTeamProject(int projectId) async {
+    Response rp = await delete('/api/projects/$projectId');
+    debugPrint(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> exitTeamProject(int projectId) async {
+    Response rp = await delete('/api/project-users/$projectId');
+    debugPrint(rp.bodyString);
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> readAlarmsAll() async {
+    Response rp = await patch('/api/alarms', {});
+    return rp.statusCode == 204;
+  }
+
+  Future<bool> readAlarm(int id) async {
+    Response rp = await patch('/api/alarms/$id', {});
+    return rp.statusCode == 204;
   }
 }
 
@@ -178,6 +263,7 @@ class GetTeamProjectListResult {
             tpList.length, (index) => TeamProject.fromJson(tpList[index])));
   }
 }
+
 
 // WTMProjectList
 

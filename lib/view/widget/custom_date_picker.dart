@@ -100,7 +100,7 @@ class _CustomPicker extends StatelessWidget {
             return Text(items[index],
                 style: TextStyle(
                   color: AppColors.Black,
-                  fontSize: 16.sp,
+                  fontSize: 15.sp,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w400,
                   height: 0,
