@@ -28,7 +28,7 @@ class TeamPlayController extends GetxController {
     }
 
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(0, false, 'DESC', 'DONE',
+        .getTeamProjectList(0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectNotDoneListJson);
     if (result != null) {
       tpList.value = result;

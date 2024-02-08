@@ -51,12 +51,12 @@ class UserInfoPage extends StatelessWidget {
       }
 
       result = await Get.find<ApiService>()
-          .getTeamProjectList(0, true, 'DESC', 'DONE',
+          .getTeamProjectList(0, true, 'DESC', 'DONE', user.value!.id,
           cacheKey: SharedPreferencesKeys
               .teamProjectDoneListJson);
     } else {
       result = await Get.find<ApiService>()
-          .getTeamProjectList(0, true, 'DESC', 'DONE');
+          .getTeamProjectList(0, true, 'DESC', 'DONE', user.value!.id);
     }
 
     if (result != null) {

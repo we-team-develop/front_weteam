@@ -129,13 +129,14 @@ class ApiService extends CustomGetConnect implements GetxService {
   }
 
   Future<GetTeamProjectListResult?> getTeamProjectList(
-      int page, bool done, String direction, String field,
+      int page, bool done, String direction, String field, int userId,
       {String? cacheKey}) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
       'size': 10.toString(),
       'done': done.toString(),
       'direction': direction,
+      'userId': userId.toString(),
       'field': field
     });
     if (!rp.isOk) return null;
