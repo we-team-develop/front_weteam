@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:front_weteam/service/auth_service.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -49,7 +50,7 @@ class HomeController extends GetxController {
   
   Future<void> updateTeamProjectList() async {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE',
+        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
     if (result != null) {
       tpList.value = result;
