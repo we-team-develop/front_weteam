@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 enum Page { TEAMPLAY, HOME, MYPAGE }
@@ -24,7 +25,7 @@ class BottomNavController extends GetxController {
   void moveToPage(int value) {
     if (_history.last != value && Platform.isAndroid) {
       _history.add(value);
-      print(_history);
+      debugPrint(_history.toString());
     }
     _pageIndex(value);
   }

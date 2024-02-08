@@ -140,7 +140,7 @@ class _DDayDialogState extends State<DDayDialog> {
               try {
                 await onTapButton();
               } catch(e, st) {
-                print(e);
+                debugPrint(e.toString());
                 debugPrintStack(stackTrace: st);
               }
               isSaving = false;

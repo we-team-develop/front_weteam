@@ -31,7 +31,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     }
 
     String? json = rp.bodyString;
-    print('$json');
+    debugPrint('$json');
     if (json == null) {
       debugPrint("bodyString is null");
       return null;
@@ -91,7 +91,7 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> changeUserProfiles(int imageIdx) async {
     Response rp = await patch('/api/profiles/$imageIdx', {});
-    print(rp.statusCode);
+    debugPrint("${rp.statusCode}");
     if (rp.statusCode != 200) {
       return false;
     } else {
@@ -109,9 +109,9 @@ class ApiService extends CustomGetConnect implements GetxService {
       "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
-    print(data);
+    debugPrint("$data");
     Response rp = await post('/api/projects', data);
-    print(rp.bodyString);
+    debugPrint(rp.bodyString);
     return rp.statusCode == 201;
   }
 
@@ -144,7 +144,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     if (cacheKey != null) {
       sharedPreferences.setString(cacheKey, rp.bodyString!);
     }
-    print(rp.bodyString);
+    debugPrint(rp.bodyString);
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
@@ -178,7 +178,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await get('/api/project-users/$projectId');
     if (!rp.isOk) return null;
 
-    print(rp.bodyString);
+    debugPrint(rp.bodyString);
 
     List data = jsonDecode(rp.bodyString ?? '[]');
     List<WeteamProjectUser> ret = List<WeteamProjectUser>.generate(
@@ -198,7 +198,7 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   Future<bool> changeTeamProjectHost(int projectId, int userId) async {
     Response rp = await patch('/api/projects/$projectId/$userId', {});
-    print(rp.bodyString);
+    debugPrint(rp.bodyString);
     return rp.statusCode == 204;
   }
 

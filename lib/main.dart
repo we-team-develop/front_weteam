@@ -68,7 +68,7 @@ Future<void> _init() async {
       }
     }
   } catch (e, st) {
-    print("앱 초기화 실패 : $e\n$st");
+    debugPrint("앱 초기화 실패 : $e\n$st");
     MemCache.put(MemCacheKey.weteamUserJson, null);
     MemCache.put(MemCacheKey.firebaseAuthIdToken, null);
   }
