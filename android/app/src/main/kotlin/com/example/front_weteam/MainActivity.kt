@@ -1,4 +1,4 @@
-package com.example.front_weteam
+package com.login.front_weteam
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
