@@ -46,7 +46,7 @@ class WTMCreate extends GetView<WTMController> {
                   children: [
                     // 첫 페이지
                     Column(
-                      mainAxisSize: MainAxisSize.min,
+                      // mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -63,7 +63,7 @@ class WTMCreate extends GetView<WTMController> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 50.w, top: 103.h),
+                          padding: EdgeInsets.only(left: 50.w, top: 103.2.h),
                           child: Text.rich(
                             TextSpan(children: [
                               TextSpan(
@@ -103,30 +103,108 @@ class WTMCreate extends GetView<WTMController> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 57.h),
+                          padding: EdgeInsets.only(top: 47.h),
                           child: Center(
                               child: Image.asset(
                             ImagePath.wtmtutorial1,
                             width: 296.w,
-                            height: 429.h,
+                            height: 474.h,
                           )),
                         ),
                       ],
                     ),
                     // 두 번째 페이지
-                    Center(
-                      child: Container(
-                        width: 50.w,
-                        height: 50.h,
-                        color: Colors.white,
-                      ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 19.w, top: 44.h),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                                onTap: () => _removeOverlay(),
+                                child: Image.asset(
+                                  ImagePath.wtmcross,
+                                  width: 15.75.w,
+                                  height: 15.75.h,
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 50.w, top: 99.h),
+                          child: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                text: '팀원을 언제보까에 초대한 뒤, \n',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '서로 가능한 ',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '시간대를 선택',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '하고 \n',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '일정을 비교',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.White),
+                              ),
+                              TextSpan(
+                                text: '해보세요!',
+                                style: TextStyle(
+                                    decorationThickness: 0,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 13.sp,
+                                    color: AppColors.White),
+                              ),
+                            ]),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 60.h),
+                          child: Center(
+                              child: Image.asset(
+                            ImagePath.wtmtutorial2,
+                            width: 296.w,
+                            height: 444.h,
+                          )),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
             Positioned(
-              bottom: 450.h,
+              top: 219.h,
               left: 0,
               right: 0,
               child: Center(
