@@ -103,9 +103,13 @@ class WTMCreate extends GetView<WTMController> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 125.0),
+                          padding: EdgeInsets.only(top: 57.h),
                           child: Center(
-                              child: Image.asset(ImagePath.wtmtutorial1)),
+                              child: Image.asset(
+                            ImagePath.wtmtutorial1,
+                            width: 296.w,
+                            height: 429.h,
+                          )),
                         ),
                       ],
                     ),
@@ -122,14 +126,20 @@ class WTMCreate extends GetView<WTMController> {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.1,
+              bottom: 450.h,
               left: 0,
               right: 0,
               child: Center(
                 child: SmoothPageIndicator(
-                  controller: pageController, // PageController
-                  count: 2, // 페이지 수
-                  effect: const WormEffect(), // 원하는 효과
+                  controller: pageController,
+                  count: 2,
+                  effect: WormEffect(
+                    dotColor: AppColors.G_03,
+                    activeDotColor: AppColors.White,
+                    dotHeight: 7.h,
+                    dotWidth: 7.w,
+                  ),
+                  // 효과
                   onDotClicked: (index) {
                     pageController.animateToPage(
                       index,

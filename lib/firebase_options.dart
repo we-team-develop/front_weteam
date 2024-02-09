@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBc4I9eLDbOYxWfTtjWD6JrMymeTy7UQm0',
-    appId: '1:722879115497:android:568c66ada86b4fb2c1c078',
+    appId: '1:722879115497:android:b9fdfa6dd7c6b50dc1c078',
     messagingSenderId: '722879115497',
     projectId: 'weteam-1968a',
     databaseURL: 'https://weteam-1968a-default-rtdb.firebaseio.com',
@@ -60,13 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBc10UyJz6B9Zr9qEgH7gnCjbVa6b3GGcY',
-    appId: '1:722879115497:ios:a60737dff2e659fcc1c078',
+    appId: '1:722879115497:ios:eec41a4031fd4357c1c078',
     messagingSenderId: '722879115497',
     projectId: 'weteam-1968a',
     databaseURL: 'https://weteam-1968a-default-rtdb.firebaseio.com',
     storageBucket: 'weteam-1968a.appspot.com',
-    androidClientId: '722879115497-23h6sich43q38hadja766mjmh2fo33et.apps.googleusercontent.com',
-    iosClientId: '722879115497-pn4plqtkckc7eshge430bavfp7t6gc3b.apps.googleusercontent.com',
-    iosBundleId: 'com.example.frontWeteam',
+    androidClientId: '722879115497-184l0a3d4o0asprqv49rr5917t4hvcfg.apps.googleusercontent.com',
+    iosClientId: '722879115497-snpbls5g403v2nig98b4sbi64ub3u2eh.apps.googleusercontent.com',
+    iosBundleId: 'com.login.frontWeteam',
   );
 }

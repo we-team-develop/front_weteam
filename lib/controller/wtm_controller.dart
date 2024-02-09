@@ -1,9 +1,8 @@
 import 'package:front_weteam/model/team_project.dart';
+import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:get/get.dart';
-
-import '../model/weteam_user.dart';
 
 class WTMController extends GetxController {
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
@@ -24,6 +23,7 @@ class WTMController extends GetxController {
     tpList.clear();
     GetTeamProjectListResult? result = await Get.find<ApiService>()
         .getTeamProjectList(0, done, 'DESC', 'DONE', user.id);
+
     if (result != null) {
       tpList.addAll(result.projectList);
     } else {

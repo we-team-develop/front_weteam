@@ -88,7 +88,9 @@ class MyApp extends StatelessWidget {
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home = Get.find<AuthService>().user.value != null ? const App() : const LoginMain();
+    home = Get.find<AuthService>().user.value != null
+        ? const App()
+        : const LoginMain();
 
     linkStream.listen((event) async {
       if (event == null) return;
@@ -154,7 +156,8 @@ class SharedPreferencesKeys {
   static const String weteamUserJson = "weteam_user_json";
   static const String teamProjectListJson = "team_project_list_json";
   static const String teamProjectDoneListJson = "team_project_done_list_json";
-  static const String teamProjectNotDoneListJson = "team_project_not_done_list_json";
+  static const String teamProjectNotDoneListJson =
+      "team_project_not_done_list_json";
 }
 
 Future<void> resetApp() async {

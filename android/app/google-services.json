@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "722879115497-184l0a3d4o0asprqv49rr5917t4hvcfg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.front_weteam",
+            "certificate_hash": "02a04943a04d4f6b1414af0b404b2fabd64a5768"
+          }
+        },
+        {
           "client_id": "722879115497-cs0ohfc7lrse4qc95odc3bm5r3fqu1og.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +38,58 @@
             "certificate_hash": "621ad60eadb0854e40105ec5a37f3606d48a0e2a"
           }
         },
+        {
+          "client_id": "722879115497-i0pl87b3uuosfm8tq0ro6fnruapqc1fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.front_weteam",
+            "certificate_hash": "0c8f5c73d4b8a37f21b6d5660c4a73fccf468181"
+          }
+        },
+        {
+          "client_id": "722879115497-kt36e49s3hbha0cc1eoh1ome38172dpp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.front_weteam",
+            "certificate_hash": "8e5fcfff1c60f3ff249824fdcf2912a096018325"
+          }
+        },
+        {
+          "client_id": "722879115497-7lh84ll4mgpgumcsmut3uvvvolbqfpc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4I9eLDbOYxWfTtjWD6JrMymeTy7UQm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722879115497-7lh84ll4mgpgumcsmut3uvvvolbqfpc4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "722879115497-4trl6hm7gp0itqrbbo3b45eu3830rhnb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.frontWeteam.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722879115497:android:b9fdfa6dd7c6b50dc1c078",
+        "android_client_info": {
+          "package_name": "com.login.front_weteam"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "722879115497-7lh84ll4mgpgumcsmut3uvvvolbqfpc4.apps.googleusercontent.com",
           "client_type": 3
