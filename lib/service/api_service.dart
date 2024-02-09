@@ -66,6 +66,19 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.isOk;
   }
 
+  /// 팀플 단건 조회 API
+  ///
+  /// return: 성공시  TeamProject, 실패시 null
+  Future<TeamProject?> getTeamProject(int projectId) async {
+    Response rp = await get('/api/projects/$projectId');
+    if (rp.hasError) return null;
+
+    String json = rp.bodyString ?? "{}";
+    Map data = jsonDecode(json);
+
+    return TeamProject.fromJson(data);
+  }
+
   /// 팀플 삭제 API
   ///
   /// return: 성공 여부

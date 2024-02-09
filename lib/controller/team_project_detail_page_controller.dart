@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
@@ -22,6 +24,20 @@ class TeamProjectDetailPageController extends GetxController {
     isChangeHostMode.listen((p0) {
       if (p0 == false) selectedNewHost.value = -1; // 호스트 변경모드 꺼지면 -1로 초기화
     });
+
+    Timer.periodic(const Duration(seconds: 30), (timer) {
+      try {
+        fetchTeamProject();
+      } catch (_) {};
+    });
+  }
+
+  Future<void> fetchTeamProject() async {
+    ApiService service = Get.find<ApiService>();
+    TeamProject? tp = await service.getTeamProject(this.tp.value.id);
+    if (tp != null) {
+      this.tp.value = tp;
+    }
   }
 
   // 성공 여부 반환
