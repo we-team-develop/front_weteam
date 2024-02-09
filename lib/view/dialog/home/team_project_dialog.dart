@@ -28,9 +28,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
   final int maxContentLength = 25;
 
   final maxTitleLength = 20;
-  String titleValue = "";
 
-  String inputValue = "";
   DateTime startTime = DateTime.now();
   DateTime endTime = DateTime.now();
 
@@ -146,7 +144,6 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                             style: const TextStyle(fontSize: 13),
                             onChanged: (newV) {
                               setState(() {
-                                inputValue = newV;
                               });
                             },
                           ),
@@ -156,7 +153,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         bottom: 10,
                         child: Text(
                           // TextField 오른쪽에 counter
-                          "${inputValue.length} / $maxContentLength",
+                          "${contentController.text.length} / $maxContentLength",
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.5),
                             fontSize: 10,

@@ -16,8 +16,6 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  String inputValue = "";
-
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -29,7 +27,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ? null
               : Text(
                   // TextField 오른쪽에 counter
-                  "${inputValue.length} / ${widget.maxLength}",
+                  "${widget.controller?.text.length} / ${widget.maxLength}",
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 10,
@@ -69,7 +67,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
       onChanged: (newV) {
         setState(() {
-          inputValue = newV;
         });
       },
     );
