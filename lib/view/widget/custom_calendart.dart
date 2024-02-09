@@ -13,6 +13,8 @@ class CustomCalendar extends GetView<CustomCalendarController> {
   DateTime initDate = DateTime.now().copyWith(
       day: 0, hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
 
+  CustomCalendar({super.key});
+
   @override
   StatelessElement createElement() {
     Get.put(CustomCalendarController());
@@ -249,7 +251,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
             controller.selectedDt2.value = null;
           },
           behavior: HitTestBehavior.translucent,
-          child: Container(
+          child: SizedBox(
             height: 30.h,
             width: 30.w,
             child: Stack(

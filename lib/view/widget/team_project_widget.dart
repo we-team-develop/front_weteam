@@ -17,7 +17,7 @@ class TeamProjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(GetBuilder(builder: (controller) => TeamProjectDetailPage(), init: TeamProjectDetailPageController(team))),
+      onTap: () => Get.to(GetBuilder(builder: (controller) => const TeamProjectDetailPage(), init: TeamProjectDetailPageController(team))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,

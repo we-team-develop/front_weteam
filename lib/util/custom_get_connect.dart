@@ -23,7 +23,7 @@ class CustomGetConnect extends GetConnect {
     // 요청 헤더에 토큰이 있다면 생략시킵니다. (스팸 방지)
     String? authorization = requestHeader['Authorization'];
     if (authorization != null && authorization.length > 10) {
-      requestHeader['Authorization'] = "${(authorization as String).substring(0, 10)}...(생략됨)";
+      requestHeader['Authorization'] = "${(authorization).substring(0, 10)}...(생략됨)";
     }
 
     int? statusCode = rp.statusCode; // 응답 코드

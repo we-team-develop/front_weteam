@@ -11,7 +11,7 @@ import '../../util/weteam_utils.dart';
 import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
-  ProfileSettingPage({Key? key}) : super(key: key);
+  ProfileSettingPage({super.key});
   final ProfileController controller = Get.put(ProfileController());
 
   @override
