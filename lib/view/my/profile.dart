@@ -7,6 +7,7 @@ import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../service/auth_service.dart';
+import '../../util/weteam_utils.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../widget/custom_switch.dart';
 import '../widget/profile_image_widget.dart';
@@ -232,7 +233,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 탈퇴 실패
-      Get.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
+      WeteamUtils.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
     }
   }
 
@@ -243,7 +244,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 로그아웃 실패
-      Get.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
+      WeteamUtils.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
     }
   }
 }

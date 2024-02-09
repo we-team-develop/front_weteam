@@ -4,6 +4,8 @@ import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:get/get.dart';
 
+import '../util/weteam_utils.dart';
+
 class WTMController extends GetxController {
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
   final Rxn<TeamProject> selectedTeamProject = Rxn();
@@ -27,7 +29,7 @@ class WTMController extends GetxController {
     if (result != null) {
       tpList.addAll(result.projectList);
     } else {
-      Get.snackbar('문제가 발생했습니다', '팀플 목록을 불러오지 못했습니다');
+      WeteamUtils.snackbar('문제가 발생했습니다', '팀플 목록을 불러오지 못했습니다');
     }
   }
 }

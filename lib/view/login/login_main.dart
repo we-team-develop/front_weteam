@@ -11,6 +11,7 @@ import '../../util/helper/auth_helper.dart';
 import '../../util/helper/google_auth_helper.dart';
 import '../../util/helper/kakao_auth_helper.dart';
 import '../../util/helper/naver_auth_helper.dart';
+import '../../util/weteam_utils.dart';
 import 'sign_up_completed.dart';
 
 class LoginMain extends StatelessWidget {
@@ -101,7 +102,7 @@ class LoginMain extends StatelessWidget {
         Get.offAll(() => const App());
       }
     } else {
-      Get.snackbar("로그인 실패", "로그인에 실패하였습니다");
+      WeteamUtils.snackbar("로그인 실패", "로그인에 실패하였습니다");
     }
   }
 }

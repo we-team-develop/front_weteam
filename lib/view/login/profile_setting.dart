@@ -7,6 +7,7 @@ import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../service/api_service.dart';
+import '../../util/weteam_utils.dart';
 import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
@@ -65,7 +66,7 @@ class ProfileSettingPage extends StatelessWidget {
                 onTap: () {
                   int? id = controller.getSelectedProfileId();
                   if (id == null) {
-                    Get.snackbar("", "사용할 프로필 이미지를 선택해주세요");
+                    WeteamUtils.snackbar("", "사용할 프로필 이미지를 선택해주세요");
                     return;
                   }
                   setProfile(id, context);
@@ -86,7 +87,7 @@ class ProfileSettingPage extends StatelessWidget {
       await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
       await resetApp();
     } else {
-      Get.snackbar("죄송합니다", "문제가 발생했습니다");
+      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다");
     }
   }
 }

@@ -19,6 +19,7 @@ import 'firebase_options.dart';
 import 'service/api_service.dart';
 import 'service/auth_service.dart';
 import 'util/mem_cache.dart';
+import 'util/weteam_utils.dart';
 import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
@@ -116,9 +117,9 @@ class MyApp extends StatelessWidget {
           bool success = await Get.find<ApiService>().acceptInvite(projectId);
           if (success) {
             Get.find<HomeController>().updateTeamProjectList();
-            Get.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
+            WeteamUtils.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
           } else {
-            Get.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
+            WeteamUtils.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
           }
         }
       }

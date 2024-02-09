@@ -11,6 +11,7 @@ import '../../main.dart';
 import '../../model/weteam_project_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../util/weteam_utils.dart';
 import '../dialog/custom_big_dialog.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
@@ -123,9 +124,9 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         await updateTeamProjectLists();
         Get.back();
         Get.back();
-        Get.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
+        WeteamUtils.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
       } else {
-        Get.snackbar("삭제 실패", '팀플을 삭제하지 못했어요.');
+        WeteamUtils.snackbar("삭제 실패", '팀플을 삭제하지 못했어요.');
       }
     } else {
       // 팀플 탈퇴
@@ -134,9 +135,9 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         await updateTeamProjectLists();
         Get.back();
         Get.back();
-        Get.snackbar("탈퇴 성공", '팀플을 탈퇴했습니다.');
+        WeteamUtils.snackbar("탈퇴 성공", '팀플을 탈퇴했습니다.');
       } else {
-        Get.snackbar("삭제 실패", '팀플을 탈퇴하지 못했어요.');
+        WeteamUtils.snackbar("삭제 실패", '팀플을 탈퇴하지 못했어요.');
       }
     }
   }
@@ -437,7 +438,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                             text: '강제 퇴장 시키기',
                             onTap: () {
                               if (controller.tp.value.memberSize == 1) {
-                                Get.snackbar("", '강제 퇴장할 팀원이 없습니다');
+                                WeteamUtils.snackbar("", '강제 퇴장할 팀원이 없습니다');
                                 return;
                               }
                               controller.isKickMode.value =
@@ -447,7 +448,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                             text: '호스트 권한 넘기기',
                             onTap: () {
                               if (controller.tp.value.memberSize == 1) {
-                                Get.snackbar("", '호스트를 넘겨 받을 팀원이 없습니다');
+                                WeteamUtils.snackbar("", '호스트를 넘겨 받을 팀원이 없습니다');
                                 return;
                               }
                               controller.isKickMode.value = false;
@@ -559,7 +560,7 @@ class _CancelOrActionBottomPanel
                   dynamic ret = action.call();
                   if (ret is Future) await ret;
                 } catch (e, st) {
-                  Get.snackbar("죄송합니다", "오류가 발생했습니다");
+                  WeteamUtils.snackbar("죄송합니다", "오류가 발생했습니다");
                   debugPrint("$e");
                   debugPrintStack(stackTrace: st);
                 }
@@ -665,7 +666,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
   Future<void> setRole() async {
     String newRole = tec.text.trim();
     if (newRole.isEmpty) {
-      Get.snackbar("역할을 입력해주세요", "");
+      WeteamUtils.snackbar("역할을 입력해주세요", "");
       return;
     }
     bool result = await Get.find<ApiService>()
@@ -674,7 +675,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       Get.back();
       controller.fetchUserList();
     } else {
-      Get.snackbar("죄송합니다", "역할을 설정하지 못했습니다");
+      WeteamUtils.snackbar("죄송합니다", "역할을 설정하지 못했습니다");
     }
   }
 }
