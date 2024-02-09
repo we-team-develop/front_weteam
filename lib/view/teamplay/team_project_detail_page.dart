@@ -171,7 +171,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
     });
   }
 
-  bool amIOwner() {
+  bool amIHost() {
     return controller.tp.value.host.id == projectUser.user.id;
   }
 
@@ -180,7 +180,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (controller.isKickMode.isTrue && !amIOwner()) {
+        if (controller.isKickMode.isTrue && !amIHost()) {
           kickSelected.value = !kickSelected.value;
           controller.selectedKickUser.value = kickSelected.value ? projectUser.id : -1;
         }
@@ -229,14 +229,14 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
             ),
           ),
           Visibility(
-              visible: amIOwner(),
+              visible: amIHost(),
               child: Positioned(
                   right: 0,
                   left: 0,
                   child: Image.asset(ImagePath.icSolarCrownBold,
                       width: 16.w, height: 16.h))),
           Obx(() => Visibility(
-              visible: controller.isKickMode.value && !amIOwner(),
+              visible: controller.isKickMode.value && !amIHost(),
               child: Positioned(
                 right: 10.w,
                 top: 10.h,
@@ -247,7 +247,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                         width: 14.w, height: 14.h),
               ))),
           Obx(() => Visibility(
-                visible: controller.isChangeHostMode.value && !amIOwner(),
+                visible: controller.isChangeHostMode.value && !amIHost(),
                 child: Positioned(
                   top: 25.h,
                   left: 10.w,
