@@ -91,6 +91,49 @@
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
+=======
+          "client_id": "722879115497-a9kap7crufv4o236e2f8dtfs8t34600i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.login.front_weteam",
+            "certificate_hash": "f0378749681ec09e85ed1c3021d0344ca164874f"
+          }
+        },
+        {
+          "client_id": "722879115497-asj7ifr6mvoliint15oc45gdpk7db5aq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.login.front_weteam",
+            "certificate_hash": "02a04943a04d4f6b1414af0b404b2fabd64a5768"
+          }
+        },
+        {
+          "client_id": "722879115497-c7aj182aj46gsah5k17rb93cb4m10a5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.login.front_weteam",
+            "certificate_hash": "0c8f5c73d4b8a37f21b6d5660c4a73fccf468181"
+          }
+        },
+        {
+          "client_id": "722879115497-di8fu4mg3vvrjnnmsi6dh62jss1pr3e0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.login.front_weteam",
+            "certificate_hash": "621ad60eadb0854e40105ec5a37f3606d48a0e2a"
+          }
+        },
+        {
+          "client_id": "722879115497-reanf11bfrlfkgsou8okcp4uheaj50dc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.login.front_weteam",
+            "certificate_hash": "8e5fcfff1c60f3ff249824fdcf2912a096018325"
+          }
+        },
+        {
+>>>>>>> dc6477fe414e51747371a34d37f5c416d2859aa7
           "client_id": "722879115497-7lh84ll4mgpgumcsmut3uvvvolbqfpc4.apps.googleusercontent.com",
           "client_type": 3
         }
