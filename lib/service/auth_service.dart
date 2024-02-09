@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +26,7 @@ class AuthService extends GetxService {
     dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
     if (firebaseIdToken != null && userJson != null) {
       token = firebaseIdToken;
-      debugPrint(token);
+      log("$token");
       user.value = WeteamUser.fromJson(jsonDecode(userJson));
       if (user.value!.profile == null) {
         user.value = null; // 로그인 취소
