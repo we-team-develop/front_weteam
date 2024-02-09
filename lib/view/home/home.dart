@@ -49,7 +49,7 @@ class Home extends GetView<HomeController> {
                   _getTeamProjectListBody(),
                   GestureDetector(
                       onTap: () {
-                        Get.to(() => const WTM());
+                        Get.to(() => WTM());
                       },
                       child: _bottomBanner()),
                   SizedBox(height: 15.h)
@@ -121,7 +121,8 @@ class Home extends GetView<HomeController> {
 
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
-      onTap: () => controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add)),
+      onTap: () => controller.popupDialog(
+          const TeamProjectDialog(mode: TeamProjectDialogMode.add)),
       child: Container(
         width: 330.w,
         height: 49.h,
@@ -173,7 +174,8 @@ class Home extends GetView<HomeController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.popupDialog(const TeamProjectDialog(mode: TeamProjectDialogMode.add));
+                    controller.popupDialog(const TeamProjectDialog(
+                        mode: TeamProjectDialogMode.add));
                   },
                   child: Image.asset(
                     ImagePath.icPlus,
@@ -211,6 +213,7 @@ class Home extends GetView<HomeController> {
       ),
     ));
   }
+
   Widget _bottomBanner() {
     return Container(
       width: double.infinity,
@@ -285,7 +288,6 @@ class _DDayWidgetState extends State<DDayWidget> {
   Timer? timer;
   bool showPopupMenu = false;
   String leftDays = "";
-
 
   @override
   void initState() {
