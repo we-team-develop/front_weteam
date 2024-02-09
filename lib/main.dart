@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,15 @@ Future<void> main() async {
   // Firebase 초기화 대기
   await firebaseFuture;
   await _init();
+
+  // 팀플 목록 30초마다 조회
+  Timer.periodic(const Duration(seconds: 30), (timer) {
+    try {
+      if (MemCache.get(MemCacheKey.weteamUserJson) != null && MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
+        updateTeamProjectLists();
+      }
+    } catch (_) {}
+  });
 
   runApp(Phoenix(child: MyApp()));
 }
