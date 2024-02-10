@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/model/team_project.dart';
@@ -13,10 +15,20 @@ import '../util/weteam_utils.dart';
 
 class WTMController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
+  final Rx<String> searchText = Rx("");
+  String? searchWait;
+
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
   final Rxn<TeamProject> selectedTeamProject = Rxn();
   final RxList<TeamProject> tpList = RxList();
   RxString selectedTpList = '진행중인 팀플'.obs;
+
+  // 웬투밋 관련 페이지가 모두 닫혔을 때 호출됩니다.
+  @override
+  void onClose() {
+    super.onClose();
+    _removeOverlay(); // 튜토리얼 오버레이를 닫습니다.
+  }
 
   void setSelectedTpList(String tpList) {
     selectedTpList.value = tpList;
@@ -24,13 +36,6 @@ class WTMController extends GetxController {
     updateTeamProject(done);
     selectedTeamProject.value = null;
     selectedTeamProject.refresh();
-  }
-
-  // 웬투밋 관련 페이지가 모두 닫혔을 때 호출됩니다.
-  @override
-  void onClose() {
-    super.onClose();
-    _removeOverlay(); // 튜토리얼 오버레이를 닫습니다.
   }
 
   Future<void> updateTeamProject(bool done) async {
@@ -47,6 +52,17 @@ class WTMController extends GetxController {
   }
 
   // WTM MAIN
+  void scheduleSearch(String query) {
+    query = query.trim();
+    searchWait = query;
+    // 600ms 대기
+    Timer(const Duration(milliseconds: 400), () {
+      // 만약 검색어가 바뀌었다면 취소
+      if (searchWait != query) return;
+      searchText.value = query;
+    });
+  }
+
   void showOverlay(BuildContext context) {
     if (_overlayEntry.value != null) {
       // 이미 오버레이가 표시되어 있다면 무시

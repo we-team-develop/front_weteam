@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +38,7 @@ class WTMCreate extends GetView<WTMController> {
           ),
           Padding(
             padding: EdgeInsets.only(left: 15.w),
-            child: _search(),
+            child: _Search(),
           ),
           SizedBox(height: 14.h),
           Row(
@@ -59,39 +60,48 @@ class WTMCreate extends GetView<WTMController> {
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
             child: ListView.builder(
               itemCount: controller.tpList.length,
-              itemBuilder: (_, index) => Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
-                  child: Row(children: [
-                    Expanded(child: TeamProjectWidget(controller.tpList[index])),
-                    SizedBox(width: 16.w),
-                    GestureDetector(onTap: () {
-                      controller.selectedTeamProject.value = controller.tpList[index];
-                    }, child: Obx(() {
-                      bool isSelected =
-                          controller.selectedTeamProject.value?.id ==
-                              controller.tpList[index].id;
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 9.w, vertical: 4.h),
-                        decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.Orange_03
-                                : AppColors.G_02,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Text(
-                              '선택',
-                              style: TextStyle(
-                                  color: isSelected
-                                      ? AppColors.White
-                                      : AppColors.G_05,
-                                  fontFamily: 'NanumSquareNeo',
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      );
-                    }))
-                  ])),
+              itemBuilder: (_, index) => Obx(() {
+                TeamProject tp = controller.tpList[index];
+                String searchText = controller.searchText.value;
+
+                // 검색어에 본인이 포함되지 않을 경우
+                if (searchText.isNotEmpty && !tp.title.contains(searchText)) {
+                  return const SizedBox.shrink();
+                }
+
+                return Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: Row(children: [
+                      Expanded(child: TeamProjectWidget(tp)),
+                      SizedBox(width: 16.w),
+                      GestureDetector(onTap: () {
+                        controller.selectedTeamProject.value = tp;
+                      }, child: Obx(() {
+                        bool isSelected =
+                            controller.selectedTeamProject.value?.id == tp.id;
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 9.w, vertical: 4.h),
+                          decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.Orange_03
+                                  : AppColors.G_02,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Text(
+                                '선택',
+                                style: TextStyle(
+                                    color: isSelected
+                                        ? AppColors.White
+                                        : AppColors.G_05,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontSize: 9.sp,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                        );
+                      }))
+                    ]));
+              }),
             ),
           )),
           Center(
@@ -115,28 +125,6 @@ class WTMCreate extends GetView<WTMController> {
           fontWeight: FontWeight.bold,
           fontFamily: 'NanumGothic',
           fontSize: 20.sp),
-    );
-  }
-
-  Widget _search() {
-    return Container(
-      width: 330.w,
-      height: 49.h,
-      padding: EdgeInsets.only(right: 8.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: AppColors.G_02, width: 1.w),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Image.asset(
-            ImagePath.icSearch,
-            width: 36.w,
-            height: 36.h,
-          ),
-        ],
-      ),
     );
   }
 
@@ -209,6 +197,42 @@ class WTMCreate extends GetView<WTMController> {
                 color: AppColors.G_05,
                 decoration: TextDecoration.underline,
                 fontSize: 10.sp),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Search extends GetView<WTMController> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 330.w,
+      height: 49.h,
+      padding: EdgeInsets.only(right: 8.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: AppColors.G_02, width: 1.w),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: TextField(
+                onChanged: (v) => controller.scheduleSearch(v),
+                maxLines: 1,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    isDense: true
+                ),
+              )
+          )),
+          Image.asset(
+            ImagePath.icSearch,
+            width: 36.w,
+            height: 36.h,
           ),
         ],
       ),
