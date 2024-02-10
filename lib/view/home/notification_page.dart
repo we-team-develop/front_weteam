@@ -60,31 +60,39 @@ class NotificationPage extends GetView<NotificationController> {
   }
 }
 
-class NotificationContainer extends StatelessWidget {
+class NotificationContainer extends StatefulWidget {
   final WeteamNotification notification;
 
   const NotificationContainer(this.notification, {super.key});
 
   @override
+  State<NotificationContainer> createState() => _NotificationContainerState();
+}
+
+class _NotificationContainerState extends State<NotificationContainer> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Get.find<ApiService>().readAlarm(notification.id);
-        if (notification.project != null) {
+        Get.find<ApiService>().readAlarm(widget.notification.id);
+        if (widget.notification.project != null) {
+          setState(() {
+            widget.notification.read = true;
+          });
           Get.to(GetBuilder(
               builder: (controller) => const TeamProjectDetailPage(),
-              init: TeamProjectDetailPageController(notification.project!)));
+              init: TeamProjectDetailPageController(widget.notification.project!)));
         }
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
-        color: notification.read ? Colors.transparent : AppColors.Orange_01,
+        color: widget.notification.read ? Colors.transparent : AppColors.Orange_01,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              notification.getTitle(),
+              widget.notification.getTitle(),
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.sp,
@@ -94,7 +102,7 @@ class NotificationContainer extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             Text(
-              notification.getContent(),
+              widget.notification.getContent(),
               style: TextStyle(
                 color: AppColors.Black,
                 fontSize: 11.sp,
@@ -104,7 +112,7 @@ class NotificationContainer extends StatelessWidget {
             ),
             SizedBox(height: 5.h),
             Text(
-              notification.date,
+              widget.notification.date,
               style: TextStyle(
                 color: AppColors.G_04,
                 fontSize: 10.sp,

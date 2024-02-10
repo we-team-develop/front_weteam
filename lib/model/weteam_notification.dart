@@ -5,12 +5,12 @@ class WeteamNotification {
   final int id;
   final String status;
   final String date;
-  final bool read;
+  bool read;
 
   final WeteamUser? user;
   final TeamProject? project;
 
-  const WeteamNotification(
+  WeteamNotification(
       {required this.id,
       required this.status,
       required this.date,
