@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
@@ -8,9 +7,7 @@ import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
 class WTMCreate extends GetView<WTMController> {
-  WTMCreate({super.key});
-
-  final TeamPlayController teamPlayController = Get.find<TeamPlayController>();
+  const WTMCreate({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +39,12 @@ class WTMCreate extends GetView<WTMController> {
                   child: Column(
                 children: [
                   _tplist(
-                      "진행중인 팀플", controller.selectedtpList.value == "진행중인 팀플"),
+                      "진행중인 팀플", controller.selectedTpList.value == "진행중인 팀플"),
                 ],
               )),
               Expanded(
                   child: _tplist(
-                      "완료된 팀플", controller.selectedtpList.value == "완료된 팀플")),
+                      "완료된 팀플", controller.selectedTpList.value == "완료된 팀플")),
             ],
           ),
           Expanded(
@@ -138,7 +135,7 @@ class WTMCreate extends GetView<WTMController> {
 
   Widget _tplist(String text, bool isSelected) {
     return GestureDetector(
-      onTap: () => controller.setSelectedtpList(text),
+      onTap: () => controller.setSelectedTpList(text),
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(bottom: 8.h),

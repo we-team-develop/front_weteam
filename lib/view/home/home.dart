@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/binding/wtm_bindings.dart';
 import 'package:get/get.dart';
 
 import '../../controller/home_controller.dart';
@@ -75,7 +76,7 @@ class Home extends GetView<HomeController> {
                     SizedBox(height: 16.h),
                     GestureDetector(
                         onTap: () {
-                          Get.to(() => WTM());
+                          Get.to(() => WTM(), binding: WTMCreateBinding());
                         },
                         child: _bottomBanner()),
                     SizedBox(height: 15.h)
