@@ -9,6 +9,13 @@ import 'package:get/get.dart';
 class WTMCreate extends GetView<WTMController> {
   const WTMCreate({super.key});
 
+
+  @override
+  StatelessElement createElement() {
+    controller.setSelectedTpList('진행중인 팀플');
+    return super.createElement();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
