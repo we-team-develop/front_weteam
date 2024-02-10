@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../binding/wtm_bindings.dart';
 import '../../controller/wtm_controller.dart';
 import '../../data/color_data.dart';
@@ -31,6 +30,11 @@ class WTM extends GetView<WTMController> {
   }
 
   void _showOverlay(BuildContext context) {
+    if (_overlayEntry.value != null) {
+      // 이미 오버레이가 표시되어 있다면 무시
+      return;
+    }
+
     final PageController pageController = PageController();
 
     _overlayEntry.value = OverlayEntry(
@@ -43,27 +47,33 @@ class WTM extends GetView<WTMController> {
               opacity: 0.5,
               child: ModalBarrier(dismissible: true, color: Colors.black),
             ),
-            // 닫기 버튼
-            Positioned(
-                right: 19.w,
-                top: 19.h,
-                child: GestureDetector(
-                    onTap: () => _removeOverlay(),
-                    child: Image.asset(
-                      ImagePath.wtmcross,
-                      width: 15.75.w,
-                      height: 15.75.h,
-                    ))),
+
             // 내용
             PageView(
               controller: pageController,
               children: [
                 // 첫 페이지
                 Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // 닫기 버튼
+                    GestureDetector(
+                      onTap: () => _removeOverlay(),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 19.w, bottom: 76.h),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Image.asset(
+                            ImagePath.wtmcross,
+                            width: 15.75.w,
+                            height: 15.75.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // 텍스트
                     Padding(
                       padding: EdgeInsets.only(left: 50.w),
                       child: Text.rich(
@@ -119,10 +129,26 @@ class WTM extends GetView<WTMController> {
                 ),
                 // 두 번째 페이지
                 Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // 닫기 버튼
+                    GestureDetector(
+                      onTap: () => _removeOverlay(),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 19.w, bottom: 76.h),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Image.asset(
+                            ImagePath.wtmcross,
+                            width: 15.75.w,
+                            height: 15.75.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // 텍스트
                     Padding(
                       padding: EdgeInsets.only(left: 50.w),
                       child: Text.rich(
@@ -187,7 +213,7 @@ class WTM extends GetView<WTMController> {
                         alignment: Alignment.bottomCenter,
                         ImagePath.wtmtutorial2,
                         width: 296.w,
-                        height: 444.h,
+                        height: 474.h,
                       )),
                     ),
                   ],
@@ -195,7 +221,7 @@ class WTM extends GetView<WTMController> {
               ],
             ),
             Positioned(
-              top: 219.h,
+              bottom: 494.h,
               left: 0,
               right: 0,
               child: Center(
