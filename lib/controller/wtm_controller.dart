@@ -18,6 +18,9 @@ class WTMController extends GetxController {
   final Rx<String> searchText = Rx("");
   String? searchWait;
 
+  final TextEditingController nameInputController = TextEditingController();
+  final Rx<String> nameInputText = Rx("");
+
   final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
   final Rxn<TeamProject> selectedTeamProject = Rxn();
   final RxList<TeamProject> tpList = RxList();

@@ -5,6 +5,7 @@ import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
+import 'package:front_weteam/view/wtm/wtm_create_input_name.dart';
 import 'package:get/get.dart';
 
 class WTMCreate extends GetView<WTMController> {
@@ -19,9 +20,9 @@ class WTMCreate extends GetView<WTMController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       body: _body(),
-    );
+    ));
   }
 
   Widget _body() {
@@ -30,7 +31,7 @@ class WTMCreate extends GetView<WTMController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 68.h, left: 15.w),
+            padding: EdgeInsets.only(top: 40.h, left: 15.w),
             child: _head(),
           ),
           SizedBox(
@@ -154,26 +155,34 @@ class WTMCreate extends GetView<WTMController> {
   }
 
   Widget _checkBox() {
-    return Obx(() => Container(
-          width: 330.w,
-          height: 46.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.r),
-            color: controller.selectedTeamProject.value != null
-                ? AppColors.MainOrange
-                : AppColors.G_02,
-          ),
-          child: Center(
-            child: Text(
-              '선택 완료',
-              style: TextStyle(
-                fontSize: 15.sp,
-                fontFamily: 'NanumGothicExtraBold',
-                color: Colors.white,
-              ),
+    return GestureDetector(
+      onTap: () {
+        if (controller.selectedTeamProject.value != null) {
+          Get.to(() => WTMCreateInputName(),
+              transition: Transition.rightToLeft);
+        }
+      },
+      child: Obx(() => Container(
+        width: 330.w,
+        height: 46.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.r),
+          color: controller.selectedTeamProject.value != null
+              ? AppColors.MainOrange
+              : AppColors.G_02,
+        ),
+        child: Center(
+          child: Text(
+            '선택 완료',
+            style: TextStyle(
+              fontSize: 15.sp,
+              fontFamily: 'NanumGothicExtraBold',
+              color: Colors.white,
             ),
           ),
-        ));
+        ),
+      ))
+    );
   }
 
   Widget _nextText() {
