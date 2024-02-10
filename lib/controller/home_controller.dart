@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/model/team_project.dart';
@@ -29,6 +30,7 @@ class HomeController extends GetxController {
     String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
     if (tpListCache != null) {
       GetTeamProjectListResult gtplResult = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
+      _oldTpList = gtplResult.projectList;
       tpWidgetList.value = _generateTpwList(gtplResult);
       tpWidgetList.refresh();
     }
@@ -65,7 +67,7 @@ class HomeController extends GetxController {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
         .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
-    if (result != null && _oldTpList != result.projectList) {
+    if (result != null && !listEquals(_oldTpList, result.projectList)) {
       _oldTpList = result.projectList;
       tpWidgetList.value = _generateTpwList(result);
       tpWidgetList.refresh();

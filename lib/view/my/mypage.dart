@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/model/team_project.dart';
@@ -37,6 +38,7 @@ class UserInfoPage extends StatefulWidget {
 
 class _UserInfoPageState extends State<UserInfoPage> {
   final Rx<List<TeamProject>> tpList = Rx<List<TeamProject>>([]);
+  List<TeamProject> _oldTpList = [];
 
   @override
   void initState () {
@@ -58,6 +60,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
           SharedPreferencesKeys.teamProjectDoneListJson);
       if (json != null) {
         tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json)).projectList;
+        _oldTpList = tpList.value;
       }
 
       result = await Get.find<ApiService>()
@@ -66,7 +69,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
               .teamProjectDoneListJson);
     }
 
-    if (result != null) {
+    if (result != null && !listEquals(result.projectList, _oldTpList)) {
+      _oldTpList = tpList.value;
       tpList.value = result.projectList;
     }
   }

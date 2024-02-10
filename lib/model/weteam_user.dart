@@ -30,4 +30,21 @@ class WeteamUser {
         role: json['role'] as String?,
         profile: profile);
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! WeteamUser) return false;
+    if (other.hashCode == hashCode) return true;
+    return id == other.id &&
+        username == other.username &&
+        email == other.email &&
+        organization == other.organization &&
+        role == other.role &&
+        profile == other.profile;
+  }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
 }

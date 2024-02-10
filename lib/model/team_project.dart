@@ -37,4 +37,23 @@ class TeamProject {
         done: data['done'],
         host: WeteamUser.fromJson(data['host'] ?? {}));
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! TeamProject) return false;
+    if (other.hashCode == hashCode) return true;
+    return id == other.id &&
+        img == other.img &&
+        title == other.title &&
+        description == other.description &&
+        memberSize == other.memberSize &&
+        startedAt.isAtSameMomentAs(other.startedAt) &&
+        endedAt.isAtSameMomentAs(other.endedAt) &&
+        done == other.done &&
+        host == other.host;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
