@@ -53,30 +53,29 @@ class WTMCreate extends GetView<WTMController> {
           Expanded(
               child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
-            child: SingleChildScrollView(
-              child: Column(
-                children: controller.tpList.map((teamProject) {
-                  return Padding(
-                      padding: EdgeInsets.only(bottom: 12.h),
-                      child: Row(children: [
-                        Expanded(child: TeamProjectWidget(teamProject)),
-                        SizedBox(width: 16.w),
-                        GestureDetector(onTap: () {
-                          controller.selectedTeamProject.value = teamProject;
-                        }, child: Obx(() {
-                          bool isSelected =
-                              controller.selectedTeamProject.value?.id ==
-                                  teamProject.id;
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 9.w, vertical: 4.h),
-                            decoration: BoxDecoration(
-                                color: isSelected
-                                    ? AppColors.Orange_03
-                                    : AppColors.G_02,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
+            child: ListView.builder(
+              itemCount: controller.tpList.length,
+              itemBuilder: (_, index) => Padding(
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: Row(children: [
+                    Expanded(child: TeamProjectWidget(controller.tpList[index])),
+                    SizedBox(width: 16.w),
+                    GestureDetector(onTap: () {
+                      controller.selectedTeamProject.value = controller.tpList[index];
+                    }, child: Obx(() {
+                      bool isSelected =
+                          controller.selectedTeamProject.value?.id ==
+                              controller.tpList[index].id;
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 9.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColors.Orange_03
+                                : AppColors.G_02,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
                               '선택',
                               style: TextStyle(
                                   color: isSelected
@@ -86,11 +85,9 @@ class WTMCreate extends GetView<WTMController> {
                                   fontSize: 9.sp,
                                   fontWeight: FontWeight.bold),
                             )),
-                          );
-                        }))
-                      ]));
-                }).toList(),
-              ),
+                      );
+                    }))
+                  ])),
             ),
           )),
           Center(

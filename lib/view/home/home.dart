@@ -12,7 +12,6 @@ import '../dialog/home/dday_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/normal_button.dart';
-import '../widget/team_project_column.dart';
 import '../wtm/wtm_main.dart';
 import 'notification_page.dart';
 
@@ -38,26 +37,53 @@ class Home extends GetView<HomeController> {
         SizedBox(
           height: 12.h,
         ),
-        Expanded(
-            child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(
-                children: [
-                  Obx(() => DDayWidget(dDayData: controller.dDayData.value)),
-                  _getTeamProjectListBody(),
-                  GestureDetector(
-                      onTap: () {
-                        Get.to(() => WTM());
-                      },
-                      child: _bottomBanner()),
-                  SizedBox(height: 15.h)
-                ],
+        Expanded(child: Obx(() {
+          return CustomScrollView(
+            slivers: [
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                Obx(() => DDayWidget(dDayData: controller.dDayData.value))
+              ])),
+              (controller.tpWidgetList.value == null ||
+                      controller.tpWidgetList.value!.isEmpty)
+                  ? SliverList(
+                      delegate:
+                          SliverChildListDelegate([_noTeamProjectWidget()]))
+                  : SliverList(
+                      delegate: SliverChildListDelegate([
+                        SizedBox(height: 15.h),
+                        const SizedBox(
+                          height: 0.7,
+                          width: double.infinity,
+                          child: ColoredBox(
+                            color: AppColors.G_02,
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+                        ...controller.tpWidgetList.value ?? [],
+                      ]),
+                    ),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Expanded(child: Container()),
+                    // 팀플 추가하기 버튼
+                    SizedBox(height: 16.h),
+                    _addTeamProjectBigButton(),
+                    SizedBox(height: 16.h),
+                    GestureDetector(
+                        onTap: () {
+                          Get.to(() => WTM());
+                        },
+                        child: _bottomBanner()),
+                    SizedBox(height: 15.h)
+                  ],
+                ),
               ),
-            )
-          ],
-        ))
+            ],
+          );
+        }))
       ],
     );
   }
@@ -86,36 +112,38 @@ class Home extends GetView<HomeController> {
 
   Widget _getTeamProjectListBody() {
     return Obx(() {
-      if (controller.tpList.value == null ||
-          controller.tpList.value!.projectList.isEmpty) {
+      if (controller.tpWidgetList.value == null ||
+          controller.tpWidgetList.value!.isEmpty) {
         // 팀플 없으면
         return _noTeamProjectWidget();
       }
 
       return Expanded(
-          child: Column(
-        children: [
-          // Divider
-          SizedBox(height: 15.h),
-          const SizedBox(
-            height: 0.7,
-            width: double.infinity,
-            child: ColoredBox(
-              color: AppColors.G_02,
+          child: Flexible(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                // Divider
+                SizedBox(height: 15.h),
+                const SizedBox(
+                  height: 0.7,
+                  width: double.infinity,
+                  child: ColoredBox(
+                    color: AppColors.G_02,
+                  ),
+                ),
+                SizedBox(height: 15.h),
+
+                // 팀플 목록
+                ...controller.tpWidgetList.value ?? [],
+
+                // 팀플 추가하기 버튼
+                SizedBox(height: 16.h),
+                _addTeamProjectBigButton(),
+                SizedBox(height: 16.h),
+              ],
             ),
-          ),
-          SizedBox(height: 15.h),
-
-          // 팀플 목록
-          Expanded(
-              child: TeamProjectColumn(controller.tpList.value!.projectList)),
-
-          // 팀플 추가하기 버튼
-          SizedBox(height: 16.h),
-          _addTeamProjectBigButton(),
-          SizedBox(height: 16.h),
-        ],
-      ));
+          ));
     });
   }
 

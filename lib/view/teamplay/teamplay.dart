@@ -46,44 +46,34 @@ class TeamPlay extends GetView<TeamPlayController> {
           SizedBox(
             height: 24.0.h,
           ),
-          _teamlist(),
+          Expanded(
+            child: Obx(() {
+              if (controller.tpList.value == null ||
+                  controller.tpList.value!.projectList.isEmpty) {
+                return _noTeamProject();
+              } else {
+                List<TeamProject> tpList = controller.tpList.value!.projectList;
+                return TeamProjectListView(tpList);
+              }
+            }),
+          )
         ],
       ),
     );
   }
 
-  Widget _teamlist() {
-    return Expanded(
-        child:
-            CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
-      SliverFillRemaining(
-          hasScrollBody: false,
-          child: Obx(() {
-            if (controller.tpList.value == null ||
-                controller.tpList.value!.projectList.isEmpty) {
-              return const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Center(
-                          child: Text(
-                    '진행 중인  팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.Black,
-                      fontSize: 11,
-                      fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
-                  )))
-                ],
-              );
-            }
-
-            List<TeamProject> tpList = controller.tpList.value!.projectList;
-            return TeamProjectColumn(tpList);
-          }))
-    ]));
+  Widget _noTeamProject() {
+    return const Center(
+        child: Text(
+          '진행 중인  팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: AppColors.Black,
+            fontSize: 11,
+            fontFamily: 'NanumSquareNeo',
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+        ));
   }
 }

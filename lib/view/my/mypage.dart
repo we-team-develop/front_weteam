@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
@@ -24,43 +25,49 @@ class MyPage extends StatelessWidget {
   }
 }
 
-class UserInfoPage extends StatelessWidget {
-  final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+class UserInfoPage extends StatefulWidget {
   final Rxn<WeteamUser> user;
   final bool isOtherUser;
 
-  UserInfoPage({super.key, required this.user, required this.isOtherUser});
+  const UserInfoPage({super.key, required this.user, required this.isOtherUser});
 
   @override
-  StatelessElement createElement() {
+  State<UserInfoPage> createState() => _UserInfoPageState();
+}
+
+class _UserInfoPageState extends State<UserInfoPage> {
+  final Rx<List<TeamProject>> tpList = Rx<List<TeamProject>>([]);
+
+  @override
+  void initState () {
     fetchTeamProjectList();
-    if (!isOtherUser) {
+    if (!widget.isOtherUser) {
       tpListUpdateRequiredListenerList.add(fetchTeamProjectList);
     }
-    return super.createElement();
+    return super.initState();
   }
 
   Future<void> fetchTeamProjectList() async {
     GetTeamProjectListResult? result;
 
-    if (!isOtherUser) {
+    if (widget.isOtherUser) {
+      result = await Get.find<ApiService>()
+          .getTeamProjectList(0, true, 'DESC', 'DONE', widget.user.value!.id);
+    } else {
       String? json = sharedPreferences.getString(
           SharedPreferencesKeys.teamProjectDoneListJson);
       if (json != null) {
-        tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json));
+        tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json)).projectList;
       }
 
       result = await Get.find<ApiService>()
-          .getTeamProjectList(0, true, 'DESC', 'DONE', user.value!.id,
+          .getTeamProjectList(0, true, 'DESC', 'DONE', widget.user.value!.id,
           cacheKey: SharedPreferencesKeys
               .teamProjectDoneListJson);
-    } else {
-      result = await Get.find<ApiService>()
-          .getTeamProjectList(0, true, 'DESC', 'DONE', user.value!.id);
     }
 
     if (result != null) {
-      tpList.value = result;
+      tpList.value = result.projectList;
     }
   }
 
@@ -68,22 +75,13 @@ class UserInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: _body(),
-          )
-        ],
-      ),
+      body: _body(),
     ));
   }
 
   Widget _body() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: [
         _head(),
         SizedBox(height: 16.0.h),
@@ -111,7 +109,7 @@ class UserInfoPage extends StatelessWidget {
         children: [
           SizedBox(width: 37.0.w),
           Obx(() => ProfileImageWidget(
-              id: user.value!.profile?.imageIdx ?? 0)),
+              id: widget.user.value!.profile?.imageIdx ?? 0)),
           SizedBox(width: 33.w),
           Expanded(
               child: Column(
@@ -126,7 +124,7 @@ class UserInfoPage extends StatelessWidget {
                     children: [
                       Flexible(
                           child: Text(
-                            '${user.value!.username}님 ',
+                            '${widget.user.value!.username}님 ',
                             style: TextStyle(
                               color: AppColors.Black,
                               fontSize: 16.sp,
@@ -137,7 +135,7 @@ class UserInfoPage extends StatelessWidget {
                             ),
                           )),
                       Visibility(
-                          visible: !isOtherUser,
+                          visible: !widget.isOtherUser,
                           child: GestureDetector(
                             onTap: () {
                               Get.to(() => const Profile());
@@ -149,7 +147,7 @@ class UserInfoPage extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Obx(() => Text(
-                    user.value!.organization ?? '미입력',
+                    widget.user.value!.organization ?? '미입력',
                     style: TextStyle(
                       color: AppColors.G_04,
                       fontSize: 10.sp,
@@ -172,14 +170,13 @@ class UserInfoPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _bottomContainerTitle(),
-          Obx(() {
-            if (tpList.value != null &&
-                tpList.value!.projectList.isNotEmpty) {
+          Expanded(child: Obx(() {
+            if (tpList.value.isNotEmpty) {
               return _bottomContainerTeamListWidget();
             } else {
               return _bottomContainerEmpty();
             }
-          }),
+          })),
         ],
       ),
     ));
@@ -189,11 +186,10 @@ class UserInfoPage extends StatelessWidget {
     return Obx(() {
       String text;
 
-      if (tpList.value != null &&
-          tpList.value!.projectList.isNotEmpty) {
-        text = "${user.value!.username}님이 완료한 팀플들이에요!";
+      if (tpList.value.isNotEmpty) {
+        text = "${widget.user.value!.username}님이 완료한 팀플들이에요!";
       } else {
-        text = "${user.value!.username}님은 완료한 팀플이 없어요!";
+        text = "${widget.user.value!.username}님은 완료한 팀플이 없어요!";
       }
 
       return Text(
@@ -212,18 +208,17 @@ class UserInfoPage extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: 24.h),
-        Expanded(child: TeamProjectColumn(tpList.value!.projectList))
+        Expanded(child: TeamProjectListView(tpList.value))
       ],
     );
   }
 
   Widget _bottomContainerEmpty() {
-    return Expanded(
-        child: Center(
-            child: Image.asset(
-      ImagePath.myNoTeamProjectTimi,
-      width: 113.37.w,
-      height: 171.44.h,
-    )));
+    return Center(
+        child: Image.asset(
+          ImagePath.myNoTeamProjectTimi,
+          width: 113.37.w,
+          height: 171.44.h,
+        ));
   }
 }

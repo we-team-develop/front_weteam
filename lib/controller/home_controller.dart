@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -11,8 +14,10 @@ import '../service/api_service.dart';
 class HomeController extends GetxController {
   int teamProjectPage = 0;
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
-  final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+  final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
   final RxBool hasNewNoti = RxBool(false);
+
+  List<TeamProject> _oldTpList = [];
 
   @override
   void onInit() {
@@ -23,8 +28,16 @@ class HomeController extends GetxController {
 
     String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
     if (tpListCache != null) {
-      tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
+      GetTeamProjectListResult gtplResult = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
+      tpWidgetList.value = _generateTpwList(gtplResult);
+      tpWidgetList.refresh();
     }
+  }
+
+  List<Widget> _generateTpwList(GetTeamProjectListResult result) {
+    List<TeamProject> tpList = result.projectList;
+    EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
+    return List<Widget>.generate(tpList.length, (index) => Padding(padding: padding, child: TeamProjectWidget(tpList[index])));
   }
 
   Future<void> checkNotification() async {
@@ -52,8 +65,10 @@ class HomeController extends GetxController {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
         .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
-    if (result != null) {
-      tpList.value = result;
+    if (result != null && _oldTpList != result.projectList) {
+      _oldTpList = result.projectList;
+      tpWidgetList.value = _generateTpwList(result);
+      tpWidgetList.refresh();
     }
   }
 

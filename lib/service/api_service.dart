@@ -33,7 +33,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       {String? cacheKey}) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
-      'size': 10.toString(),
+      'size': 200.toString(),
       'done': done.toString(),
       'direction': direction,
       'userId': userId.toString(),
