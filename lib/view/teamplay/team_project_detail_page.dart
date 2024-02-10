@@ -122,8 +122,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       bool success = await Get.find<ApiService>().deleteTeamProject(controller.tp.value.id);
       if (success) {
         await updateTeamProjectLists();
-        Get.back();
-        Get.back();
+        Get.back(closeOverlays: true);
+        Get.back(closeOverlays: true);
         WeteamUtils.snackbar("삭제 성공", '팀플이 성공적으로 삭제되었어요.');
       } else {
         WeteamUtils.snackbar("삭제 실패", '팀플을 삭제하지 못했어요.');
@@ -133,8 +133,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       bool success = await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
       if (success) {
         await updateTeamProjectLists();
-        Get.back();
-        Get.back();
+        Get.back(closeOverlays: true);
+        Get.back(closeOverlays: true);
         WeteamUtils.snackbar("탈퇴 성공", '팀플을 탈퇴했습니다.');
       } else {
         WeteamUtils.snackbar("삭제 실패", '팀플을 탈퇴하지 못했어요.');
