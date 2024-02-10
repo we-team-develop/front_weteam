@@ -39,6 +39,7 @@ class Home extends GetView<HomeController> {
         ),
         Expanded(child: Obx(() {
           return CustomScrollView(
+            controller: controller.scrollController,
             slivers: [
               SliverList(
                   delegate: SliverChildListDelegate([

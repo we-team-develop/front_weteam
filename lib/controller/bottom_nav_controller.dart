@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:front_weteam/controller/home_controller.dart';
+import 'package:front_weteam/controller/my_page_controller.dart';
+import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:get/get.dart';
 
 enum Page { TEAMPLAY, HOME, MYPAGE }
@@ -14,12 +17,20 @@ class BottomNavController extends GetxController {
 
   void changeIndex(int value) {
     var page = Page.values[value];
-    switch (page) {
-      case Page.TEAMPLAY:
-      case Page.HOME:
-      case Page.MYPAGE:
-        moveToPage(value);
+    if (value == _pageIndex.value) {
+      switch (page) {
+        case Page.TEAMPLAY:
+          Get.find<TeamPlayController>().tpScrollUp();
+          break;
+        case Page.HOME:
+          Get.find<HomeController>().scrollUp();
+          break;
+        case Page.MYPAGE:
+          Get.find<MyPageController>().scrollUp();
+          break;
+      }
     }
+    moveToPage(value);
   }
 
   void moveToPage(int value) {

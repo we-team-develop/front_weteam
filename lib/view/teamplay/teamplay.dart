@@ -53,7 +53,7 @@ class TeamPlay extends GetView<TeamPlayController> {
                 return _noTeamProject();
               } else {
                 List<TeamProject> tpList = controller.tpList.value!.projectList;
-                return TeamProjectListView(tpList);
+                return TeamProjectListView(tpList, scrollController: controller.tpScrollController);
               }
             }),
           )

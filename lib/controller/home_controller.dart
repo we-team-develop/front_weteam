@@ -13,6 +13,7 @@ import '../model/weteam_notification.dart';
 import '../service/api_service.dart';
 
 class HomeController extends GetxController {
+  final ScrollController scrollController = ScrollController();
   int teamProjectPage = 0;
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
   final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
@@ -34,6 +35,10 @@ class HomeController extends GetxController {
       tpWidgetList.value = _generateTpwList(gtplResult);
       tpWidgetList.refresh();
     }
+  }
+
+  void scrollUp() {
+    scrollController.animateTo(0, duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
   }
 
   List<Widget> _generateTpwList(GetTeamProjectListResult result) {

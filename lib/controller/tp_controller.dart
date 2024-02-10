@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ import '../service/api_service.dart';
 import '../service/auth_service.dart';
 
 class TeamPlayController extends GetxController {
+  final ScrollController tpScrollController = ScrollController();
   final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
   List<TeamProject> _oldTpList = [];
 
@@ -19,6 +21,10 @@ class TeamPlayController extends GetxController {
     }
     tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     super.onInit();
+  }
+
+  void tpScrollUp() {
+    tpScrollController.animateTo(0, duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
   }
 
   String getUserName() {

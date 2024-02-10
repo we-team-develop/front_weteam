@@ -1,3 +1,4 @@
+import 'package:front_weteam/controller/my_page_controller.dart';
 import 'package:get/get.dart';
 
 import '../controller/bottom_nav_controller.dart';
@@ -18,5 +19,6 @@ class MainBindings implements Bindings {
     Get.put(HomeController());
     Get.put(ProfileController());
     Get.put(TeamPlayController());
+    Get.put(MyPageController());
   }
 }

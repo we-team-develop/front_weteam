@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/my_page_controller.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
@@ -17,20 +18,28 @@ import '../widget/profile_image_widget.dart';
 import '../widget/team_project_column.dart';
 import 'profile.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return UserInfoPage(user: Get.find<AuthService>().user, isOtherUser: false);
+    return UserInfoPage(
+        user: Get.find<AuthService>().user,
+        isOtherUser: false,
+        scrollController: controller.scrollController);
   }
 }
 
 class UserInfoPage extends StatefulWidget {
+  final ScrollController? scrollController;
   final Rxn<WeteamUser> user;
   final bool isOtherUser;
 
-  const UserInfoPage({super.key, required this.user, required this.isOtherUser});
+  const UserInfoPage(
+      {super.key,
+      required this.user,
+      required this.isOtherUser,
+      this.scrollController});
 
   @override
   State<UserInfoPage> createState() => _UserInfoPageState();
@@ -212,7 +221,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     return Column(
       children: [
         SizedBox(height: 24.h),
-        Expanded(child: TeamProjectListView(tpList.value))
+        Expanded(child: TeamProjectListView(tpList.value, scrollController: widget.scrollController))
       ],
     );
   }
