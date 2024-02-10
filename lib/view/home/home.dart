@@ -110,43 +110,6 @@ class Home extends GetView<HomeController> {
                 : ImagePath.icBell)));
   }
 
-  Widget _getTeamProjectListBody() {
-    return Obx(() {
-      if (controller.tpWidgetList.value == null ||
-          controller.tpWidgetList.value!.isEmpty) {
-        // 팀플 없으면
-        return _noTeamProjectWidget();
-      }
-
-      return Expanded(
-          child: Flexible(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                // Divider
-                SizedBox(height: 15.h),
-                const SizedBox(
-                  height: 0.7,
-                  width: double.infinity,
-                  child: ColoredBox(
-                    color: AppColors.G_02,
-                  ),
-                ),
-                SizedBox(height: 15.h),
-
-                // 팀플 목록
-                ...controller.tpWidgetList.value ?? [],
-
-                // 팀플 추가하기 버튼
-                SizedBox(height: 16.h),
-                _addTeamProjectBigButton(),
-                SizedBox(height: 16.h),
-              ],
-            ),
-          ));
-    });
-  }
-
   Widget _addTeamProjectBigButton() {
     return GestureDetector(
       onTap: () => controller.popupDialog(
