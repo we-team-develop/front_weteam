@@ -6,6 +6,7 @@ import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_user.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
+import 'package:front_weteam/service/overlay_service.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -66,9 +67,17 @@ class WTMController extends GetxController {
     });
   }
 
-  void showOverlay(BuildContext context) {
+  bool doNotShowAgain = false;
+
+  void showOverlay(BuildContext context) async {
     if (_overlayEntry.value != null) {
       // 이미 오버레이가 표시되어 있다면 무시
+      return;
+    }
+
+    // "다시 보지 않기" 설정을 확인
+    bool shouldDisplay = await OverlayService.shouldShowOverlay();
+    if (!shouldDisplay) {
       return;
     }
 
@@ -84,7 +93,6 @@ class WTMController extends GetxController {
               opacity: 0.5,
               child: ModalBarrier(dismissible: true, color: Colors.black),
             ),
-
             // 내용
             PageView(
               controller: pageController,
@@ -156,11 +164,11 @@ class WTMController extends GetxController {
                       padding: EdgeInsets.only(top: 47.h),
                       child: Center(
                           child: Image.asset(
-                            alignment: Alignment.bottomCenter,
-                            ImagePath.wtmtutorial1,
-                            width: 296.w,
-                            height: 474.h,
-                          )),
+                        alignment: Alignment.bottomCenter,
+                        ImagePath.wtmtutorial1,
+                        width: 296.w,
+                        height: 474.h,
+                      )),
                     ),
                   ],
                 ),
@@ -244,14 +252,14 @@ class WTMController extends GetxController {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 60.h),
+                      padding: EdgeInsets.only(top: 24.h),
                       child: Center(
                           child: Image.asset(
-                            alignment: Alignment.bottomCenter,
-                            ImagePath.wtmtutorial2,
-                            width: 296.w,
-                            height: 474.h,
-                          )),
+                        alignment: Alignment.bottomCenter,
+                        ImagePath.wtmtutorial2,
+                        width: 296.w,
+                        height: 474.h,
+                      )),
                     ),
                   ],
                 ),
@@ -280,6 +288,32 @@ class WTMController extends GetxController {
                     );
                   },
                 ),
+              ),
+            ),
+            Positioned(
+              top: 222.h,
+              child: Center(
+                child: StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                  return Material(
+                    child: Transform.scale(
+                      scale: 0.8,
+                      child: Checkbox(
+                        value: doNotShowAgain,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                        onChanged: (bool? value) {
+                          setState(() {
+                            doNotShowAgain =
+                                value ?? false; // Corrected the null check
+                          });
+                          OverlayService.setDoNotShowOverlayAgain(
+                              value ?? false); // Corrected the null check
+                        },
+                      ),
+                    ),
+                  );
+                }),
               ),
             ),
           ],
