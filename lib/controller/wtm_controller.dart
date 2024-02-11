@@ -67,20 +67,37 @@ class WTMController extends GetxController {
     });
   }
 
-  bool doNotShowAgain = false;
+  // 오버레이
+  var doNotShowAgain = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadPreference();
+    print('check');
+  }
+
+// 사용자의 선호를 반영하여 doNotShowAgain 값을 설정합니다.
+  Future<void> loadPreference() async {
+    bool shouldShow = await OverlayService.shouldShowOverlay();
+    doNotShowAgain.value = !shouldShow;
+    print('Load doNotShowAgain Preference: ${doNotShowAgain.value}');
+  }
+
+  void toggleDoNotShowAgain() async {
+    doNotShowAgain.value = !doNotShowAgain.value;
+    await OverlayService.setDoNotShowOverlayAgain(doNotShowAgain.value);
+    print('Saved doNotShowAgain: ${doNotShowAgain.value} to SharedPreferences');
+  }
 
   void showOverlay(BuildContext context) async {
-    if (_overlayEntry.value != null) {
-      // 이미 오버레이가 표시되어 있다면 무시
+    if (_overlayEntry.value != null || doNotShowAgain.value) {
+      print('Overlay not shown due to conditions.');
+      // 이미 오버레이가 표시되어 있거나 사용자가 "다시 보지 않기"를 선택한 경우 무시합니다.
       return;
     }
-
-    // "다시 보지 않기" 설정을 확인
-    bool shouldDisplay = await OverlayService.shouldShowOverlay();
-    if (!shouldDisplay) {
-      return;
-    }
-
+    print(
+        'Attempting to show overlay. doNotShowAgain: ${doNotShowAgain.value}'); // 로그 출력
     final PageController pageController = PageController();
 
     _overlayEntry.value = OverlayEntry(
@@ -254,20 +271,24 @@ class WTMController extends GetxController {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 21.h),
+                      padding: EdgeInsets.only(top: 10.h, left: 223.w),
                       child: GestureDetector(
-                        onTap: () => controller.doNotShowAgain.value = !controller.doNotShowAgain.value,
+                        onTap: () =>
+                            doNotShowAgain.value = !doNotShowAgain.value,
                         child: Row(
                           children: [
                             Obx(() => Image.asset(
-                                controller.doNotShowAgain.value ? "활성화아이콘" : "비활성아이콘",
+                                doNotShowAgain.value
+                                    ? ImagePath.checktutorialtrue
+                                    : ImagePath.checktutorialfalse,
                                 width: 12.w,
-                                height: 12.h
-                            )),
+                                height: 12.h)),
+                            SizedBox(
+                              width: 2.w,
+                            ),
                             Text(
                               '다시 보지 않기',
-                              style:
-                              TextStyle(
+                              style: TextStyle(
                                   decorationThickness: 0,
                                   fontFamily: 'NanumSquareNeo',
                                   fontSize: 11.sp,

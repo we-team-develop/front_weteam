@@ -3,15 +3,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OverlayService {
   static const String _keyDoNotShowAgain = 'doNotShowOverlayAgain';
 
-  /// 오버레이 표시 여부를 결정하는 함수
   static Future<bool> shouldShowOverlay() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyDoNotShowAgain) ?? true;
+    bool shouldShow =
+        prefs.getBool(_keyDoNotShowAgain) ?? true; // 기본값은 true로 설정
+    // 로그 출력 추가
+    print('SharedPreferences loaded: $_keyDoNotShowAgain = $shouldShow');
+    return !(prefs.getBool(_keyDoNotShowAgain) ?? false);
   }
 
-  /// "다시 보지 않기"를 설정하는 함수
   static Future<void> setDoNotShowOverlayAgain(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyDoNotShowAgain, value);
+    // 로그 출력 추가
+    print('SharedPreferences saved: $_keyDoNotShowAgain = $value');
   }
 }
