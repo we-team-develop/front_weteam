@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../app.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
@@ -99,7 +98,7 @@ class LoginMain extends StatelessWidget {
       if (result.isNewUser) {
         Get.offAll(() => const SignUpCompleted());
       } else {
-        Get.offAll(() => const App());
+        resetApp();
       }
     } else {
       WeteamUtils.snackbar("로그인 실패", "로그인에 실패하였습니다");

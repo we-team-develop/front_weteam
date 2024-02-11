@@ -186,6 +186,7 @@ class SharedPreferencesKeys {
 Future<void> resetApp() async {
   Get.deleteAll(force: true);
   MemCache.clear();
+  tpListUpdateRequiredListenerList.clear();
   _init();
   Phoenix.rebirth(Get.context!);
   Get.reset();
