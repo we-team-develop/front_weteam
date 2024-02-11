@@ -68,7 +68,7 @@ class WTMController extends GetxController {
   }
 
   // 오버레이
-  var doNotShowAgain = false.obs;
+  RxBool shouldShowOverlay = RxBool(true);
 
   @override
   void onInit() {
@@ -77,27 +77,27 @@ class WTMController extends GetxController {
     print('check');
   }
 
-// 사용자의 선호를 반영하여 doNotShowAgain 값을 설정합니다.
-  Future<void> loadPreference() async {
-    bool shouldShow = await OverlayService.shouldShowOverlay();
-    doNotShowAgain.value = !shouldShow;
-    print('Load doNotShowAgain Preference: ${doNotShowAgain.value}');
+// 사용자의 선호를 반영하여 showOverlay 값을 설정합니다.
+  void loadPreference() {
+    bool shouldShow = OverlayService.shouldShowOverlay();
+    shouldShowOverlay.value = shouldShow;
+    print('Load showOverlay Preference: ${shouldShowOverlay.value}');
   }
 
-  void toggleDoNotShowAgain() async {
-    doNotShowAgain.value = !doNotShowAgain.value;
-    await OverlayService.setDoNotShowOverlayAgain(doNotShowAgain.value);
-    print('Saved doNotShowAgain: ${doNotShowAgain.value} to SharedPreferences');
+  void toggleShouldShowOverlay() async {
+    shouldShowOverlay.value = !shouldShowOverlay.value;
+    await OverlayService.setShouldShowOvelay(shouldShowOverlay.value);
+    print('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
   }
 
   void showOverlay(BuildContext context) async {
-    if (_overlayEntry.value != null || doNotShowAgain.value) {
+    if (_overlayEntry.value != null || shouldShowOverlay.isFalse) {
       print('Overlay not shown due to conditions.');
       // 이미 오버레이가 표시되어 있거나 사용자가 "다시 보지 않기"를 선택한 경우 무시합니다.
       return;
     }
     print(
-        'Attempting to show overlay. doNotShowAgain: ${doNotShowAgain.value}'); // 로그 출력
+        'Attempting to show overlay. showOverlay: ${shouldShowOverlay.value}'); // 로그 출력
     final PageController pageController = PageController();
 
     _overlayEntry.value = OverlayEntry(
@@ -273,14 +273,13 @@ class WTMController extends GetxController {
                     Padding(
                       padding: EdgeInsets.only(top: 10.h, left: 223.w),
                       child: GestureDetector(
-                        onTap: () =>
-                            doNotShowAgain.value = !doNotShowAgain.value,
+                        onTap: () => toggleShouldShowOverlay(),
                         child: Row(
                           children: [
                             Obx(() => Image.asset(
-                                doNotShowAgain.value
-                                    ? ImagePath.checktutorialtrue
-                                    : ImagePath.checktutorialfalse,
+                                shouldShowOverlay.isTrue
+                                    ? ImagePath.checktutorialfalse
+                                    : ImagePath.checktutorialtrue,
                                 width: 12.w,
                                 height: 12.h)),
                             SizedBox(

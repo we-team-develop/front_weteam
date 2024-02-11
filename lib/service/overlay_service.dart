@@ -1,21 +1,24 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+
+import '../main.dart';
 
 class OverlayService {
-  static const String _keyDoNotShowAgain = 'doNotShowOverlayAgain';
+  static const String _keyShowOverlay =
+      SharedPreferencesKeys.showWTMOverlay;
 
-  static Future<bool> shouldShowOverlay() async {
-    final prefs = await SharedPreferences.getInstance();
+  static bool shouldShowOverlay() {
+    final prefs = sharedPreferences;
     bool shouldShow =
-        prefs.getBool(_keyDoNotShowAgain) ?? true; // 기본값은 true로 설정
+        prefs.getBool(_keyShowOverlay) ?? true; // 기본값은 true로 설정
     // 로그 출력 추가
-    print('SharedPreferences loaded: $_keyDoNotShowAgain = $shouldShow');
-    return !(prefs.getBool(_keyDoNotShowAgain) ?? false);
+    debugPrint('SharedPreferences loaded: $_keyShowOverlay = $shouldShow');
+    return shouldShow;
   }
 
-  static Future<void> setDoNotShowOverlayAgain(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_keyDoNotShowAgain, value);
+  static Future<void> setShouldShowOvelay(bool value) async {
+    final prefs = sharedPreferences;
+    await prefs.setBool(_keyShowOverlay, value);
     // 로그 출력 추가
-    print('SharedPreferences saved: $_keyDoNotShowAgain = $value');
+    debugPrint('SharedPreferences saved: $_keyShowOverlay = $value');
   }
 }
