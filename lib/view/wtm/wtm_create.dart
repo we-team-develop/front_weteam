@@ -6,11 +6,11 @@ import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
 import 'package:front_weteam/view/wtm/wtm_create_input_name.dart';
+import 'package:front_weteam/view/wtm/wtm_naming.dart';
 import 'package:get/get.dart';
 
 class WTMCreate extends GetView<WTMController> {
   const WTMCreate({super.key});
-
 
   @override
   StatelessElement createElement() {
@@ -20,7 +20,8 @@ class WTMCreate extends GetView<WTMController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: _body(),
     ));
   }
@@ -90,15 +91,15 @@ class WTMCreate extends GetView<WTMController> {
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                               child: Text(
-                                '선택',
-                                style: TextStyle(
-                                    color: isSelected
-                                        ? AppColors.White
-                                        : AppColors.G_05,
-                                    fontFamily: 'NanumSquareNeo',
-                                    fontSize: 9.sp,
-                                    fontWeight: FontWeight.bold),
-                              )),
+                            '선택',
+                            style: TextStyle(
+                                color: isSelected
+                                    ? AppColors.White
+                                    : AppColors.G_05,
+                                fontFamily: 'NanumSquareNeo',
+                                fontSize: 9.sp,
+                                fontWeight: FontWeight.bold),
+                          )),
                         );
                       }))
                     ]));
@@ -156,33 +157,32 @@ class WTMCreate extends GetView<WTMController> {
 
   Widget _checkBox() {
     return GestureDetector(
-      onTap: () {
-        if (controller.selectedTeamProject.value != null) {
-          Get.to(() => WTMCreateInputName(),
-              transition: Transition.rightToLeft);
-        }
-      },
-      child: Obx(() => Container(
-        width: 330.w,
-        height: 46.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.r),
-          color: controller.selectedTeamProject.value != null
-              ? AppColors.MainOrange
-              : AppColors.G_02,
-        ),
-        child: Center(
-          child: Text(
-            '선택 완료',
-            style: TextStyle(
-              fontSize: 15.sp,
-              fontFamily: 'NanumGothicExtraBold',
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ))
-    );
+        onTap: () {
+          if (controller.selectedTeamProject.value != null) {
+            Get.to(() => WTMCreateInputName(),
+                transition: Transition.rightToLeft);
+          }
+        },
+        child: Obx(() => Container(
+              width: 330.w,
+              height: 46.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
+                color: controller.selectedTeamProject.value != null
+                    ? AppColors.MainOrange
+                    : AppColors.G_02,
+              ),
+              child: Center(
+                child: Text(
+                  '선택 완료',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontFamily: 'NanumGothicExtraBold',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )));
   }
 
   Widget _nextText() {
@@ -198,14 +198,19 @@ class WTMCreate extends GetView<WTMController> {
                 fontWeight: FontWeight.bold,
                 fontSize: 10.sp),
           ),
-          Text(
-            '다음으로',
-            style: TextStyle(
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.bold,
-                color: AppColors.G_05,
-                decoration: TextDecoration.underline,
-                fontSize: 10.sp),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const WTMNaming());
+            },
+            child: Text(
+              '다음으로',
+              style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.G_05,
+                  decoration: TextDecoration.underline,
+                  fontSize: 10.sp),
+            ),
           ),
         ],
       ),
@@ -227,17 +232,15 @@ class _Search extends GetView<WTMController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Expanded(child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w),
-              child: TextField(
-                onChanged: (v) => controller.scheduleSearch(v),
-                maxLines: 1,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    isDense: true
-                ),
-              )
-          )),
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: TextField(
+                    onChanged: (v) => controller.scheduleSearch(v),
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none, isDense: true),
+                  ))),
           Image.asset(
             ImagePath.icSearch,
             width: 36.w,

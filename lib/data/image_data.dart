@@ -71,7 +71,8 @@ class ImagePath {
       'assets/images/tutorial_checkbox_false.png';
   static String get checktutorialtrue =>
       'assets/images/tutorial_checkbox_true.png';
-
+  static String get wtmnamingoff => 'assets/images/wtm_naming_off.png';
+  static String get wtmnamingon => 'assets/images/wtm_naming_on.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }
