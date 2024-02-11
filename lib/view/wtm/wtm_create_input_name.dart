@@ -21,7 +21,7 @@ class WTMCreateInputName extends GetView<WTMController> {
             SizedBox(height: 62.h),
             _TextInput(),
 
-            Expanded(child: Container()),
+            const Expanded(child: SizedBox()),
 
             GestureDetector(
               onTap: () {
@@ -33,7 +33,7 @@ class WTMCreateInputName extends GetView<WTMController> {
                   color: controller.nameInputText.value.isNotEmpty
                   ? AppColors.MainOrange
                   : AppColors.G_02,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                 ),
                 child: Center(
                     child: Text('입력 완료',

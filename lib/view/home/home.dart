@@ -71,7 +71,6 @@ class Home extends GetView<HomeController> {
                         ? Expanded(child: _noTeamProjectWidget())
                         : Expanded(child: Column(
                       children: [
-                        Container(),
                         SizedBox(height: 16.h),
                         // 팀플 추가하기 버튼
                         const Expanded(child: SizedBox()),

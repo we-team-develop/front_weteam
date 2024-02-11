@@ -91,7 +91,7 @@ class _CustomPicker extends StatelessWidget {
         height: 60.h,
         child: CupertinoPicker.builder(
           backgroundColor: Colors.transparent,
-          selectionOverlay: Container(),
+          selectionOverlay: const SizedBox(),
           itemExtent: 25.h,
           scrollController: scrollController,
           onSelectedItemChanged: onChanged,

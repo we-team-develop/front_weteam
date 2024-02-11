@@ -136,13 +136,13 @@ class _BlankDay extends GetView<CustomCalendarController> {
       bool selectedCompletely = controller.selectedDt1.value != null &&
           controller.selectedDt2.value != null;
       if (!selectedCompletely) {
-        return Container();
+        return const SizedBox();
       }
       DateTime later = controller.selectedDt1.value!;
       DateTime earlier = controller.selectedDt2.value!;
 
       if (later.month == earlier.month) {
-        return Container();
+        return const SizedBox();
       }
 
       if (later.difference(controller.selectedDt2.value!).isNegative) {
@@ -168,7 +168,7 @@ class _BlankDay extends GetView<CustomCalendarController> {
         }
       }
 
-      return Container();
+      return const SizedBox();
     });
   }
 }
