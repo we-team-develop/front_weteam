@@ -195,7 +195,9 @@ class WTMController extends GetxController {
                     ),
                     // 텍스트
                     Padding(
-                      padding: EdgeInsets.only(left: 50.w),
+                      padding: EdgeInsets.only(
+                        left: 50.w,
+                      ),
                       child: Text.rich(
                         TextSpan(children: [
                           TextSpan(
@@ -252,6 +254,41 @@ class WTMController extends GetxController {
                       ),
                     ),
                     Padding(
+                      padding: EdgeInsets.only(top: 21.h),
+                      child: Row(
+                        children: [
+                          StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return Material(
+                              child: Transform.scale(
+                                scale: 0.8,
+                                child: Checkbox(
+                                  value: doNotShowAgain,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.r)),
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      doNotShowAgain = value ??
+                                          false; // Corrected the null check
+                                    });
+                                    OverlayService.setDoNotShowOverlayAgain(
+                                        value ??
+                                            false); // Corrected the null check
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
+                          Text(
+                            '다시 보지 않기',
+                            style:
+                                TextStyle(fontSize: 11.sp, color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(top: 24.h),
                       child: Center(
                           child: Image.asset(
@@ -288,32 +325,6 @@ class WTMController extends GetxController {
                     );
                   },
                 ),
-              ),
-            ),
-            Positioned(
-              top: 222.h,
-              child: Center(
-                child: StatefulBuilder(
-                    builder: (BuildContext context, StateSetter setState) {
-                  return Material(
-                    child: Transform.scale(
-                      scale: 0.8,
-                      child: Checkbox(
-                        value: doNotShowAgain,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r)),
-                        onChanged: (bool? value) {
-                          setState(() {
-                            doNotShowAgain =
-                                value ?? false; // Corrected the null check
-                          });
-                          OverlayService.setDoNotShowOverlayAgain(
-                              value ?? false); // Corrected the null check
-                        },
-                      ),
-                    ),
-                  );
-                }),
               ),
             ),
           ],
