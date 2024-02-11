@@ -72,12 +72,12 @@ class Home extends GetView<HomeController> {
                         : Expanded(child: Column(
                       children: [
                         Container(),
+                        SizedBox(height: 16.h),
+                        // 팀플 추가하기 버튼
+                        _addTeamProjectBigButton(),
                         SizedBox(height: 16.h)
                       ],
                     )),
-                    // 팀플 추가하기 버튼
-                    _addTeamProjectBigButton(),
-                    SizedBox(height: 16.h),
                     GestureDetector(
                         onTap: () {
                           Get.to(() => WTM(), binding: WTMCreateBinding());
@@ -197,7 +197,7 @@ class Home extends GetView<HomeController> {
             ),
           ),
           Positioned(
-            right: 10,
+            left: 10,
             bottom: 0,
             child: Image.asset(
               ImagePath.icEmptyTimi,
