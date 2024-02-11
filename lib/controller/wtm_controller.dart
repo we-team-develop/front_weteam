@@ -255,37 +255,26 @@ class WTMController extends GetxController {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 21.h),
-                      child: Row(
-                        children: [
-                          StatefulBuilder(builder:
-                              (BuildContext context, StateSetter setState) {
-                            return Material(
-                              child: Transform.scale(
-                                scale: 0.8,
-                                child: Checkbox(
-                                  value: doNotShowAgain,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.r)),
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      doNotShowAgain = value ??
-                                          false; // Corrected the null check
-                                    });
-                                    OverlayService.setDoNotShowOverlayAgain(
-                                        value ??
-                                            false); // Corrected the null check
-                                  },
-                                ),
-                              ),
-                            );
-                          }),
-                          Text(
-                            '다시 보지 않기',
-                            style:
-                                TextStyle(fontSize: 11.sp, color: Colors.black),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: () => controller.doNotShowAgain.value = !controller.doNotShowAgain.value,
+                        child: Row(
+                          children: [
+                            Obx(() => Image.asset(
+                                controller.doNotShowAgain.value ? "활성화아이콘" : "비활성아이콘",
+                                width: 12.w,
+                                height: 12.h
+                            )),
+                            Text(
+                              '다시 보지 않기',
+                              style:
+                              TextStyle(
+                                  decorationThickness: 0,
+                                  fontFamily: 'NanumSquareNeo',
+                                  fontSize: 11.sp,
+                                  color: AppColors.White),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
