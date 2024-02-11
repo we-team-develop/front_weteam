@@ -46,14 +46,11 @@ class Home extends GetView<HomeController> {
                   delegate: SliverChildListDelegate([
                 Obx(() => DDayWidget(dDayData: controller.dDayData.value))
               ])),
-              (controller.tpWidgetList.value == null ||
-                      controller.tpWidgetList.value!.isEmpty)
-                  ? SliverList(
-                      delegate:
-                          SliverChildListDelegate([_noTeamProjectWidget()]))
-                  : SliverList(
-                      delegate: SliverChildListDelegate([
-                        SizedBox(height: 15.h),
+              if (!(controller.tpWidgetList.value == null ||
+                  controller.tpWidgetList.value!.isEmpty))
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(height: 15.h),
                         const SizedBox(
                           height: 0.7,
                           width: double.infinity,
@@ -69,9 +66,16 @@ class Home extends GetView<HomeController> {
                 hasScrollBody: false,
                 child: Column(
                   children: [
-                    Expanded(child: Container()),
+                    (controller.tpWidgetList.value == null ||
+                            controller.tpWidgetList.value!.isEmpty)
+                        ? Expanded(child: _noTeamProjectWidget())
+                        : Expanded(child: Column(
+                      children: [
+                        Container(),
+                        SizedBox(height: 16.h)
+                      ],
+                    )),
                     // 팀플 추가하기 버튼
-                    SizedBox(height: 16.h),
                     _addTeamProjectBigButton(),
                     SizedBox(height: 16.h),
                     GestureDetector(
@@ -152,8 +156,7 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _noTeamProjectWidget() {
-    return Expanded(
-        child: SizedBox(
+    return SizedBox(
       width: double.infinity,
       child: Stack(
         children: [
@@ -204,7 +207,7 @@ class Home extends GetView<HomeController> {
           )
         ],
       ),
-    ));
+    );
   }
 
   Widget _bottomBanner() {
