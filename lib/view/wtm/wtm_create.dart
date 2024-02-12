@@ -67,38 +67,26 @@ class WTMCreate extends GetView<WTMController> {
                   return const SizedBox.shrink();
                 }
 
-                return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
-                    child: Row(children: [
-                      Expanded(child: TeamProjectWidget(tp)),
-                      SizedBox(width: 16.w),
-                      GestureDetector(onTap: () {
-                        controller.selectedTeamProject.value = tp;
-                      }, child: Obx(() {
-                        bool isSelected =
-                            controller.selectedTeamProject.value?.id == tp.id;
-                        return Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 9.w, vertical: 4.h),
-                          decoration: BoxDecoration(
-                              color: isSelected
-                                  ? AppColors.Orange_03
-                                  : AppColors.G_02,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                              child: Text(
-                            '선택',
-                            style: TextStyle(
-                                color: isSelected
-                                    ? AppColors.White
-                                    : AppColors.G_05,
-                                fontFamily: 'NanumSquareNeo',
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.bold),
-                          )),
-                        );
-                      }))
-                    ]));
+                return GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      controller.selectedTeamProject.value = tp;
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.only(bottom: 12.h),
+                        child: Row(children: [
+                          // IgnorePointer를 사용하여 터치시 팀플 화면이 나오는 걸 방지
+                          Expanded(
+                              child:
+                                  IgnorePointer(child: TeamProjectWidget(tp))),
+                          SizedBox(width: 16.w),
+                          Obx(() {
+                            bool isSelected =
+                                controller.selectedTeamProject.value?.id ==
+                                    tp.id;
+                            return _SelectButton(isSelected);
+                          })
+                        ])));
               }),
             ),
           );
@@ -155,8 +143,7 @@ class WTMCreate extends GetView<WTMController> {
     return GestureDetector(
         onTap: () {
           if (controller.selectedTeamProject.value != null) {
-            Get.to(() => const WTMNaming(),
-                transition: Transition.rightToLeft);
+            Get.to(() => const WTMNaming(), transition: Transition.rightToLeft);
           }
         },
         child: Obx(() => Container(
@@ -210,6 +197,31 @@ class WTMCreate extends GetView<WTMController> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SelectButton extends StatelessWidget {
+  final bool isSelected;
+
+  const _SelectButton(this.isSelected);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 4.h),
+      decoration: BoxDecoration(
+          color: isSelected ? AppColors.Orange_03 : AppColors.G_02,
+          borderRadius: BorderRadius.circular(10)),
+      child: Center(
+          child: Text(
+        '선택',
+        style: TextStyle(
+            color: isSelected ? AppColors.White : AppColors.G_05,
+            fontFamily: 'NanumSquareNeo',
+            fontSize: 9.sp,
+            fontWeight: FontWeight.bold),
+      )),
     );
   }
 }
