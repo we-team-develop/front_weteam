@@ -26,38 +26,35 @@ class WTMCreate extends GetView<WTMController> {
   }
 
   Widget _body() {
-    return Obx(() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 40.h, left: 15.w),
-            child: _head(),
-          ),
-          SizedBox(
-            height: 16.h,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 15.w),
-            child: _Search(),
-          ),
-          SizedBox(height: 14.h),
-          Row(
-            children: [
-              Expanded(
-                  child: Column(
-                children: [
-                  _tplist(
-                      "진행중인 팀플", controller.selectedTpList.value == "진행중인 팀플"),
-                ],
-              )),
-              Expanded(
-                  child: _tplist(
-                      "완료된 팀플", controller.selectedTpList.value == "완료된 팀플")),
-            ],
-          ),
-          Expanded(
-              child: Padding(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 40.h, left: 15.w),
+          child: _head(),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+          child: const _Search(),
+        ),
+        Obx(() => Row(
+              children: [
+                Expanded(
+                    child: _tplist("진행중인 팀플",
+                        controller.selectedTpList.value == "진행중인 팀플")),
+                Expanded(
+                    child: _tplist(
+                        "완료된 팀플", controller.selectedTpList.value == "완료된 팀플")),
+              ],
+            )),
+        Expanded(child: Obx(() {
+          if (controller.tpList.isEmpty) {
+            return const Center(
+                child: Text('표시할 팀플이 없어요',
+                    style: TextStyle(color: AppColors.Black)));
+          }
+
+          return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
             child: ListView.builder(
               itemCount: controller.tpList.length,
@@ -104,19 +101,19 @@ class WTMCreate extends GetView<WTMController> {
                     ]));
               }),
             ),
-          )),
-          Center(
-              child: Column(
-            children: [
-              _checkBox(),
-              SizedBox(height: 16.h),
-              _nextText(),
-              SizedBox(height: 15.h),
-            ],
-          )),
-        ],
-      );
-    });
+          );
+        })),
+        Center(
+            child: Column(
+          children: [
+            _checkBox(),
+            SizedBox(height: 16.h),
+            _nextText(),
+            SizedBox(height: 15.h),
+          ],
+        )),
+      ],
+    );
   }
 
   Widget _head() {
@@ -218,12 +215,12 @@ class WTMCreate extends GetView<WTMController> {
 }
 
 class _Search extends GetView<WTMController> {
+  const _Search();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 330.w,
       height: 49.h,
-      padding: EdgeInsets.only(right: 8.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: AppColors.G_02, width: 1.w),
