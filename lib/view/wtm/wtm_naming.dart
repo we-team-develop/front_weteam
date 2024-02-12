@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
+import 'package:front_weteam/view/wtm/wtm_create_finish.dart';
 import 'package:get/get.dart';
 
 class WTMNaming extends GetView<WTMController> {
@@ -50,6 +51,7 @@ class WTMNaming extends GetView<WTMController> {
   Widget _bottom() {
     return GestureDetector(
       onTap: () {
+        Get.to(() => WTMCreateFinish());
       },
       child: Obx(() => Container(
         width: 330.w,
@@ -87,6 +89,7 @@ class _TextInput extends GetView<WTMController> {
           SizedBox(width: 8.w),
           Expanded(child: TextField(
             maxLines: 1,
+            controller: controller.nameInputController,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 counterText: "",

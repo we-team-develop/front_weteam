@@ -10,18 +10,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'app.dart';
 import 'binding/main_bindings.dart';
-import 'controller/home_controller.dart';
 import 'controller/profile_controller.dart';
 import 'data/color_data.dart';
 import 'firebase_options.dart';
-import 'service/api_service.dart';
 import 'service/auth_service.dart';
 import 'util/mem_cache.dart';
-import 'util/weteam_utils.dart';
 import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
@@ -110,31 +106,6 @@ class MyApp extends StatelessWidget {
     home = Get.find<AuthService>().user.value != null
         ? const App()
         : const LoginMain();
-
-    linkStream.listen((event) async {
-      if (event == null) return;
-      bool isLoggedIn = Get.find<AuthService>().user.value != null;
-      Uri uri = Uri.parse(event);
-
-      String host = uri.host;
-      String path = uri.path;
-      Map<String, String> query = uri.queryParameters;
-
-      if (host == "projects") {
-        if (path.startsWith("/acceptInvite")) {
-          int projectId = int.parse(query['id'] ?? '-1');
-          if (!isLoggedIn) return;
-
-          bool success = await Get.find<ApiService>().acceptInvite(projectId);
-          if (success) {
-            Get.find<HomeController>().updateTeamProjectList();
-            WeteamUtils.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
-          } else {
-            WeteamUtils.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
-          }
-        }
-      }
-    });
     return super.createElement();
   }
 

@@ -1,16 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'controller/bottom_nav_controller.dart';
+import 'controller/home_controller.dart';
 import 'data/color_data.dart';
 import 'data/image_data.dart';
+import 'service/api_service.dart';
+import 'service/auth_service.dart';
+import 'util/weteam_utils.dart';
 import 'view/home/home.dart';
 import 'view/my/mypage.dart';
 import 'view/teamplay/teamplay.dart';
 
 class App extends GetView<BottomNavController> {
   const App({super.key});
+
+  @override
+  StatelessElement createElement() {
+    linkStream.listen((event) async {
+      if (event == null) return;
+      bool isLoggedIn = Get.find<AuthService>().user.value != null;
+      Uri uri = Uri.parse(event);
+
+      String host = uri.host;
+      String path = uri.path;
+      Map<String, String> query = uri.queryParameters;
+
+      if (host == "projects") {
+        if (path.startsWith("/acceptInvite")) {
+          int projectId = int.parse(query['id'] ?? '-1');
+          if (!isLoggedIn) return;
+
+          bool success = await Get.find<ApiService>().acceptInvite(projectId);
+          if (success) {
+            Get.find<HomeController>().updateTeamProjectList();
+            WeteamUtils.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
+          } else {
+            WeteamUtils.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
+          }
+        }
+      } else if (host == "wtm") {
+        if (path.startsWith('add')) {
+          int wtmId = int.parse(query['id'] ?? '-1');
+          Get.snackbar('아직 구현되지 않음', '웬투밋 수락 기능을 구현하지 않았습니다.');
+          // TODO: 구현하기
+        }
+      }
+    });
+    return super.createElement();
+  }
 
   @override
   Widget build(BuildContext context) {
