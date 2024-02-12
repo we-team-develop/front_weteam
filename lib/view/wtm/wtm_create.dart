@@ -5,7 +5,6 @@ import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/view/widget/team_project_widget.dart';
-import 'package:front_weteam/view/wtm/wtm_create_input_name.dart';
 import 'package:front_weteam/view/wtm/wtm_naming.dart';
 import 'package:get/get.dart';
 
@@ -159,7 +158,7 @@ class WTMCreate extends GetView<WTMController> {
     return GestureDetector(
         onTap: () {
           if (controller.selectedTeamProject.value != null) {
-            Get.to(() => WTMCreateInputName(),
+            Get.to(() => const WTMNaming(),
                 transition: Transition.rightToLeft);
           }
         },

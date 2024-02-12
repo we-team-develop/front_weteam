@@ -348,7 +348,4 @@ class WTMController extends GetxController {
     _overlayEntry.value?.remove();
     _overlayEntry.value = null;
   }
-
-  final TextEditingController textController = TextEditingController();
-  final RxInt textLength = 0.obs;
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 
 class WTMNaming extends GetView<WTMController> {
@@ -10,82 +9,32 @@ class WTMNaming extends GetView<WTMController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _body(),
-    );
+    return SafeArea(child: Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
+        child: _body(),
+      ),
+    ));
   }
 
   Widget _body() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
-        padding: EdgeInsets.only(top: 67.h, left: 15.w),
+        padding: EdgeInsets.only(top: 40.h),
         child: _head(),
       ),
       Padding(
-        padding: EdgeInsets.only(top: 67.h, left: 15.w),
-        child: _textfield(),
+        padding: EdgeInsets.only(top: 62.h),
+        child: _TextInput(),
       ),
+
+      const Expanded(child: SizedBox()),
+
       Padding(
-        padding: EdgeInsets.only(top: 418.h, left: 15.w),
+        padding: EdgeInsets.only(bottom: 16.h),
         child: _bottom(),
       ),
     ]);
-  }
-
-  Widget _textfield() {
-    return Container(
-      width: 330.w,
-      height: 39.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0.r),
-        border: Border.all(
-          color: AppColors.G_01,
-          width: 1.0.w,
-        ),
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: EdgeInsets.only(left: 9.0.w),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: controller.textController,
-                  maxLength: 20,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '옆 동네 꽃밭 맛실 & 꿀 모아오기',
-                    hintStyle: TextStyle(
-                      fontFamily: 'NanumGothic',
-                      fontSize: 14.sp,
-                      color: AppColors.G_06,
-                    ),
-                    counterText: '',
-                  ),
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              Obx(() => Padding(
-                    padding: EdgeInsets.only(right: 9.0.w),
-                    child: Text(
-                      '${controller.textLength}/20',
-                      style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontSize: 14.sp,
-                        color: AppColors.G_06,
-                      ),
-                    ),
-                  )),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget _head() {
@@ -99,13 +48,67 @@ class WTMNaming extends GetView<WTMController> {
   }
 
   Widget _bottom() {
-    return Obx(
-      () => Image.asset(
-        controller.textController.text.isNotEmpty
-            ? ImagePath.wtmnamingon
-            : ImagePath.wtmnamingoff,
+    return GestureDetector(
+      onTap: () {
+      },
+      child: Obx(() => Container(
         width: 330.w,
         height: 40.h,
+        decoration: BoxDecoration(
+          color: controller.nameInputText.value.isNotEmpty
+              ? AppColors.MainOrange
+              : AppColors.G_02,
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        ),
+        child: Center(
+            child: Text('입력 완료',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'NanumGothicExtraBold',
+                    fontSize: 15.sp))),
+      )),
+    );
+  }
+}
+
+class _TextInput extends GetView<WTMController> {
+  final int maxLength = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.r),
+          border: Border.all(color: AppColors.G_01, width: 1)
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(width: 8.w),
+          Expanded(child: TextField(
+            maxLines: 1,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                counterText: "",
+                hintText: "옆 동네 꽃밭 & 꿀 모아오기",
+                hintStyle: TextStyle(
+                    fontFamily: "NanumGothic",
+                    fontSize: 14.sp,
+                    color: AppColors.G_06
+                )
+            ),
+            maxLength: maxLength,
+            onChanged: (value) => controller.nameInputText.value = value.trimRight(),
+          )),
+          Obx(() => Text(
+            "${controller.nameInputText.value.length} / $maxLength",
+            style: TextStyle(
+                fontFamily: 'NanumSquareNeo',
+                fontSize: 12.sp,
+                color: AppColors.G_05),
+          )),
+          SizedBox(width: 8.w)
+        ],
       ),
     );
   }
