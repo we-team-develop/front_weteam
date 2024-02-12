@@ -18,6 +18,23 @@ class WTMDate extends GetView<WTMController> {
   }
 
   Widget _body() {
-    return const Column();
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 40.h),
+          child: _head(),
+        ),
+      ],
+    );
+  }
+
+  Widget _head() {
+    return Text(
+      '언제부터 언제까지의 일정을\n조사할까요?',
+      style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: 'NanumGothic',
+          fontSize: 20.sp),
+    );
   }
 }

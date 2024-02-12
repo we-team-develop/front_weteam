@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
 import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/view/wtm/wtm_create_finish.dart';
+import 'package:front_weteam/view/wtm/wtm_date.dart';
 import 'package:get/get.dart';
 
 class WTMNaming extends GetView<WTMController> {
@@ -10,7 +11,8 @@ class WTMNaming extends GetView<WTMController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: _body(),
@@ -28,9 +30,7 @@ class WTMNaming extends GetView<WTMController> {
         padding: EdgeInsets.only(top: 62.h),
         child: _TextInput(),
       ),
-
       const Expanded(child: SizedBox()),
-
       Padding(
         padding: EdgeInsets.only(bottom: 16.h),
         child: _bottom(),
@@ -51,24 +51,32 @@ class WTMNaming extends GetView<WTMController> {
   Widget _bottom() {
     return GestureDetector(
       onTap: () {
-        Get.to(() => WTMCreateFinish());
+        if (controller.nameInputText.value.isNotEmpty) {
+          Get.to(() => const WTMDate());
+        } else {
+          Get.snackbar(
+            'Error',
+            'Please enter a name for the appointment.',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
       },
       child: Obx(() => Container(
-        width: 330.w,
-        height: 40.h,
-        decoration: BoxDecoration(
-          color: controller.nameInputText.value.isNotEmpty
-              ? AppColors.MainOrange
-              : AppColors.G_02,
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        ),
-        child: Center(
-            child: Text('입력 완료',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'NanumGothicExtraBold',
-                    fontSize: 15.sp))),
-      )),
+            width: 330.w,
+            height: 40.h,
+            decoration: BoxDecoration(
+              color: controller.nameInputText.value.isNotEmpty
+                  ? AppColors.MainOrange
+                  : AppColors.G_02,
+              borderRadius: BorderRadius.all(Radius.circular(8.r)),
+            ),
+            child: Center(
+                child: Text('입력 완료',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NanumGothicExtraBold',
+                        fontSize: 15.sp))),
+          )),
     );
   }
 }
@@ -81,13 +89,13 @@ class _TextInput extends GetView<WTMController> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: AppColors.G_01, width: 1)
-      ),
+          border: Border.all(color: AppColors.G_01, width: 1)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(width: 8.w),
-          Expanded(child: TextField(
+          Expanded(
+              child: TextField(
             maxLines: 1,
             controller: controller.nameInputController,
             decoration: InputDecoration(
@@ -97,19 +105,18 @@ class _TextInput extends GetView<WTMController> {
                 hintStyle: TextStyle(
                     fontFamily: "NanumGothic",
                     fontSize: 14.sp,
-                    color: AppColors.G_06
-                )
-            ),
+                    color: AppColors.G_06)),
             maxLength: maxLength,
-            onChanged: (value) => controller.nameInputText.value = value.trimRight(),
+            onChanged: (value) =>
+                controller.nameInputText.value = value.trimRight(),
           )),
           Obx(() => Text(
-            "${controller.nameInputText.value.length} / $maxLength",
-            style: TextStyle(
-                fontFamily: 'NanumSquareNeo',
-                fontSize: 12.sp,
-                color: AppColors.G_05),
-          )),
+                "${controller.nameInputText.value.length} / $maxLength",
+                style: TextStyle(
+                    fontFamily: 'NanumSquareNeo',
+                    fontSize: 12.sp,
+                    color: AppColors.G_05),
+              )),
           SizedBox(width: 8.w)
         ],
       ),
