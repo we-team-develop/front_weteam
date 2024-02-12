@@ -67,7 +67,10 @@ class ImagePath {
   static String get icCheckWhiteActivated =>
       'assets/images/ic_check_white_activated.png';
   static String get icHostoutGray => 'assets/images/ic_hostout_gray.png';
-
+  static String get checktutorialfalse =>
+      'assets/images/tutorial_checkbox_false.png';
+  static String get checktutorialtrue =>
+      'assets/images/tutorial_checkbox_true.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }

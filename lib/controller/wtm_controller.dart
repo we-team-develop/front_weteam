@@ -67,20 +67,37 @@ class WTMController extends GetxController {
     });
   }
 
-  bool doNotShowAgain = false;
+  // 오버레이
+  RxBool shouldShowOverlay = RxBool(true);
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadPreference();
+    print('check');
+  }
+
+// 사용자의 선호를 반영하여 showOverlay 값을 설정합니다.
+  void loadPreference() {
+    bool shouldShow = OverlayService.shouldShowOverlay();
+    shouldShowOverlay.value = shouldShow;
+    print('Load showOverlay Preference: ${shouldShowOverlay.value}');
+  }
+
+  void toggleShouldShowOverlay() async {
+    shouldShowOverlay.value = !shouldShowOverlay.value;
+    await OverlayService.setShouldShowOvelay(shouldShowOverlay.value);
+    print('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
+  }
 
   void showOverlay(BuildContext context) async {
-    if (_overlayEntry.value != null) {
-      // 이미 오버레이가 표시되어 있다면 무시
+    if (_overlayEntry.value != null || shouldShowOverlay.isFalse) {
+      print('Overlay not shown due to conditions.');
+      // 이미 오버레이가 표시되어 있거나 사용자가 "다시 보지 않기"를 선택한 경우 무시합니다.
       return;
     }
-
-    // "다시 보지 않기" 설정을 확인
-    bool shouldDisplay = await OverlayService.shouldShowOverlay();
-    if (!shouldDisplay) {
-      return;
-    }
-
+    print(
+        'Attempting to show overlay. showOverlay: ${shouldShowOverlay.value}'); // 로그 출력
     final PageController pageController = PageController();
 
     _overlayEntry.value = OverlayEntry(
@@ -195,7 +212,9 @@ class WTMController extends GetxController {
                     ),
                     // 텍스트
                     Padding(
-                      padding: EdgeInsets.only(left: 50.w),
+                      padding: EdgeInsets.only(
+                        left: 50.w,
+                      ),
                       child: Text.rich(
                         TextSpan(children: [
                           TextSpan(
@@ -252,6 +271,33 @@ class WTMController extends GetxController {
                       ),
                     ),
                     Padding(
+                      padding: EdgeInsets.only(top: 10.h, left: 223.w),
+                      child: GestureDetector(
+                        onTap: () => toggleShouldShowOverlay(),
+                        child: Row(
+                          children: [
+                            Obx(() => Image.asset(
+                                shouldShowOverlay.isTrue
+                                    ? ImagePath.checktutorialfalse
+                                    : ImagePath.checktutorialtrue,
+                                width: 12.w,
+                                height: 12.h)),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              '다시 보지 않기',
+                              style: TextStyle(
+                                  decorationThickness: 0,
+                                  fontFamily: 'NanumSquareNeo',
+                                  fontSize: 11.sp,
+                                  color: AppColors.White),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(top: 24.h),
                       child: Center(
                           child: Image.asset(
@@ -288,32 +334,6 @@ class WTMController extends GetxController {
                     );
                   },
                 ),
-              ),
-            ),
-            Positioned(
-              top: 222.h,
-              child: Center(
-                child: StatefulBuilder(
-                    builder: (BuildContext context, StateSetter setState) {
-                  return Material(
-                    child: Transform.scale(
-                      scale: 0.8,
-                      child: Checkbox(
-                        value: doNotShowAgain,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r)),
-                        onChanged: (bool? value) {
-                          setState(() {
-                            doNotShowAgain =
-                                value ?? false; // Corrected the null check
-                          });
-                          OverlayService.setDoNotShowOverlayAgain(
-                              value ?? false); // Corrected the null check
-                        },
-                      ),
-                    ),
-                  );
-                }),
               ),
             ),
           ],
