@@ -103,8 +103,6 @@ class WTMController extends GetxController {
         'Attempting to show overlay. showOverlay: ${shouldShowOverlay.value}'); // 로그 출력
 
     TutorialOverlay();
-
-    Overlay.of(context).insert(_overlayEntry.value!);
   }
 
   void _removeOverlay() {

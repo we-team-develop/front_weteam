@@ -10,7 +10,7 @@ class TutorialOverlay extends WTMController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
   final PageController pageController = PageController();
 
-  void tutorialOverlay() {
+  void tutorialOverlay(BuildContext context) {
     _overlayEntry.value = OverlayEntry(
       builder: (context) => SafeArea(
         child: Stack(
@@ -251,6 +251,8 @@ class TutorialOverlay extends WTMController {
         ),
       ),
     );
+
+    Overlay.of(context).insert(_overlayEntry.value!);
   }
 
   void _removeOverlay() {
