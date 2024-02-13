@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:front_weteam/controller/wtm_controller.dart';
+import 'package:front_weteam/data/color_data.dart';
 import 'package:get/get.dart';
 
 class WTMDate extends GetView<WTMController> {
@@ -24,6 +25,10 @@ class WTMDate extends GetView<WTMController> {
           padding: EdgeInsets.only(top: 40.h),
           child: _head(),
         ),
+        Divider(
+          height: 1.h,
+          color: AppColors.G_02,
+        )
       ],
     );
   }
