@@ -1,28 +1,25 @@
 import 'package:front_weteam/model/team_project.dart';
 
 class WTMProject {
-  int id;
-  String title;
-  String img;
-  DateTime startedAt;
-  DateTime endedAt;
-  bool done;
-  TeamProject project;
+  final int id;
+  final String title;
+  final String img;
+  final DateTime startedAt;
+  final DateTime endedAt;
+  final TeamProject project;
 
-  WTMProject({
-    this.id = -1,
-    this.img = "",
-    this.title = "",
+  const WTMProject({
+    required this.id,
+    required this.img,
+    required this.title,
     required this.startedAt,
     required this.endedAt,
-    required this.project,
-    this.done = false,
-  }) {
-    done = endedAt.difference(DateTime.now()).inSeconds.isNegative;
-  }
+    required this.project
+  });
 
   factory WTMProject.fromJson(Map data) {
     return WTMProject(
+        img: "",
         id: data['id'],
         title: data['name'],
         startedAt: DateTime.parse(data['startedAt']),
@@ -39,7 +36,6 @@ class WTMProject {
         title == other.title &&
         startedAt.isAtSameMomentAs(other.startedAt) &&
         endedAt.isAtSameMomentAs(other.endedAt) &&
-        done == other.done &&
         project == other.project;
   }
 }

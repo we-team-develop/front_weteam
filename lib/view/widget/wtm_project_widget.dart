@@ -12,29 +12,24 @@ class WTMProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Expanded(
-            child: Row(
+        _wtmImgWidget(team.img),
+        SizedBox(
+          width: 14.w,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _wtmImgWidget(team.img),
-            SizedBox(
-              width: 14.w,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _wtmTitleWidget(team.title),
-                _wtmTeamWidget(team.project),
-                _dateWidget(),
-              ],
-            ),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(ImagePath.wtmlink)),
+            _wtmTitleWidget(team.title),
+            _wtmTeamWidget(team.project),
+            _dateWidget(),
           ],
-        ))
+        ),
+        Align(
+            alignment: Alignment.centerRight,
+            child: Image.asset(ImagePath.wtmlink)),
       ],
     );
   }

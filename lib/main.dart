@@ -155,8 +155,6 @@ class SharedPreferencesKeys {
       "team_project_not_done_list_json";
 
   static const String showWTMOverlay = "show_wtm_overlay";
-
-  static const String wtmProjectListJson = "wtm_project_list_json";
 }
 
 Future<void> resetApp() async {

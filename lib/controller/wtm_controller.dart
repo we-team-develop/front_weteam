@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/controller/home_controller.dart';
 import 'package:front_weteam/main.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_user.dart';
@@ -23,19 +24,20 @@ class WTMController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
   final Rx<String> searchText = Rx("");
   String? searchWait;
-  final Rxn<List<Widget>> wtmWidgetList = Rxn<List<Widget>>();
 
-  int wtmProjectPage = 0;
-  List<WTMProject> _oldwtmList = [];
   final ScrollController wtmScrollController = ScrollController();
 
   final TextEditingController nameInputController = TextEditingController();
   final Rx<String> nameInputText = Rx("");
 
-  final Rxn<GetWTMProjectListResult> wtmList = Rxn<GetWTMProjectListResult>();
+  final Rxn<List<WTMProject>> wtmList = Rxn<List<WTMProject>>();
   final Rxn<TeamProject> selectedTeamProject = Rxn();
   final RxList<TeamProject> tpList = RxList();
   RxString selectedTpList = '진행중인 팀플'.obs;
+
+  WTMController() {
+    updateWTMProjectList();
+  }
 
   // 웬투밋 관련 페이지가 모두 닫혔을 때 호출됩니다.
   @override
@@ -362,21 +364,9 @@ class WTMController extends GetxController {
   // wtm list 관련
   Future<void> updateWTMProjectList() async {
     GetWTMProjectListResult? result = await Get.find<ApiService>()
-        .getWTMProjectList(wtmProjectPage, 'DESC', 'DONE',
-            cacheKey: SharedPreferencesKeys.wtmProjectListJson);
-    if (result != null && !listEquals(_oldwtmList, result.wtmprojectList)) {
-      _oldwtmList = result.wtmprojectList;
-      wtmWidgetList.value = _generatewtmwList(result);
-      wtmWidgetList.refresh();
+        .getWTMProjectList(0, 'DESC', 'STARTED_AT');
+    if (result != null) {
+      wtmList.value = result.wtmprojectList;
     }
-  }
-
-  List<Widget> _generatewtmwList(GetWTMProjectListResult result) {
-    List<WTMProject> wtmList = result.wtmprojectList;
-    EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
-    return List<Widget>.generate(
-        wtmList.length,
-        (index) =>
-            Padding(padding: padding, child: WTMProjectWidget(wtmList[index])));
   }
 }

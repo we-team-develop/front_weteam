@@ -34,38 +34,25 @@ class WTM extends GetView<WTMController> {
         children: [
           _head(),
           Expanded(
-              child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Obx(() {
-                        if (controller.wtmList.value == null ||
-                            controller.wtmList.value!.wtmprojectList.isEmpty) {
-                          return _noWTMWidget();
-                        } else {
-                          List<WTMProject> wtmList =
-                              controller.wtmList.value!.wtmprojectList;
-                          return WTMProjectListView(wtmList,
-                              scrollController: controller.wtmScrollController);
-                        }
-                      }),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 25.h),
-                      child: GestureDetector(
-                          onTap: () {
-                            Get.to(() => const WTMCreate());
-                          },
-                          child: _newWTMButton()),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ))
+            child: Obx(() {
+              if (controller.wtmList.value == null || controller.wtmList.value!.isEmpty) {
+                return _noWTMWidget();
+              } else {
+                List<WTMProject> wtmList =
+                    controller.wtmList.value!;
+                return WTMProjectListView(wtmList,
+                    scrollController: controller.wtmScrollController);
+              }
+            }),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 25.h),
+            child: GestureDetector(
+                onTap: () {
+                  Get.to(() => const WTMCreate());
+                },
+                child: _newWTMButton()),
+          )
         ],
       ),
     );
@@ -87,35 +74,33 @@ class WTM extends GetView<WTMController> {
   Widget _noWTMWidget() {
     return Padding(
       padding: EdgeInsets.only(top: 153.h),
-      child: Expanded(
-        child: SizedBox(
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      ImagePath.wtmEmptyTimi,
-                      width: 127.w,
-                      height: 131.h,
+      child: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    ImagePath.wtmEmptyTimi,
+                    width: 127.w,
+                    height: 131.h,
+                  ),
+                  Text(
+                    '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.Black,
+                      fontSize: 11.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                      height: 1.5,
                     ),
-                    Text(
-                      '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.Black,
-                        fontSize: 11.sp,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w400,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -54,21 +54,15 @@ class ApiService extends CustomGetConnect implements GetxService {
   ///
   /// return: 성공시 GetWTMProjectListResult, 실패시 null
   Future<GetWTMProjectListResult?> getWTMProjectList(
-      int page, String direction, String field,
-      {String? cacheKey}) async {
+      int page, String direction, String field) async {
     Response rp = await get('/api/projects', query: {
       'page': page.toString(),
       'size': 200.toString(),
       'direction': direction,
       'field': field
     });
+
     if (rp.hasError) return null;
-
-    // 키를 받았다면 캐시에 json을 기록
-    if (cacheKey != null) {
-      sharedPreferences.setString(cacheKey, rp.bodyString!);
-    }
-
     return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
