@@ -36,7 +36,10 @@ class WTMDate extends GetView<WTMController> {
           height: 24.h,
         ),
         Expanded(child: CustomCalendar()),
-        _bottom(),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.h),
+          child: _bottom(),
+        ),
       ],
     );
   }
