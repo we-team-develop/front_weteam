@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
   final RxBool hasNewNoti = RxBool(false);
 
-  List<TeamProject> _oldTpList = [];
+  List<TeamProject> oldTpList = [];
 
   @override
   void onInit() {
@@ -28,23 +28,29 @@ class HomeController extends GetxController {
     updateDDay();
     checkNotification();
 
-    String? tpListCache = sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
+    String? tpListCache =
+        sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
     if (tpListCache != null) {
-      GetTeamProjectListResult gtplResult = GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
-      _oldTpList = gtplResult.projectList;
+      GetTeamProjectListResult gtplResult =
+          GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
+      oldTpList = gtplResult.projectList;
       tpWidgetList.value = _generateTpwList(gtplResult);
       tpWidgetList.refresh();
     }
   }
 
   void scrollUp() {
-    scrollController.animateTo(0, duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
+    scrollController.animateTo(0,
+        duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
   }
 
   List<Widget> _generateTpwList(GetTeamProjectListResult result) {
     List<TeamProject> tpList = result.projectList;
     EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
-    return List<Widget>.generate(tpList.length, (index) => Padding(padding: padding, child: TeamProjectWidget(tpList[index])));
+    return List<Widget>.generate(
+        tpList.length,
+        (index) =>
+            Padding(padding: padding, child: TeamProjectWidget(tpList[index])));
   }
 
   Future<void> checkNotification() async {
@@ -67,13 +73,14 @@ class HomeController extends GetxController {
     DDayData dDayData = DDayData.fromJson(data);
     this.dDayData.value = dDayData;
   }
-  
+
   Future<void> updateTeamProjectList() async {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
+        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE',
+            Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
-    if (result != null && !listEquals(_oldTpList, result.projectList)) {
-      _oldTpList = result.projectList;
+    if (result != null && !listEquals(oldTpList, result.projectList)) {
+      oldTpList = result.projectList;
       tpWidgetList.value = _generateTpwList(result);
       tpWidgetList.refresh();
     }
@@ -83,7 +90,8 @@ class HomeController extends GetxController {
     return true; // false면 팀플 리스트 예시를 표시
   }*/
 
-  void popupDialog(Widget dialogWidget) { // TODO: 이게 여기 있어도 되나요
+  void popupDialog(Widget dialogWidget) {
+    // TODO: 이게 여기 있어도 되나요
     showDialog(
         context: Get.context!,
         //barrierDismissible - Dialog를 제외한 다른 화면 터치 x

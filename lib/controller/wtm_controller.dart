@@ -363,10 +363,20 @@ class WTMController extends GetxController {
 
   // wtm list 관련
   Future<void> updateWTMProjectList() async {
-    GetWTMProjectListResult? result = await Get.find<ApiService>()
-        .getWTMProjectList(0, 'DESC', 'STARTED_AT');
+    GetWTMProjectListResult? result =
+        await Get.find<ApiService>().getWTMProjectList(0, 'DESC', 'STARTED_AT');
     if (result != null) {
       wtmList.value = result.wtmprojectList;
+    } else {
+      wtmList.value = [
+        WTMProject(
+            id: 1,
+            img: "",
+            title: 'title',
+            startedAt: DateTime.now(),
+            endedAt: DateTime.now(),
+            project: Get.find<HomeController>().oldTpList[0])
+      ];
     }
   }
 }
