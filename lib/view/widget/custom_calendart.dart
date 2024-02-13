@@ -183,13 +183,15 @@ class _DayWidget extends GetView<CustomCalendarController> {
     return Obx(() {
       bool isEnabled = controller.now.difference(date).inSeconds.isNegative;
 
-      late Color color;
-      if (date.weekday == 6) {
-        color = AppColors.Blue_01;
+      late Color textColor;
+      if (!isEnabled) {
+        textColor = AppColors.G_03;
+      } else if (date.weekday == 6) {
+        textColor = AppColors.Blue_01;
       } else if (date.weekday == 7) {
-        color = AppColors.Red;
+        textColor = AppColors.Red;
       } else {
-        color = isEnabled ? AppColors.Black : AppColors.G_03;
+        textColor = AppColors.Black;
       }
 
       bool selectedCompletely = controller.selectedDt1.value != null &&
@@ -213,7 +215,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
 
       bool amILater = false;
       if (selected) {
-        color = AppColors.White;
+        textColor = AppColors.White;
         if (selectedCompletely) {
           if (controller.selectedDt1.value == date) {
             amILater =
@@ -288,7 +290,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
                             ))),
                 Text('${date.day}',
                     style: TextStyle(
-                        color: color,
+                        color: textColor,
                         fontFamily: 'NanumGothicBold',
                         fontWeight: FontWeight.bold))
               ],
