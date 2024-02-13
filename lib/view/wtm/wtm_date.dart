@@ -32,7 +32,10 @@ class WTMDate extends GetView<WTMController> {
           height: 1.h,
           color: AppColors.G_02,
         ),
-        // SingleChildScrollView(child: CustomCalendar()),
+        SizedBox(
+          height: 24.h,
+        ),
+        Expanded(child: CustomCalendar()),
         _bottom(),
       ],
     );
