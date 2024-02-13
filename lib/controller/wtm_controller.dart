@@ -27,6 +27,7 @@ class WTMController extends GetxController {
 
   int wtmProjectPage = 0;
   List<WTMProject> _oldwtmList = [];
+  final ScrollController wtmScrollController = ScrollController();
 
   final TextEditingController nameInputController = TextEditingController();
   final Rx<String> nameInputText = Rx("");
@@ -359,7 +360,6 @@ class WTMController extends GetxController {
   }
 
   // wtm list 관련
-
   Future<void> updateWTMProjectList() async {
     GetWTMProjectListResult? result = await Get.find<ApiService>()
         .getWTMProjectList(wtmProjectPage, 'DESC', 'DONE',

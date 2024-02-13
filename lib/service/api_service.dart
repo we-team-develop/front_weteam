@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:front_weteam/model/wtm_project.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -49,6 +50,33 @@ class ApiService extends CustomGetConnect implements GetxService {
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
+  /// wtm 목록 조회 API
+  ///
+  /// return: 성공시 GetWTMProjectListResult, 실패시 null
+  Future<GetWTMProjectListResult?> getWTMProjectList(
+      int page, String direction, String field,
+      {String? cacheKey}) async {
+    Response rp = await get('/api/projects', query: {
+      'page': page.toString(),
+      'size': 200.toString(),
+      'direction': direction,
+      'field': field
+    });
+    if (rp.hasError) return null;
+
+    // 키를 받았다면 캐시에 json을 기록
+    if (cacheKey != null) {
+      sharedPreferences.setString(cacheKey, rp.bodyString!);
+    }
+
+    return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
+  }
+
+  /// wtm 생성 API
+  ///
+  /// return: 성공 여부
+  // Future<bool>
+
   /// 팀플 생성 API
   ///
   /// return: 성공 여부
@@ -57,9 +85,9 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = {
       'name': name,
       'startedAt':
-      "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
+          "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
       'endedAt':
-      "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
+          "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation
     };
     Response rp = await post('/api/projects', data);
@@ -94,9 +122,9 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = {
       'name': tp.title,
       'startedAt':
-      "${tp.startedAt.year}-${tp.startedAt.month.toString().padLeft(2, '0')}-${tp.startedAt.day.toString().padLeft(2, '0')}",
+          "${tp.startedAt.year}-${tp.startedAt.month.toString().padLeft(2, '0')}-${tp.startedAt.day.toString().padLeft(2, '0')}",
       'endedAt':
-      "${tp.endedAt.year}-${tp.endedAt.month.toString().padLeft(2, '0')}-${tp.endedAt.day.toString().padLeft(2, '0')}",
+          "${tp.endedAt.year}-${tp.endedAt.month.toString().padLeft(2, '0')}-${tp.endedAt.day.toString().padLeft(2, '0')}",
       'explanation': tp.description
     };
     Response rp = await patch('/api/projects/${tp.id}', data);
@@ -144,7 +172,7 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// return: 성공 여부
   Future<bool> setUserOrganization(String organization) async {
     Response rp =
-    await patch('/api/users/${Uri.encodeComponent(organization)}', {});
+        await patch('/api/users/${Uri.encodeComponent(organization)}', {});
     return rp.isOk;
   }
 
@@ -203,10 +231,8 @@ class ApiService extends CustomGetConnect implements GetxService {
   ///
   /// return: 성공 여부
   Future<bool> changeUserTeamProjectRole(TeamProject team, String role) async {
-    Response rp = await patch('/api/project-users', {}, query: {
-      'projectId': team.id.toString(),
-      'role': role
-    });
+    Response rp = await patch('/api/project-users', {},
+        query: {'projectId': team.id.toString(), 'role': role});
 
     return rp.isOk;
   }
@@ -293,8 +319,8 @@ class GetTeamProjectListResult {
 
   const GetTeamProjectListResult(
       {required this.totalPages,
-        required this.totalElements,
-        required this.projectList});
+      required this.totalElements,
+      required this.projectList});
 
   factory GetTeamProjectListResult.fromJson(Map data) {
     List tpList = data['projectList'];
@@ -306,25 +332,23 @@ class GetTeamProjectListResult {
   }
 }
 
-
-// WTMProjectList
-
+// WTM 조회 API의 결과에 대한 객체
 class GetWTMProjectListResult {
   final int totalPages;
   final int totalElements;
-  final List<TeamProject> projectList;
+  final List<WTMProject> wtmprojectList;
 
   const GetWTMProjectListResult(
       {required this.totalPages,
-        required this.totalElements,
-        required this.projectList});
+      required this.totalElements,
+      required this.wtmprojectList});
 
   factory GetWTMProjectListResult.fromJson(Map data) {
     List wtmList = data['wtmList'];
     return GetWTMProjectListResult(
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
-        projectList: List<TeamProject>.generate(
-            wtmList.length, (index) => TeamProject.fromJson(wtmList[index])));
+        wtmprojectList: List<WTMProject>.generate(
+            wtmList.length, (index) => WTMProject.fromJson(wtmList[index])));
   }
 }

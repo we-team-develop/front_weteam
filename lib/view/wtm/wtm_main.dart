@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/model/wtm_project.dart';
+import 'package:front_weteam/view/widget/wtm_project_column.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm_controller.dart';
@@ -31,9 +33,6 @@ class WTM extends GetView<WTMController> {
       child: Column(
         children: [
           _head(),
-          SizedBox(
-            height: 153.h,
-          ),
           Expanded(
               child: CustomScrollView(
             slivers: [
@@ -41,7 +40,19 @@ class WTM extends GetView<WTMController> {
                 hasScrollBody: false,
                 child: Column(
                   children: [
-                    _wtmbody(),
+                    Expanded(
+                      child: Obx(() {
+                        if (controller.wtmList.value == null ||
+                            controller.wtmList.value!.wtmprojectList.isEmpty) {
+                          return _noWTMWidget();
+                        } else {
+                          List<WTMProject> wtmList =
+                              controller.wtmList.value!.wtmprojectList;
+                          return WTMProjectListView(wtmList,
+                              scrollController: controller.wtmScrollController);
+                        }
+                      }),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 25.h),
                       child: GestureDetector(
@@ -73,39 +84,38 @@ class WTM extends GetView<WTMController> {
     );
   }
 
-  Widget _wtmbody() {
-    return _noWTMWidget();
-  }
-
   Widget _noWTMWidget() {
-    return Expanded(
-      child: SizedBox(
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Image.asset(
-                    ImagePath.wtmEmptyTimi,
-                    width: 127.w,
-                    height: 131.h,
-                  ),
-                  Text(
-                    '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.Black,
-                      fontSize: 11.sp,
-                      fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w400,
-                      height: 1.5,
+    return Padding(
+      padding: EdgeInsets.only(top: 153.h),
+      child: Expanded(
+        child: SizedBox(
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      ImagePath.wtmEmptyTimi,
+                      width: 127.w,
+                      height: 131.h,
                     ),
-                  ),
-                ],
+                    Text(
+                      '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.Black,
+                        fontSize: 11.sp,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w400,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
