@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'dart:ffi';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/main.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/weteam_user.dart';
+import 'package:front_weteam/model/wtm_project.dart';
 import 'package:front_weteam/service/api_service.dart';
 import 'package:front_weteam/service/auth_service.dart';
 import 'package:front_weteam/service/overlay_service.dart';
+import 'package:front_weteam/view/widget/wtm_project_widget.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -18,6 +23,10 @@ class WTMController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
   final Rx<String> searchText = Rx("");
   String? searchWait;
+  final Rxn<List<Widget>> wtmWidgetList = Rxn<List<Widget>>();
+
+  int wtmProjectPage = 0;
+  List<WTMProject> _oldwtmList = [];
 
   final TextEditingController nameInputController = TextEditingController();
   final Rx<String> nameInputText = Rx("");
@@ -347,5 +356,27 @@ class WTMController extends GetxController {
   void _removeOverlay() {
     _overlayEntry.value?.remove();
     _overlayEntry.value = null;
+  }
+
+  // wtm list 관련
+
+  Future<void> updateWTMProjectList() async {
+    GetWTMProjectListResult? result = await Get.find<ApiService>()
+        .getWTMProjectList(wtmProjectPage, 'DESC', 'DONE',
+            cacheKey: SharedPreferencesKeys.wtmProjectListJson);
+    if (result != null && !listEquals(_oldwtmList, result.wtmprojectList)) {
+      _oldwtmList = result.wtmprojectList;
+      wtmWidgetList.value = _generatewtmwList(result);
+      wtmWidgetList.refresh();
+    }
+  }
+
+  List<Widget> _generatewtmwList(GetWTMProjectListResult result) {
+    List<WTMProject> wtmList = result.wtmprojectList;
+    EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
+    return List<Widget>.generate(
+        wtmList.length,
+        (index) =>
+            Padding(padding: padding, child: WTMProjectWidget(wtmList[index])));
   }
 }

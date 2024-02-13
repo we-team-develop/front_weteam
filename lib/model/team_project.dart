@@ -1,5 +1,3 @@
-
-
 import 'weteam_user.dart';
 
 class TeamProject {
@@ -52,8 +50,4 @@ class TeamProject {
         done == other.done &&
         host == other.host;
   }
-
-  @override
-  int get hashCode => super.hashCode;
-
 }

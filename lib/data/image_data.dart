@@ -73,6 +73,7 @@ class ImagePath {
       'assets/images/tutorial_checkbox_true.png';
   static String get greenCheck => 'assets/images/green_check.png';
   static String get thumbTimi => 'assets/images/thumb_timi.png';
+  static String get wtmlink => 'assets/images/wtm_list_link.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }
