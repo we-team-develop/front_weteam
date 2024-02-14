@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../binding/wtm_bindings.dart';
 import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
