@@ -49,7 +49,7 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(
                   ImagePath.googlelogin,
                   width: 302.w,
-                  // height: 39.h,
+                  height: 39.h,
                 ),
               ),
               SizedBox(height: padding),
@@ -94,7 +94,8 @@ class LoginMain extends StatelessWidget {
     // TODO: 로그인 버튼 중복 클릭 방지
     LoginResult result = await Get.find<AuthService>().login(helper);
     if (result.isSuccess) {
-      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, !result.isNewUser);
+      sharedPreferences.setBool(
+          SharedPreferencesKeys.isRegistered, !result.isNewUser);
       if (result.isNewUser) {
         Get.offAll(() => const SignUpCompleted());
       } else {
