@@ -7,7 +7,7 @@ import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/wtm_project.dart';
 import '../widget/wtm_project_column.dart';
-import 'wtm_create.dart';
+import 'create/wtm_create.dart';
 
 class WTM extends GetView<WTMController> {
   WTM({super.key});
