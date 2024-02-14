@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:front_weteam/model/wtm_project.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -8,6 +7,7 @@ import '../model/team_project.dart';
 import '../model/weteam_notification.dart';
 import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
+import '../model/wtm_project.dart';
 import '../util/custom_get_connect.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {

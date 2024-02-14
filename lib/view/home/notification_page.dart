@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/service/api_service.dart';
-import 'package:front_weteam/view/teamplay/team_project_detail_page.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -9,6 +7,8 @@ import '../../controller/notification_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../model/weteam_notification.dart';
+import '../../service/api_service.dart';
+import '../teamplay/team_project_detail_page.dart';
 
 class NotificationPage extends GetView<NotificationController> {
   const NotificationPage({super.key});

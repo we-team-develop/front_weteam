@@ -1,4 +1,4 @@
-import 'package:front_weteam/model/team_project.dart';
+import 'team_project.dart';
 
 class WTMProject {
   final int id;

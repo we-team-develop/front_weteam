@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:front_weteam/controller/home_controller.dart';
-import 'package:front_weteam/controller/my_page_controller.dart';
-import 'package:front_weteam/controller/tp_controller.dart';
 import 'package:get/get.dart';
+
+import 'home_controller.dart';
+import 'my_page_controller.dart';
+import 'tp_controller.dart';
 
 enum Page { TEAMPLAY, HOME, MYPAGE }
 

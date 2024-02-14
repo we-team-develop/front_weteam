@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/model/wtm_project.dart';
-import 'package:front_weteam/view/widget/wtm_project_column.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
+import '../../model/wtm_project.dart';
+import '../widget/wtm_project_column.dart';
 import 'wtm_create.dart';
 
 class WTM extends GetView<WTMController> {

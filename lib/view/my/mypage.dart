@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/my_page_controller.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
+import '../../controller/my_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
+import '../../model/team_project.dart';
+import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';

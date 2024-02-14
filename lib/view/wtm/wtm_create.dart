@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/wtm_controller.dart';
-import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/view/widget/team_project_widget.dart';
-import 'package:front_weteam/view/wtm/wtm_naming.dart';
 import 'package:get/get.dart';
+
+import '../../controller/wtm_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../widget/team_project_widget.dart';
+import 'wtm_naming.dart';
 
 class WTMCreate extends GetView<WTMController> {
   const WTMCreate({super.key});

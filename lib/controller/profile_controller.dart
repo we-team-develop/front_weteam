@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:front_weteam/model/weteam_profile.dart';
-import 'package:front_weteam/model/weteam_user.dart';
 import 'package:get/get.dart';
 
 import '../data/color_data.dart';
 import '../data/image_data.dart';
+import '../model/weteam_profile.dart';
+import '../model/weteam_user.dart';
 import '../service/api_service.dart';
 import '../service/auth_service.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/view/my/mypage.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -15,6 +14,7 @@ import '../../util/weteam_utils.dart';
 import '../dialog/custom_big_dialog.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
+import '../my/mypage.dart';
 import '../widget/custom_text_field.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
