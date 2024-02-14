@@ -15,7 +15,7 @@ import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/profile_image_widget.dart';
-import '../widget/team_project_column.dart';
+import '../widget/team_project_list_view.dart';
 import 'profile.dart';
 
 class MyPage extends GetView<MyPageController> {
