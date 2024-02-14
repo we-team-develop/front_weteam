@@ -51,17 +51,17 @@ class Home extends GetView<HomeController> {
                 SliverList(
                   delegate: SliverChildListDelegate([
                     SizedBox(height: 15.h),
-                        const SizedBox(
-                          height: 0.7,
-                          width: double.infinity,
-                          child: ColoredBox(
-                            color: AppColors.G_02,
-                          ),
-                        ),
-                        SizedBox(height: 15.h),
-                        ...controller.tpWidgetList.value ?? [],
-                      ]),
+                    const SizedBox(
+                      height: 0.7,
+                      width: double.infinity,
+                      child: ColoredBox(
+                        color: AppColors.G_02,
+                      ),
                     ),
+                    SizedBox(height: 15.h),
+                    ...controller.tpWidgetList.value ?? [],
+                  ]),
+                ),
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Column(
@@ -69,15 +69,16 @@ class Home extends GetView<HomeController> {
                     (controller.tpWidgetList.value == null ||
                             controller.tpWidgetList.value!.isEmpty)
                         ? Expanded(child: _noTeamProjectWidget())
-                        : Expanded(child: Column(
-                      children: [
-                        SizedBox(height: 16.h),
-                        // 팀플 추가하기 버튼
-                        const Expanded(child: SizedBox()),
-                        _addTeamProjectBigButton(),
-                        SizedBox(height: 16.h)
-                      ],
-                    )),
+                        : Expanded(
+                            child: Column(
+                            children: [
+                              SizedBox(height: 16.h),
+                              // 팀플 추가하기 버튼
+                              const Expanded(child: SizedBox()),
+                              _addTeamProjectBigButton(),
+                              SizedBox(height: 16.h)
+                            ],
+                          )),
                     GestureDetector(
                         onTap: () {
                           Get.to(() => WTM(), binding: WTMCreateBinding());

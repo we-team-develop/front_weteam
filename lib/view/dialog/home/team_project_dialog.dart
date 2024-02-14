@@ -73,8 +73,9 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       crossAxisAlignment: CrossAxisAlignment.center, // 중앙 정렬
       children: <Widget>[
         Visibility(
-          visible: widget.mode != TeamProjectDialogMode.revive,
-            child: CustomTextField(hint: "팀플명", maxLength: 20, controller: titleController)),
+            visible: widget.mode != TeamProjectDialogMode.revive,
+            child: CustomTextField(
+                hint: "팀플명", maxLength: 20, controller: titleController)),
         Visibility(
             visible: widget.mode == TeamProjectDialogMode.revive,
             child: Row(
@@ -86,15 +87,13 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         style: TextStyle(
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 12.sp,
-                            color: AppColors.G_05
-                        )),
+                            color: AppColors.G_05)),
                     Text(' ${widget.teamData?.title}',
                         style: TextStyle(
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.Black
-                        )),
+                            color: AppColors.Black)),
                   ],
                 )
               ],
@@ -103,7 +102,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
           height: 12.h,
         ),
         Visibility(
-          visible: widget.mode != TeamProjectDialogMode.revive,
+            visible: widget.mode != TeamProjectDialogMode.revive,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -120,13 +119,14 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                 Stack(
                   children: [
                     ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: 60.h, minWidth: 260.w),
+                        constraints:
+                            BoxConstraints(minHeight: 60.h, minWidth: 260.w),
                         child: Container(
                           padding: const EdgeInsets.all(5),
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                                side:
-                                const BorderSide(width: 1, color: AppColors.G_02),
+                                side: const BorderSide(
+                                    width: 1, color: AppColors.G_02),
                                 borderRadius: BorderRadius.circular(8)),
                           ),
                           child: TextField(
@@ -143,8 +143,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                             cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
                             style: const TextStyle(fontSize: 13),
                             onChanged: (newV) {
-                              setState(() {
-                              });
+                              setState(() {});
                             },
                           ),
                         )),
@@ -175,20 +174,20 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
               children: [
                 Flexible(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '시작일',
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.6),
-                            fontSize: 12,
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 15.h),
-                        Visibility(
-                          visible: widget.mode != TeamProjectDialogMode.revive,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '시작일',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.6),
+                        fontSize: 12,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 15.h),
+                    Visibility(
+                        visible: widget.mode != TeamProjectDialogMode.revive,
                         child: CustomDatePicker(
                             start: DateTime(1980, 1, 1),
                             end: DateTime(2090, 12, 31),
@@ -196,18 +195,17 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                             onChangeListener: (v) {
                               startTime = v;
                             })),
-                        Visibility(
-                            visible: widget.mode == TeamProjectDialogMode.revive,
-                            child: Text(
-                              "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontFamily: 'NanumSquareNeo',
-                                fontWeight: FontWeight.bold
-                              ),
-                            ))
+                    Visibility(
+                        visible: widget.mode == TeamProjectDialogMode.revive,
+                        child: Text(
+                          "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
+                          style: TextStyle(
+                              fontSize: 15.sp,
+                              fontFamily: 'NanumSquareNeo',
+                              fontWeight: FontWeight.bold),
+                        ))
                   ],
-                    )),
+                )),
                 Container(
                   width: 1,
                   height: 90.h,
@@ -218,34 +216,34 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                 ),
                 Flexible(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '종료일',
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.6),
-                            fontSize: 12,
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 15.h),
-                        CustomDatePicker(
-                            start: DateTime(1980, 1, 1),
-                            end: DateTime(2090, 12, 31),
-                            init: endTime,
-                            onChangeListener: (v) {
-                              endTime = v;
-                            }),
-                      ],
-                    ))
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '종료일',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.6),
+                        fontSize: 12,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 15.h),
+                    CustomDatePicker(
+                        start: DateTime(1980, 1, 1),
+                        end: DateTime(2090, 12, 31),
+                        init: endTime,
+                        onChangeListener: (v) {
+                          endTime = v;
+                        }),
+                  ],
+                ))
               ],
             )),
         SizedBox(
           height: 34.h,
         ),
         Visibility(
-          visible: widget.mode == TeamProjectDialogMode.revive,
+            visible: widget.mode == TeamProjectDialogMode.revive,
             child: Column(
               children: [
                 Text(
@@ -253,31 +251,32 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                   style: TextStyle(
                       color: AppColors.G_05,
                       fontFamily: 'NanumSquareNeo',
-                      fontSize: 10.sp
-                  ),
+                      fontSize: 10.sp),
                 ),
                 SizedBox(height: 23.h)
               ],
             )),
         Visibility(
-          visible: warningVisible,
+            visible: warningVisible,
             child: Text(warningContent,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppColors.MainOrange,
-              fontFamily: 'NanumSquareNeo',
-              fontSize: 10.sp))),
-        NormalButton(text: '확인', onTap: () async {
-          if (isSaving) return;
-          isSaving = true;
-          try {
-            updateTeamProject();
-          } catch (e, st) {
-            debugPrint('$e');
-            debugPrintStack(stackTrace: st);
-          }
-          isSaving = false;
-        }),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.MainOrange,
+                    fontFamily: 'NanumSquareNeo',
+                    fontSize: 10.sp))),
+        NormalButton(
+            text: '확인',
+            onTap: () async {
+              if (isSaving) return;
+              isSaving = true;
+              try {
+                updateTeamProject();
+              } catch (e, st) {
+                debugPrint('$e');
+                debugPrintStack(stackTrace: st);
+              }
+              isSaving = false;
+            }),
       ],
     );
   }
@@ -322,18 +321,27 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
 
     late bool success;
     if (widget.teamData == null) {
-      success = await Get.find<ApiService>().createTeamProject(name, startTime, endTime, content);
+      success = await Get.find<ApiService>()
+          .createTeamProject(name, startTime, endTime, content);
     } else {
-      TeamProject newTp = TeamProject(id: widget.teamData!.id,
-        host: widget.teamData!.host,
-        endedAt: endTime,
-        startedAt: startTime,
-        memberSize: widget.teamData!.memberSize,
-        description: contentController.text,
-        title: titleController.text,
-        done: endTime.difference(DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0)).inDays.isNegative,
-        img: widget.teamData!.img
-      );
+      TeamProject newTp = TeamProject(
+          id: widget.teamData!.id,
+          host: widget.teamData!.host,
+          endedAt: endTime,
+          startedAt: startTime,
+          memberSize: widget.teamData!.memberSize,
+          description: contentController.text,
+          title: titleController.text,
+          done: endTime
+              .difference(DateTime.now().copyWith(
+                  hour: 0,
+                  minute: 0,
+                  second: 0,
+                  millisecond: 0,
+                  microsecond: 0))
+              .inDays
+              .isNegative,
+          img: widget.teamData!.img);
       /*widget.teamData!.title = titleController.text.trim();
       widget.teamData!.description = contentController.text.trim();
       widget.teamData!.startedAt = startTime;
@@ -357,6 +365,4 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
   }
 }
 
-enum TeamProjectDialogMode {
-  add, edit, revive
-}
+enum TeamProjectDialogMode { add, edit, revive }
