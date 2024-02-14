@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:front_weteam/main.dart';
 import 'package:get/get.dart';
 
+import '../main.dart';
 import '../model/team_project.dart';
 import '../model/weteam_project_user.dart';
 import '../service/api_service.dart';

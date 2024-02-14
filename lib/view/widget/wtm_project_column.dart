@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/model/wtm_project.dart';
-import 'package:front_weteam/view/widget/wtm_project_widget.dart';
+
+import '../../model/wtm_project.dart';
+import 'wtm_project_widget.dart';
 
 class WTMProjectListView extends StatelessWidget {
   final ScrollController? scrollController;

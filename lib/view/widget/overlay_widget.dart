@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/wtm_controller.dart';
-import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/data/image_data.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../controller/wtm_controller.dart';
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
 
 class TutorialOverlay extends WTMController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/controller/wtm_controller.dart';
-import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/view/wtm/wtm_create_finish.dart';
-import 'package:front_weteam/view/wtm/wtm_date.dart';
 import 'package:get/get.dart';
+
+import '../../../controller/wtm_controller.dart';
+import '../../../data/color_data.dart';
+import 'wtm_date.dart';
 
 class WTMNaming extends GetView<WTMController> {
   const WTMNaming({super.key});

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/data/color_data.dart';
-import 'package:front_weteam/data/image_data.dart';
-import 'package:front_weteam/model/team_project.dart';
-import 'package:front_weteam/model/wtm_project.dart';
-import 'package:front_weteam/view/wtm/wtm_current.dart';
+
+import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/team_project.dart';
+import '../../model/wtm_project.dart';
+import '../wtm/wtm_current.dart';
 
 class WTMProjectWidget extends StatelessWidget {
   final WTMProject team;

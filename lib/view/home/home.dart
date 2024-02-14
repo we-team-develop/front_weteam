@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/binding/wtm_bindings.dart';
 import 'package:get/get.dart';
 
+import '../../binding/wtm_bindings.dart';
 import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
