@@ -122,7 +122,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
         children: [
           SizedBox(width: 37.0.w),
           Obx(() => ProfileImageWidget(
-              id: widget.user.value!.profile?.imageIdx ?? 0)),
+              id: widget.user.value?.profile?.imageIdx ?? 0)),
           SizedBox(width: 33.w),
           Expanded(
               child: Column(
@@ -160,7 +160,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                   ),
                   SizedBox(height: 5.h),
                   Obx(() => Text(
-                    widget.user.value!.organization ?? '미입력',
+                    widget.user.value?.organization ?? '미입력',
                     style: TextStyle(
                       color: AppColors.G_04,
                       fontSize: 10.sp,
@@ -200,9 +200,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
       String text;
 
       if (tpList.value.isNotEmpty) {
-        text = "${widget.user.value!.username}님이 완료한 팀플들이에요!";
+        text = "${widget.user.value?.username}님이 완료한 팀플들이에요!";
       } else {
-        text = "${widget.user.value!.username}님은 완료한 팀플이 없어요!";
+        text = "${widget.user.value?.username}님은 완료한 팀플이 없어요!";
       }
 
       return Text(
