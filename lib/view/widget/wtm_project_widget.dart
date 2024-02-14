@@ -4,6 +4,7 @@ import 'package:front_weteam/data/color_data.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/model/team_project.dart';
 import 'package:front_weteam/model/wtm_project.dart';
+import 'package:front_weteam/view/wtm/wtm_current.dart';
 
 class WTMProjectWidget extends StatelessWidget {
   final WTMProject team;
@@ -12,25 +13,41 @@ class WTMProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _wtmImgWidget(team.img),
-        SizedBox(
-          width: 14.w,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        // 해당 웬투밋 현황 페이지로 이동
+        const WTMCurrent();
+      },
+      behavior: HitTestBehavior.translucent,
+      child: SizedBox(
+        height: 53.h,
+        child: Column(
           children: [
-            _wtmTitleWidget(team.title),
-            _wtmTeamWidget(team.project),
-            _dateWidget(),
+            Expanded(
+              child: Row(
+                children: [
+                  _wtmImgWidget(team.img),
+                  SizedBox(width: 14.w),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _wtmTitleWidget(team.title),
+                        _wtmTeamWidget(team.project),
+                        _dateWidget(),
+                      ],
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Image.asset(ImagePath.wtmlink)),
+                ],
+              ),
+            ),
           ],
         ),
-        Align(
-            alignment: Alignment.centerRight,
-            child: Image.asset(ImagePath.wtmlink)),
-      ],
+      ),
     );
   }
 
@@ -87,6 +104,6 @@ class WTMProjectWidget extends StatelessWidget {
   }
 
   String _formattedDateTime(DateTime dt) {
-    return "${dt.year}-${dt.month}-${dt.day}";
+    return "${dt.year}.${dt.month}.${dt.day}";
   }
 }

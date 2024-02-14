@@ -29,17 +29,19 @@ class WTM extends GetView<WTMController> {
   }
 
   Widget _body() {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.only(left: 15.w, right: 15.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _head(),
           Expanded(
             child: Obx(() {
-              if (controller.wtmList.value == null || controller.wtmList.value!.isEmpty) {
+              if (controller.wtmList.value == null ||
+                  controller.wtmList.value!.isEmpty) {
                 return _noWTMWidget();
               } else {
-                List<WTMProject> wtmList =
-                    controller.wtmList.value!;
+                List<WTMProject> wtmList = controller.wtmList.value!;
                 return WTMProjectListView(wtmList,
                     scrollController: controller.wtmScrollController);
               }

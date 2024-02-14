@@ -11,13 +11,13 @@ import '../teamplay/team_project_detail_page.dart';
 class TeamProjectWidget extends StatelessWidget {
   final TeamProject team;
 
-  const TeamProjectWidget(
-      this.team,
-      {super.key});
+  const TeamProjectWidget(this.team, {super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(GetBuilder(builder: (controller) => const TeamProjectDetailPage(), init: TeamProjectDetailPageController(team))),
+      onTap: () => Get.to(GetBuilder(
+          builder: (controller) => const TeamProjectDetailPage(),
+          init: TeamProjectDetailPageController(team))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
@@ -25,26 +25,26 @@ class TeamProjectWidget extends StatelessWidget {
           children: [
             Expanded(
                 child: Row(
+              children: [
+                _teamImgWidget(team.img),
+                SizedBox(width: 16.w),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _teamImgWidget(team.img),
-                    SizedBox(width: 16.w),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    _teamTitleWidget(team.title),
+                    _teamDescriptionWidget(team.description),
+                    Row(
                       children: [
-                        _teamTitleWidget(team.title),
-                        _teamDescriptionWidget(team.description),
-                        Row(
-                          children: [
-                            _teamMemberCountWidget(team.memberSize),
-                            SizedBox(width: 31.w),
-                            _dateWidget(),
-                          ],
-                        )
+                        _teamMemberCountWidget(team.memberSize),
+                        SizedBox(width: 31.w),
+                        _dateWidget(),
                       ],
                     )
                   ],
-                )),
+                )
+              ],
+            )),
           ],
         ),
       ),
@@ -111,7 +111,7 @@ class TeamProjectWidget extends StatelessWidget {
 
   Widget _dateWidget() {
     return Text(
-        "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
+      "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
       style: TextStyle(
         color: AppColors.G_04,
         fontSize: 9.sp,
@@ -123,7 +123,6 @@ class TeamProjectWidget extends StatelessWidget {
   }
 
   String _formattedDateTime(DateTime dt) {
-    return "${dt.year}-${dt.month}-${dt.day}";
+    return "${dt.year}.${dt.month}.${dt.day}";
   }
-
 }
