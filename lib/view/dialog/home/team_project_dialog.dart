@@ -185,7 +185,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 15.h),
+                    SizedBox(height: 37.h),
                     Visibility(
                         visible: widget.mode != TeamProjectDialogMode.revive,
                         child: CustomDatePicker(

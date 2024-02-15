@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/color_data.dart';
-import '../../util/wtm_utils.dart';
+import 'package:get/get.dart';
 
 class WTMCurrent extends StatelessWidget {
   const WTMCurrent({super.key});
@@ -16,15 +14,15 @@ class WTMCurrent extends StatelessWidget {
           width: double.maxFinite,
           padding: EdgeInsets.symmetric(
             horizontal: 15.h,
-            vertical: 10.v,
+            vertical: 10.w,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildComponentTen(),
-              SizedBox(height: 15.v),
+              SizedBox(height: 15.h),
               SizedBox(
-                height: 436.v,
+                height: 436.h,
                 width: 327.h,
                 child: Stack(
                   alignment: Alignment.center,
@@ -35,8 +33,8 @@ class WTMCurrent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 31.v),
-                            child: Column(
+                            padding: EdgeInsets.only(top: 31.w),
+                            child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //시간 위치
@@ -64,18 +62,18 @@ class WTMCurrent extends StatelessWidget {
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 //스타일 수정
                                                 ),
                                           ),
                                         ),
-                                        Spacer(
+                                        const Spacer(
                                           flex: 19,
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 4.v),
+                                  SizedBox(height: 4.w),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -84,7 +82,7 @@ class WTMCurrent extends StatelessWidget {
                                         children: [
                                           // 이 부분 걍 파일 하나 만들어서 위젯을 붙여넣기 해도 될 듯. 엄청 여러 개 쓸 거니까
                                           Container(
-                                            height: 17.v,
+                                            height: 17.w,
                                             width: 43.h,
                                             decoration: BoxDecoration(
                                               color: AppColors.G_04, //임의,
@@ -94,11 +92,11 @@ class WTMCurrent extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 3.v),
+                                          SizedBox(height: 3.w),
                                         ],
                                       ),
                                       SizedBox(
-                                        height: 388.v,
+                                        height: 388.w,
                                         width: 43.h,
                                         child: Stack(
                                           alignment: Alignment.center,
@@ -106,10 +104,10 @@ class WTMCurrent extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.topCenter,
                                               child: Container(
-                                                height: 17.v,
+                                                height: 17.w,
                                                 width: 43.h,
                                                 margin:
-                                                    EdgeInsets.only(top: 165.v),
+                                                    EdgeInsets.only(top: 165.w),
                                                 decoration: BoxDecoration(
                                                   color: AppColors.G_04, //임의
                                                   borderRadius:
@@ -134,7 +132,7 @@ class WTMCurrent extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 2.v),
+              SizedBox(height: 2.h),
             ],
           ),
         ),
@@ -146,7 +144,7 @@ class WTMCurrent extends StatelessWidget {
   Widget _buildComponentTen() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.h),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
