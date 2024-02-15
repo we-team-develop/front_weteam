@@ -18,7 +18,7 @@ class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
   Rxn<WeteamUser> user = Rxn<WeteamUser>();
-
+  RxString currentLoginService = ''.obs;
 
   @override
   void onInit() {
@@ -36,12 +36,15 @@ class AuthService extends GetxService {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       if (uid.startsWith('naver')) {
         helper = NaverAuthHelper();
+        currentLoginService.value = "네이버";
         debugPrint("네이버");
       } else if (uid.startsWith('kakao')) {
         helper = KakaoAuthHelper();
+        currentLoginService.value = "카카오";
         debugPrint("카카오");
       } else {
         helper = GoogleAuthHelper();
+        currentLoginService.value = "구글";
         debugPrint("구글");
       }
     }
@@ -83,7 +86,7 @@ class AuthService extends GetxService {
         debugPrint("user값을 받아오지 못함!");
         return const LoginResult(isSuccess: false);
       }
-    } catch(e) {
+    } catch (e) {
       debugPrint("로그인 실패: $e");
       return const LoginResult(isSuccess: false);
     }
@@ -157,5 +160,6 @@ class LoginResult {
   final bool isSuccess;
   final bool isNewUser;
 
-  const LoginResult({required this.isSuccess, this.isNewUser = false, this.user});
+  const LoginResult(
+      {required this.isSuccess, this.isNewUser = false, this.user});
 }

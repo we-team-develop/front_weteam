@@ -18,7 +18,8 @@ class Profile extends GetView<ProfileController> {
   @override
   StatelessElement createElement() {
     controller.updateOrganization();
-    controller.selectProfile(Get.find<AuthService>().user.value!.profile?.imageIdx ?? 0);
+    controller.selectProfile(
+        Get.find<AuthService>().user.value!.profile?.imageIdx ?? 0);
     return super.createElement();
   }
 
@@ -159,7 +160,29 @@ class Profile extends GetView<ProfileController> {
             ),
             SizedBox(height: 14.h),
             // TODO: 연결된 계정에 따른 버튼 변경
-            Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h),
+            Obx(() {
+              // AuthService의 인스턴스를 얻습니다.
+              final AuthService authService = Get.find<AuthService>();
+
+              String imagePath = ImagePath.naverlogin; // 기본 이미지
+
+              // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
+              switch (authService.currentLoginService.value) {
+                case '네이버':
+                  imagePath = ImagePath.naverlogin; // 네이버 로그인 이미지 경로
+                  break;
+                case '카카오':
+                  imagePath = ImagePath.kakaologin; // 카카오 로그인 이미지 경로
+                  break;
+                case '구글':
+                  imagePath = ImagePath.googlelogin; // 구글 로그인 이미지 경로
+                  break;
+              }
+
+              // 설정된 imagePath를 사용하여 Image.asset 위젯을 반환
+              return Image.asset(imagePath, width: 330.w, height: 39.h);
+            }),
+            //Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h), 기존 코드
             SizedBox(height: 24.0.h),
             GestureDetector(
               behavior: HitTestBehavior.translucent,
