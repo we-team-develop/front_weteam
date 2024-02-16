@@ -23,6 +23,7 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_screenutil: ^5.9.0
   google_sign_in: ^6.2.1
+  firebase_messaging: ^14.7.15
 
 dev_dependencies:
   flutter_test:

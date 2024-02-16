@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:front_weteam/data/image_data.dart';
 import 'package:front_weteam/view/login/login_main.dart';
 
@@ -18,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginMain()));
+          MaterialPageRoute(builder: (_) =>  LoginMain()));
     });
   }
 
