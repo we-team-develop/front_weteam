@@ -74,6 +74,7 @@ class ImagePath {
   static String get greenCheck => 'assets/images/green_check.png';
   static String get thumbTimi => 'assets/images/thumb_timi.png';
   static String get wtmlink => 'assets/images/wtm_list_link.png';
+  static String get inforicon => 'assets/images/infor_icon.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }

@@ -66,6 +66,19 @@ class ApiService extends CustomGetConnect implements GetxService {
     return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
+  /// wtm 단건 조회 API
+  ///
+  /// return: 성공시  wtmProject, 실패시 null
+  Future<WTMProject?> getWTMProject(int projectId) async {
+    Response rp = await get('/api/meetings/$projectId');
+    if (rp.hasError) return null;
+
+    String json = rp.bodyString ?? "{}";
+    Map data = jsonDecode(json);
+
+    return WTMProject.fromJson(data);
+  }
+
   /// wtm 생성 API
   ///
   /// return: 성공 여부
