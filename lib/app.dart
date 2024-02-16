@@ -44,7 +44,7 @@ class App extends GetView<BottomNavController> {
       } else if (host == "wtm") {
         if (path.startsWith('add')) {
           int wtmId = int.parse(query['id'] ?? '-1');
-          Get.snackbar('아직 구현되지 않음', '웬투밋 수락 기능을 구현하지 않았습니다.');
+          WeteamUtils.snackbar('아직 구현되지 않음', '웬투밋 수락 기능을 구현하지 않았습니다.');
           // TODO: 구현하기
         }
       }

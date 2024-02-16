@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/wtm_controller.dart';
 import '../../../data/color_data.dart';
+import '../../../util/weteam_utils.dart';
 import '../../widget/custom_calendart.dart';
 import 'wtm_create_finish.dart';
 
@@ -61,10 +62,9 @@ class WTMDate extends GetView<WTMController> {
         if (controller.nameInputText.value.isNotEmpty) {
           Get.to(() => WTMCreateFinish());
         } else {
-          Get.snackbar(
+          WeteamUtils.snackbar(
             'Error',
-            'Please enter a name for the appointment.',
-            snackPosition: SnackPosition.BOTTOM,
+            'Please enter a name for the appointment.'
           );
         }
       },

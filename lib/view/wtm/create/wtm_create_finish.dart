@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../controller/wtm_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
+import '../../../util/weteam_utils.dart';
 
 class WTMCreateFinish extends GetView<WTMController> {
   DateTime startAt = DateTime(2024, 2, 28); // TODO: controller에서 받아오기
@@ -130,17 +131,7 @@ class _CopyLinkButton extends GetView<WTMController> {
     return GestureDetector(
       onTap: () {
         Clipboard.setData(const ClipboardData(text: 'weteam://wtm/add?id=0'));
-        Get.showSnackbar(GetSnackBar(
-            message: '언제보까 링크를 복사했어요.',
-            backgroundColor: AppColors.G_04,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: Image.asset(ImagePath.greenCheck, width: 12.w, height: 12.h),
-            duration: const Duration(seconds: 2),
-            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 7.h),
-            forwardAnimationCurve: Curves.easeOutCirc,
-            reverseAnimationCurve: Curves.easeOutCirc,
-            borderRadius: 8.r));
-        //Get.showSnackbar('a','a');
+        WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', iconPath: ImagePath.greenCheck);
       },
       child: Container(
         height: 40.h,
