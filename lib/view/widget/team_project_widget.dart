@@ -32,15 +32,15 @@ class TeamProjectWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _teamTitleWidget(team.title),
-                    _teamDescriptionWidget(team.description),
                     Row(
                       children: [
+                        _teamTitleWidget(team.title),
+                        SizedBox(width: 8.w),
                         _teamMemberCountWidget(team.memberSize),
-                        SizedBox(width: 31.w),
-                        _dateWidget(),
                       ],
-                    )
+                    ),
+                    _teamDescriptionWidget(team.description),
+                    _dateWidget()
                   ],
                 )
               ],
