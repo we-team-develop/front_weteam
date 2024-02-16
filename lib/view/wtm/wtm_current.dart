@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../data/image_data.dart';
 import '../widget/wtm_project_widget.dart';
+import '../widget/wtm_schedule_widget.dart';
 
 class WTMCurrent extends GetView<WTMCurrentController> {
   const WTMCurrent({super.key});
@@ -65,6 +66,9 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                     height: 19.h,
                   ),
                 ),
+                Expanded(
+                    child: SingleChildScrollView(
+                        child: Obx(() => WTMSchedule(controller.wtm.value)))),
               ],
             ),
           ),

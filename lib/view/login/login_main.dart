@@ -36,7 +36,7 @@ class LoginMain extends StatelessWidget {
               alignment: Alignment.center,
               child: Image.asset(
                 ImagePath.appicon,
-                width: 110.w,
+                width: 108.w,
                 height: 140.h,
               ),
             ),
@@ -94,7 +94,8 @@ class LoginMain extends StatelessWidget {
     // TODO: 로그인 버튼 중복 클릭 방지
     LoginResult result = await Get.find<AuthService>().login(helper);
     if (result.isSuccess) {
-      sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, !result.isNewUser);
+      sharedPreferences.setBool(
+          SharedPreferencesKeys.isRegistered, !result.isNewUser);
       if (result.isNewUser) {
         Get.offAll(() => const SignUpCompleted());
       } else {
