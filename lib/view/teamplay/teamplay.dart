@@ -37,6 +37,7 @@ class TeamPlay extends GetView<TeamPlayController> {
           const SizedBox(
             height: 11.0,
           ),
+          // TODO : 배너 이미지
           Image.asset(
             ImagePath.tpBanner,
             width: 330.w,
@@ -53,7 +54,8 @@ class TeamPlay extends GetView<TeamPlayController> {
                 return _noTeamProject();
               } else {
                 List<TeamProject> tpList = controller.tpList.value!.projectList;
-                return TeamProjectListView(tpList, scrollController: controller.tpScrollController);
+                return TeamProjectListView(tpList,
+                    scrollController: controller.tpScrollController);
               }
             }),
           )
@@ -65,15 +67,15 @@ class TeamPlay extends GetView<TeamPlayController> {
   Widget _noTeamProject() {
     return const Center(
         child: Text(
-          '진행 중인  팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: AppColors.Black,
-            fontSize: 11,
-            fontFamily: 'NanumSquareNeo',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-        ));
+      '진행 중인  팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: AppColors.Black,
+        fontSize: 11,
+        fontFamily: 'NanumSquareNeo',
+        fontWeight: FontWeight.w400,
+        height: 0,
+      ),
+    ));
   }
 }
