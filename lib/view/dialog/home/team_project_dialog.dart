@@ -141,7 +141,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                               isDense: true,
                             ),
                             cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
-                            style: const TextStyle(fontSize: 13),
+                            style: TextStyle(fontSize: 13.sp),
                             onChanged: (newV) {
                               setState(() {});
                             },

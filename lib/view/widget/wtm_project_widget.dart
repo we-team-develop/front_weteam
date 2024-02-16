@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
+import '../../controller/wtm_current_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
@@ -15,10 +16,9 @@ class WTMProjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // 해당 웬투밋 현황 페이지로 이동
-        const WTMCurrent();
-      },
+      onTap: () => Get.to(GetBuilder(
+          builder: (controller) => const WTMCurrent(),
+          init: WTMCurrentController(team))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
