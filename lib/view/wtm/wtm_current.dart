@@ -43,8 +43,12 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                 ),
                 // TODO : wtm_widget
                 Obx(
-                  () =>
-                      Stack(children: [WTMProjectWidget(controller.wtm.value)]),
+                  () => Stack(children: [
+                    WTMProjectWidget(
+                      controller.wtm.value,
+                      showlink: false,
+                    )
+                  ]),
                 ),
                 SizedBox(
                   height: 14.h,

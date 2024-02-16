@@ -10,8 +10,9 @@ import '../wtm/wtm_current.dart';
 
 class WTMProjectWidget extends StatelessWidget {
   final WTMProject team;
+  final bool showlink;
 
-  const WTMProjectWidget(this.team, {super.key});
+  const WTMProjectWidget(this.team, {super.key, this.showlink = true});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,10 @@ class WTMProjectWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Image.asset(ImagePath.wtmlink)),
+                  if (showlink)
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: Image.asset(ImagePath.wtmlink)),
                 ],
               ),
             ),

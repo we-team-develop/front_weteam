@@ -72,8 +72,22 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                                   admitCallback:
                                                       exitOrDeleteTeamProject));
                                     },
-                                    child: Image.asset(ImagePath.icHostoutGray,
-                                        width: 21.w, height: 21.h),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 14.h),
+                                      child: Column(
+                                        children: [
+                                          Image.asset(ImagePath.icHostoutGray,
+                                              width: 21.w, height: 21.h),
+                                          Text(
+                                            '나가기',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10.sp,
+                                                color: AppColors.G_03),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ))
                               : const SizedBox(),
                         ])),
@@ -85,7 +99,6 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         return _UserListView();
                       }
                     }),
-
                     Obx(() => Visibility(
                         visible: controller.isKickMode.isFalse &&
                             controller.isChangeHostMode.isFalse,
@@ -119,7 +132,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   Future<void> exitOrDeleteTeamProject() async {
     if (controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
       // 팀플 삭제
-      bool success = await Get.find<ApiService>().deleteTeamProject(controller.tp.value.id);
+      bool success = await Get.find<ApiService>()
+          .deleteTeamProject(controller.tp.value.id);
       if (success) {
         await updateTeamProjectLists();
         Get.closeAllSnackbars();
@@ -131,7 +145,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       }
     } else {
       // 팀플 탈퇴
-      bool success = await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
+      bool success =
+          await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
       if (success) {
         await updateTeamProjectLists();
         Get.closeAllSnackbars();
@@ -152,7 +167,7 @@ class _CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 1,
+      height: 1.h,
       margin: EdgeInsets.symmetric(vertical: 20.h),
       color: AppColors.G_01,
     );
@@ -185,10 +200,12 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
       onTap: () {
         if (controller.isKickMode.isTrue && !amIHost()) {
           kickSelected.value = !kickSelected.value;
-          controller.selectedKickUser.value = kickSelected.value ? projectUser.id : -1;
+          controller.selectedKickUser.value =
+              kickSelected.value ? projectUser.id : -1;
         }
 
-        if (controller.isKickMode.isFalse && controller.isChangeHostMode.isFalse) {
+        if (controller.isKickMode.isFalse &&
+            controller.isChangeHostMode.isFalse) {
           if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
             Get.to(
                 UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
@@ -367,131 +384,142 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Visibility(
-          // 어드민 전용 설정
-            visible: controller.tp.value.host.id ==
-                Get.find<AuthService>().user.value!.id,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 24.h),
-                GestureDetector(
-                  onTap: () {
-                    String? userName = Get.find<AuthService>().user.value?.username;
-                    String teamProjectName = controller.tp.value.title;
-                    int teamProjectId = controller.tp.value.id;
-                    Share.share('$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$teamProjectId');
-                  },
-                  child: Container(
-                    width: 330.w,
-                    height: 40.h,
-                    decoration: const BoxDecoration(
-                      color: AppColors.MainOrange,
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                // 어드민 전용 설정
+                visible: controller.tp.value.host.id ==
+                    Get.find<AuthService>().user.value!.id,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 24.h),
+                    GestureDetector(
+                      onTap: () {
+                        String? userName =
+                            Get.find<AuthService>().user.value?.username;
+                        String teamProjectName = controller.tp.value.title;
+                        int teamProjectId = controller.tp.value.id;
+                        Share.share(
+                            '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$teamProjectId');
+                      },
+                      child: Container(
+                        width: 330.w,
+                        height: 40.h,
+                        decoration: const BoxDecoration(
+                          color: AppColors.MainOrange,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Center(
+                            child: Text('팀원 초대하기',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'NanumGothicExtraBold',
+                                    fontSize: 15.sp))),
+                      ),
                     ),
-                    child: Center(
-                        child: Text('팀원 초대하기',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'NanumGothicExtraBold',
-                                fontSize: 15.sp))),
-                  ),
-                ),
-                SizedBox(height: 24.h),
-                Text(
-                  '팀플방 관리실 | 호스트',
-                  style: TextStyle(
-                    color: AppColors.Black,
-                    fontSize: 14.sp,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 14.h),
-                Visibility(
-                    visible: controller.tp.value.done,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _TextButton(text: '팀플 기간 연장 (팀플 복구)', onTap: () {
-                          showDialog(context: context, builder: (BuildContext context) => TeamProjectDialog(mode: TeamProjectDialogMode.revive, teamData: controller.tp.value));
+                    SizedBox(height: 24.h),
+                    Text(
+                      '팀플방 관리실 | 호스트',
+                      style: TextStyle(
+                        color: AppColors.Black,
+                        fontSize: 14.sp,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+                    Visibility(
+                        visible: controller.tp.value.done,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _TextButton(
+                                text: '팀플 기간 연장 (팀플 복구)',
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          TeamProjectDialog(
+                                              mode:
+                                                  TeamProjectDialogMode.revive,
+                                              teamData: controller.tp.value));
+                                }),
+                          ],
+                        )),
+                    Visibility(
+                        visible: !controller.tp.value.done,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _TextButton(
+                                text: '팀플 정보 수정',
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return TeamProjectDialog(
+                                            teamData: controller.tp.value,
+                                            mode: TeamProjectDialogMode.edit);
+                                      });
+                                }),
+                            _TextButton(
+                                text: '강제 퇴장 시키기',
+                                onTap: () {
+                                  if (controller.tp.value.memberSize == 1) {
+                                    WeteamUtils.snackbar("", '강제 퇴장할 팀원이 없습니다');
+                                    return;
+                                  }
+                                  controller.isKickMode.value =
+                                      !controller.isKickMode.value;
+                                }),
+                            _TextButton(
+                                text: '호스트 권한 넘기기',
+                                onTap: () {
+                                  if (controller.tp.value.memberSize == 1) {
+                                    WeteamUtils.snackbar(
+                                        "", '호스트를 넘겨 받을 팀원이 없습니다');
+                                    return;
+                                  }
+                                  controller.isKickMode.value = false;
+                                  controller.isChangeHostMode.value = true;
+                                }),
+                            SizedBox(height: 23.h)
+                          ],
+                        )),
+                  ],
+                )),
+            Visibility(
+                // 공통
+                visible: !controller.tp.value.done,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '팀플방 관리실 | 공통',
+                      style: TextStyle(
+                        color: AppColors.Black,
+                        fontSize: 14.sp,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 14.h),
+                    _TextButton(
+                        text: '내 역할 변경하기',
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomBigDialog(
+                                    title: '내 역할 변경',
+                                    child: _ChangeRoleDialog(changeRoleTEC));
+                              });
                         }),
-                      ],
-                    )),
-                Visibility(
-                    visible: !controller.tp.value.done,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _TextButton(
-                            text: '팀플 정보 수정',
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return TeamProjectDialog(
-                                        teamData: controller.tp.value,
-                                        mode: TeamProjectDialogMode.edit);
-                                  });
-                            }),
-                        _TextButton(
-                            text: '강제 퇴장 시키기',
-                            onTap: () {
-                              if (controller.tp.value.memberSize == 1) {
-                                WeteamUtils.snackbar("", '강제 퇴장할 팀원이 없습니다');
-                                return;
-                              }
-                              controller.isKickMode.value =
-                              !controller.isKickMode.value;
-                            }),
-                        _TextButton(
-                            text: '호스트 권한 넘기기',
-                            onTap: () {
-                              if (controller.tp.value.memberSize == 1) {
-                                WeteamUtils.snackbar("", '호스트를 넘겨 받을 팀원이 없습니다');
-                                return;
-                              }
-                              controller.isKickMode.value = false;
-                              controller.isChangeHostMode.value = true;
-                            }),
-                        SizedBox(height: 23.h)
-                      ],
-                    )),
-              ],
-            )),
-        Visibility(
-          // 공통
-            visible: !controller.tp.value.done,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '팀플방 관리실 | 공통',
-                  style: TextStyle(
-                    color: AppColors.Black,
-                    fontSize: 14.sp,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 14.h),
-                _TextButton(
-                    text: '내 역할 변경하기',
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomBigDialog(
-                                title: '내 역할 변경',
-                                child: _ChangeRoleDialog(changeRoleTEC));
-                          });
-                    }),
-              ],
-            ))
-      ],
-    ));
+                  ],
+                ))
+          ],
+        ));
   }
 }
 
@@ -533,8 +561,7 @@ class _CancelOrActionBottomPanel
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side:
-                          const BorderSide(width: 1, color: AppColors.G_02),
+                      side: const BorderSide(width: 1, color: AppColors.G_02),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -664,7 +691,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       ],
     );
   }
-  
+
   Future<void> setRole() async {
     String newRole = tec.text.trim();
     if (newRole.isEmpty) {
