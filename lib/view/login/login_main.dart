@@ -25,7 +25,7 @@ class LoginMain extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    var padding = MediaQuery.of(context).size.height * 0.01; // 버튼 사이 패딩
+    var padding = 4.h; // 버튼 사이 패딩
 
     return Center(
       child: Column(
@@ -35,7 +35,7 @@ class LoginMain extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Image.asset(
-                ImagePath.appicon,
+                ImagePath.bigWeteamTimiIcon,
                 width: 108.w,
                 height: 140.h,
               ),
@@ -49,14 +49,17 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(
                   ImagePath.googlelogin,
                   width: 302.w,
-                  // height: 39.h,
+                  height: 39.h,
                 ),
               ),
               SizedBox(height: padding),
+              // 임시 회원
               GestureDetector(
-                onTap: () => login(KakaoAuthHelper()),
+                onTap: () {
+                  Get.to(() => const SignUpCompleted());
+                },
                 child: Image.asset(
-                  ImagePath.kakaologin,
+                  ImagePath.applelogin,
                   width: 302.w,
                   height: 39.h,
                 ),
@@ -71,17 +74,15 @@ class LoginMain extends StatelessWidget {
                 onTap: () => login(NaverAuthHelper()),
               ),
               SizedBox(height: padding),
-              // 임시 회원
               GestureDetector(
-                onTap: () {
-                  Get.to(() => const SignUpCompleted());
-                },
+                onTap: () => login(KakaoAuthHelper()),
                 child: Image.asset(
-                  ImagePath.applelogin,
+                  ImagePath.kakaologin,
                   width: 302.w,
                   height: 39.h,
                 ),
               ),
+              SizedBox(height: padding),
               SizedBox(height: MediaQuery.of(context).size.height * 0.09),
             ],
           ),
