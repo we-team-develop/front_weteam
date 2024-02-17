@@ -29,62 +29,76 @@ class CustomCheckDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
-      titlePadding: const EdgeInsets.fromLTRB(40, 28, 40, 5),
+      //titlePadding: const EdgeInsets.fromLTRB(40, 28, 40, 5),
       backgroundColor: AppColors.White,
       surfaceTintColor: AppColors.White,
-
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       //Dialog Main Title
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: AppColors.Black,
-          fontSize: 12.sp,
-          fontFamily: 'NanumSquareNeo',
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min, // 최소 크기로
-        crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
-        children: [
-          Text(content,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.Black,
-                fontSize: 10.sp,
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.w400,
-              )),
-
-          const SizedBox(height: 12.37),
-          // Divider
-          Container(
-            width: double.infinity,
-            height: 0.5,
-            decoration: const BoxDecoration(
-              color: AppColors.G_02,
-            ),
-          ),
-          IntrinsicHeight(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _Button(name: denyName, colorInt: denyColorInt, callback: denyCallback),
-              Container(
-                width: 0.5,
-                height: 40,
-                decoration: const BoxDecoration(
-                    color: AppColors.G_02
+      content: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: 111.h, minWidth: 240.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // 최소 크기로
+          crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min, // 최소 크기로
+              crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
+              children: [
+                SizedBox(height: 24.h),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.Black,
+                    fontSize: 12.sp,
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              _Button(name: admitName, colorInt: admitColorInt, callback: admitCallback)
-            ],
-          )),
-        ],
+                Text(content,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.Black,
+                      fontSize: 10.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                    )),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min, // 최소 크기로
+              crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
+              children: [
+                // Divider
+                Container(
+                  width: double.infinity,
+                  height: 0.5.r,
+                  decoration: const BoxDecoration(
+                    color: AppColors.G_02,
+                  ),
+                ),
+                IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _Button(name: denyName, colorInt: denyColorInt, callback: denyCallback),
+                        Container(
+                          width: 0.5.r,
+                          height: 42.h,
+                          decoration: const BoxDecoration(
+                              color: AppColors.G_02
+                          ),
+                        ),
+                        _Button(name: admitName, colorInt: admitColorInt, callback: admitCallback)
+                      ],
+                    )),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
