@@ -127,7 +127,7 @@ class Home extends GetView<HomeController> {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1, color: AppColors.G_02),
+            side: BorderSide(width: 1.r, color: AppColors.G_02),
             borderRadius: BorderRadius.circular(8.r),
           ),
         ),
@@ -500,7 +500,7 @@ class _DDayWidgetState extends State<DDayWidget> {
       decoration: ShapeDecoration(
         color: AppColors.Orange_01,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1.w, color: AppColors.G_02),
+          side: BorderSide(width: 1.r, color: AppColors.G_02),
           borderRadius: BorderRadius.circular(16.r),
         ),
       ),

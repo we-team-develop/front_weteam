@@ -89,7 +89,7 @@ class _TextInput extends GetView<WTMController> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: AppColors.G_01, width: 1)),
+          border: Border.all(color: AppColors.G_01, width: 1.r)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

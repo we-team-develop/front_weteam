@@ -125,7 +125,7 @@ class WTMCreate extends GetView<WTMController> {
           border: Border(
             bottom: BorderSide(
               color: isSelected ? AppColors.MainOrange : Colors.transparent,
-              width: 2.w,
+              width: 2.r,
             ),
           ),
         ),

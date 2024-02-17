@@ -561,7 +561,7 @@ class _CancelOrActionBottomPanel
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side: const BorderSide(width: 1, color: AppColors.G_02),
+                      side: BorderSide(width: 1.r, color: AppColors.G_02),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
