@@ -138,7 +138,7 @@ class _Button extends StatelessWidget {
   }
 
   void callCallback() async {
-    if (callback == null && loading.value) {
+    if (callback == null || loading.value) {
       return;
     }
 
