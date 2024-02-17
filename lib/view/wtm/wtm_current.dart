@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../data/color_data.dart';
-import '../../controller/wtm_current_controller.dart';
 import 'package:get/get.dart';
 
+import '../../controller/wtm_current_controller.dart';
+import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../widget/wtm_project_widget.dart';
 import '../widget/wtm_schedule_widget.dart';
@@ -15,7 +15,7 @@ class WTMCurrent extends GetView<WTMCurrentController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 46.0.h),
+        padding: EdgeInsets.only(top: 21.0.h),
         child: _body(),
       ),
     );
@@ -67,8 +67,28 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                   ),
                 ),
                 Expanded(
-                    child: SingleChildScrollView(
-                        child: Obx(() => WTMSchedule(controller.wtm.value)))),
+                    child: WTMSchedule(controller.wtm.value)),
+                SizedBox(height: 11.05.h),
+                GestureDetector(
+                  onTap: () {
+                  },
+                  child: Container(
+                    height: 40.h,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: 15.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.MainOrange,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    ),
+                    child: Center(
+                        child: Text('가능 시간 입력',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'NanumGothicExtraBold',
+                                fontSize: 15.sp))),
+                  ),
+                ),
+                SizedBox(height: 12.h)
               ],
             ),
           ),
