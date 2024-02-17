@@ -169,13 +169,13 @@ class Profile extends GetView<ProfileController> {
               // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
               switch (authService.currentLoginService.value) {
                 case '네이버':
-                  imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
+                  imagePath = ImagePath.naverlogin; // 네이버 로그인 이미지 경로
                   break;
                 case '카카오':
-                  imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
+                  imagePath = ImagePath.kakaologin; // 카카오 로그인 이미지 경로
                   break;
                 case '구글':
-                  imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
+                  imagePath = ImagePath.googlelogin; // 구글 로그인 이미지 경로
                   break;
               }
 
