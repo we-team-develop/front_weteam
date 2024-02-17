@@ -16,6 +16,8 @@ class CustomBigDialog extends StatelessWidget {
       surfaceTintColor: AppColors.White,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+      titlePadding: EdgeInsets.symmetric(vertical: 29.h),
+      contentPadding: EdgeInsets.all(16.r),
       //Dialog Main Title
       title: Text(
         title,
@@ -27,7 +29,11 @@ class CustomBigDialog extends StatelessWidget {
           fontWeight: FontWeight.w800,
         ),
       ),
-      content: child,
+      content: ConstrainedBox(
+        constraints: BoxConstraints(
+            minWidth: 272.w),
+        child: child,
+      ),
     );
   }
 }

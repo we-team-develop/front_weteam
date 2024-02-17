@@ -99,7 +99,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
               ],
             )),
         SizedBox(
-          height: 12.h,
+          height: 26.h,
         ),
         Visibility(
             visible: widget.mode != TeamProjectDialogMode.revive,
@@ -185,7 +185,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 37.h),
+                    SizedBox(height: 15.h),
                     Visibility(
                         visible: widget.mode != TeamProjectDialogMode.revive,
                         child: CustomDatePicker(
@@ -240,7 +240,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
               ],
             )),
         SizedBox(
-          height: 34.h,
+          height: 27.h,
         ),
         Visibility(
             visible: widget.mode == TeamProjectDialogMode.revive,

@@ -85,7 +85,7 @@ class _DDayDialogState extends State<DDayDialog> {
                     Container(
                       width: 1,
                       height: 90.h,
-                      margin: EdgeInsets.symmetric(horizontal: 21.w),
+                      margin: EdgeInsets.symmetric(horizontal: 16.w),
                       decoration: const BoxDecoration(
                         color: AppColors.G_02,
                       ),
@@ -116,21 +116,25 @@ class _DDayDialogState extends State<DDayDialog> {
                   ],
                 )),
             SizedBox(
-              height: 30.h,
+              height: 24.h,
             ),
             Visibility(
                 visible: warningVisible,
-                child: Text(
-                  warningContent,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.MainOrange,
-                      fontFamily: 'NanumSquareNeo',
-                      fontSize: 10.sp),
+                child: Column(
+                  children: [
+                    Text(
+                      warningContent,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.MainOrange,
+                          fontFamily: 'NanumSquareNeo',
+                          fontSize: 10.sp),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    )
+                  ],
                 )),
-            SizedBox(
-              height: 5.h,
-            ),
             NormalButton(
                 text: '확인',
                 onTap: () async {
