@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -97,12 +98,14 @@ class _CustomPicker extends StatelessWidget {
           onSelectedItemChanged: onChanged,
           childCount: items.length,
           itemBuilder: (context, index) {
-            return Text(items[index],
+            return AutoSizeText(items[index],
+                maxLines: 1,
+                maxFontSize: 16.sp,
                 style: TextStyle(
                   color: AppColors.Black,
-                  fontSize: 15.sp,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
+                  fontSize: 16.sp,
+                  fontFamily: 'NanumSquareNeo',
+                  fontWeight: FontWeight.bold,
                   height: 0,
                 ));
           },
