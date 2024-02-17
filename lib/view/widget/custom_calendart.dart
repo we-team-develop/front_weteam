@@ -291,6 +291,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
                 Text('${date.day}',
                     style: TextStyle(
                         color: textColor,
+                        fontSize: 12.sp,
                         fontFamily: 'NanumGothicBold',
                         fontWeight: FontWeight.bold))
               ],
