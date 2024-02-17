@@ -28,42 +28,37 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   }
 
   Widget _body() {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                ImagePath.appicon,
-                width: 110.w,
-                height: 140.h,
-              ),
-              SizedBox(
-                height: 21.0.h,
-              ),
-              Text(
-                'WE TEAM 회원가입이 완료되었습니다!',
-                style: TextStyle(
-                  fontFamily: 'NanumGothicExtraBold',
-                  fontSize: 14.0.sp,
-                ),
-              ),
-            ],
+        SizedBox(height: 140.h),
+        Image.asset(
+          ImagePath.bigWeteamTimiIcon,
+          width: 108.w,
+          height: 140.h,
+        ),
+        SizedBox(
+          height: 21.0.h,
+        ),
+        Text(
+          'WE TEAM 회원가입이 완료되었습니다!',
+          style: TextStyle(
+              fontFamily: 'NanumExtraGothic',
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold
           ),
         ),
+        const Expanded(child: SizedBox()),
         // 다음 버튼
         Align(
           alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 67.0.h),
-            child: GestureDetector(
-                onTap: () {
-                  Get.to(() => ProfileSettingPage());
-                },
-                child: _nextpagebutton()),
-          ),
+          child: GestureDetector(
+              onTap: () {
+                Get.to(() => ProfileSettingPage());
+              },
+              child: _nextpagebutton()),
         ),
+        SizedBox(height: 32.h)
       ],
     );
   }
