@@ -122,7 +122,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         constraints:
                             BoxConstraints(minHeight: 60.h, minWidth: 260.w),
                         child: Container(
-                          padding: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(10).r,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
                                 side: BorderSide(
@@ -141,7 +141,11 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                               isDense: true,
                             ),
                             cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
-                            style: TextStyle(fontSize: 13.sp),
+                            style: TextStyle(
+                                fontSize: 10.sp,
+                                color: AppColors.G_05,
+                                fontFamily: 'NanumSqaureNeo',
+                                fontWeight: FontWeight.bold),
                             onChanged: (newV) {
                               setState(() {});
                             },
