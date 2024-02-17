@@ -23,16 +23,33 @@ class WeteamUtils {
     }
 
     if (_snackbarController != null) {
-      await _snackbarController!.close(withAnimations: false);
+      try {
+        await _snackbarController!.close(withAnimations: false);
+      } catch (_) {}
     }
 
     _snackbarController = Get.showSnackbar(GetSnackBar(
-        title: title,
-        message: content,
+        titleText: title == null ? null : Text(
+            title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.bold,
+                fontSize: 15.sp,
+                color: AppColors.White
+            )),
+        messageText: content == null ? null : Text(
+          content,
+          style: TextStyle(
+            color: AppColors.White,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.bold,
+            fontSize: 13.sp
+          )),
         backgroundColor: AppColors.G_04,
         snackPosition: SnackPosition.BOTTOM,
         icon: Image.asset(iconPath, width: 12.w, height: 12.h),
         duration: const Duration(seconds: 2),
+        padding: EdgeInsets.all(15.r),
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 7.h),
         forwardAnimationCurve: Curves.easeOutCirc,
         reverseAnimationCurve: Curves.easeOutCirc,
