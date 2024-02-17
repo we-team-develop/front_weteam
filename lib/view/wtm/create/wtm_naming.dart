@@ -98,6 +98,10 @@ class _TextInput extends GetView<WTMController> {
               child: TextField(
             maxLines: 1,
             controller: controller.nameInputController,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: 'NanumGothic'
+            ),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 counterText: "",
