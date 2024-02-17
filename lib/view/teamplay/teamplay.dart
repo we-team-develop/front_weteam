@@ -65,13 +65,13 @@ class TeamPlay extends GetView<TeamPlayController> {
   }
 
   Widget _noTeamProject() {
-    return const Center(
+    return Center(
         child: Text(
       '진행 중인  팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
       textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.Black,
-        fontSize: 11,
+        fontSize: 11.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
         height: 0,

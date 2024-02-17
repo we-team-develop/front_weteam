@@ -26,13 +26,13 @@ class NotificationPage extends GetView<NotificationController> {
       body: Column(
         children: [
           SizedBox(height: 16.h),
-          const Center(
+          Center(
             child: Text(
               '알림',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 14.sp,
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w600,
                 height: 0,

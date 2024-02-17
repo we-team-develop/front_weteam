@@ -67,7 +67,7 @@ class _DDayDialogState extends State<DDayDialog> {
                           '시작일',
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontFamily: 'NanumSquareNeo',
                             fontWeight: FontWeight.w700,
                           ),
@@ -98,7 +98,7 @@ class _DDayDialogState extends State<DDayDialog> {
                           '종료일',
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontFamily: 'NanumSquareNeo',
                             fontWeight: FontWeight.w700,
                           ),

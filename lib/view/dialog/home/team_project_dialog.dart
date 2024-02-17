@@ -110,7 +110,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                   '상세내용',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.6),
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w700,
                   ),
@@ -155,7 +155,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                           "${contentController.text.length} / $maxContentLength",
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.5),
-                            fontSize: 10,
+                            fontSize: 10.sp,
                             fontFamily: 'NanumSquareNeo',
                             fontWeight: FontWeight.w400,
                             height: 0.26,
@@ -180,7 +180,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       '시작일',
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.6),
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w700,
                       ),
@@ -222,7 +222,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       '종료일',
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.6),
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontFamily: 'NanumSquareNeo',
                         fontWeight: FontWeight.w700,
                       ),

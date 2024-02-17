@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/color_data.dart';
 
@@ -30,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   "${widget.controller?.text.length} / ${widget.maxLength}",
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
-                    fontSize: 10,
+                    fontSize: 10.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w400,
                     height: 0.26,
@@ -41,7 +42,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hintText: " ${widget.hint}",
           hintStyle: TextStyle(
             fontFamily: "NanumSquareNeo",
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             color: Colors.black.withOpacity(0.3),
           ),

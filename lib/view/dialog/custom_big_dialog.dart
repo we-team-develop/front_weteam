@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/color_data.dart';
 
@@ -19,9 +20,9 @@ class CustomBigDialog extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           color: AppColors.Black,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontFamily: 'NanumSquareNeo',
           fontWeight: FontWeight.w800,
         ),

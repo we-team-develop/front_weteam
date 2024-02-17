@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../data/color_data.dart';
@@ -31,15 +32,16 @@ class CustomCheckDialog extends StatelessWidget {
       titlePadding: const EdgeInsets.fromLTRB(40, 28, 40, 5),
       backgroundColor: AppColors.White,
       surfaceTintColor: AppColors.White,
+
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       //Dialog Main Title
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           color: AppColors.Black,
-          fontSize: 12,
+          fontSize: 12.sp,
           fontFamily: 'NanumSquareNeo',
           fontWeight: FontWeight.w700,
         ),
@@ -50,9 +52,9 @@ class CustomCheckDialog extends StatelessWidget {
         children: [
           Text(content,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.Black,
-                fontSize: 10,
+                fontSize: 10.sp,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w400,
               )),
@@ -109,7 +111,7 @@ class _Button extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(colorInt),
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w700,
                 height: 0,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../model/wtm_project.dart';
-import '../../controller/wtm_schedule_controller.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../controller/wtm_schedule_controller.dart';
+import '../../model/wtm_project.dart';
 
 class WTMSchedule extends GetView<WTMScheduleController> {
   final WTMProject wtm;
@@ -35,7 +37,7 @@ class WTMSchedule extends GetView<WTMScheduleController> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Text(
           '${day.day}',
-          style: const TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20.sp),
         ),
       );
     });
