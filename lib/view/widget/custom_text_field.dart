@@ -66,6 +66,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
       maxLength: widget.maxLength, // 최대 20자
 
+      style: TextStyle(
+        fontFamily: 'NanumSquareNeo',
+        fontSize: 18.sp,
+        fontWeight: FontWeight.bold
+      ),
       onChanged: (newV) {
         setState(() {
         });
