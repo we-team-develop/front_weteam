@@ -256,7 +256,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 탈퇴 실패
-      WeteamUtils.snackbar("죄송합니다", "회원탈퇴를 하지 못했습니다");
+      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다.");
     }
   }
 
