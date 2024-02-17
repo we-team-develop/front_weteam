@@ -75,9 +75,6 @@ flutter:
 #   image_path: "assets/icon/icon.png"
 
 flutter_native_splash:
- background_image: "assets/images/splash.png"
- android_12:
-   background_image: "assets/images/splash.png"
 
  android: true
  ios: true
