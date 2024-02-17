@@ -49,7 +49,7 @@ class WeteamUtils {
         snackPosition: SnackPosition.BOTTOM,
         icon: Image.asset(iconPath, width: 12.w, height: 12.h),
         duration: const Duration(seconds: 2),
-        padding: EdgeInsets.all(15.r),
+        padding: const EdgeInsets.all(15).r,
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 7.h),
         forwardAnimationCurve: Curves.easeOutCirc,
         reverseAnimationCurve: Curves.easeOutCirc,

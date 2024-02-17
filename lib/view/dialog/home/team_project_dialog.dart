@@ -137,7 +137,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                               counterText: "",
                               border: InputBorder.none,
                               // 여백 제거
-                              contentPadding: EdgeInsets.all(0),
+                              contentPadding: EdgeInsets.zero,
                               isDense: true,
                             ),
                             cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경

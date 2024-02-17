@@ -56,7 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           iconColor: AppColors.MainOrange,
 
           // hint와 underline 사이의 공간 제거
-          contentPadding: const EdgeInsets.all(0),
+          contentPadding: EdgeInsets.zero,
           isDense: true,
 
           // Underline의 색을 변경합니다

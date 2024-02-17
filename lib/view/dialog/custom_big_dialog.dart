@@ -17,7 +17,7 @@ class CustomBigDialog extends StatelessWidget {
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       titlePadding: EdgeInsets.symmetric(vertical: 29.h),
-      contentPadding: EdgeInsets.all(16.r),
+      contentPadding: const EdgeInsets.all(16).r,
       //Dialog Main Title
       title: Text(
         title,
