@@ -75,6 +75,10 @@ class ImagePath {
   static String get thumbTimi => 'assets/images/thumb_timi.png';
   static String get wtmlink => 'assets/images/wtm_list_link.png';
   static String get inforicon => 'assets/images/infor_icon.png';
+  static String get loggedInGoogle => 'assets/images/loggedin_google.png';
+  static String get loggedInKakao => 'assets/images/loggedin_kakao.png';
+  static String get loggedInNaver => 'assets/images/loggedin_naver.png';
+  static String get loggedInApple => 'assets/images/loggedin_apple.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }
