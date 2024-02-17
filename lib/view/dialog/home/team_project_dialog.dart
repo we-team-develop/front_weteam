@@ -148,8 +148,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                           ),
                         )),
                     Positioned(
-                        right: 10,
-                        bottom: 10,
+                        right: 10.w,
+                        bottom: 10.h,
                         child: Text(
                           // TextField 오른쪽에 counter
                           "${contentController.text.length} / $maxContentLength",
