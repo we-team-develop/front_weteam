@@ -8,24 +8,32 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../controller/custom_calendar_controller.dart';
 import '../../data/color_data.dart';
 
-class CustomCalendar extends GetView<CustomCalendarController> {
+class CustomCalendar extends StatefulWidget {
+
+  const CustomCalendar({super.key});
+
+  @override
+  State<CustomCalendar> createState() => _CustomCalendarState();
+}
+
+class _CustomCalendarState extends State<CustomCalendar> {
+  final CustomCalendarController controller = Get.put(CustomCalendarController());
+
   late PagingController<int, _CalendarItem> _pagingController;
+
   DateTime initDate = DateTime.now().copyWith(
       day: 0, hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
 
-  CustomCalendar({super.key});
-
   @override
-  StatelessElement createElement() {
-    Get.put(CustomCalendarController());
+  void initState() {
+    super.initState();
     int key = controller.now.month - 1;
     _pagingController = PagingController(firstPageKey: key);
     _pagingController.addPageRequestListener((pageKey) async {
       DateTime nextDt =
-          DateTime(initDate.year + (pageKey ~/ 12), pageKey % 12 + 1);
+      DateTime(initDate.year + (pageKey ~/ 12), pageKey % 12 + 1);
       _pagingController.appendPage([_CalendarItem(nextDt)], ++key);
     });
-    return super.createElement();
   }
 
   @override
