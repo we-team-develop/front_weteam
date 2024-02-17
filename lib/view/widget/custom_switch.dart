@@ -47,8 +47,8 @@ class _CustomSwitchState extends State<CustomSwitch> {
           alignment: Alignment.center,
           children: [
             Container(
-              width: widget.trackWidth,
-              height: widget.trackHeight,
+              width: widget.trackWidth.w,
+              height: widget.trackHeight.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.5.r),
                 color: _isSwitched
