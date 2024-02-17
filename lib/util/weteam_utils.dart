@@ -22,11 +22,7 @@ class WeteamUtils {
       content = '$content';
     }
 
-    if (_snackbarController != null) {
-      try {
-        await _snackbarController!.close(withAnimations: false);
-      } catch (_) {}
-    }
+    await closeSnackbarNow();
 
     _snackbarController = Get.showSnackbar(GetSnackBar(
         titleText: title == null ? null : Text(
@@ -54,5 +50,14 @@ class WeteamUtils {
         forwardAnimationCurve: Curves.easeOutCirc,
         reverseAnimationCurve: Curves.easeOutCirc,
         borderRadius: 8.r));
+  }
+
+  static Future<void> closeSnackbarNow() async {
+    if (_snackbarController != null) {
+      try {
+        await _snackbarController!.close(withAnimations: false);
+        _snackbarController = null;
+      } catch (_) {}
+    }
   }
 }
