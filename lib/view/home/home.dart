@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../binding/wtm_bindings.dart';
 import '../../controller/home_controller.dart';
 import '../../data/color_data.dart';
@@ -126,7 +128,7 @@ class Home extends GetView<HomeController> {
           color: Colors.white,
           shape: RoundedRectangleBorder(
             side: const BorderSide(width: 1, color: AppColors.G_02),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
         ),
         child: Row(
@@ -215,7 +217,7 @@ class Home extends GetView<HomeController> {
       height: 70.h,
       decoration: ShapeDecoration(
         color: AppColors.Orange_01,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
       child: Stack(
         children: [
@@ -336,7 +338,7 @@ class _DDayWidgetState extends State<DDayWidget> {
         decoration: ShapeDecoration(
           color: AppColors.MainOrange,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
           ),
         ),
         child: Padding(
@@ -364,7 +366,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                             decoration: ShapeDecoration(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
+                                  borderRadius: BorderRadius.circular(8.r)),
                               shadows: const [
                                 BoxShadow(
                                   color: Color(0x23000000),
@@ -499,7 +501,7 @@ class _DDayWidgetState extends State<DDayWidget> {
         color: AppColors.Orange_01,
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 1.w, color: AppColors.G_02),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
       ),
       child: Center(

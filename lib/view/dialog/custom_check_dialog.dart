@@ -34,7 +34,7 @@ class CustomCheckDialog extends StatelessWidget {
       surfaceTintColor: AppColors.White,
 
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       //Dialog Main Title
       title: Text(
         title,

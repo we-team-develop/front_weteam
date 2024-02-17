@@ -58,7 +58,7 @@ class TeamProjectWidget extends StatelessWidget {
       height: 50.h,
       decoration: ShapeDecoration(
         color: AppColors.G_02,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
     );
   }

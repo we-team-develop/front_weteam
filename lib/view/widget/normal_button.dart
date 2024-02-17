@@ -20,7 +20,7 @@ class NormalButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: AppColors.MainOrange,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8)),
+              borderRadius: BorderRadius.circular(8.r)),
         ),
         child: Text(
           text,

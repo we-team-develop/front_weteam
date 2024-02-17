@@ -213,7 +213,7 @@ class _SelectButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 4.h),
       decoration: BoxDecoration(
           color: isSelected ? AppColors.Orange_03 : AppColors.G_02,
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(10.r)),
       child: Center(
           child: Text(
         '선택',

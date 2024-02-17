@@ -285,7 +285,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                             ? AppColors.Orange_03
                             : Colors.white,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4)),
+                            borderRadius: BorderRadius.circular(4.r)),
                         shadows: const [
                           BoxShadow(
                             color: Color(0x3F000000),
@@ -406,9 +406,9 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                       child: Container(
                         width: 330.w,
                         height: 40.h,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppColors.MainOrange,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
                         ),
                         child: Center(
                             child: Text('팀원 초대하기',
@@ -562,7 +562,7 @@ class _CancelOrActionBottomPanel
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(width: 1, color: AppColors.G_02),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
                   child: Center(
@@ -600,7 +600,7 @@ class _CancelOrActionBottomPanel
                 decoration: ShapeDecoration(
                   color: AppColors.MainOrange,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(8.r)),
                 ),
                 child: Center(
                   child: Text(
@@ -672,7 +672,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
             decoration: ShapeDecoration(
               color: AppColors.MainOrange,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8.r)),
             ),
             child: Center(
               child: Text(

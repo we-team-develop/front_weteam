@@ -127,7 +127,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                             shape: RoundedRectangleBorder(
                                 side: const BorderSide(
                                     width: 1, color: AppColors.G_02),
-                                borderRadius: BorderRadius.circular(8)),
+                                borderRadius: BorderRadius.circular(8.r)),
                           ),
                           child: TextField(
                             controller: contentController,
