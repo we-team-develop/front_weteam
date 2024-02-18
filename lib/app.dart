@@ -83,7 +83,7 @@ class App extends GetView<BottomNavController> {
           ),
         ],
       ),
-      child: SingleChildScrollView(
+      child: Flexible(
         child: BottomNavigationBar(
           currentIndex: controller.index,
           onTap: controller.changeIndex,
