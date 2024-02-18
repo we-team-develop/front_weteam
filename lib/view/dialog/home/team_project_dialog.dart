@@ -68,220 +68,223 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
   }
 
   Widget _body() {
-    return Column(
-      mainAxisSize: MainAxisSize.min, // 이거 없으면 dialog가 엄청 길어요
-      crossAxisAlignment: CrossAxisAlignment.center, // 중앙 정렬
-      children: <Widget>[
-        Visibility(
-            visible: widget.mode != TeamProjectDialogMode.revive,
-            child: CustomTextField(
-                hint: "팀플명", maxLength: 20, controller: titleController)),
-        Visibility(
-            visible: widget.mode == TeamProjectDialogMode.revive,
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('프로젝트명',
-                        style: TextStyle(
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 12.sp,
-                            color: AppColors.G_05)),
-                    Text(' ${widget.teamData?.title}',
-                        style: TextStyle(
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.Black)),
-                  ],
-                )
-              ],
-            )),
-        SizedBox(
-          height: 26.h,
-        ),
-        Visibility(
-            visible: widget.mode != TeamProjectDialogMode.revive,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '상세내용',
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.6),
-                    fontSize: 12.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Stack(
-                  children: [
-                    ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minHeight: 60.h, minWidth: 260.w),
-                        child: Container(
-                          padding: const EdgeInsets.all(10).r,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1.r, color: AppColors.G_02),
-                                borderRadius: BorderRadius.circular(8.r)),
-                          ),
-                          child: TextField(
-                            controller: contentController,
-                            maxLines: 5,
-                            maxLength: maxContentLength,
-                            decoration: const InputDecoration(
-                              counterText: "",
-                              border: InputBorder.none,
-                              // 여백 제거
-                              contentPadding: EdgeInsets.zero,
-                              isDense: true,
-                            ),
-                            cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
-                            style: TextStyle(
-                                fontSize: 10.sp,
-                                color: AppColors.G_05,
-                                fontFamily: 'NanumSqaureNeo',
-                                fontWeight: FontWeight.bold),
-                            onChanged: (newV) {
-                              setState(() {});
-                            },
-                          ),
-                        )),
-                    Positioned(
-                        right: 10.w,
-                        bottom: 10.h,
-                        child: Text(
-                          // TextField 오른쪽에 counter
-                          "${contentController.text.length} / $maxContentLength",
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min, // 이거 없으면 dialog가 엄청 길어요
+        crossAxisAlignment: CrossAxisAlignment.center, // 중앙 정렬
+        children: <Widget>[
+          Visibility(
+              visible: widget.mode != TeamProjectDialogMode.revive,
+              child: CustomTextField(
+                  hint: "팀플명", maxLength: 20, controller: titleController)),
+          Visibility(
+              visible: widget.mode == TeamProjectDialogMode.revive,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('프로젝트명',
                           style: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
-                            fontSize: 10.sp,
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.w400,
-                            height: 0.26,
-                          ),
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 24.h,
-                )
-              ],
-            )),
-        ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 304.w),
-            child: Row(
-              children: [
-                Flexible(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '시작일',
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.6),
-                        fontSize: 12.sp,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-                    Visibility(
-                        visible: widget.mode != TeamProjectDialogMode.revive,
-                        child: CustomDatePicker(
-                            start: DateTime(1980, 1, 1),
-                            end: DateTime(2090, 12, 31),
-                            init: startTime,
-                            onChangeListener: (v) {
-                              startTime = v;
-                            })),
-                    Visibility(
-                        visible: widget.mode == TeamProjectDialogMode.revive,
-                        child: Text(
-                          "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
-                          style: TextStyle(
-                              fontSize: 15.sp,
                               fontFamily: 'NanumSquareNeo',
-                              fontWeight: FontWeight.bold),
-                        ))
-                  ],
-                )),
-                Container(
-                  width: 1,
-                  height: 90.h,
-                  margin: EdgeInsets.symmetric(horizontal: 21.w),
-                  decoration: const BoxDecoration(
-                    color: AppColors.G_02,
-                  ),
-                ),
-                Flexible(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '종료일',
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.6),
-                        fontSize: 12.sp,
-                        fontFamily: 'NanumSquareNeo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-                    CustomDatePicker(
-                        start: DateTime(1980, 1, 1),
-                        end: DateTime(2090, 12, 31),
-                        init: endTime,
-                        onChangeListener: (v) {
-                          endTime = v;
-                        }),
-                  ],
-                ))
-              ],
-            )),
-        SizedBox(
-          height: 27.h,
-        ),
-        Visibility(
-            visible: widget.mode == TeamProjectDialogMode.revive,
-            child: Column(
-              children: [
-                Text(
-                  '※ 종료일은 금일 이후 날짜부터 변경 가능합니다.',
-                  style: TextStyle(
-                      color: AppColors.G_05,
+                              fontSize: 12.sp,
+                              color: AppColors.G_05)),
+                      Text(' ${widget.teamData?.title}',
+                          style: TextStyle(
+                              fontFamily: 'NanumSquareNeo',
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.Black)),
+                    ],
+                  )
+                ],
+              )),
+          SizedBox(
+            height: 26.h,
+          ),
+          Visibility(
+              visible: widget.mode != TeamProjectDialogMode.revive,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '상세내용',
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.6),
+                      fontSize: 12.sp,
                       fontFamily: 'NanumSquareNeo',
-                      fontSize: 10.sp),
-                ),
-                SizedBox(height: 23.h)
-              ],
-            )),
-        Visibility(
-            visible: warningVisible,
-            child: Text(warningContent,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.MainOrange,
-                    fontFamily: 'NanumSquareNeo',
-                    fontSize: 10.sp))),
-        NormalButton(
-            text: '확인',
-            onTap: () async {
-              if (isSaving) return;
-              isSaving = true;
-              try {
-                updateTeamProject();
-              } catch (e, st) {
-                debugPrint('$e');
-                debugPrintStack(stackTrace: st);
-              }
-              isSaving = false;
-            }),
-      ],
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Stack(
+                    children: [
+                      ConstrainedBox(
+                          constraints:
+                              BoxConstraints(minHeight: 60.h, minWidth: 260.w),
+                          child: Container(
+                            padding: const EdgeInsets.all(10).r,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 1.r, color: AppColors.G_02),
+                                  borderRadius: BorderRadius.circular(8.r)),
+                            ),
+                            child: TextField(
+                              controller: contentController,
+                              maxLines: 5,
+                              maxLength: maxContentLength,
+                              decoration: const InputDecoration(
+                                counterText: "",
+                                border: InputBorder.none,
+                                // 여백 제거
+                                contentPadding: EdgeInsets.zero,
+                                isDense: true,
+                              ),
+                              cursorColor:
+                                  AppColors.MainOrange, // 깜빡이는 커서의 색 변경
+                              style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: AppColors.G_05,
+                                  fontFamily: 'NanumSqaureNeo',
+                                  fontWeight: FontWeight.bold),
+                              onChanged: (newV) {
+                                setState(() {});
+                              },
+                            ),
+                          )),
+                      Positioned(
+                          right: 10.w,
+                          bottom: 10.h,
+                          child: Text(
+                            // TextField 오른쪽에 counter
+                            "${contentController.text.length} / $maxContentLength",
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontSize: 10.sp,
+                              fontFamily: 'NanumSquareNeo',
+                              fontWeight: FontWeight.w400,
+                              height: 0.26,
+                            ),
+                          ))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 24.h,
+                  )
+                ],
+              )),
+          ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 304.w),
+              child: Row(
+                children: [
+                  Flexible(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '시작일',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.6),
+                          fontSize: 12.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(height: 15.h),
+                      Visibility(
+                          visible: widget.mode != TeamProjectDialogMode.revive,
+                          child: CustomDatePicker(
+                              start: DateTime(1980, 1, 1),
+                              end: DateTime(2090, 12, 31),
+                              init: startTime,
+                              onChangeListener: (v) {
+                                startTime = v;
+                              })),
+                      Visibility(
+                          visible: widget.mode == TeamProjectDialogMode.revive,
+                          child: Text(
+                            "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                fontFamily: 'NanumSquareNeo',
+                                fontWeight: FontWeight.bold),
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 1,
+                    height: 90.h,
+                    margin: EdgeInsets.symmetric(horizontal: 21.w),
+                    decoration: const BoxDecoration(
+                      color: AppColors.G_02,
+                    ),
+                  ),
+                  Flexible(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '종료일',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.6),
+                          fontSize: 12.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(height: 15.h),
+                      CustomDatePicker(
+                          start: DateTime(1980, 1, 1),
+                          end: DateTime(2090, 12, 31),
+                          init: endTime,
+                          onChangeListener: (v) {
+                            endTime = v;
+                          }),
+                    ],
+                  ))
+                ],
+              )),
+          SizedBox(
+            height: 27.h,
+          ),
+          Visibility(
+              visible: widget.mode == TeamProjectDialogMode.revive,
+              child: Column(
+                children: [
+                  Text(
+                    '※ 종료일은 금일 이후 날짜부터 변경 가능합니다.',
+                    style: TextStyle(
+                        color: AppColors.G_05,
+                        fontFamily: 'NanumSquareNeo',
+                        fontSize: 10.sp),
+                  ),
+                  SizedBox(height: 23.h)
+                ],
+              )),
+          Visibility(
+              visible: warningVisible,
+              child: Text(warningContent,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.MainOrange,
+                      fontFamily: 'NanumSquareNeo',
+                      fontSize: 10.sp))),
+          NormalButton(
+              text: '확인',
+              onTap: () async {
+                if (isSaving) return;
+                isSaving = true;
+                try {
+                  updateTeamProject();
+                } catch (e, st) {
+                  debugPrint('$e');
+                  debugPrintStack(stackTrace: st);
+                }
+                isSaving = false;
+              }),
+        ],
+      ),
     );
   }
 
