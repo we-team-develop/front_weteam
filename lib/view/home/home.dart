@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../binding/wtm_bindings.dart';
-import '../../controller/home_controller.dart';
+import '../../controller/mainpage/home_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';

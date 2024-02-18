@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-import 'home_controller.dart';
-import 'my_page_controller.dart';
-import 'tp_controller.dart';
+import 'mainpage/home_controller.dart';
+import 'mainpage/my_page_controller.dart';
+import 'mainpage/tp_controller.dart';
 
 enum Page { TEAMPLAY, HOME, MYPAGE }
 

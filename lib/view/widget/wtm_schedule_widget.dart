@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/wtm_schedule_controller.dart';
+import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../model/wtm_project.dart';
 

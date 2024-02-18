@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/my_page_controller.dart';
+import '../../controller/mainpage/my_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';

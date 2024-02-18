@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../main.dart';
-import '../model/team_project.dart';
-import '../model/weteam_notification.dart';
-import '../service/api_service.dart';
-import '../service/auth_service.dart';
-import '../view/widget/team_project_widget.dart';
+import '../../main.dart';
+import '../../model/team_project.dart';
+import '../../model/weteam_notification.dart';
+import '../../service/api_service.dart';
+import '../../service/auth_service.dart';
+import '../../view/widget/team_project_widget.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();

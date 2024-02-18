@@ -1,7 +1,7 @@
-import '../service/api_service.dart';
 import 'package:get/get.dart';
 
-import '../model/wtm_project.dart';
+import '../../model/wtm_project.dart';
+import '../../service/api_service.dart';
 
 class WTMCurrentController extends GetxController {
   late final Rx<WTMProject> wtm;

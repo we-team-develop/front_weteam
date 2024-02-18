@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/mainpage/tp_controller.dart';
 import '../../../controller/team_project_detail_page_controller.dart';
-import '../../../controller/tp_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../main.dart';
 import '../../../model/team_project.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../controller/wtm_controller.dart';
+import '../../controller/wtm/wtm_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 

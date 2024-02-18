@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-import '../main.dart';
-import '../model/team_project.dart';
-import '../service/api_service.dart';
-import '../service/auth_service.dart';
+import '../../main.dart';
+import '../../model/team_project.dart';
+import '../../service/api_service.dart';
+import '../../service/auth_service.dart';
 
 class TeamPlayController extends GetxController {
   final ScrollController tpScrollController = ScrollController();

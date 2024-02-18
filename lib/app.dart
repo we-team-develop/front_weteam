@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'controller/bottom_nav_controller.dart';
-import 'controller/home_controller.dart';
+import 'controller/mainpage/home_controller.dart';
 import 'data/color_data.dart';
 import 'data/image_data.dart';
 import 'service/api_service.dart';

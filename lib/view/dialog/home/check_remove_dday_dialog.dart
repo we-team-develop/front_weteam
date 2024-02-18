@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/home_controller.dart';
+import '../../../controller/mainpage/home_controller.dart';
 import '../../../main.dart';
 import '../custom_check_dialog.dart';
 
