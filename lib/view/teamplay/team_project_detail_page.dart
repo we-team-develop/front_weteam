@@ -387,9 +387,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-                // 어드민 전용 설정
-                visible: controller.tp.value.host.id ==
-                    Get.find<AuthService>().user.value!.id,
+                visible: !controller.tp.value.done,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -418,7 +416,16 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                     fontSize: 15.sp))),
                       ),
                     ),
-                    SizedBox(height: 24.h),
+                  ],
+                )),
+            SizedBox(height: 24.h),
+            Visibility(
+                // 어드민 전용 설정
+                visible: controller.tp.value.host.id ==
+                    Get.find<AuthService>().user.value!.id,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
                       '팀플방 관리실 | 호스트',
                       style: TextStyle(
