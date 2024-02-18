@@ -164,21 +164,21 @@ class Profile extends GetView<ProfileController> {
               // AuthService의 인스턴스를 얻습니다.
               final AuthService authService = Get.find<AuthService>();
 
-              String imagePath = ImagePath.usingnaver; // 기본 이미지
+              String imagePath = ImagePath.loggedInGoogle; // 기본 이미지
 
               // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
               switch (authService.currentLoginService.value) {
                 case '네이버':
-                  imagePath = ImagePath.usingnaver; // 네이버 로그인 이미지 경로
+                  imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
                   break;
                 case '카카오':
-                  imagePath = ImagePath.usingkakao; // 카카오 로그인 이미지 경로
+                  imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
                   break;
                 case '구글':
-                  imagePath = ImagePath.usinggoogle; // 구글 로그인 이미지 경로
+                  imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
                   break;
                 case '애플':
-                  imagePath = ImagePath.usingapple; // 애플 로그인 이미지 경로
+                  imagePath = ImagePath.loggedInApple; // 애플 로그인 이미지 경로
                   break;
               }
 
