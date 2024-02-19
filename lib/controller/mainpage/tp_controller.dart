@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../model/team_project.dart';
 import '../../service/api_service.dart';
@@ -50,6 +51,17 @@ class TeamPlayController extends GetxController {
     }
   }
 
-  // tp 이미지 랜덤 배정
-  RxList<String> imagePaths = RxList<String>([]);
+  // tp 이미지
+  RxList<String> imagePaths = RxList<String>([
+    ImagePath.tpImage1,
+    ImagePath.tpImage2,
+    ImagePath.tpImage3,
+    ImagePath.tpImage4,
+    ImagePath.tpImage5,
+    ImagePath.tpImage6,
+    ImagePath.tpImage7,
+    ImagePath.tpImage8,
+    ImagePath.tpImage9,
+    ImagePath.tpImage10,
+  ]);
 }

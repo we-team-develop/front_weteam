@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../controller/mainpage/tp_controller.dart';
 import 'package:get/get.dart';
 
 import '../../controller/team_project_detail_page_controller.dart';
@@ -52,14 +55,16 @@ class TeamProjectWidget extends StatelessWidget {
   }
 
   Widget _teamImgWidget(String img) {
+    TeamPlayController controller = Get.find<TeamPlayController>();
+
+    int randomIndex = Random().nextInt(controller.imagePaths.length);
+    String randomImagePath = controller.imagePaths[randomIndex];
+
     // TODO : 이미지 표시하기
-    return Container(
+    return SizedBox(
       width: 50.w,
       height: 50.h,
-      decoration: ShapeDecoration(
-        color: AppColors.G_02,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-      ),
+      child: Image.asset(randomImagePath),
     );
   }
 
