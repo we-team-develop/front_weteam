@@ -24,7 +24,8 @@ class TeamPlayController extends GetxController {
   }
 
   void tpScrollUp() {
-    tpScrollController.animateTo(0, duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
+    tpScrollController.animateTo(0,
+        duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
   }
 
   String getUserName() {
@@ -40,11 +41,15 @@ class TeamPlayController extends GetxController {
     }
 
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
+        .getTeamProjectList(
+            0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectNotDoneListJson);
     if (result != null && !listEquals(_oldTpList, result.projectList)) {
       _oldTpList = result.projectList;
       tpList.value = result;
     }
   }
+
+  // tp 이미지 랜덤 배정
+  RxList<String> imagePaths = RxList<String>([]);
 }

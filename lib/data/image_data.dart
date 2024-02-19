@@ -80,6 +80,16 @@ class ImagePath {
   static String get loggedInNaver => 'assets/images/loggedin_naver.png';
   static String get loggedInApple => 'assets/images/loggedin_apple.png';
   static String get bigWeteamTimiIcon => 'assets/images/big_weteam_timi_ic.png';
+  static String get tpImage1 => 'assets/images/1@4x.png';
+  static String get tpImage2 => 'assets/images/2@4x.png';
+  static String get tpImage3 => 'assets/images/3@4x.png';
+  static String get tpImage4 => 'assets/images/4@4x.png';
+  static String get tpImage5 => 'assets/images/5@4x.png';
+  static String get tpImage6 => 'assets/images/6@4x.png';
+  static String get tpImage7 => 'assets/images/7@4x.png';
+  static String get tpImage8 => 'assets/images/8@4x.png';
+  static String get tpImage9 => 'assets/images/9@4x.png';
+  static String get tpImage10 => 'assets/images/10@4x.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }
