@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_controller.dart';
+import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
 import '../../../util/weteam_utils.dart';
 
-class WTMCreateFinish extends GetView<WTMController> {
+class WTMCreateFinish extends GetView<WTMCreateController> {
   DateTime startAt = DateTime(2024, 2, 28); // TODO: controller에서 받아오기
   DateTime endAt = DateTime(2024, 3, 2);
 
@@ -125,7 +125,7 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _CopyLinkButton extends GetView<WTMController> {
+class _CopyLinkButton extends GetView<WTMCreateController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

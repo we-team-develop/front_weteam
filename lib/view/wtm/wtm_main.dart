@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm/wtm_controller.dart';
+import '../../controller/wtm/wtm_create_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/wtm_project.dart';
@@ -51,7 +52,7 @@ class WTM extends GetView<WTMController> {
             padding: EdgeInsets.only(bottom: 25.h),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const WTMCreate());
+                  Get.to(() => GetBuilder(builder: (controller) => const WTMCreate(), init: WTMCreateController()));
                 },
                 child: _newWTMButton()),
           )

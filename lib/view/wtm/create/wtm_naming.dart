@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_controller.dart';
+import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../util/weteam_utils.dart';
 import 'wtm_date.dart';
 
-class WTMNaming extends GetView<WTMController> {
+class WTMNaming extends GetView<WTMCreateController> {
   const WTMNaming({super.key});
 
   @override
@@ -81,7 +81,7 @@ class WTMNaming extends GetView<WTMController> {
   }
 }
 
-class _TextInput extends GetView<WTMController> {
+class _TextInput extends GetView<WTMCreateController> {
   final int maxLength = 20;
 
   @override

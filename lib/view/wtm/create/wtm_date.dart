@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_controller.dart';
+import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_calendart.dart';
 import 'wtm_create_finish.dart';
 
-class WTMDate extends GetView<WTMController> {
+class WTMDate extends GetView<WTMCreateController> {
   const WTMDate({super.key});
 
   @override
@@ -37,7 +37,7 @@ class WTMDate extends GetView<WTMController> {
         SizedBox(
           height: 24.h,
         ),
-        Expanded(child: CustomCalendar()),
+        const Expanded(child: CustomCalendar()),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 15.h),
           child: _bottom(),
