@@ -9,10 +9,7 @@ import '../../../data/image_data.dart';
 import '../../../util/weteam_utils.dart';
 
 class WTMCreateFinish extends GetView<WTMCreateController> {
-  DateTime startAt = DateTime(2024, 2, 28); // TODO: controller에서 받아오기
-  DateTime endAt = DateTime(2024, 3, 2);
-
-  WTMCreateFinish({super.key}); // TODO: controller에서 받아오기
+  const WTMCreateFinish({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +33,12 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
                     fontSize: 12.sp,
                     color: AppColors.Black),
                 children: [
-                  _boldTS(_formatDateTime(startAt)),
+                  _boldTS(_formatDateTime(controller.startedAt!)),
                   const TextSpan(text: ' 부터 '),
-                  _boldTS(_formatDateTime(endAt)),
+                  _boldTS(_formatDateTime(controller.endedAt!)),
                   const TextSpan(text: '까지\n'),
                   _boldTS(
-                      '총 ${endAt.difference(startAt).inDays}일,\n\n[${controller.selectedTeamProject.value?.title}]'),
+                      '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n[${controller.selectedTeamProject.value?.title}]'),
                   const TextSpan(text: '의\n'),
                   _boldTS('[${controller.nameInputText.value}]'),
                   const TextSpan(text: ' 약속을 잡는\n언제보까가 생성되었습니다~!'),
@@ -80,9 +77,9 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
             child: RichText(
                 text: TextSpan(
               children: const [
-                TextSpan(text: '수정할게 있어요.'),
+                TextSpan(text: '수정할게 있어요. '),
                 TextSpan(
-                    text: ' 수정하기',
+                    text: '수정하기',
                     style: TextStyle(decoration: TextDecoration.underline))
               ],
               style: TextStyle(

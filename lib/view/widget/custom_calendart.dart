@@ -17,7 +17,7 @@ class CustomCalendar extends StatefulWidget {
 }
 
 class _CustomCalendarState extends State<CustomCalendar> {
-  final CustomCalendarController controller = Get.put(CustomCalendarController());
+  final CustomCalendarController controller = Get.find<CustomCalendarController>();
 
   late PagingController<int, _CalendarItem> _pagingController;
 
