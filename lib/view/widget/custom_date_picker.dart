@@ -105,17 +105,19 @@ class _CustomPicker extends StatelessWidget {
           onSelectedItemChanged: onChanged,
           childCount: items.length,
           itemBuilder: (context, index) {
-            return AutoSizeText(items[index],
-                maxLines: 1,
-                maxFontSize: 16,
-                stepGranularity: 1,
-                style: TextStyle(
-                  color: AppColors.Black,
-                  fontSize: 16.sp,
-                  fontFamily: 'NanumSquareNeo',
-                  fontWeight: FontWeight.bold,
-                  height: 0,
-                ));
+            // AutoSizeText 사용, presetFontSizes로 고정 폰트 크기 목록 제공
+            return AutoSizeText(
+              items[index],
+              maxLines: 1,
+              style: const TextStyle(
+                color: AppColors.Black,
+                fontFamily: 'NanumSquareNeo',
+                fontWeight: FontWeight.bold,
+                height: 0,
+              ),
+              presetFontSizes: [13.sp], // 고정 폰트 크기 목록. 이 예제에서는 16.sp를 사용
+              textAlign: TextAlign.center, // 텍스트를 중앙 정렬
+            );
           },
         ));
   }
