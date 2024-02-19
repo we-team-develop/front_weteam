@@ -83,39 +83,37 @@ class App extends GetView<BottomNavController> {
           ),
         ],
       ),
-      child: Flexible(
-        child: BottomNavigationBar(
-          currentIndex: controller.index,
-          onTap: controller.changeIndex,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: AppColors.MainOrange,
-          unselectedItemColor: AppColors.G_04,
-          selectedLabelStyle: TextStyle(fontSize: 8.sp),
-          unselectedLabelStyle: TextStyle(fontSize: 8.sp),
-          backgroundColor: Colors.white,
-          items: [
-            BottomNavigationBarItem(
-                icon:
-                    ImageData(path: ImagePath.tpOff, width: 75.w, height: 75.h),
-                activeIcon:
-                    ImageData(path: ImagePath.tpOn, width: 75.w, height: 75.h),
-                label: '진행팀플'),
-            BottomNavigationBarItem(
-                icon: ImageData(
-                    path: ImagePath.homeOff, width: 75.w, height: 75.h),
-                activeIcon: ImageData(
-                    path: ImagePath.homeOn, width: 75.w, height: 75.h),
-                label: '홈'),
-            BottomNavigationBarItem(
-                icon:
-                    ImageData(path: ImagePath.myOff, width: 75.w, height: 75.h),
-                activeIcon:
-                    ImageData(path: ImagePath.myOn, width: 75.w, height: 75.h),
-                label: '마이'),
-          ],
-        ),
+      child: BottomNavigationBar(
+        currentIndex: controller.index,
+        onTap: controller.changeIndex,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.MainOrange,
+        unselectedItemColor: AppColors.G_04,
+        selectedLabelStyle: TextStyle(fontSize: 8.sp),
+        unselectedLabelStyle: TextStyle(fontSize: 8.sp),
+        backgroundColor: Colors.white,
+        items: [
+          BottomNavigationBarItem(
+              icon:
+              Image.asset(ImagePath.tpOff, width: 25.w, height: 25.h),
+              activeIcon:
+              Image.asset(ImagePath.tpOn, width: 25.w, height: 25.h),
+              label: '진행팀플'),
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                  ImagePath.homeOff, width: 25.w, height: 25.h),
+              activeIcon: Image.asset(
+                  ImagePath.homeOn, width: 25.w, height: 25.h),
+              label: '홈'),
+          BottomNavigationBarItem(
+              icon:
+              Image.asset(ImagePath.myOff, width: 25.w, height: 25.h),
+              activeIcon:
+              Image.asset(ImagePath.myOn, width: 25.w, height: 25.h),
+              label: '마이'),
+        ],
       ),
     );
   }
