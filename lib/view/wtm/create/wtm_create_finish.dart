@@ -47,8 +47,9 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
           _CopyLinkButton(),
           const Expanded(child: SizedBox()),
           GestureDetector(
-            onTap: () {
-              Get.closeAllSnackbars();
+            onTap: () async {
+              await WeteamUtils.closeSnackbarNow();
+              Get.back();
               Get.back();
               Get.back();
               Get.back();
@@ -69,8 +70,9 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Get.closeAllSnackbars();
+            onTap: () async {
+              await WeteamUtils.closeSnackbarNow();
+              Get.back();
               Get.back();
               Get.back();
             },
