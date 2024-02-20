@@ -551,7 +551,7 @@ class _CancelOrActionBottomPanel
     return Column(
       children: [
         Text(
-          '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
+          message,
           style: TextStyle(
             color: AppColors.Black,
             fontSize: 10.sp,
@@ -613,7 +613,7 @@ class _CancelOrActionBottomPanel
                 ),
                 child: Center(
                   child: Text(
-                    '퇴출하기',
+                    actionButtonText,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12.sp,

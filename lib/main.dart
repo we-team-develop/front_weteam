@@ -48,8 +48,8 @@ Future<void> main() async {
   await firebaseFuture;
   await _init();
 
-  // 팀플 목록 30초마다 조회
-  Timer.periodic(const Duration(seconds: 30), (timer) {
+  // 팀플 목록 3분마다 조회
+  Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
     try {
       if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
           MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
