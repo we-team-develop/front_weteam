@@ -118,7 +118,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '호스트 권한을 넘기고 있습니다.',
                             actionButtonText: '호스트넘기기',
-                            action: controller.changeHost,
+                            action: controller.showChangeHostDialog,
                             cancelAction: () =>
                                 controller.isChangeHostMode.value = false)))
                   ],

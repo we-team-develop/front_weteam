@@ -51,13 +51,26 @@ class TeamProjectDetailPageController extends GetxController {
     return true;
   }
 
-  Future<void> changeHost() async {
+  void showChangeHostDialog() {
     if (selectedNewHost.value == -1) {
-      WeteamUtils.snackbar("호스트 권한을 넘길 수 없습니다", '호스트 권한을 받을 유저를 선택해주세요',
-          icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar('','호스트 권한을 받을 유저를 선택해주세요');
       return;
     }
 
+    showDialog(
+        context: Get.context!,
+        builder: (context) => CustomCheckDialog(
+          title: '',
+          content: '정말 호스트를 넘길까요?',
+          admitCallback: changeHost,
+          denyCallback: () async {
+            await WeteamUtils.closeSnackbarNow();
+            Get.back();
+          },
+        ));
+  }
+
+  Future<void> changeHost() async {
     bool success = await Get.find<ApiService>()
         .changeTeamProjectHost(tp.value.id, selectedNewHost.value);
     if (success) {
