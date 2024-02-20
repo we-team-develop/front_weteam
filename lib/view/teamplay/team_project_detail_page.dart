@@ -56,7 +56,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                               right: 0,
                               child: GestureDetector(
                                 onTap: () {
-                                  if (controller.tp.value.memberSize > 1 ||
+                                  if (controller.tp.value.memberSize > 1 &&
                                       controller.tp.value.host.id ==
                                           Get.find<AuthService>().user.value!.id) {
                                     WeteamUtils.snackbar(
