@@ -351,7 +351,7 @@ class _DDayWidgetState extends State<DDayWidget> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 13.h, horizontal: 7.w),
+                      EdgeInsets.only(right: 13.h, top: 7.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -459,7 +459,7 @@ class _DDayWidgetState extends State<DDayWidget> {
               ],
             ),
             Padding(
-                padding: EdgeInsets.symmetric(vertical: 11.h, horizontal: 19.w),
+                padding: EdgeInsets.only(bottom: 11.h, left: 19.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
