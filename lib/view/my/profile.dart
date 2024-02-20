@@ -259,7 +259,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 탈퇴 실패
-      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다.");
+      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
 
@@ -270,7 +270,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 로그아웃 실패
-      WeteamUtils.snackbar("죄송합니다", "로그아웃을 하지 못했습니다");
+      WeteamUtils.snackbar("로그아웃 실패", "오류가 있었습니다", icon: SnackbarIcon.fail);
     }
   }
 }

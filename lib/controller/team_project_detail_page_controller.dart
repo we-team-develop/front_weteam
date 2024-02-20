@@ -52,7 +52,8 @@ class TeamProjectDetailPageController extends GetxController {
 
   Future<void> changeHost() async {
     if (selectedNewHost.value == -1) {
-      WeteamUtils.snackbar("호스트 권한을 넘길 수 없습니다", '호스트 권한을 받을 유저를 선택해주세요');
+      WeteamUtils.snackbar("호스트 권한을 넘길 수 없습니다", '호스트 권한을 받을 유저를 선택해주세요',
+          icon: SnackbarIcon.fail);
       return;
     }
 
@@ -62,26 +63,26 @@ class TeamProjectDetailPageController extends GetxController {
       await updateTeamProjectLists();
       isChangeHostMode.value = false;
       Get.back();
-      WeteamUtils.snackbar("호스트 변경 성공", "호스트 권한을 성공적으로 넘겼습니다");
+      WeteamUtils.snackbar("","호스트 권한을 성공적으로 넘겼습니다", icon: SnackbarIcon.success);
     } else {
-      WeteamUtils.snackbar("호스트 변경 실패", "오류가 발생했습니다");
+      WeteamUtils.snackbar("호스트 변경 실패", "오류가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
 
   Future<void> kickSelectedUser() async {
     ApiService service = Get.find<ApiService>();
     if (selectedKickUser.value == -1) {
-      WeteamUtils.snackbar("퇴출시킬 유저를 선택하세요", "");
+      WeteamUtils.snackbar("", "퇴출시킬 유저를 선택하세요");
       return;
     }
     bool success = await service.kickUserFromTeamProject([selectedKickUser.value]);
 
     if (success) {
-      WeteamUtils.snackbar("강제 퇴장 성공", "성공적으로 퇴출시켰습니다.");
+      WeteamUtils.snackbar("", "성공적으로 퇴출시켰습니다.", icon: SnackbarIcon.success);
       fetchUserList();
       isKickMode.value = false;
     } else {
-      WeteamUtils.snackbar("강제 퇴장 실패", "오류가 발생했습니다");
+      WeteamUtils.snackbar("강제 퇴장 실패", "오류가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
 }

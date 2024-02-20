@@ -130,7 +130,7 @@ class _CopyLinkButton extends GetView<WTMCreateController> {
     return GestureDetector(
       onTap: () {
         Clipboard.setData(const ClipboardData(text: 'weteam://wtm/add?id=0'));
-        WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', iconPath: ImagePath.greenCheck);
+        WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', icon: SnackbarIcon.success);
       },
       child: Container(
         height: 40.h,

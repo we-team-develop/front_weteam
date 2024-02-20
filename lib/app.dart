@@ -36,9 +36,11 @@ class App extends GetView<BottomNavController> {
           bool success = await Get.find<ApiService>().acceptInvite(projectId);
           if (success) {
             Get.find<HomeController>().updateTeamProjectList();
-            WeteamUtils.snackbar('팀플에 참여함', '팀플 초대를 성공적으로 수락했어요!');
+            WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',
+                icon: SnackbarIcon.success);
           } else {
-            WeteamUtils.snackbar('오류', '팀플 초대를 수락하지 못했어요.');
+            WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
+                icon: SnackbarIcon.fail);
           }
         }
       } else if (host == "wtm") {

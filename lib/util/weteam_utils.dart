@@ -5,10 +5,21 @@ import 'package:get/route_manager.dart';
 import '../data/color_data.dart';
 import '../data/image_data.dart';
 
+enum SnackbarIcon {
+  info, success, fail;
+}
+
 class WeteamUtils {
   static SnackbarController? _snackbarController;
-  static void snackbar(title, content, {String? iconPath}) async {
-    iconPath ??= ImagePath.icCheckWhite;
+  static void snackbar(title, content, {SnackbarIcon? icon}) async {
+    late String iconPath;
+    if (icon == SnackbarIcon.fail) {
+      iconPath = ImagePath.snackbarFailIc;
+    } else if (icon == SnackbarIcon.success) {
+      iconPath = ImagePath.snackbarSuccessIc;
+    } else {
+      iconPath = ImagePath.snackbarInfoIc;
+    }
 
     if (title == null || (title is String && title.isEmpty)) {
       title = null;

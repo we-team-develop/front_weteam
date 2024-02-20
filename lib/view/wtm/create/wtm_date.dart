@@ -83,7 +83,7 @@ class WTMDate extends GetView<WTMCreateController> {
               if (success) {
                 Get.to(() => WTMCreateFinish());
               } else {
-                WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다');
+                WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
               }
             }
           },
