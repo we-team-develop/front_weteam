@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
-import '../../../util/weteam_utils.dart';
 import 'wtm_date.dart';
 
 class WTMNaming extends GetView<WTMCreateController> {
@@ -54,11 +53,6 @@ class WTMNaming extends GetView<WTMCreateController> {
       onTap: () {
         if (controller.nameInputText.value.isNotEmpty) {
           Get.to(() => const WTMDate());
-        } else {
-          WeteamUtils.snackbar(
-            'Error',
-            'Please enter a name for the appointment.'
-          );
         }
       },
       child: Obx(() => Container(

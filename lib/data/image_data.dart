@@ -90,6 +90,9 @@ class ImagePath {
   static String get tpImage8 => 'assets/images/8@4x.png';
   static String get tpImage9 => 'assets/images/9@4x.png';
   static String get tpImage10 => 'assets/images/10@4x.png';
+  static String get snackbarFailIc => 'assets/images/snackbar_fail_ic.png';
+  static String get snackbarSuccessIc => 'assets/images/snackbar_success_ic.png';
+  static String get snackbarInfoIc => 'assets/images/snackbar_info_ic.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }

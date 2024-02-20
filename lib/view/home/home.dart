@@ -273,6 +273,7 @@ class Home extends GetView<HomeController> {
 
 class DDayWidget extends StatefulWidget {
   final DDayData? dDayData;
+
   const DDayWidget({super.key, this.dDayData});
 
   @override
@@ -289,6 +290,7 @@ class _DDayWidgetState extends State<DDayWidget> {
   @override
   void initState() {
     super.initState();
+    updateLeftDays();
     timer = Timer.periodic(const Duration(seconds: 1), (t) => updateLeftDays());
   }
 
@@ -341,15 +343,16 @@ class _DDayWidgetState extends State<DDayWidget> {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(right: 13.h, top: 7.w),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       GestureDetector(
@@ -358,7 +361,8 @@ class _DDayWidgetState extends State<DDayWidget> {
                             showPopupMenu = !showPopupMenu; // 활성화 상태 반전
                           });
                         },
-                        child: ImageData(path: ImagePath.icKebabWhite),
+                        child: Image.asset(ImagePath.icKebabWhite,
+                            width: 24.w, height: 24.h),
                       ),
                       Visibility(
                         visible: showPopupMenu,
@@ -451,45 +455,48 @@ class _DDayWidgetState extends State<DDayWidget> {
                       )
                     ],
                   ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image.asset(
-                        ImagePath.icPinWhite,
-                        height: 10.h,
-                        width: 10.w,
-                      ),
-                      Text(
-                        "${widget.dDayData?.name} ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10.sp,
-                          fontFamily: 'NanumSquareNeo',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
+                ),
+              ],
+            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 11.h, left: 19.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          ImagePath.icPinWhite,
+                          height: 10.75.h,
+                          width: 10.75.w,
                         ),
-                      )
-                    ],
-                  ),
-                  Text(
-                    '$leftDays ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 52.sp,
-                      fontFamily: 'Cafe24Moyamoya',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
+                        SizedBox(width: 3.62.w),
+                        Text(
+                          "${widget.dDayData?.name} ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10.sp,
+                            fontFamily: 'NanumSquareNeo',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
+                    Text(
+                      '$leftDays ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 52.sp,
+                        fontFamily: 'Cafe24Moyamoya',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                ))
+          ],
         ));
   }
 

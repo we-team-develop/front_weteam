@@ -87,7 +87,7 @@ class ProfileSettingPage extends StatelessWidget {
       await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
       await resetApp();
     } else {
-      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다");
+      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
 }
