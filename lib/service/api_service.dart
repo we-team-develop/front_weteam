@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -293,6 +294,18 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// return: 성공 여부
   Future<bool> acceptInvite(int projectId) async {
     Response rp = await patch('/api/project-users/$projectId', {});
+    return rp.isOk;
+  }
+
+  /**
+   * FCM
+   */
+
+  Future<bool> setFCMToken() async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    if (fcmToken == null) return false;
+    Response rp = await patch('/api/fcm/$fcmToken', {});
+
     return rp.isOk;
   }
 
