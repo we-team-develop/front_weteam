@@ -110,7 +110,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
                             actionButtonText: '퇴출하기',
-                            action: controller.kickSelectedUser,
+                            action: controller.showKickDialog,
                             cancelAction: () =>
                                 controller.isKickMode.value = false))),
                     Obx(() => Visibility(
@@ -187,7 +187,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
       }
     });
     controller.selectedKickUser.listen((p0) {
-      if (p0 != projectUser.id) kickSelected.value = false;
+      if (p0?.id != projectUser.id) kickSelected.value = false;
     });
   }
 
@@ -203,7 +203,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
         if (controller.isKickMode.isTrue && !amIHost()) {
           kickSelected.value = !kickSelected.value;
           controller.selectedKickUser.value =
-              kickSelected.value ? projectUser.id : -1;
+              kickSelected.value ? projectUser : null;
         }
 
         if (controller.isKickMode.isFalse &&

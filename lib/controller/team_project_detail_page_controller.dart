@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -8,13 +8,14 @@ import '../model/team_project.dart';
 import '../model/weteam_project_user.dart';
 import '../service/api_service.dart';
 import '../util/weteam_utils.dart';
+import '../view/dialog/custom_check_dialog.dart';
 
 class TeamProjectDetailPageController extends GetxController {
   late final Rx<TeamProject> tp;
   RxList<WeteamProjectUser> userList = RxList<WeteamProjectUser>();
   RxList<Widget> userContainerList = RxList<Widget>();
   RxBool isKickMode = RxBool(false);
-  Rx<int> selectedKickUser = Rx<int>(-1);
+  Rxn<WeteamProjectUser> selectedKickUser = Rxn<WeteamProjectUser>();
   RxBool isChangeHostMode = RxBool(false);
   Rx<int> selectedNewHost = Rx<int>(-1);
 
@@ -68,14 +69,29 @@ class TeamProjectDetailPageController extends GetxController {
       WeteamUtils.snackbar("호스트 변경 실패", "오류가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
-
-  Future<void> kickSelectedUser() async {
-    ApiService service = Get.find<ApiService>();
-    if (selectedKickUser.value == -1) {
+  
+  void showKickDialog() {
+    if (selectedKickUser.value == null) {
       WeteamUtils.snackbar("", "퇴출시킬 유저를 선택하세요");
       return;
     }
-    bool success = await service.kickUserFromTeamProject([selectedKickUser.value]);
+    WeteamProjectUser selectedUser = selectedKickUser.value!;
+    showDialog(
+        context: Get.context!,
+        builder: (context) => CustomCheckDialog(
+            title: '',
+            content: '정말 ${selectedUser.user.username}님을 강제 퇴장시킬까요?',
+          admitCallback: kickSelectedUser,
+          denyCallback: () async {
+              await WeteamUtils.closeSnackbarNow();
+              Get.back();
+          },
+        ));
+  }
+
+  Future<void> kickSelectedUser() async {
+    ApiService service = Get.find<ApiService>();
+    bool success = await service.kickUserFromTeamProject([selectedKickUser.value!.id]);
 
     if (success) {
       WeteamUtils.snackbar("", "성공적으로 퇴출시켰습니다.", icon: SnackbarIcon.success);
