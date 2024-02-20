@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/custom_calendar_controller.dart';
 import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
+import '../../../service/api_service.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_calendart.dart';
 import 'wtm_create_finish.dart';
@@ -20,6 +22,7 @@ class WTMDate extends GetView<WTMCreateController> {
   }
 
   Widget _body() {
+    Get.put(CustomCalendarController());
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -37,7 +40,8 @@ class WTMDate extends GetView<WTMCreateController> {
         SizedBox(
           height: 24.h,
         ),
-        const Expanded(child: CustomCalendar()),
+        const Expanded(
+            child: CustomCalendar()),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 15.h),
           child: _bottom(),
@@ -57,22 +61,37 @@ class WTMDate extends GetView<WTMCreateController> {
   }
 
   Widget _bottom() {
-    return GestureDetector(
-      onTap: () {
-        if (controller.nameInputText.value.isNotEmpty) {
-          Get.to(() => WTMCreateFinish());
-        } else {
-          WeteamUtils.snackbar(
-            'Error',
-            'Please enter a name for the appointment.'
-          );
-        }
-      },
-      child: Obx(() => Container(
+    CustomCalendarController ccc = Get.find<CustomCalendarController>();
+
+    return Obx(() {
+      bool canFinish = ccc.selectedDt2.value != null && ccc.selectedDt2.value != null;
+      return GestureDetector(
+          onTap: () async {
+            if (canFinish) {
+              if (ccc.selectedDt2.value!.isBefore(ccc.selectedDt1.value!)) {
+                controller.startedAt = ccc.selectedDt2.value!;
+                controller.endedAt = ccc.selectedDt1.value!;
+              } else {
+                controller.startedAt = ccc.selectedDt1.value!;
+                controller.endedAt = ccc.selectedDt2.value!;
+              }
+              bool success = await Get.find<ApiService>().createWTM(
+                  title: controller.nameInputText.value.trim(),
+                  startedAt: controller.startedAt!,
+                  endedAt: controller.endedAt!,
+                  projectId: controller.selectedTeamProject.value?.id ?? -1);
+              if (success) {
+                Get.to(() => WTMCreateFinish());
+              } else {
+                WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다');
+              }
+            }
+          },
+          child: Container(
             width: 330.w,
             height: 40.h,
             decoration: BoxDecoration(
-              color: controller.nameInputText.value.isNotEmpty
+              color: canFinish
                   ? AppColors.MainOrange
                   : AppColors.G_02,
               borderRadius: BorderRadius.all(Radius.circular(8.r)),
@@ -83,7 +102,7 @@ class WTMDate extends GetView<WTMCreateController> {
                         color: Colors.white,
                         fontFamily: 'NanumGothicExtraBold',
                         fontSize: 15.sp))),
-          )),
-    );
+          ));
+    });
   }
 }

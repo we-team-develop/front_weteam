@@ -20,6 +20,9 @@ class WTMCreateController extends GetxController {
   final TextEditingController nameInputController = TextEditingController();
   final Rx<String> nameInputText = Rx("");
 
+  DateTime? startedAt;
+  DateTime? endedAt;
+
   // wtm_create.dart
   void setSelectedTpList(String tpList) {
     selectedTpList.value = tpList;
