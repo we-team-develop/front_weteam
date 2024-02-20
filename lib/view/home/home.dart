@@ -290,6 +290,7 @@ class _DDayWidgetState extends State<DDayWidget> {
   @override
   void initState() {
     super.initState();
+    updateLeftDays();
     timer = Timer.periodic(const Duration(seconds: 1), (t) => updateLeftDays());
   }
 
