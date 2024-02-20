@@ -26,11 +26,7 @@ class TeamProjectDetailPageController extends GetxController {
       if (p0 == false) selectedNewHost.value = -1; // 호스트 변경모드 꺼지면 -1로 초기화
     });
 
-    Timer.periodic(const Duration(seconds: 30), (timer) {
-      try {
-        fetchTeamProject();
-      } catch (_) {};
-    });
+    fetchTeamProject();
   }
 
   Future<void> fetchTeamProject() async {
