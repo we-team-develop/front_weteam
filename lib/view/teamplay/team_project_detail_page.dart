@@ -67,9 +67,9 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                   showDialog(
                                       context: context,
                                       builder: (context) => CustomCheckDialog(
-                                          title: '정말 팀플을 나갈까요?',
-                                          content: '이 작업은 되돌릴 수 없어요.',
-                                          admitName: '예',
+                                          title: '정말 나가시겠습니까?',
+                                          content: '팀플 목록에서 완전히 삭제됩니다.',
+                                          admitName: '나가기',
                                           denyName: '아니요',
                                           denyCallback: () => Get.back(),
                                           admitCallback:
