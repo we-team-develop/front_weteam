@@ -56,11 +56,12 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// return: 성공시 GetWTMProjectListResult, 실패시 null
   Future<GetWTMProjectListResult?> getWTMProjectList(
       int page, String direction, String field) async {
-    Response rp = await get('/api/projects', query: {
+    Response rp = await get('/api/meetings', query: {
       'page': page.toString(),
       'size': 200.toString(),
       'direction': direction,
-      'field': field
+      'field': field,
+      'sort': 'desc'
     });
 
     if (rp.hasError) return null;
