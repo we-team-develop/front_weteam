@@ -50,9 +50,9 @@ class WTMCreate extends GetView<WTMCreateController> {
             )),
         Expanded(child: Obx(() {
           if (controller.tpList.isEmpty) {
-            return const Center(
+            return Center(
                 child: Text('표시할 팀플이 없어요',
-                    style: TextStyle(color: AppColors.Black)));
+                    style: TextStyle(color: AppColors.Black, fontSize: 12.sp)));
           }
 
           return Padding(
@@ -247,6 +247,10 @@ class _Search extends GetView<WTMCreateController> {
                   child: TextField(
                     onChanged: (v) => controller.scheduleSearch(v),
                     maxLines: 1,
+                    style: TextStyle(
+                        fontFamily: 'NanumGothic',
+                        fontSize: 15.0.sp,
+                        color: AppColors.Black),
                     decoration: const InputDecoration(
                         border: InputBorder.none, isDense: true),
                   ))),

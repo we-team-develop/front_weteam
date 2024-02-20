@@ -59,7 +59,7 @@ class WTMSchedule extends GetView<WTMScheduleController> {
         children: [
           Text(
             '${strDate[date.weekday - 1]}\n${date.day}',
-            style: TextStyle(fontSize: 10.sp),
+            style: TextStyle(fontFamily: 'NanumGothic', fontSize: 10.sp),
             textAlign: TextAlign.center,
           ),
           ...List<Widget>.generate(
