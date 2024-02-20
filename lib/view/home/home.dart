@@ -81,7 +81,7 @@ class Home extends GetView<HomeController> {
                           )),
                     GestureDetector(
                         onTap: () {
-                          Get.to(() => WTM(), binding: WTMCreateBinding());
+                          Get.to(() => WTM(), binding: WTMBindings());
                         },
                         child: _bottomBanner()),
                     SizedBox(height: 15.h)

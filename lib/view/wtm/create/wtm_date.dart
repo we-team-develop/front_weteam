@@ -22,7 +22,6 @@ class WTMDate extends GetView<WTMCreateController> {
   }
 
   Widget _body() {
-    Get.put(CustomCalendarController());
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
