@@ -83,7 +83,14 @@ class ProfileSettingPage extends StatelessWidget {
   }
 
   Future<void> setProfile(int id, BuildContext context) async {
-    if (await Get.find<ApiService>().createUserProfiles(id) && (await Get.find<ApiService>().getCurrentUser())?.profile != null) {
+    ApiService service = Get.find<ApiService>();
+    if (await service.createUserProfiles(id) &&
+        (await service.getCurrentUser())?.profile != null) {
+      try {
+        await service.setFCMToken();
+      } catch (e) {
+        debugPrint('$e');
+      }
       await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
       await resetApp();
     } else {

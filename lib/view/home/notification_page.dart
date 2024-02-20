@@ -46,10 +46,10 @@ class NotificationPage extends GetView<NotificationController> {
             builderDelegate: PagedChildBuilderDelegate<WeteamNotification>(
               itemBuilder: (context, item, index) =>
                   NotificationContainer(item),
-              noItemsFoundIndicatorBuilder: (context) => const Center(
+              noItemsFoundIndicatorBuilder: (context) => Center(
                 child: Text(
                   "아직 받은 알림이 없어요!",
-                  style: TextStyle(fontFamily: "NanumSquareNeo"),
+                  style: TextStyle(fontFamily: "NanumSquareNeo", fontSize: 12.sp),
                 ),
               ),
             ),

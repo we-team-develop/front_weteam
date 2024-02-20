@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -49,40 +50,6 @@ class ApiService extends CustomGetConnect implements GetxService {
 
     return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
   }
-
-  /// wtm 목록 조회 API
-  ///
-  /// return: 성공시 GetWTMProjectListResult, 실패시 null
-  Future<GetWTMProjectListResult?> getWTMProjectList(
-      int page, String direction, String field) async {
-    Response rp = await get('/api/projects', query: {
-      'page': page.toString(),
-      'size': 200.toString(),
-      'direction': direction,
-      'field': field
-    });
-
-    if (rp.hasError) return null;
-    return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
-  }
-
-  /// wtm 단건 조회 API
-  ///
-  /// return: 성공시  wtmProject, 실패시 null
-  Future<WTMProject?> getWTMProject(int projectId) async {
-    Response rp = await get('/api/meetings/$projectId');
-    if (rp.hasError) return null;
-
-    String json = rp.bodyString ?? "{}";
-    Map data = jsonDecode(json);
-
-    return WTMProject.fromJson(data);
-  }
-
-  /// wtm 생성 API
-  ///
-  /// return: 성공 여부
-  // Future<bool>
 
   /// 팀플 생성 API
   ///
@@ -177,7 +144,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       {required String title,
       required DateTime startedAt,
       required DateTime endedAt,
-      required int projectId}) async {
+      required int? projectId}) async {
     Map<String, String> requestBody = {};
     requestBody['title'] = title;
     requestBody['startedAt'] =
@@ -186,10 +153,42 @@ class ApiService extends CustomGetConnect implements GetxService {
     requestBody['endedAt'] =
     "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt
         .day.toString().padLeft(2, '0')}T00:00:00";
-    requestBody['projectId'] = '$projectId';
+    if (projectId != null) {
+      requestBody['projectId'] = '$projectId';
+    }
     Response rp = await post('/api/meetings', requestBody);
 
     return rp.isOk;
+  }
+
+  /// wtm 목록 조회 API
+  ///
+  /// return: 성공시 GetWTMProjectListResult, 실패시 null
+  Future<GetWTMProjectListResult?> getWTMProjectList(
+      int page, String direction, String field) async {
+    Response rp = await get('/api/meetings', query: {
+      'page': page.toString(),
+      'size': 200.toString(),
+      'direction': direction,
+      'field': field,
+      'sort': 'desc'
+    });
+
+    if (rp.hasError) return null;
+    return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
+  }
+
+  /// wtm 단건 조회 API
+  ///
+  /// return: 성공시  wtmProject, 실패시 null
+  Future<WTMProject?> getWTMProject(int projectId) async {
+    Response rp = await get('/api/meetings/$projectId');
+    if (rp.hasError) return null;
+
+    String json = rp.bodyString ?? "{}";
+    Map data = jsonDecode(json);
+
+    return WTMProject.fromJson(data);
   }
 
   /**
@@ -293,6 +292,18 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// return: 성공 여부
   Future<bool> acceptInvite(int projectId) async {
     Response rp = await patch('/api/project-users/$projectId', {});
+    return rp.isOk;
+  }
+
+  /**
+   * FCM
+   */
+
+  Future<bool> setFCMToken() async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    if (fcmToken == null) return false;
+    Response rp = await patch('/api/fcm/$fcmToken', {});
+
     return rp.isOk;
   }
 

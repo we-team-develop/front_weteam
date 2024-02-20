@@ -79,9 +79,9 @@ class WTMDate extends GetView<WTMCreateController> {
                   title: controller.nameInputText.value.trim(),
                   startedAt: controller.startedAt!,
                   endedAt: controller.endedAt!,
-                  projectId: controller.selectedTeamProject.value?.id ?? -1);
+                  projectId: controller.selectedTeamProject.value?.id);
               if (success) {
-                Get.to(() => WTMCreateFinish());
+                Get.to(() => const WTMCreateFinish());
               } else {
                 WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
               }

@@ -50,46 +50,48 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                     const _CustomDivider(),
                     Obx(() => Stack(children: [
                           TeamProjectWidget(controller.tp.value),
-                          (controller.tp.value.memberSize == 1 ||
-                                  controller.tp.value.host.id !=
-                                      Get.find<AuthService>().user.value!.id)
-                              ? Positioned(
-                                  top: 0,
-                                  bottom: 0,
-                                  right: 0,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              CustomCheckDialog(
-                                                  title: '정말 팀플을 나갈까요?',
-                                                  content: '이 작업은 되돌릴 수 없어요.',
-                                                  admitName: '예',
-                                                  denyName: '아니요',
-                                                  denyCallback: () =>
-                                                      Get.back(),
-                                                  admitCallback:
-                                                      exitOrDeleteTeamProject));
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 14.h),
-                                      child: Column(
-                                        children: [
-                                          Image.asset(ImagePath.icHostoutGray,
-                                              width: 21.w, height: 21.h),
-                                          Text(
-                                            '나가기',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10.sp,
-                                                color: AppColors.G_03),
-                                          ),
-                                        ],
+                          Positioned(
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (controller.tp.value.memberSize > 1 &&
+                                      controller.tp.value.host.id ==
+                                          Get.find<AuthService>().user.value!.id) {
+                                    WeteamUtils.snackbar(
+                                        '', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
+                                        icon: SnackbarIcon.fail);
+                                    return;
+                                  }
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => CustomCheckDialog(
+                                          title: '정말 나가시겠습니까?',
+                                          content: '팀플 목록에서 완전히 삭제됩니다.',
+                                          admitName: '나가기',
+                                          denyName: '아니요',
+                                          denyCallback: () => Get.back(),
+                                          admitCallback:
+                                              exitOrDeleteTeamProject));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 14.h),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(ImagePath.icHostoutGray,
+                                          width: 21.w, height: 21.h),
+                                      Text(
+                                        '나가기',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10.sp,
+                                            color: AppColors.G_03),
                                       ),
-                                    ),
-                                  ))
-                              : const SizedBox(),
+                                    ],
+                                  ),
+                                ),
+                              ))
                         ])),
                     const _CustomDivider(),
                     Obx(() {
@@ -108,7 +110,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
                             actionButtonText: '퇴출하기',
-                            action: controller.kickSelectedUser,
+                            action: controller.showKickDialog,
                             cancelAction: () =>
                                 controller.isKickMode.value = false))),
                     Obx(() => Visibility(
@@ -116,7 +118,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                         child: _CancelOrActionBottomPanel(
                             message: '호스트 권한을 넘기고 있습니다.',
                             actionButtonText: '호스트넘기기',
-                            action: controller.changeHost,
+                            action: controller.showChangeHostDialog,
                             cancelAction: () =>
                                 controller.isChangeHostMode.value = false)))
                   ],
@@ -185,7 +187,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
       }
     });
     controller.selectedKickUser.listen((p0) {
-      if (p0 != projectUser.id) kickSelected.value = false;
+      if (p0?.id != projectUser.id) kickSelected.value = false;
     });
   }
 
@@ -201,7 +203,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
         if (controller.isKickMode.isTrue && !amIHost()) {
           kickSelected.value = !kickSelected.value;
           controller.selectedKickUser.value =
-              kickSelected.value ? projectUser.id : -1;
+              kickSelected.value ? projectUser : null;
         }
 
         if (controller.isKickMode.isFalse &&
