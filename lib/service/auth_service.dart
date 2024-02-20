@@ -106,8 +106,9 @@ class AuthService extends GetxService {
       await sharedPreferences.clear();
 
       return true;
-    } catch (e) {
+    } catch (e, st) {
       debugPrint("로그아웃 중 예외발생: $e");
+      debugPrintStack(stackTrace: st);
       return false;
     }
   }
