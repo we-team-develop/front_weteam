@@ -178,7 +178,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       {required String title,
       required DateTime startedAt,
       required DateTime endedAt,
-      required int projectId}) async {
+      required int? projectId}) async {
     Map<String, String> requestBody = {};
     requestBody['title'] = title;
     requestBody['startedAt'] =
@@ -187,7 +187,9 @@ class ApiService extends CustomGetConnect implements GetxService {
     requestBody['endedAt'] =
     "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt
         .day.toString().padLeft(2, '0')}T00:00:00";
-    requestBody['projectId'] = '$projectId';
+    if (projectId != null) {
+      requestBody['projectId'] = '$projectId';
+    }
     Response rp = await post('/api/meetings', requestBody);
 
     return rp.isOk;

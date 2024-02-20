@@ -38,8 +38,13 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
                   _boldTS(_formatDateTime(controller.endedAt!)),
                   const TextSpan(text: '까지\n'),
                   _boldTS(
-                      '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n[${controller.selectedTeamProject.value?.title}]'),
-                  const TextSpan(text: '의\n'),
+                      '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n'),
+                  if (controller.selectedTeamProject.value != null) TextSpan(
+                    children: [
+                      _boldTS('[${controller.selectedTeamProject.value?.title}]'),
+                      const TextSpan(text: '의\n'),
+                    ]
+                  ),
                   _boldTS('[${controller.nameInputText.value}]'),
                   const TextSpan(text: ' 약속을 잡는\n언제보까가 생성되었습니다~!'),
                 ]),
