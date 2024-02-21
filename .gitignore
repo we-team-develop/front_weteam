@@ -32,6 +32,7 @@ render.experimental.xml
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+GoogleService-info.plist
 
 # Android Profiling
 *.hprof
@@ -434,3 +435,6 @@ hs_err_pid*
 
 ### 네이버 로그인 API ###
 android/app/src/main/res/values/strings.xml
+
+### firebase 관련 ###
+firebase_app_id_file.json
