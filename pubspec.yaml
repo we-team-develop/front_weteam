@@ -28,6 +28,7 @@ dependencies:
   share_plus: ^7.2.2
   auto_size_text: ^3.0.0
   firebase_messaging: ^14.7.16
+  firebase_crashlytics: ^3.4.15
 
 dev_dependencies:
   flutter_test:
