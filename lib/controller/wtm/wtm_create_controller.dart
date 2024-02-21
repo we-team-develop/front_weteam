@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
+import '../../model/wtm_project.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
 
 class WTMCreateController extends GetxController {
+  WTMProject? wtmProject;
+
   final Rx<String> searchText = Rx("");
   String? searchWait;
 

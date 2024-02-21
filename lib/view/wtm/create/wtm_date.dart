@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../controller/custom_calendar_controller.dart';
 import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
+import '../../../model/wtm_project.dart';
 import '../../../service/api_service.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_calendart.dart';
@@ -74,15 +75,47 @@ class WTMDate extends GetView<WTMCreateController> {
                 controller.startedAt = ccc.selectedDt1.value!;
                 controller.endedAt = ccc.selectedDt2.value!;
               }
-              bool success = await Get.find<ApiService>().createWTM(
-                  title: controller.nameInputText.value.trim(),
-                  startedAt: controller.startedAt!,
-                  endedAt: controller.endedAt!,
-                  projectId: controller.selectedTeamProject.value?.id);
+
+              String title = controller.nameInputText.value.trim();
+              DateTime startedAt = controller.startedAt!;
+              DateTime endedAt = controller.endedAt!;
+              int? projectId = controller.selectedTeamProject.value?.id;
+
+              // 웬투밋 생성or수정 성공 여부를 담는 변수입니다.
+              bool success = false;
+
+              // 웬투밋 생성하는 단계입니다.
+              if (controller.wtmProject == null) {
+                WTMProject? wtmProject = await Get.find<ApiService>().createWTM(
+                    title: title,
+                    startedAt: startedAt,
+                    endedAt: endedAt,
+                    projectId: projectId);
+
+                success = (wtmProject != null);
+                if (success) {
+                  // 나중에 수정할 때를 위해 컨트롤러에 담아둡니다.
+                  controller.wtmProject = wtmProject;
+                }
+              } else { // 웬투밋 수정하는 단계입니다.
+                int wtmId = controller.wtmProject!.id;
+                success = await Get.find<ApiService>().editWTM(
+                    wtmProjectId: wtmId,
+                    title: title,
+                    startedAt: startedAt,
+                    endedAt: endedAt);
+              }
+
               if (success) {
                 Get.to(() => const WTMCreateFinish());
               } else {
-                WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
+                if (controller.wtmProject == null) { // 생성 실패시
+                  WeteamUtils.snackbar(
+                      '생성 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
+                } else { // 수정 실패시
+                  WeteamUtils.snackbar(
+                      '수정 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
+                }
               }
             }
           },
