@@ -25,7 +25,7 @@ class NotificationController extends GetxController {
         return;
       }
 
-      _pagingController.appendPage(newList, currentPage++);
+      _pagingController.appendPage(newList, ++currentPage);
     });
   }
 

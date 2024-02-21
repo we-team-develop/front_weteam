@@ -246,6 +246,7 @@ class Profile extends GetView<ProfileController> {
                     color: AppColors.Red),
               ),
             ),
+            SizedBox(height: 20.h)
           ],
         ),
       ),

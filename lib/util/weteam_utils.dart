@@ -71,4 +71,28 @@ class WeteamUtils {
       } catch (_) {}
     }
   }
+
+  /// DateTime을 String으로 변형합니다
+  ///
+  /// withTime: 시,분,초까지 포함합니다.
+  static String formatDateTime(DateTime dt, {bool? withTime}) {
+    String ret = "${padLeft(dt.year)}-${padLeft(dt.month)}-${padLeft(dt.day)}";
+    if (withTime != null && withTime == true) {
+      ret += "T${padLeft(dt.hour)}:${padLeft(dt.minute)}:${padLeft(dt.second)}";
+    }
+    return ret;
+  }
+
+  /// Num를 2글자 이상 String으로
+  ///
+  /// '''padLeft(3)''' -> '03'
+  static String padLeft(int num) {
+    return num.toString().padLeft(2, '0');
+  }
+
+
+  /// 시,분,초(mill,micro 포함)를 모두 0으로 설정합니다.
+  static DateTime onlyDate(DateTime dt) {
+    return DateTime(dt.year, dt.month, dt.day);
+  }
 }

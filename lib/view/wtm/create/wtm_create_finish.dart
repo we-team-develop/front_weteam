@@ -79,7 +79,6 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
               await WeteamUtils.closeSnackbarNow();
               Get.back();
               Get.back();
-              Get.back();
             },
             child: RichText(
                 text: TextSpan(

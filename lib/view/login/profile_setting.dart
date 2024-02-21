@@ -84,17 +84,21 @@ class ProfileSettingPage extends StatelessWidget {
 
   Future<void> setProfile(int id, BuildContext context) async {
     ApiService service = Get.find<ApiService>();
-    if (await service.createUserProfiles(id) &&
-        (await service.getCurrentUser())?.profile != null) {
-      try {
-        await service.setFCMToken();
-      } catch (e) {
-        debugPrint('$e');
+    try {
+      bool fcmSuccess = await service.setFCMToken(); // FCM토큰을 서버에 전송합니다
+
+      if (fcmSuccess && await service.createUserProfiles(id) &&
+          (await service.getCurrentUser())?.profile != null) {
+        await sharedPreferences.setBool(
+            SharedPreferencesKeys.isRegistered, true);
+        await resetApp();
+      } else {
+        WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다(1)", icon: SnackbarIcon.fail);
       }
-      await sharedPreferences.setBool(SharedPreferencesKeys.isRegistered, true);
-      await resetApp();
-    } else {
-      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다", icon: SnackbarIcon.fail);
+    } catch (e, st) {
+      debugPrint('$e');
+      debugPrintStack(stackTrace: st);
+      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다(2)", icon: SnackbarIcon.fail);
     }
   }
 }

@@ -18,19 +18,21 @@ class BottomNavController extends GetxController {
 
   void changeIndex(int value) {
     var page = Page.values[value];
-    if (value == _pageIndex.value) {
-      switch (page) {
-        case Page.TEAMPLAY:
-          Get.find<TeamPlayController>().tpScrollUp();
-          break;
-        case Page.HOME:
-          Get.find<HomeController>().scrollUp();
-          break;
-        case Page.MYPAGE:
-          Get.find<MyPageController>().scrollUp();
-          break;
+    try {
+      if (value == _pageIndex.value) {
+        switch (page) {
+          case Page.TEAMPLAY:
+            Get.find<TeamPlayController>().tpScrollUp();
+            break;
+          case Page.HOME:
+            Get.find<HomeController>().scrollUp();
+            break;
+          case Page.MYPAGE:
+            Get.find<MyPageController>().scrollUp();
+            break;
+        }
       }
-    }
+    } catch (_) {}
     moveToPage(value);
   }
 

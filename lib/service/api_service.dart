@@ -10,6 +10,7 @@ import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../model/wtm_project.dart';
 import '../util/custom_get_connect.dart';
+import '../util/weteam_utils.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
   final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
@@ -139,24 +140,56 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   /// 미팅 생성
   ///
-  /// return: 성공 여부
-  Future<bool> createWTM(
+  /// return: [WTMProject]?
+  Future<WTMProject?> createWTM(
       {required String title,
       required DateTime startedAt,
       required DateTime endedAt,
       required int? projectId}) async {
-    Map<String, String> requestBody = {};
-    requestBody['title'] = title;
-    requestBody['startedAt'] =
-    "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt
-        .day.toString().padLeft(2, '0')}T00:00:00";
-    requestBody['endedAt'] =
-    "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt
-        .day.toString().padLeft(2, '0')}T00:00:00";
+    startedAt = WeteamUtils.onlyDate(startedAt);
+    endedAt = WeteamUtils.onlyDate(endedAt);
+
+    Map<String, String> requestBody = {
+      'title': title,
+      'startedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+      'endedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+    };
+
+    // 팀플을 선택하는 미팅일 경우 팀플 ID를 추가해줍니다.
     if (projectId != null) {
       requestBody['projectId'] = '$projectId';
     }
+
+    // 서버로 API요청
     Response rp = await post('/api/meetings', requestBody);
+
+    // 오류 발생시 null return
+    if (rp.hasError || rp.bodyString == null) {
+      return null;
+    }
+
+    return WTMProject.fromJson(json.decode(rp.bodyString!));
+  }
+
+  /// 미팅 수정
+  ///
+  /// return: [bool]
+  Future<bool> editWTM(
+      {required int wtmProjectId,
+      required String title,
+      required DateTime startedAt,
+      required DateTime endedAt}) async {
+    startedAt = WeteamUtils.onlyDate(startedAt);
+    endedAt = WeteamUtils.onlyDate(endedAt);
+
+    Map<String, String> requestBody = {
+      'title': title,
+      'startedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+      'endedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+    };
+
+    // 서버로 API요청
+    Response rp = await patch('/api/meetings/$wtmProjectId', requestBody);
 
     return rp.isOk;
   }

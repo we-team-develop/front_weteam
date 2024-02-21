@@ -81,7 +81,7 @@ class Home extends GetView<HomeController> {
                           )),
                     GestureDetector(
                         onTap: () {
-                          Get.to(() => WTM(), binding: WTMCreateBinding());
+                          Get.to(() => WTM(), binding: WTMBindings());
                         },
                         child: _bottomBanner()),
                     SizedBox(height: 15.h)
@@ -184,7 +184,7 @@ class Home extends GetView<HomeController> {
                   height: 15.h,
                 ),
                 Text(
-                  '진행 중인  팀플이 없어요.\n지금 바로 생성해보세요!',
+                  '진행 중인 팀플이 없어요.\n지금 바로 생성해보세요!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.Black,

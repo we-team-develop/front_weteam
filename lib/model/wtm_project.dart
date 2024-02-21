@@ -21,7 +21,7 @@ class WTMProject {
     return WTMProject(
         img: "",
         id: data['id'],
-        title: data['name'],
+        title: data['title'],
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),
         project: TeamProject.fromJson(data['project'] ?? {}));
