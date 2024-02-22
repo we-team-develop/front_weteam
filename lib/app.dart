@@ -30,10 +30,10 @@ class App extends GetView<BottomNavController> {
 
       if (host == "projects") {
         if (path.startsWith("/acceptInvite")) {
-          int projectId = int.parse(query['id'] ?? '-1');
+          String hashedId = query['id'] ?? '-1';
           if (!isLoggedIn) return;
 
-          bool success = await Get.find<ApiService>().acceptInvite(projectId);
+          bool success = await Get.find<ApiService>().acceptInvite(hashedId);
           if (success) {
             Get.find<HomeController>().updateTeamProjectList();
             WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',

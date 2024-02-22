@@ -1,6 +1,7 @@
 import 'weteam_user.dart';
 
 class TeamProject {
+  String hashedId;
   int id;
   String img;
   String title;
@@ -12,7 +13,8 @@ class TeamProject {
   WeteamUser host;
 
   TeamProject(
-      {this.id = -1,
+      {this.hashedId = "",
+      this.id = -1,
       this.img = "",
       this.title = "",
       this.description = "",
@@ -26,6 +28,7 @@ class TeamProject {
 
   factory TeamProject.fromJson(Map data) {
     return TeamProject(
+        hashedId: data['hashedId'] ?? "",
         id: data['id'],
         title: data['name'],
         description: data['explanation'],

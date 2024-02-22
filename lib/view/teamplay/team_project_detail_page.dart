@@ -411,9 +411,11 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
-                        int teamProjectId = controller.tp.value.id;
-                        Share.share(
-                            '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$teamProjectId');
+                        String hashedId = controller.tp.value.hashedId;
+
+                        String inviteText = '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$hashedId';
+                        debugPrint(inviteText);
+                        Share.share(inviteText);
                       },
                       child: Container(
                         width: 330.w,
