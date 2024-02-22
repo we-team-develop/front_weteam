@@ -58,7 +58,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                 onTap: () {
                                   if (controller.tp.value.memberSize > 1 &&
                                       controller.tp.value.host.id ==
-                                          Get.find<AuthService>().user.value!.id) {
+                                          Get.find<AuthService>()
+                                              .user
+                                              .value!
+                                              .id) {
                                     WeteamUtils.snackbar(
                                         '', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
                                         icon: SnackbarIcon.fail);
@@ -79,8 +82,16 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                   padding: EdgeInsets.only(top: 14.h),
                                   child: Column(
                                     children: [
-                                      Image.asset(ImagePath.icHostoutGray,
-                                          width: 21.w, height: 21.h),
+                                      Image.asset(
+                                          controller.tp.value.host.id ==
+                                                  Get.find<AuthService>()
+                                                      .user
+                                                      .value!
+                                                      .id
+                                              ? ImagePath.icHostoutGray
+                                              : ImagePath.icGuestoutGray,
+                                          width: 21.w,
+                                          height: 21.h),
                                       Text(
                                         '나가기',
                                         style: TextStyle(
@@ -141,7 +152,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         await WeteamUtils.closeSnackbarNow();
         Get.back();
         Get.back();
-        WeteamUtils.snackbar("", '팀플이 성공적으로 삭제되었어요.', icon: SnackbarIcon.success);
+        WeteamUtils.snackbar("", '팀플이 성공적으로 삭제되었어요.',
+            icon: SnackbarIcon.success);
       } else {
         WeteamUtils.snackbar("", '팀플을 삭제하지 못했어요.', icon: SnackbarIcon.fail);
       }
@@ -598,7 +610,8 @@ class _CancelOrActionBottomPanel
                   dynamic ret = action.call();
                   if (ret is Future) await ret;
                 } catch (e, st) {
-                  WeteamUtils.snackbar("죄송합니다", "오류가 발생했습니다", icon: SnackbarIcon.fail);
+                  WeteamUtils.snackbar("죄송합니다", "오류가 발생했습니다",
+                      icon: SnackbarIcon.fail);
                   debugPrint("$e");
                   debugPrintStack(stackTrace: st);
                 }

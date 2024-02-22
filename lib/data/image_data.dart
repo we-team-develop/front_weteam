@@ -67,6 +67,7 @@ class ImagePath {
   static String get icCheckWhiteActivated =>
       'assets/images/ic_check_white_activated.png';
   static String get icHostoutGray => 'assets/images/ic_hostout_gray.png';
+  static String get icGuestoutGray => 'assets/images/ic_guestout_gray.png';
   static String get checktutorialfalse =>
       'assets/images/tutorial_checkbox_false.png';
   static String get checktutorialtrue =>
@@ -91,7 +92,8 @@ class ImagePath {
   static String get tpImage9 => 'assets/images/9@4x.png';
   static String get tpImage10 => 'assets/images/10@4x.png';
   static String get snackbarFailIc => 'assets/images/snackbar_fail_ic.png';
-  static String get snackbarSuccessIc => 'assets/images/snackbar_success_ic.png';
+  static String get snackbarSuccessIc =>
+      'assets/images/snackbar_success_ic.png';
   static String get snackbarInfoIc => 'assets/images/snackbar_info_ic.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
