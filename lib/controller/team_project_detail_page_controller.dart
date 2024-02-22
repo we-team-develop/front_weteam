@@ -39,7 +39,8 @@ class TeamProjectDetailPageController extends GetxController {
 
   // 성공 여부 반환
   Future<bool> fetchUserList() async {
-    List<WeteamProjectUser>? list = await Get.find<ApiService>().getProjectUsers(tp.value.id);
+    List<WeteamProjectUser>? list =
+        await Get.find<ApiService>().getProjectUsers(tp.value.id);
     if (list == null || list.isEmpty) return false; // 비어있으면 서버 오류로 판단
 
     userList.clear();
@@ -49,21 +50,21 @@ class TeamProjectDetailPageController extends GetxController {
 
   void showChangeHostDialog() {
     if (selectedNewHost.value == -1) {
-      WeteamUtils.snackbar('','호스트 권한을 받을 유저를 선택해주세요');
+      WeteamUtils.snackbar('', '호스트 권한을 받을 유저를 선택해주세요');
       return;
     }
 
     showDialog(
         context: Get.context!,
         builder: (context) => CustomCheckDialog(
-          title: '',
-          content: '정말 호스트를 넘길까요?',
-          admitCallback: changeHost,
-          denyCallback: () async {
-            await WeteamUtils.closeSnackbarNow();
-            Get.back();
-          },
-        ));
+              title: '',
+              content: '정말 호스트를 넘길까요?',
+              admitCallback: changeHost,
+              denyCallback: () async {
+                await WeteamUtils.closeSnackbarNow();
+                Get.back();
+              },
+            ));
   }
 
   Future<void> changeHost() async {
@@ -73,12 +74,13 @@ class TeamProjectDetailPageController extends GetxController {
       await updateTeamProjectLists();
       isChangeHostMode.value = false;
       Get.back();
-      WeteamUtils.snackbar("","호스트 권한을 성공적으로 넘겼습니다", icon: SnackbarIcon.success);
+      WeteamUtils.snackbar("", "호스트 권한을 성공적으로 넘겼습니다",
+          icon: SnackbarIcon.success);
     } else {
       WeteamUtils.snackbar("호스트 변경 실패", "오류가 발생했습니다", icon: SnackbarIcon.fail);
     }
   }
-  
+
   void showKickDialog() {
     if (selectedKickUser.value == null) {
       WeteamUtils.snackbar("", "퇴출시킬 유저를 선택하세요");
@@ -88,19 +90,19 @@ class TeamProjectDetailPageController extends GetxController {
     showDialog(
         context: Get.context!,
         builder: (context) => CustomCheckDialog(
-            title: '',
-            content: '정말 ${selectedUser.user.username}님을 강제 퇴장시킬까요?',
-          admitCallback: kickSelectedUser,
-          denyCallback: () async {
-              await WeteamUtils.closeSnackbarNow();
-              Get.back();
-          },
-        ));
+              content: '정말 ${selectedUser.user.username}님을 강제 퇴장시킬까요?',
+              admitCallback: kickSelectedUser,
+              denyCallback: () async {
+                await WeteamUtils.closeSnackbarNow();
+                Get.back();
+              },
+            ));
   }
 
   Future<void> kickSelectedUser() async {
     ApiService service = Get.find<ApiService>();
-    bool success = await service.kickUserFromTeamProject([selectedKickUser.value!.id]);
+    bool success =
+        await service.kickUserFromTeamProject([selectedKickUser.value!.id]);
 
     if (success) {
       WeteamUtils.snackbar("", "성공적으로 퇴출시켰습니다.", icon: SnackbarIcon.success);

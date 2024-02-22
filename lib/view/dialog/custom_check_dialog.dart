@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../data/color_data.dart';
 
 class CustomCheckDialog extends StatelessWidget {
-  final String title; // 예시: 정말 로그아웃 하시겠습니까?
+  final String? title; // 예시: 정말 로그아웃 하시겠습니까?
   final String content; // 예시: 다시 돌아올 거라 믿어요😢
   final String denyName;
   final String admitName;
@@ -16,7 +16,7 @@ class CustomCheckDialog extends StatelessWidget {
 
   const CustomCheckDialog(
       {super.key,
-      required this.title,
+      this.title,
       required this.content,
       this.denyName = '아니오',
       this.admitName = '네',
@@ -46,25 +46,28 @@ class CustomCheckDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min, // 최소 크기로
               crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
               children: [
-                SizedBox(height: 24.h),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.Black,
-                    fontSize: 12.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(content,
+                if (title != null && title!.isNotEmpty) ...[
+                  SizedBox(height: 24.h),
+                  Text(
+                    title!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.Black,
-                      fontSize: 10.sp,
+                      fontSize: 12.sp,
                       fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w400,
-                    )),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: title != null ? 24.h : 0),
+                  Text(content,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.Black,
+                        fontSize: 10.sp,
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.w400,
+                      )),
+                ],
               ],
             ),
             Column(
@@ -81,20 +84,24 @@ class CustomCheckDialog extends StatelessWidget {
                 ),
                 IntrinsicHeight(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _Button(name: denyName, colorInt: denyColorInt, callback: denyCallback),
-                        Container(
-                          width: 0.5.r,
-                          height: 42.h,
-                          decoration: const BoxDecoration(
-                              color: AppColors.G_02
-                          ),
-                        ),
-                        _Button(name: admitName, colorInt: admitColorInt, callback: admitCallback)
-                      ],
-                    )),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _Button(
+                        name: denyName,
+                        colorInt: denyColorInt,
+                        callback: denyCallback),
+                    Container(
+                      width: 0.5.r,
+                      height: 42.h,
+                      decoration: const BoxDecoration(color: AppColors.G_02),
+                    ),
+                    _Button(
+                        name: admitName,
+                        colorInt: admitColorInt,
+                        callback: admitCallback)
+                  ],
+                )),
               ],
             )
           ],
@@ -120,17 +127,19 @@ class _Button extends StatelessWidget {
         //behavior: HitTestBehavior.translucent, // 모든 곳 터치 되도록
         child: Center(
           child: Obx(
-            () => loading.value ? const CircularProgressIndicator() : Text(
-              name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(colorInt),
-                fontSize: 12.sp,
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
+            () => loading.value
+                ? const CircularProgressIndicator()
+                : Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(colorInt),
+                      fontSize: 12.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
           ),
         ),
       ),
@@ -156,5 +165,4 @@ class _Button extends StatelessWidget {
     loading.value = false;
     loading.refresh();
   }
-
 }
