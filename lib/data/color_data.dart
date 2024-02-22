@@ -27,7 +27,11 @@ class AppColors {
   // Sub_Blue
   static const Color Blue_01 = Color(0xFF87B3DB);
   static const Color Blue_02 = Color(0xFF94A4F9);
-  static const Color Blue_03 = Color(0x9989B2E7);
+  static const Color Blue_03 = Color(0xFF89B2E7);
+  static const Color Blue_04 = Color(0xFFD6EBFA);
+  static const Color Blue_05 = Color(0xFFAED6F5);
+  static const Color Blue_06 = Color(0xFF85C1F1);
+  static const Color Blue_07 = Color(0xFF5DADEC);
   // Sub_Purple
   static const Color Purple = Color(0xFF9C879E);
   // Sub_Green
