@@ -97,7 +97,14 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 10.sp,
-                                            color: AppColors.G_03),
+                                            color:
+                                                controller.tp.value.host.id ==
+                                                        Get.find<AuthService>()
+                                                            .user
+                                                            .value!
+                                                            .id
+                                                    ? AppColors.G_03
+                                                    : AppColors.G_05),
                                       ),
                                     ],
                                   ),
