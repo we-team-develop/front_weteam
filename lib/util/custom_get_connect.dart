@@ -29,17 +29,16 @@ class CustomGetConnect extends GetConnect {
     // 요청 헤더에 토큰이 있다면 생략시킵니다. (스팸 방지)
     String? authorization = requestHeader['Authorization'];
     if (authorization != null && authorization.length > 10) {
-      requestHeader['Authorization'] = "${(authorization).substring(0, 10)}...(생략됨)";
+      requestHeader['Authorization'] =
+          "${(authorization).substring(0, 10)}...(생략됨)";
     }
 
     int? statusCode = rp.statusCode; // 응답 코드
     String? bodyString = rp.bodyString; // 응답 bodyString
     bool isOk = rp.isOk;
 
-    log(
-        "=========== $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
-    name: 'API 요청 정보',
-    time: DateTime.now());
+    log("=========== $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
+        name: 'API 요청 정보', time: DateTime.now());
   }
 
   Future<Map<String, String>?> putTokenToHeaders(
@@ -125,14 +124,14 @@ class CustomGetConnect extends GetConnect {
 
   @override
   Future<Response<T>> patch<T>(
-      String url,
-      dynamic body, {
-        String? contentType,
-        Map<String, String>? headers,
-        Map<String, dynamic>? query,
-        Decoder<T>? decoder,
-        Progress? uploadProgress,
-      }) async {
+    String url,
+    dynamic body, {
+    String? contentType,
+    Map<String, String>? headers,
+    Map<String, dynamic>? query,
+    Decoder<T>? decoder,
+    Progress? uploadProgress,
+  }) async {
     headers = await putTokenToHeaders(headers);
 
     Response<T> rp = await httpClient.patch<T>(
