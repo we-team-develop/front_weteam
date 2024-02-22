@@ -90,7 +90,7 @@ class TeamProjectDetailPageController extends GetxController {
     showDialog(
         context: Get.context!,
         builder: (context) => CustomCheckDialog(
-              content: '정말 ${selectedUser.user.username}님을 강제 퇴장시킬까요?',
+              title: '정말 ${selectedUser.user.username}님을 강제 퇴장시킬까요?',
               admitCallback: kickSelectedUser,
               denyCallback: () async {
                 await WeteamUtils.closeSnackbarNow();
