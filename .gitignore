@@ -438,3 +438,6 @@ android/app/src/main/res/values/strings.xml
 
 ### firebase 관련 ###
 firebase_app_id_file.json
+
+### 위팀 ###
+weteam.properties

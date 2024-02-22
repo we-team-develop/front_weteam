@@ -4,6 +4,10 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+Properties weteamProperties = new Properties()
+weteamProperties.load(project.rootProject.file('weteam.properties').newDataInputStream())
+def kakao_native_key = weteamProperties.getProperty('kakao_native_key')
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -49,6 +53,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [KAKAO_NATIVE_APP_KEY: kakao_native_key]
     }
 
     buildTypes {
