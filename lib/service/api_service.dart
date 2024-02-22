@@ -415,7 +415,7 @@ class GetWTMProjectListResult {
       required this.wtmprojectList});
 
   factory GetWTMProjectListResult.fromJson(Map data) {
-    List wtmList = data['wtmList'];
+    List wtmList = data['meetingDtoList'];
     return GetWTMProjectListResult(
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
