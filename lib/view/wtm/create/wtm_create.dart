@@ -144,35 +144,6 @@ class WTMCreate extends GetView<WTMCreateController> {
     );
   }
 
-  // Widget _checkBox() {
-  //   return GestureDetector(
-  //       onTap: () {
-  //         if (controller.selectedTeamProject.value != null) {
-  //           Get.to(() => const WTMNaming(), transition: Transition.rightToLeft);
-  //         }
-  //       },
-  //       child: Obx(() => Container(
-  //             width: 330.w,
-  //             height: 46.h,
-  //             decoration: BoxDecoration(
-  //               borderRadius: BorderRadius.circular(8.r),
-  //               color: controller.selectedTeamProject.value != null
-  //                   ? AppColors.MainOrange
-  //                   : AppColors.G_02,
-  //             ),
-  //             child: Center(
-  //               child: Text(
-  //                 '선택 완료',
-  //                 style: TextStyle(
-  //                   fontSize: 15.sp,
-  //                   fontFamily: 'NanumGothicExtraBold',
-  //                   color: Colors.white,
-  //                 ),
-  //               ),
-  //             ),
-  //           )));
-  // }
-
   Widget _checkBox() {
     return Obx(() => NormalButton(
           text: '선택 완료',
