@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../widget/normal_button.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/wtm/wtm_create_controller.dart';
@@ -49,29 +50,19 @@ class WTMNaming extends GetView<WTMCreateController> {
   }
 
   Widget _bottom() {
-    return GestureDetector(
-      onTap: () {
-        if (controller.nameInputText.value.isNotEmpty) {
-          Get.to(() => const WTMDate());
-        }
-      },
-      child: Obx(() => Container(
-            width: 330.w,
-            height: 40.h,
-            decoration: BoxDecoration(
-              color: controller.nameInputText.value.isNotEmpty
-                  ? AppColors.MainOrange
-                  : AppColors.G_02,
-              borderRadius: BorderRadius.all(Radius.circular(8.r)),
-            ),
-            child: Center(
-                child: Text('입력 완료',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NanumGothicExtraBold',
-                        fontSize: 15.sp))),
-          )),
-    );
+    return Obx(() => NormalButton(
+          text: '입력 완료',
+          onTap: controller.nameInputText.value.isNotEmpty
+              ? () {
+                  Get.to(() => const WTMDate());
+                }
+              : null, // 입력 텍스트가 없을 때는 onTap을 null로 설정하여 버튼 비활성화
+          color: controller.nameInputText.value.isNotEmpty
+              ? AppColors.MainOrange
+              : AppColors.G_02, // 조건에 따라 색상 변경
+          width: 330, // 너비 설정
+          height: 40, // 높이 설정
+        ));
   }
 }
 
@@ -92,10 +83,7 @@ class _TextInput extends GetView<WTMCreateController> {
               child: TextField(
             maxLines: 1,
             controller: controller.nameInputController,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontFamily: 'NanumGothic'
-            ),
+            style: TextStyle(fontSize: 14.sp, fontFamily: 'NanumGothic'),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 counterText: "",
