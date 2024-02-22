@@ -350,8 +350,7 @@ class _DDayWidgetState extends State<DDayWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.only(right: 13.h, top: 7.w),
+                  padding: EdgeInsets.only(right: 13.h, top: 7.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -554,7 +553,7 @@ class _DDayWidgetState extends State<DDayWidget> {
             ),
             SizedBox(height: 30.h),
             NormalButton(
-                text: '중요 일정 추가하기',
+                text: '디데이 일정 추가하기',
                 onTap: () =>
                     Get.find<HomeController>().popupDialog(const DDayDialog())),
           ],

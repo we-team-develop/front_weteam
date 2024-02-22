@@ -9,7 +9,6 @@ import '../../data/color_data.dart';
 
 class CustomDatePicker extends StatefulWidget {
   final Function(DateTime dt) onChangeListener;
-
   final DateTime start;
   final DateTime end;
   final DateTime init;
@@ -42,29 +41,57 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-            child: _CustomPicker(
-                getYearList(), widget.init.year - widget.start.year, (int v) {
-          _current.value = _current.value.copyWith(year: widget.start.year + v);
-          _current.value.printInfo();
-          widget.onChangeListener.call(_current.value);
-        })),
+          child: _CustomPicker(
+            getYearList(),
+            widget.init.year - widget.start.year,
+            (int v) {
+              DateTime updatedDate = DateTime(
+                widget.start.year + v,
+                _current.value.month,
+                min(
+                    _current.value.day,
+                    DateTime(widget.start.year + v, _current.value.month + 1, 0)
+                        .day),
+              );
+              _updateCurrentDate(updatedDate);
+            },
+          ),
+        ),
         Flexible(
-            child:
-                _CustomPicker(getMonthList(), widget.init.month - 1, (int v) {
-          _current.value = _current.value.copyWith(month: v + 1);
-          _current.value.printInfo();
-          widget.onChangeListener.call(_current.value);
-        })),
+          child: _CustomPicker(
+            getMonthList(),
+            widget.init.month - 1,
+            (int v) {
+              DateTime updatedDate = DateTime(
+                _current.value.year,
+                v + 1,
+                min(_current.value.day,
+                    DateTime(_current.value.year, v + 2, 0).day),
+              );
+              _updateCurrentDate(updatedDate);
+            },
+          ),
+        ),
         Flexible(
-            child: Obx(
-          () => _CustomPicker(getDayList(), widget.init.day - 1, (int v) {
-            _current.value = _current.value.copyWith(day: v + 1);
-            _current.value.printInfo();
-            widget.onChangeListener.call(_current.value);
-          }),
-        ))
+          child: Obx(
+            () => _CustomPicker(
+              getDayList(),
+              widget.init.day - 1,
+              (int v) {
+                _updateCurrentDate(_current.value.copyWith(day: v + 1));
+              },
+            ),
+          ),
+        ),
       ],
     );
+  }
+
+  void _updateCurrentDate(DateTime date) {
+    setState(() {
+      _current.value = date;
+      widget.onChangeListener.call(_current.value);
+    });
   }
 
   List<String> getYearList() {
@@ -78,7 +105,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   }
 
   List<String> getDayList() {
-    int length = _current.value.copyWith(day: 0).day;
+    DateTime nextMonth =
+        DateTime(_current.value.year, _current.value.month + 1, 0);
+    int length = nextMonth.day;
     return List<String>.generate(
         length, (index) => (index + 1).toString().padLeft(2, '0'));
   }

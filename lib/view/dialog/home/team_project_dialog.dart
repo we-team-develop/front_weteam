@@ -272,6 +272,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       fontSize: 10.sp))),
           NormalButton(
               text: '확인',
+              width: 185.w,
+              height: 40.h,
               onTap: () async {
                 if (isSaving) return;
                 isSaving = true;
