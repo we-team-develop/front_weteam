@@ -28,7 +28,7 @@ class WTMSchedule extends GetView<WTMScheduleController> {
           Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: wtm.startedAt.difference(wtm.endedAt).inDays + 1,
+                itemCount: wtm.endedAt.difference(wtm.startedAt).inDays + 1,
                 itemBuilder: (_, i) =>
                     _day(context, wtm.startedAt.add(Duration(days: i))),
               ))
