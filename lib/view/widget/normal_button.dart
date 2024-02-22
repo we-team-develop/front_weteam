@@ -6,21 +6,31 @@ import '../../data/color_data.dart';
 class NormalButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
+  final Color? color;
+  final double? width;
+  final double? height;
 
-  const NormalButton({super.key, this.text = "", this.onTap});
+  const NormalButton({
+    super.key,
+    this.text = "",
+    this.onTap,
+    this.color,
+    this.width = 185,
+    this.height = 25.60,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 185.w,
-        height: 25.60.h,
+        width: width?.w,
+        height: height?.h,
         alignment: Alignment.center,
         decoration: ShapeDecoration(
-          color: AppColors.MainOrange,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r)),
+          color: color ?? AppColors.MainOrange,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         ),
         child: Text(
           text,

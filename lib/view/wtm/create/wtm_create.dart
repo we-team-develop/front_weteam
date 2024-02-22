@@ -6,6 +6,7 @@ import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
 import '../../../model/team_project.dart';
+import '../../widget/normal_button.dart';
 import '../../widget/team_project_widget.dart';
 import 'wtm_naming.dart';
 
@@ -95,7 +96,10 @@ class WTMCreate extends GetView<WTMCreateController> {
         Center(
             child: Column(
           children: [
-            _checkBox(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+              child: _checkBox(),
+            ),
             SizedBox(height: 16.h),
             _nextText(),
             SizedBox(height: 15.h),
@@ -140,33 +144,50 @@ class WTMCreate extends GetView<WTMCreateController> {
     );
   }
 
+  // Widget _checkBox() {
+  //   return GestureDetector(
+  //       onTap: () {
+  //         if (controller.selectedTeamProject.value != null) {
+  //           Get.to(() => const WTMNaming(), transition: Transition.rightToLeft);
+  //         }
+  //       },
+  //       child: Obx(() => Container(
+  //             width: 330.w,
+  //             height: 46.h,
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.circular(8.r),
+  //               color: controller.selectedTeamProject.value != null
+  //                   ? AppColors.MainOrange
+  //                   : AppColors.G_02,
+  //             ),
+  //             child: Center(
+  //               child: Text(
+  //                 '선택 완료',
+  //                 style: TextStyle(
+  //                   fontSize: 15.sp,
+  //                   fontFamily: 'NanumGothicExtraBold',
+  //                   color: Colors.white,
+  //                 ),
+  //               ),
+  //             ),
+  //           )));
+  // }
+
   Widget _checkBox() {
-    return GestureDetector(
-        onTap: () {
-          if (controller.selectedTeamProject.value != null) {
-            Get.to(() => const WTMNaming(), transition: Transition.rightToLeft);
-          }
-        },
-        child: Obx(() => Container(
-              width: 330.w,
-              height: 46.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
-                color: controller.selectedTeamProject.value != null
-                    ? AppColors.MainOrange
-                    : AppColors.G_02,
-              ),
-              child: Center(
-                child: Text(
-                  '선택 완료',
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontFamily: 'NanumGothicExtraBold',
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )));
+    return Obx(() => NormalButton(
+          text: '선택 완료',
+          onTap: controller.selectedTeamProject.value != null
+              ? () {
+                  Get.to(() => const WTMNaming(),
+                      transition: Transition.rightToLeft);
+                }
+              : null,
+          color: controller.selectedTeamProject.value != null
+              ? AppColors.MainOrange
+              : AppColors.G_02,
+          width: 330.w,
+          height: 40.h,
+        ));
   }
 
   Widget _nextText() {
