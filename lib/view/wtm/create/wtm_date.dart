@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../widget/normal_button.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/custom_calendar_controller.dart';
@@ -40,8 +41,7 @@ class WTMDate extends GetView<WTMCreateController> {
         SizedBox(
           height: 24.h,
         ),
-        const Expanded(
-            child: CustomCalendar()),
+        const Expanded(child: CustomCalendar()),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 15.h),
           child: _bottom(),
@@ -64,77 +64,60 @@ class WTMDate extends GetView<WTMCreateController> {
     CustomCalendarController ccc = Get.find<CustomCalendarController>();
 
     return Obx(() {
-      bool canFinish = ccc.selectedDt2.value != null && ccc.selectedDt2.value != null;
-      return GestureDetector(
-          onTap: () async {
-            if (canFinish) {
-              if (ccc.selectedDt2.value!.isBefore(ccc.selectedDt1.value!)) {
-                controller.startedAt = ccc.selectedDt2.value!;
-                controller.endedAt = ccc.selectedDt1.value!;
-              } else {
-                controller.startedAt = ccc.selectedDt1.value!;
-                controller.endedAt = ccc.selectedDt2.value!;
-              }
+      bool canFinish =
+          ccc.selectedDt2.value != null && ccc.selectedDt2.value != null;
+      return NormalButton(
+        onTap: canFinish
+            ? () async {
+                if (ccc.selectedDt2.value!.isBefore(ccc.selectedDt1.value!)) {
+                  controller.startedAt = ccc.selectedDt2.value!;
+                  controller.endedAt = ccc.selectedDt1.value!;
+                } else {
+                  controller.startedAt = ccc.selectedDt1.value!;
+                  controller.endedAt = ccc.selectedDt2.value!;
+                }
 
-              String title = controller.nameInputText.value.trim();
-              DateTime startedAt = controller.startedAt!;
-              DateTime endedAt = controller.endedAt!;
-              int? projectId = controller.selectedTeamProject.value?.id;
+                String title = controller.nameInputText.value.trim();
+                DateTime startedAt = controller.startedAt!;
+                DateTime endedAt = controller.endedAt!;
+                int? projectId = controller.selectedTeamProject.value?.id;
 
-              // 웬투밋 생성or수정 성공 여부를 담는 변수입니다.
-              bool success = false;
+                bool success = false;
 
-              // 웬투밋 생성하는 단계입니다.
-              if (controller.wtmProject == null) {
-                WTMProject? wtmProject = await Get.find<ApiService>().createWTM(
-                    title: title,
-                    startedAt: startedAt,
-                    endedAt: endedAt,
-                    projectId: projectId);
+                if (controller.wtmProject == null) {
+                  WTMProject? wtmProject = await Get.find<ApiService>()
+                      .createWTM(
+                          title: title,
+                          startedAt: startedAt,
+                          endedAt: endedAt,
+                          projectId: projectId);
 
-                success = (wtmProject != null);
+                  success = (wtmProject != null);
+                  if (success) {
+                    controller.wtmProject = wtmProject;
+                  }
+                } else {
+                  int wtmId = controller.wtmProject!.id;
+                  success = await Get.find<ApiService>().editWTM(
+                      wtmProjectId: wtmId,
+                      title: title,
+                      startedAt: startedAt,
+                      endedAt: endedAt);
+                }
+
                 if (success) {
-                  // 나중에 수정할 때를 위해 컨트롤러에 담아둡니다.
-                  controller.wtmProject = wtmProject;
-                }
-              } else { // 웬투밋 수정하는 단계입니다.
-                int wtmId = controller.wtmProject!.id;
-                success = await Get.find<ApiService>().editWTM(
-                    wtmProjectId: wtmId,
-                    title: title,
-                    startedAt: startedAt,
-                    endedAt: endedAt);
-              }
-
-              if (success) {
-                Get.to(() => const WTMCreateFinish());
-              } else {
-                if (controller.wtmProject == null) { // 생성 실패시
-                  WeteamUtils.snackbar(
-                      '생성 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
-                } else { // 수정 실패시
-                  WeteamUtils.snackbar(
-                      '수정 실패', '오류가 발생했습니다', icon: SnackbarIcon.fail);
+                  Get.to(() => const WTMCreateFinish());
+                } else {
+                  WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다',
+                      icon: SnackbarIcon.fail);
                 }
               }
-            }
-          },
-          child: Container(
-            width: 330.w,
-            height: 40.h,
-            decoration: BoxDecoration(
-              color: canFinish
-                  ? AppColors.MainOrange
-                  : AppColors.G_02,
-              borderRadius: BorderRadius.all(Radius.circular(8.r)),
-            ),
-            child: Center(
-                child: Text('입력 완료',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'NanumGothicExtraBold',
-                        fontSize: 15.sp))),
-          ));
+            : null,
+        text: '입력 완료',
+        color: canFinish ? AppColors.MainOrange : AppColors.G_02,
+        width: 330,
+        height: 40,
+      );
     });
   }
 }
