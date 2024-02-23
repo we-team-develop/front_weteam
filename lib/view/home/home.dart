@@ -32,66 +32,72 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _body() {
-    return Column(
-      children: [
-        _head(),
-        SizedBox(
-          height: 12.h,
-        ),
-        Expanded(child: Obx(() {
-          return CustomScrollView(
-            controller: controller.scrollController,
-            slivers: [
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                Obx(() => DDayWidget(dDayData: controller.dDayData.value))
-              ])),
-              if (!(controller.tpWidgetList.value == null ||
-                  controller.tpWidgetList.value!.isEmpty))
+    return RefreshIndicator(
+      onRefresh: () async {
+        await controller.updateTeamProjectList();
+      },
+      child: Column(
+        children: [
+          _head(),
+          SizedBox(
+            height: 12.h,
+          ),
+          Expanded(child: Obx(() {
+            return CustomScrollView(
+              controller: controller.scrollController,
+              physics: const AlwaysScrollableScrollPhysics(), // 항상 스크롤 가능하도록 설정
+              slivers: [
                 SliverList(
-                  delegate: SliverChildListDelegate([
-                    SizedBox(height: 15.h),
-                    const SizedBox(
-                      height: 0.7,
-                      width: double.infinity,
-                      child: ColoredBox(
-                        color: AppColors.G_02,
+                    delegate: SliverChildListDelegate([
+                  Obx(() => DDayWidget(dDayData: controller.dDayData.value))
+                ])),
+                if (!(controller.tpWidgetList.value == null ||
+                    controller.tpWidgetList.value!.isEmpty))
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      SizedBox(height: 15.h),
+                      const SizedBox(
+                        height: 0.7,
+                        width: double.infinity,
+                        child: ColoredBox(
+                          color: AppColors.G_02,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 15.h),
-                    ...controller.tpWidgetList.value ?? [],
-                  ]),
+                      SizedBox(height: 15.h),
+                      ...controller.tpWidgetList.value ?? [],
+                    ]),
+                  ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      (controller.tpWidgetList.value == null ||
+                              controller.tpWidgetList.value!.isEmpty)
+                          ? Expanded(child: _noTeamProjectWidget())
+                          : Expanded(
+                              child: Column(
+                              children: [
+                                SizedBox(height: 16.h),
+                                // 팀플 추가하기 버튼
+                                const Expanded(child: SizedBox()),
+                                _addTeamProjectBigButton(),
+                                SizedBox(height: 16.h)
+                              ],
+                            )),
+                      GestureDetector(
+                          onTap: () {
+                            Get.to(() => WTM(), binding: WTMBindings());
+                          },
+                          child: _bottomBanner()),
+                      SizedBox(height: 15.h)
+                    ],
+                  ),
                 ),
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    (controller.tpWidgetList.value == null ||
-                            controller.tpWidgetList.value!.isEmpty)
-                        ? Expanded(child: _noTeamProjectWidget())
-                        : Expanded(
-                            child: Column(
-                            children: [
-                              SizedBox(height: 16.h),
-                              // 팀플 추가하기 버튼
-                              const Expanded(child: SizedBox()),
-                              _addTeamProjectBigButton(),
-                              SizedBox(height: 16.h)
-                            ],
-                          )),
-                    GestureDetector(
-                        onTap: () {
-                          Get.to(() => WTM(), binding: WTMBindings());
-                        },
-                        child: _bottomBanner()),
-                    SizedBox(height: 15.h)
-                  ],
-                ),
-              ),
-            ],
-          );
-        }))
-      ],
+              ],
+            );
+          }))
+        ],
+      ),
     );
   }
 
