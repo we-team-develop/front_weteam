@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../widget/normal_button.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/custom_calendar_controller.dart';
+import '../../../controller/wtm/wtm_controller.dart';
 import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../model/wtm_project.dart';
 import '../../../service/api_service.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_calendart.dart';
+import '../../widget/normal_button.dart';
 import 'wtm_create_finish.dart';
 
 class WTMDate extends GetView<WTMCreateController> {
@@ -106,6 +107,7 @@ class WTMDate extends GetView<WTMCreateController> {
                 }
 
                 if (success) {
+                  Get.find<WTMController>().updateWTMProjectList();
                   Get.to(() => const WTMCreateFinish());
                 } else {
                   WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다',
