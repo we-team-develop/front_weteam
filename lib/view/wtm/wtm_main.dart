@@ -24,7 +24,12 @@ class WTM extends GetView<WTMController> {
       key: overlayKey,
       body: Padding(
         padding: EdgeInsets.only(top: 47.0.h),
-        child: _body(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await controller.updateWTMProjectList();
+          },
+          child: _body(),
+        ),
       ),
     );
   }
