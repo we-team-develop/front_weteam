@@ -57,8 +57,8 @@ class TeamProjectDetailPageController extends GetxController {
     showDialog(
         context: Get.context!,
         builder: (context) => CustomCheckDialog(
-              title: '',
-              content: '정말 호스트를 넘길까요?',
+              title: '정말 호스트를 넘길까요?',
+              content: '',
               admitCallback: changeHost,
               denyCallback: () async {
                 await WeteamUtils.closeSnackbarNow();
