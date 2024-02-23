@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../model/wtm_project.dart';
+import '../../util/weteam_utils.dart';
 
 class WTMSchedule extends GetView<WTMScheduleController> {
   final WTMProject wtm;
@@ -41,15 +42,15 @@ class WTMSchedule extends GetView<WTMScheduleController> {
 
   Widget _day(BuildContext c, DateTime date) {
     ScrollController sc =
-        ScrollController(initialScrollOffset: controller.offset.value);
+        ScrollController(initialScrollOffset: controller.verticalScrollOffset.value);
     sc.addListener(() {
-      if (sc.offset == controller.offset.value) return;
+      if (sc.offset == controller.verticalScrollOffset.value) return;
       controller.dt = date;
-      controller.offset.value = sc.offset;
+      controller.verticalScrollOffset.value = sc.offset;
     });
-    controller.offset.listen((p0) {
+    controller.verticalScrollOffset.listen((p0) {
       if (sc.hasClients && controller.dt != date) {
-        sc.jumpTo(controller.offset.value);
+        sc.jumpTo(controller.verticalScrollOffset.value);
       }
     });
     List<String> strDate = ['월', '화', '수', '목', '금', '토', '일'];
@@ -86,8 +87,9 @@ class _Hour extends GetView<WTMScheduleController> {
       padding: EdgeInsets.only(bottom: 3.25.h, right: 5.w),
       child: GestureDetector(
         onTap: () {
+          String dtKey = WeteamUtils.formatDateTime(parentDt);
           if (controller.selectionMode.isTrue) {
-            HashSet<int>? set = controller.selected[parentDt];
+            HashSet<int>? set = controller.selected[dtKey];
             set ??= HashSet<int>();
 
             if (set.contains(dt.hour)) {
@@ -96,17 +98,38 @@ class _Hour extends GetView<WTMScheduleController> {
               set.add(dt.hour);
             }
 
-            controller.selected[parentDt] = set;
+            controller.selected[dtKey] = set;
           }
         },
         child: Obx(() {
           late Color color;
-          bool selected = controller.selected[parentDt]?.contains(dt.hour) == true;
 
           if (controller.selectionMode.isTrue) {
-            color = selected ?AppColors.Blue_07 : AppColors.G_02;
+            String sMapKey = WeteamUtils.formatDateTime(parentDt);
+            bool selected =
+                controller.selected[sMapKey]?.contains(dt.hour) == true;
+
+            color = selected ? AppColors.Blue_07 : AppColors.G_02;
           } else {
-            color = AppColors.G_02;
+            String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
+            int population = controller.populationMap[pMapKey] ?? 0;
+
+            if (population == 0) {
+              color = AppColors.G_02;
+            } else {
+              double percent = population / controller.maxPopulation.value;
+              print("object${controller.maxPopulation}");
+              print(percent);
+              if (percent >= 0.75) {
+                color = AppColors.Blue_07;
+              } else if (percent >= 0.5) {
+                color = AppColors.Blue_06;
+              } else if (percent >= 0.25) {
+                color = AppColors.Blue_05;
+              } else {
+                color = AppColors.Blue_04;
+              }
+            }
           }
 
           return Container(
@@ -131,13 +154,13 @@ class _HourTextColumnState extends State<_HourTextColumn> {
 
   _HourTextColumnState() {
     sc.addListener(() {
-      if (sc.offset == controller.offset.value) return;
+      if (sc.offset == controller.verticalScrollOffset.value) return;
       controller.dt = null;
-      controller.offset.value = sc.offset;
+      controller.verticalScrollOffset.value = sc.offset;
     });
-    controller.offset.listen((p0) {
+    controller.verticalScrollOffset.listen((p0) {
       if (sc.hasClients && controller.dt != null) {
-        sc.jumpTo(controller.offset.value);
+        sc.jumpTo(controller.verticalScrollOffset.value);
       }
     });
   }

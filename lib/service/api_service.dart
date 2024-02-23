@@ -11,6 +11,7 @@ import '../model/weteam_notification.dart';
 import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../model/wtm_project.dart';
+import '../model/wtm_project_detail.dart';
 import '../util/custom_get_connect.dart';
 import '../util/weteam_utils.dart';
 
@@ -240,6 +241,15 @@ class ApiService extends CustomGetConnect implements GetxService {
 
     Response rp = await patch('/api/meeting-users/$meetingId/time', timeMapList);
     return rp.isOk;
+  }
+
+  Future<WTMProjectDetail?> getWTMProjectDetail(int meetingId) async {
+    Response rp = await get('/api/meetings/$meetingId');
+    if (rp.hasError || rp.body == null) {
+      return null;
+    }
+
+    return WTMProjectDetail.fromJson(rp.body);
   }
 
   /**

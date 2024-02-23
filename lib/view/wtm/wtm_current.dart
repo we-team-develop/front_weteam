@@ -80,6 +80,7 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                     // 서버에 저장하기
                     if (currentMode == true) {
                       bool success = await controller.setSelectedTimes();
+                      await controller.fetchWTMProjectDetail(); // 정보 조회
                       if (!success) {
                         WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
                       } else {
