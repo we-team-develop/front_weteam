@@ -45,7 +45,8 @@ class WTMProjectWidget extends StatelessWidget {
                   if (showlink)
                     Align(
                         alignment: Alignment.centerRight,
-                        child: Image.asset(ImagePath.wtmlink)),
+                        child: Image.asset(ImagePath.wtmlink,
+                            width: 13.5.w, height: 15.h)),
                 ],
               ),
             ),
