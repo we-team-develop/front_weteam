@@ -152,7 +152,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map<String, String> requestBody = {
       'title': title,
       'startedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
-      'endedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+      'endedAt': WeteamUtils.formatDateTime(endedAt, withTime: true),
     };
 
     // 팀플을 선택하는 미팅일 경우 팀플 ID를 추가해줍니다.
