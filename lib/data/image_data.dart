@@ -24,10 +24,6 @@ class ImagePath {
   static String get kakaologin => 'assets/images/kakao_login_large_wide.png';
   static String get naverlogin => 'assets/images/naver_login.png';
   static String get applelogin => 'assets/images/apple_login.png';
-  static String get startweteambutton =>
-      'assets/images/start_weteam_button.png';
-  static String get startweteambuttonOff =>
-      'assets/images/start_weteam_button_off.png';
   static String get profile1 => 'assets/images/profile_1.png';
   static String get profile2 => 'assets/images/profile_2.png';
   static String get profile3 => 'assets/images/profile_3.png';
@@ -41,7 +37,6 @@ class ImagePath {
   static String get tpOn => 'assets/images/tp_on.png';
   static String get tpOff => 'assets/images/tp_off.png';
   static String get bottomBannerIcon => 'assets/images/bottom_banner_icon.png';
-  static String get nextButton => 'assets/images/nextbutton.png';
   static String get check => 'assets/images/check.png';
   static String get icBell => 'assets/images/ic_bell.png';
   static String get icSearch => 'assets/images/ic_search.png';
