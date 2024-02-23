@@ -143,7 +143,7 @@ class MyApp extends StatelessWidget {
                 if (routing == null) return;
 
                 // 뒤로가기 액션이고 마지막 페이지가 Profile였을 때
-                if (routing.isBack == true && lastPage.contains("Profile")) {
+                if (routing.isBack == true && lastPage == "/Profile") {
                   Get.find<ProfileController>().saveChanges();
                 }
 
