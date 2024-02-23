@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../widget/normal_button.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
+import '../../widget/normal_button.dart';
 import 'wtm_date.dart';
 
 class WTMNaming extends GetView<WTMCreateController> {
@@ -52,16 +52,10 @@ class WTMNaming extends GetView<WTMCreateController> {
   Widget _bottom() {
     return Obx(() => NormalButton(
           text: '입력 완료',
-          onTap: controller.nameInputText.value.isNotEmpty
-              ? () {
-                  Get.to(() => const WTMDate());
-                }
-              : null, // 입력 텍스트가 없을 때는 onTap을 null로 설정하여 버튼 비활성화
-          color: controller.nameInputText.value.isNotEmpty
-              ? AppColors.MainOrange
-              : AppColors.G_02, // 조건에 따라 색상 변경
-          width: 330, // 너비 설정
-          height: 40, // 높이 설정
+          onTap: () => Get.to(() => const WTMDate()),
+          enable: controller.nameInputText.value.isNotEmpty,
+          width: 330.w, // 너비 설정
+          height: 40.h, // 높이 설정
         ));
   }
 }

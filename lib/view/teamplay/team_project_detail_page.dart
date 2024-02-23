@@ -16,6 +16,7 @@ import '../dialog/custom_check_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
 import '../my/mypage.dart';
 import '../widget/custom_text_field.dart';
+import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
 
@@ -413,31 +414,21 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 24.h),
-                    GestureDetector(
+                    NormalButton(
                       onTap: () {
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
                         String hashedId = controller.tp.value.hashedId;
 
-                        String inviteText = '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$hashedId';
+                        String inviteText =
+                            '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$hashedId';
                         debugPrint(inviteText);
                         Share.share(inviteText);
                       },
-                      child: Container(
-                        width: 330.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.MainOrange,
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                        ),
-                        child: Center(
-                            child: Text('팀원 초대하기',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'NanumGothicExtraBold',
-                                    fontSize: 15.sp))),
-                      ),
+                      width: 330.w,
+                      height: 40.h,
+                      text: '팀원 초대하기',
                     ),
                   ],
                 )),
@@ -559,9 +550,8 @@ class _CancelOrActionBottomPanel
   final String actionButtonText;
   final Function() action;
   final Function() cancelAction;
-  bool isKicking = false;
 
-  _CancelOrActionBottomPanel(
+  const _CancelOrActionBottomPanel(
       {required this.message,
       required this.actionButtonText,
       required this.cancelAction,
@@ -583,38 +573,21 @@ class _CancelOrActionBottomPanel
         SizedBox(height: 10.h),
         Row(
           children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: cancelAction,
-                child: Container(
-                  height: 38.h,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1.r, color: AppColors.G_02),
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '취소',
-                      style: TextStyle(
-                        color: AppColors.Black,
-                        fontSize: 12.sp,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                ),
+            Expanded(child: NormalButton(
+              whiteButton: true,
+              height: 38.h,
+              text: '취소',
+              onTap: cancelAction,
+              textStyle: TextStyle(
+                color: AppColors.Black,
+                fontSize: 12.sp,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w800,
               ),
-            ),
+            )),
             SizedBox(width: 10.w),
-            Expanded(
-                child: GestureDetector(
+            Expanded(child: NormalButton(
               onTap: () async {
-                if (isKicking) return;
-                isKicking = true;
                 try {
                   dynamic ret = action.call();
                   if (ret is Future) await ret;
@@ -624,28 +597,16 @@ class _CancelOrActionBottomPanel
                   debugPrint("$e");
                   debugPrintStack(stackTrace: st);
                 }
-                isKicking = false;
               },
-              child: Container(
-                height: 38.h,
-                decoration: ShapeDecoration(
-                  color: AppColors.MainOrange,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r)),
-                ),
-                child: Center(
-                  child: Text(
-                    actionButtonText,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
+              height: 38.h,
+              text: actionButtonText,
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w800,
               ),
-            )),
+            ))
           ],
         )
       ],
@@ -692,32 +653,12 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       children: [
         CustomTextField(hint: "역할명", maxLength: 10, controller: tec),
         SizedBox(height: 35.h),
-        GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () async {
-            await setRole();
-          },
-          child: Container(
-            width: 185.w,
-            height: 32.h,
-            decoration: ShapeDecoration(
-              color: AppColors.MainOrange,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r)),
-            ),
-            child: Center(
-              child: Text(
-                '확인',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
+        NormalButton(
+          onTap: setRole,
+          text: '확인',
+          fontSize: 12.sp,
+          width: 185.w,
+          height: 32.h,
         )
       ],
     );

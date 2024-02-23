@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:front_weteam/controller/wtm/wtm_controller.dart';
 import 'package:get/get.dart';
 
 import '../../model/team_project.dart';
@@ -9,6 +10,8 @@ import '../../model/wtm_project.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
+import '../../view/wtm/create/wtm_create_finish.dart';
+import '../custom_calendar_controller.dart';
 
 class WTMCreateController extends GetxController {
   WTMProject? wtmProject;
@@ -57,6 +60,51 @@ class WTMCreateController extends GetxController {
       if (searchWait != query) return;
       searchText.value = query;
     });
+  }
+
+  Future<void> finishCreatingOrEditing() async {
+    CustomCalendarController ccc = Get.find<CustomCalendarController>();
+    if (ccc.selectedDt2.value!.isBefore(ccc.selectedDt1.value!)) {
+      startedAt = ccc.selectedDt2.value!;
+      endedAt = ccc.selectedDt1.value!;
+    } else {
+      startedAt = ccc.selectedDt1.value!;
+      endedAt = ccc.selectedDt2.value!;
+    }
+
+    String title = nameInputText.value.trim();
+    int? projectId = selectedTeamProject.value?.id;
+
+    bool success = false;
+
+    if (wtmProject == null) {
+      WTMProject? wtmProject = await Get.find<ApiService>()
+          .createWTM(
+          title: title,
+          startedAt: startedAt!,
+          endedAt: endedAt!,
+          projectId: projectId);
+
+      success = (wtmProject != null);
+      if (success) {
+        wtmProject = wtmProject;
+      }
+    } else {
+      int wtmId = wtmProject!.id;
+      success = await Get.find<ApiService>().editWTM(
+          wtmProjectId: wtmId,
+          title: title,
+          startedAt: startedAt!,
+          endedAt: endedAt!);
+    }
+
+    if (success) {
+      Get.find<WTMController>().updateWTMProjectList();
+      Get.to(() => const WTMCreateFinish());
+    } else {
+      WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다',
+          icon: SnackbarIcon.fail);
+    }
   }
 
 }

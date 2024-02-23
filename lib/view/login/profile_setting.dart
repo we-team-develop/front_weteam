@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../data/color_data.dart';
-import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../service/api_service.dart';
 import '../../util/weteam_utils.dart';
+import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
@@ -59,31 +59,24 @@ class ProfileSettingPage extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(
-              bottom: 67.h,
-            ),
-            child: GestureDetector(
-                onTap: () {
-                  int? id = controller.getSelectedProfileId();
-                  if (id == null) {
-                    WeteamUtils.snackbar("", "사용할 프로필 이미지를 선택해주세요");
-                    return;
-                  }
-                  setProfile(id, context);
-                },
-                child: Image.asset(
-                  ImagePath.startweteambutton,
-                  width: 330.w,
-                  height: 38.h,
-                )),
-          ),
-        ),
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 32.h),
+              child: Obx(() {
+                controller.isSelected; // 리스너에 등록
+                return NormalButton(
+                  text: 'WE TEAM 시작하기',
+                  enable: controller.getSelectedProfileId() != null,
+                  onTap: setProfile,
+                );
+              })),
+        )
       ],
     );
   }
 
-  Future<void> setProfile(int id, BuildContext context) async {
+  Future<void> setProfile() async {
+    int id = controller.getSelectedProfileId() ?? 0;
     ApiService service = Get.find<ApiService>();
+
     try {
       bool fcmSuccess = await service.setFCMToken(); // FCM토큰을 서버에 전송합니다
 

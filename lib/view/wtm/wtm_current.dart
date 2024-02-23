@@ -7,6 +7,7 @@ import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../util/weteam_utils.dart';
+import '../widget/normal_button.dart';
 import '../widget/wtm_project_widget.dart';
 import '../widget/wtm_schedule_widget.dart';
 
@@ -71,55 +72,39 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                 Expanded(
                     child: WTMSchedule(controller.wtm.value)),
                 SizedBox(height: 11.05.h),
-                GestureDetector(
-                  onTap: () async {
-                    WTMScheduleController scheduleController = Get.find<
-                        WTMScheduleController>();
-                    bool currentMode = scheduleController.selectionMode.value;
+                Obx(() {
+                  WTMScheduleController scheduleController = Get.find<
+                      WTMScheduleController>();
+                  late String buttonText;
 
-                    // 서버에 저장하기
-                    if (currentMode == true) {
-                      bool success = await controller.setSelectedTimes();
-                      await controller.fetchWTMProjectDetail(); // 정보 조회
-                      if (!success) {
-                        WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
-                      } else {
-                        scheduleController.selectionMode.value = !currentMode;
-                      }
-                    } else {
-                      scheduleController.selectionMode.value = !currentMode;
-                    }
-                  },
-                  child: Container(
-                    height: 40.h,
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 15.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.MainOrange,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    ),
-                    child: Center(
-                        child: Obx(
-                          () {
-                            WTMScheduleController scheduleController = Get.find<
-                                WTMScheduleController>();
-                            late String buttonText;
+                  if (scheduleController.selectionMode.isTrue) {
+                    buttonText = "입력 완료";
+                  } else {
+                    buttonText = "가능 시간 입력";
+                  }
+                  return NormalButton(
+                      text: buttonText,
+                      onTap: () async {
+                        WTMScheduleController scheduleController =
+                            Get.find<WTMScheduleController>();
+                        bool currentMode =
+                            scheduleController.selectionMode.value;
 
-                            if (scheduleController.selectionMode.isTrue) {
-                              buttonText = "입력 완료";
-                            } else {
-                              buttonText = "가능 시간 입력";
-                            }
-
-                            return Text(buttonText,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'NanumGothicExtraBold',
-                                    fontSize: 15.sp));
-                          },
-                        )),
-                  ),
-                ),
+                        // 서버에 저장하기
+                        if (currentMode == true) {
+                          bool success = await controller.setSelectedTimes();
+                          await controller.fetchWTMProjectDetail(); // 정보 조회
+                          if (!success) {
+                            WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
+                          } else {
+                            scheduleController.selectionMode.value =
+                                !currentMode;
+                          }
+                        } else {
+                          scheduleController.selectionMode.value = !currentMode;
+                        }
+                      });
+                }),
                 SizedBox(height: 12.h)
               ],
             ),

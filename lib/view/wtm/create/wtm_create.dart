@@ -147,15 +147,9 @@ class WTMCreate extends GetView<WTMCreateController> {
   Widget _checkBox() {
     return Obx(() => NormalButton(
           text: '선택 완료',
-          onTap: controller.selectedTeamProject.value != null
-              ? () {
-                  Get.to(() => const WTMNaming(),
-                      transition: Transition.rightToLeft);
-                }
-              : null,
-          color: controller.selectedTeamProject.value != null
-              ? AppColors.MainOrange
-              : AppColors.G_02,
+          onTap: () => Get.to(() => const WTMNaming(),
+              transition: Transition.rightToLeft),
+          enable: controller.selectedTeamProject.value != null,
           width: 330.w,
           height: 40.h,
         ));

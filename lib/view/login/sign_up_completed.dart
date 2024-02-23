@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
+import '../widget/normal_button.dart';
 import 'profile_setting.dart';
 
 class SignUpCompleted extends StatefulWidget {
@@ -50,24 +51,14 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
         ),
         const Expanded(child: SizedBox()),
         // 다음 버튼
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: GestureDetector(
-              onTap: () {
-                Get.to(() => ProfileSettingPage());
-              },
-              child: _nextpagebutton()),
-        ),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: NormalButton(
+              onTap: () => Get.to(() => ProfileSettingPage()),
+              text: '다음',
+            )),
         SizedBox(height: 32.h)
       ],
-    );
-  }
-
-  Widget _nextpagebutton() {
-    return Image.asset(
-      ImagePath.nextButton,
-      width: 330.w,
-      height: 38.h,
     );
   }
 }

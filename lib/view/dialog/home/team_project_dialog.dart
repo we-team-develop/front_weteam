@@ -8,6 +8,7 @@ import '../../../data/color_data.dart';
 import '../../../main.dart';
 import '../../../model/team_project.dart';
 import '../../../service/api_service.dart';
+import '../../../util/weteam_utils.dart';
 import '../../widget/custom_date_picker.dart';
 import '../../widget/custom_text_field.dart';
 import '../../widget/normal_button.dart';
@@ -37,8 +38,6 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
 
   bool warningVisible = false;
   String warningContent = "";
-
-  bool isSaving = false;
 
   String title = "";
 
@@ -274,16 +273,15 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
               text: '확인',
               width: 185.w,
               height: 40.h,
+              fontSize: 12.sp,
               onTap: () async {
-                if (isSaving) return;
-                isSaving = true;
                 try {
                   updateTeamProject();
                 } catch (e, st) {
                   debugPrint('$e');
                   debugPrintStack(stackTrace: st);
+                  WeteamUtils.snackbar('문제가 발생했습니다', '오류가 있었습니다');
                 }
-                isSaving = false;
               }),
         ],
       ),

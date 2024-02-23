@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../controller/mainpage/home_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../main.dart';
+import '../../../util/weteam_utils.dart';
 import '../../widget/custom_date_picker.dart';
 import '../../widget/custom_text_field.dart';
 import '../../widget/normal_button.dart';
@@ -25,7 +26,6 @@ class DDayDialog extends StatefulWidget {
 class _DDayDialogState extends State<DDayDialog> {
   String title = "";
   TextEditingController teController = TextEditingController();
-  bool isSaving = false;
   bool warningVisible = false;
   String warningContent = "";
   DateTime startTime = DateTime.now();
@@ -137,18 +137,18 @@ class _DDayDialogState extends State<DDayDialog> {
                 )),
             NormalButton(
                 text: '확인',
+                width: 185.w,
+                height: 40.h,
+                fontSize: 12.sp,
                 onTap: () async {
-                  if (isSaving) return;
-
-              isSaving = true;
-              try {
-                await onTapButton();
-              } catch(e, st) {
-                debugPrint(e.toString());
-                debugPrintStack(stackTrace: st);
-              }
-              isSaving = false;
-            }),
+                  try {
+                    await onTapButton();
+                  } catch (e, st) {
+                    debugPrint(e.toString());
+                    debugPrintStack(stackTrace: st);
+                    WeteamUtils.snackbar('문제가 발생했습니다', '오류가 있었습니다');
+                  }
+                }),
           ],
         ));
   }

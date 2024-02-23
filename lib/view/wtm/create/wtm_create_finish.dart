@@ -7,6 +7,7 @@ import '../../../controller/wtm/wtm_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
 import '../../../util/weteam_utils.dart';
+import '../../widget/normal_button.dart';
 
 class WTMCreateFinish extends GetView<WTMCreateController> {
   const WTMCreateFinish({super.key});
@@ -51,29 +52,17 @@ class WTMCreateFinish extends GetView<WTMCreateController> {
           ),
           _CopyLinkButton(),
           const Expanded(child: SizedBox()),
-          GestureDetector(
-            onTap: () async {
-              await WeteamUtils.closeSnackbarNow();
-              Get.back();
-              Get.back();
-              Get.back();
-              Get.back();
-            },
-            child: Container(
-              height: 40.h,
-              margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-              decoration: BoxDecoration(
-                color: AppColors.MainOrange,
-                borderRadius: BorderRadius.all(Radius.circular(8.r)),
-              ),
-              child: Center(
-                  child: Text('확인',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'NanumGothicExtraBold',
-                          fontSize: 15.sp))),
-            ),
-          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+              child: NormalButton(
+                  text: '확인',
+                  onTap: () async {
+                    await WeteamUtils.closeSnackbarNow();
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                  })),
           GestureDetector(
             onTap: () async {
               await WeteamUtils.closeSnackbarNow();
