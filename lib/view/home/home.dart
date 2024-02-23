@@ -562,7 +562,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                 height: 24.h,
                 width: 185.w,
                 fontSize: 12.sp,
-                text: '디데이 일정 추가하기',
+                text: '디데이 추가하기',
                 onTap: () =>
                     Get.find<HomeController>().popupDialog(const DDayDialog())),
           ],
