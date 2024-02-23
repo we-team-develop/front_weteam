@@ -36,8 +36,9 @@ class CustomGetConnect extends GetConnect {
     int? statusCode = rp.statusCode; // 응답 코드
     String? bodyString = rp.bodyString; // 응답 bodyString
     bool isOk = rp.isOk;
+    String? method = rp.request?.method;
 
-    log("=========== $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
+    log("=========== ($method) $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
         name: 'API 요청 정보', time: DateTime.now());
   }
 
