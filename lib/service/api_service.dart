@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
+import '../controller/wtm/wtm_current_controller.dart';
 import '../main.dart';
 import '../model/team_project.dart';
 import '../model/weteam_notification.dart';
@@ -222,6 +224,22 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = jsonDecode(json);
 
     return WTMProject.fromJson(data);
+  }
+
+  /**
+   * MEETING_USER
+   */
+
+  Future<bool> setWtmSchedule(int meetingId, List<MeetingTime> timeList) async {
+    List<Map<String, String>> timeMapList = [];
+    for (var element in timeList) {
+      timeMapList.add(element.toMap());
+    }
+
+    log(jsonEncode(timeMapList));
+
+    Response rp = await patch('/api/meeting-users/$meetingId/time', timeMapList);
+    return rp.isOk;
   }
 
   /**

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -65,19 +67,54 @@ class WTMSchedule extends GetView<WTMScheduleController> {
           ...List<Widget>.generate(
               24,
               (index) =>
-                  _hour(DateTime(date.year, date.month, date.day, index)))
+                  _Hour(parentDt: date, dt: DateTime(date.year, date.month, date.day, index)))
         ],
       ),
     );
   }
+}
 
-  Widget _hour(DateTime date) {
+class _Hour extends GetView<WTMScheduleController> {
+  final DateTime dt;
+  final DateTime parentDt;
+
+  const _Hour({required this.parentDt, required this.dt});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 3.25.h, right: 5.w),
-      child: Container(
-        height: 17.38.h,
-        decoration: BoxDecoration(
-            color: AppColors.G_02, borderRadius: BorderRadius.circular(17).r),
+      child: GestureDetector(
+        onTap: () {
+          if (controller.selectionMode.isTrue) {
+            HashSet<int>? set = controller.selected[parentDt];
+            set ??= HashSet<int>();
+
+            if (set.contains(dt.hour)) {
+             set.remove(dt.hour);
+            } else {
+              set.add(dt.hour);
+            }
+
+            controller.selected[parentDt] = set;
+          }
+        },
+        child: Obx(() {
+          late Color color;
+          bool selected = controller.selected[parentDt]?.contains(dt.hour) == true;
+
+          if (controller.selectionMode.isTrue) {
+            color = selected ?AppColors.Blue_07 : AppColors.G_02;
+          } else {
+            color = AppColors.G_02;
+          }
+
+          return Container(
+            height: 17.38.h,
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(17).r),
+          );
+        }),
       ),
     );
   }
