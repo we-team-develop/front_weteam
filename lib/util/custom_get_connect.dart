@@ -12,7 +12,7 @@ class CustomGetConnect extends GetConnect {
   Future<void> _printResponseInfo(Response rp) async {
     // 출력을 원하지 않는 경우 아래 변수의 값을 false로 변경하세요.
     bool enabled = true;
-    bool logOnlyError = false;
+    bool logOnlyError = true;
     // 디버그 상태 체크
     if (!kDebugMode || !enabled) {
       return;
