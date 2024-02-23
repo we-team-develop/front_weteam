@@ -17,7 +17,8 @@ class WTMProjectListView extends StatelessWidget {
       controller: scrollController,
       itemCount: wtmList.length,
       physics: const AlwaysScrollableScrollPhysics(), // 항상 스크롤 가능하도록 설정
-      itemBuilder: (_, i) => WTMProjectWidget(wtmList[i]),
+      itemBuilder: (_, i) =>
+          Padding(padding: padding, child: WTMProjectWidget(wtmList[i])),
     );
   }
 }
