@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -15,17 +17,21 @@ class NotificationController extends GetxController {
 
     _pagingController.addPageRequestListener((pageKey) async {
       List<WeteamNotification>? newList = await _fetchPage(pageKey);
-      if (newList == null) {
-        _pagingController.appendPage([], currentPage);
-        return;
-      }
+      try {
+        if (newList == null) {
+          _pagingController.appendPage([], currentPage);
+          return;
+        }
 
-      if (newList.isEmpty) {
-        _pagingController.appendLastPage([]);
-        return;
-      }
+        if (newList.isEmpty) {
+          _pagingController.appendLastPage([]);
+          return;
+        }
 
-      _pagingController.appendPage(newList, ++currentPage);
+        _pagingController.appendPage(newList, ++currentPage);
+      } catch (e) {
+        log("$e");
+      }
     });
   }
 
