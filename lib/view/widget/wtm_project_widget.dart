@@ -18,7 +18,7 @@ class WTMProjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(GetBuilder(
+      onTap: () => Get.to(() => GetBuilder(
           builder: (controller) => const WTMCurrent(),
           init: WTMCurrentController(team))),
       behavior: HitTestBehavior.translucent,

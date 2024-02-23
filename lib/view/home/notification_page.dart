@@ -80,7 +80,7 @@ class _NotificationContainerState extends State<NotificationContainer> {
           setState(() {
             widget.notification.read = true;
           });
-          Get.to(GetBuilder(
+          Get.to(() => GetBuilder(
               builder: (controller) => const TeamProjectDetailPage(),
               init: TeamProjectDetailPageController(widget.notification.project!)));
         }

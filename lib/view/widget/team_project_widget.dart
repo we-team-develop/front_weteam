@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../controller/mainpage/tp_controller.dart';
 import 'package:get/get.dart';
 
+import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
@@ -18,7 +18,7 @@ class TeamProjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(GetBuilder(
+      onTap: () => Get.to(() => GetBuilder(
           builder: (controller) => const TeamProjectDetailPage(),
           init: TeamProjectDetailPageController(team))),
       behavior: HitTestBehavior.translucent,

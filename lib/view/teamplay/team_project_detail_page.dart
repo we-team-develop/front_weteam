@@ -230,7 +230,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
             controller.isChangeHostMode.isFalse) {
           if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
             Get.to(
-                UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+                () => UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
           }
         }
       },
