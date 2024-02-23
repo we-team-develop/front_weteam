@@ -118,8 +118,7 @@ class _Hour extends GetView<WTMScheduleController> {
               color = AppColors.G_02;
             } else {
               double percent = population / controller.maxPopulation.value;
-              print("object${controller.maxPopulation}");
-              print(percent);
+
               if (percent >= 0.75) {
                 color = AppColors.Blue_07;
               } else if (percent >= 0.5) {
