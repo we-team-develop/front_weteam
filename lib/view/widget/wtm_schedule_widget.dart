@@ -12,8 +12,9 @@ import '../../util/weteam_utils.dart';
 
 class WTMSchedule extends GetView<WTMScheduleController> {
   final WTMProject wtm;
+  final bool selectionMode;
 
-  WTMSchedule(this.wtm, {super.key}) {
+  WTMSchedule(this.wtm, this.selectionMode, {super.key}) {
     Get.put(WTMScheduleController());
   }
 
@@ -78,7 +79,10 @@ class WTMSchedule extends GetView<WTMScheduleController> {
           ...List<Widget>.generate(
               24,
               (index) =>
-                  _Hour(parentDt: date, dt: DateTime(date.year, date.month, date.day, index)))
+                  _Hour(
+                  selectionMode: selectionMode,
+                  parentDt: date,
+                  dt: DateTime(date.year, date.month, date.day, index)))
         ],
       ),
     );
@@ -88,8 +92,9 @@ class WTMSchedule extends GetView<WTMScheduleController> {
 class _Hour extends GetView<WTMScheduleController> {
   final DateTime dt;
   final DateTime parentDt;
+  final bool selectionMode;
 
-  const _Hour({required this.parentDt, required this.dt});
+  const _Hour({required this.parentDt, required this.dt, required this.selectionMode});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +103,7 @@ class _Hour extends GetView<WTMScheduleController> {
       child: GestureDetector(
         onTap: () {
           String dtKey = WeteamUtils.formatDateTime(parentDt);
-          if (controller.selectionMode.isTrue) {
+          if (selectionMode) {
             HashSet<int>? set = controller.selected[dtKey];
             set ??= HashSet<int>();
 
@@ -114,7 +119,7 @@ class _Hour extends GetView<WTMScheduleController> {
         child: Obx(() {
           late Color color;
 
-          if (controller.selectionMode.isTrue) {
+          if (selectionMode) {
             String sMapKey = WeteamUtils.formatDateTime(parentDt);
             bool selected =
                 controller.selected[sMapKey]?.contains(dt.hour) == true;

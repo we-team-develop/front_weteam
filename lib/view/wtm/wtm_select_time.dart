@@ -1,3 +1,6 @@
+import 'dart:collection';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,10 +13,40 @@ import '../../util/weteam_utils.dart';
 import '../widget/normal_button.dart';
 import '../widget/wtm_project_widget.dart';
 import '../widget/wtm_schedule_widget.dart';
-import 'wtm_select_time.dart';
 
-class WTMCurrent extends GetView<WTMCurrentController> {
-  const WTMCurrent({super.key});
+class WTMSelectTime extends StatefulWidget {
+  const WTMSelectTime({super.key});
+
+  @override
+  State<WTMSelectTime> createState() => _WTMSelectTimeState();
+}
+
+class _WTMSelectTimeState extends State<WTMSelectTime> {
+  Map<String, HashSet<int>>? tmpSelectedMap; // 뒤로가기로 페이지 나가면 원래 값으로 되돌림
+  final WTMCurrentController controller = Get.find<WTMCurrentController>();
+  final WTMScheduleController schController = Get.find<WTMScheduleController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Map<String, HashSet<int>> tmp = {};
+    schController.selected.forEach((key, value) {
+      tmp[key] = value;
+    });
+
+    tmpSelectedMap = tmp;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    if (tmpSelectedMap != null) {
+      schController.selected.clear();
+      schController.selected.addAll(tmpSelectedMap!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +81,10 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                 ),
                 // TODO : wtm_widget
                 Obx(
-                  () => Stack(children: [
-                    WTMProjectWidget(
-                      controller.wtm.value,
-                      showlink: false,
-                    )
-                  ]),
+                  () => WTMProjectWidget(
+                    controller.wtm.value,
+                    showlink: false,
+                  ),
                 ),
                 SizedBox(
                   height: 14.h,
@@ -62,22 +93,22 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                   height: 1.h,
                   color: AppColors.G_01,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 4.w, top: 6.h),
-                  child: Image.asset(
-                    ImagePath.inforicon,
-                    width: 19.w,
-                    height: 19.h,
-                  ),
-                ),
                 Expanded(
-                    child: WTMSchedule(controller.wtm.value, false)),
+                    child: WTMSchedule(controller.wtm.value, true)),
                 SizedBox(height: 11.05.h),
               NormalButton(
-                  text: '가능 시간 입력',
+                  text: '입력 완료',
                   onTap: () async {
-                    Get.to(() => const WTMSelectTime());
-                  }),
+                      bool success = await controller.setSelectedTimes();
+                      await controller.fetchWTMProjectDetail(); // 정보 조회
+                      if (!success) {
+                        WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
+                      } else {
+                        await WeteamUtils.closeSnackbarNow();
+                        tmpSelectedMap = null;
+                        Get.back();
+                      }
+                    }),
                 SizedBox(height: 12.h)
               ],
             ),
@@ -90,7 +121,7 @@ class WTMCurrent extends GetView<WTMCurrentController> {
   Widget _head() {
     return Center(
       child: Text(
-        '언제보까 현황',
+        '내 시간 입력',
         style: TextStyle(
           fontFamily: 'NanumGothic',
           fontWeight: FontWeight.bold,
