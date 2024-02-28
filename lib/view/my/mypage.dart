@@ -16,6 +16,7 @@ import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_list_view.dart';
+import '../widget/team_project_widget.dart';
 import 'profile.dart';
 
 class MyPage extends GetView<MyPageController> {
@@ -93,22 +94,36 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   Widget _body() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _head(),
-        SizedBox(height: 16.0.h),
-        _profileContainer(),
-        SizedBox(height: 24.h),
-        _bottomContainer(),
+    return RefreshIndicator(child: CustomScrollView(
+      slivers: [
+        SliverList(delegate: SliverChildListDelegate(
+            [
+              _head(),
+              SizedBox(height: 16.0.h),
+              _profileContainer(),
+              SizedBox(height: 24.h),
+            ]
+        )),
+        SliverPadding(padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
+            sliver: SliverToBoxAdapter(
+              child: _bottomContainerTitle(),
+            )
+        ),
+        SliverPadding(padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
+        sliver: (tpList.value.isNotEmpty) ? _teamProjectList() : _noTeamProject())
       ],
-    );
+    ), onRefresh: () async {
+      await updateTeamProjectLists();
+    });
   }
 
   Widget _head() {
     return Padding(
         padding: EdgeInsets.only(left: 15.0.w, top: 25.0.h),
-        child: const AppTitleWidget());
+        child: const Align(
+          alignment: Alignment.topLeft,
+          child: AppTitleWidget(),
+        ));
   }
 
   Widget _profileContainer() {
@@ -175,23 +190,27 @@ class _UserInfoPageState extends State<UserInfoPage> {
     );
   }
 
-  Widget _bottomContainer() {
-    return Expanded(
-        child: Padding(
-      padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _bottomContainerTitle(),
-          Expanded(child: Obx(() {
-            if (tpList.value.isNotEmpty) {
-              return _bottomContainerTeamListWidget();
-            } else {
-              return _bottomContainerEmpty();
-            }
-          })),
-        ],
-      ),
+  Widget _noTeamProject() {
+    return SliverFillRemaining(
+        hasScrollBody: false,
+        child: Image.asset(
+          ImagePath.myNoTeamProjectTimi,
+          width: 165.37.w,
+          height: 171.44.h,
+        ));
+  }
+
+  Widget _teamProjectList() {
+    return  SliverList(delegate: SliverChildBuilderDelegate(
+    childCount: tpList.value.length + 1,
+    (context, index) {
+      if (index == 0) {
+        return SizedBox(height: 24.h);
+      }
+      return Padding(padding: EdgeInsets.only(bottom: 12.h),
+          child: TeamProjectWidget(
+              tpList.value[index - 1]));
+    },
     ));
   }
 
@@ -215,23 +234,5 @@ class _UserInfoPageState extends State<UserInfoPage> {
         ),
       );
     });
-  }
-
-  Widget _bottomContainerTeamListWidget() {
-    return Column(
-      children: [
-        SizedBox(height: 24.h),
-        Expanded(child: TeamProjectListView(tpList.value, scrollController: widget.scrollController))
-      ],
-    );
-  }
-
-  Widget _bottomContainerEmpty() {
-    return Center(
-        child: Image.asset(
-          ImagePath.myNoTeamProjectTimi,
-          width: 113.37.w,
-          height: 171.44.h,
-        ));
   }
 }
