@@ -118,7 +118,7 @@ class MyApp extends StatelessWidget {
     Get.put(AuthService());
     home = Get.find<AuthService>().user.value != null
         ? const App()
-        : const LoginMain();
+        : LoginMain();
     return super.createElement();
   }
 
