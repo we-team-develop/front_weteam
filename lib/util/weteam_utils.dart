@@ -67,7 +67,9 @@ class WeteamUtils {
     if (_snackbarController != null) {
       try {
         await _snackbarController!.close(withAnimations: false);
+        SnackbarController tmp = _snackbarController!;
         _snackbarController = null;
+        await tmp.close();
       } catch (_) {}
     }
   }
