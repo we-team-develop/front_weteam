@@ -98,18 +98,34 @@ class LoginMain extends StatelessWidget {
 
   void _showOverlay(BuildContext context) {
     _overlayEntry.value = OverlayEntry(
-        builder: (context) => SafeArea(
-                child: Stack(fit: StackFit.expand, children: [
-              // 배경
-              const Opacity(
-                opacity: 0.5,
-                child: ModalBarrier(dismissible: true, color: Colors.black),
-              ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: _AnimatedTimi(),
-                  )
-            ])));
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+              child: Stack(fit: StackFit.expand, children: [
+                // 배경
+                const Opacity(
+                  opacity: 0.5,
+                  child: ModalBarrier(dismissible: true, color: Colors.black),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _AnimatedTimi(),
+                      SizedBox(height: 15.h),
+                      Text('로그인 중 입니다',
+                          style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.White
+                          ))
+                    ],
+                  ),
+                )
+              ])),
+        ));
     Overlay.of(context).insert(_overlayEntry.value!);
   }
 
