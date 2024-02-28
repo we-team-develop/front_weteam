@@ -66,6 +66,7 @@ class TeamPlay extends GetView<TeamPlayController> {
 
   Widget _noTeamProject() {
     return SliverFillRemaining(
+      hasScrollBody: false,
       child: Center(
           child: Text(
             '진행 중인 팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
