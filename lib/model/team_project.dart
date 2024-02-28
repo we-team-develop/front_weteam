@@ -22,9 +22,7 @@ class TeamProject {
       required this.startedAt,
       required this.endedAt,
       this.done = false,
-      required this.host}) {
-    done = endedAt.difference(DateTime.now()).inSeconds.isNegative;
-  }
+      required this.host});
 
   factory TeamProject.fromJson(Map data) {
     return TeamProject(
