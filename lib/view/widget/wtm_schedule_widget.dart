@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class WTMSchedule extends GetView<WTMScheduleController> {
             width: 33.79.w,
             child: _HourTextColumn(),
           ),
+          SizedBox(width: 11.w),
           Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -60,11 +62,19 @@ class WTMSchedule extends GetView<WTMScheduleController> {
         controller: sc,
         physics: const ClampingScrollPhysics(),
         children: [
-          Text(
-            '${strDate[date.weekday - 1]}\n${date.day}',
-            style: TextStyle(fontFamily: 'NanumGothic', fontSize: 10.sp),
-            textAlign: TextAlign.center,
+          SizedBox(
+            height: 21.h,
+            child: AutoSizeText(
+              '${strDate[date.weekday - 1]}\n${date.day}',
+              style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.bold,
+                  height: 0),
+              textAlign: TextAlign.center,
+            ),
           ),
+          SizedBox(height: 6.h),
           ...List<Widget>.generate(
               24,
               (index) =>
