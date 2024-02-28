@@ -199,6 +199,7 @@ class _HourTextColumnState extends State<_HourTextColumn> {
                   style: TextStyle(
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.bold,
+                      color: const Color(0x99000000),
                       fontSize: 10.sp),
                 ),
               ),
