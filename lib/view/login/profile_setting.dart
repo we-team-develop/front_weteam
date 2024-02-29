@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../data/color_data.dart';
@@ -84,6 +85,14 @@ class ProfileSettingPage extends StatelessWidget {
           (await service.getCurrentUser())?.profile != null) {
         await sharedPreferences.setBool(
             SharedPreferencesKeys.isRegistered, true);
+
+        // 알림 권한
+        PermissionStatus notificationStatus = await Permission.notification.status;
+        if (!notificationStatus.isGranted) {
+          await Permission.notification.request();
+        }
+
+        // 끝
         await resetApp();
       } else {
         WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다(1)", icon: SnackbarIcon.fail);
