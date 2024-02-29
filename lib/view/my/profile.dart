@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../data/color_data.dart';
@@ -142,9 +143,7 @@ class Profile extends GetView<ProfileController> {
                       color: AppColors.Black),
                 ),
                 CustomSwitch(
-                  onChanged: (value) {
-                    controller.togglePushNotification(value);
-                  },
+                  onChanged: toggleAlarmSwitch,
                   value: controller.isPushNotificationEnabled.value,
                 ),
               ],
@@ -272,6 +271,26 @@ class Profile extends GetView<ProfileController> {
     } else {
       // 로그아웃 실패
       WeteamUtils.snackbar("로그아웃 실패", "오류가 있었습니다", icon: SnackbarIcon.fail);
+    }
+  }
+
+  Future<void> toggleAlarmSwitch(bool v) async {
+    if (v) { // 비활성화 하기
+      controller.togglePushNotification(false);
+    } else { // 활성화 하기
+      // 알림 권한
+      PermissionStatus notificationStatus = await Permission.notification
+          .status;
+      if (!notificationStatus.isGranted) { // 권한 받기 시도
+        PermissionStatus newStatus = await Permission.notification.request();
+        if (newStatus.isGranted) {
+          controller.togglePushNotification(true);
+        } else {
+          WeteamUtils.snackbar('', '알림 권한이 거부되었어요.', icon: SnackbarIcon.fail);
+        }
+      } else {
+        controller.togglePushNotification(true);
+      }
     }
   }
 }
