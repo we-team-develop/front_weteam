@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm/wtm_current_controller.dart';
-import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../util/weteam_utils.dart';
 import '../widget/normal_button.dart';
 import '../widget/wtm_project_widget.dart';
 import '../widget/wtm_schedule_widget.dart';
@@ -18,9 +16,11 @@ class WTMCurrent extends GetView<WTMCurrentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 21.0.h),
-        child: _body(),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(top: 21.0.h),
+          child: _body(),
+        ),
       ),
     );
   }
