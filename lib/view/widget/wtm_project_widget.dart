@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/wtm/wtm_current_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
@@ -29,7 +32,7 @@ class WTMProjectWidget extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  _wtmImgWidget(team.img),
+                  _wtmImgWidget(),
                   SizedBox(width: 14.w),
                   Expanded(
                     child: Column(
@@ -37,7 +40,7 @@ class WTMProjectWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _wtmTitleWidget(team.title),
-                        _wtmTeamWidget(team.project),
+                        if (team.project != null) _wtmTeamWidget(team.project!),
                         _dateWidget(),
                       ],
                     ),
@@ -56,12 +59,21 @@ class WTMProjectWidget extends StatelessWidget {
     );
   }
 
-  Widget _wtmImgWidget(String img) {
-    // TODO : 이미지
+  Widget _wtmImgWidget() {
+    TeamPlayController controller = Get.find<TeamPlayController>();
+
+    int imageIndex = 0;
+    if (team.project != null) {
+      imageIndex = team.project!.imageId;
+    } else {
+      imageIndex = Random().nextInt(controller.imagePaths.length);
+    }
+
     return Container(
       width: 50.w,
       height: 50.h,
       decoration: ShapeDecoration(
+        image: DecorationImage(image: AssetImage(controller.imagePaths[imageIndex]), fit: BoxFit.fill),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
           color: AppColors.G_02),

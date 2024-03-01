@@ -78,7 +78,6 @@ class WTMController extends GetxController {
       wtmList.value = [
         WTMProject(
             id: 1,
-            img: "",
             title: 'title',
             startedAt: DateTime.now(),
             endedAt: DateTime.now(),

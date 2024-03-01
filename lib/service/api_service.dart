@@ -70,7 +70,7 @@ class ApiService extends CustomGetConnect implements GetxService {
       'endedAt':
           "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
       'explanation': explanation,
-      'imageId': randomImageIndex
+      'imageId': randomImageIndex.toString()
     };
     Response rp = await post('/api/projects', data);
     return rp.isOk;
@@ -156,10 +156,14 @@ class ApiService extends CustomGetConnect implements GetxService {
     startedAt = WeteamUtils.onlyDate(startedAt);
     endedAt = WeteamUtils.onlyDate(endedAt);
 
+    TeamPlayController controller = Get.find<TeamPlayController>();
+    int randomImageIndex = Random().nextInt(controller.imagePaths.length);
+
     Map<String, String> requestBody = {
       'title': title,
       'startedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
       'endedAt': WeteamUtils.formatDateTime(endedAt, withTime: true),
+      'imageId': randomImageIndex.toString(),
     };
 
     // 팀플을 선택하는 미팅일 경우 팀플 ID를 추가해줍니다.
