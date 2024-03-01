@@ -3,7 +3,7 @@ import 'weteam_user.dart';
 class TeamProject {
   String hashedId;
   int id;
-  String img;
+  int imageId;
   String title;
   String description;
   int memberSize;
@@ -15,7 +15,7 @@ class TeamProject {
   TeamProject(
       {this.hashedId = "",
       this.id = -1,
-      this.img = "",
+      this.imageId = 0,
       this.title = "",
       this.description = "",
       this.memberSize = -1, // 입력 안 된 경우를 구분할 수 있어야 함
@@ -29,6 +29,7 @@ class TeamProject {
         hashedId: data['hashedId'] ?? "",
         id: data['id'],
         title: data['name'],
+        imageId: data['imageId'],
         description: data['explanation'],
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),
@@ -42,7 +43,7 @@ class TeamProject {
     if (other is! TeamProject) return false;
     if (other.hashCode == hashCode) return true;
     return id == other.id &&
-        img == other.img &&
+        imageId == other.imageId &&
         title == other.title &&
         description == other.description &&
         memberSize == other.memberSize &&

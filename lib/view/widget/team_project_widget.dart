@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,7 +27,7 @@ class TeamProjectWidget extends StatelessWidget {
             Expanded(
                 child: Row(
               children: [
-                _teamImgWidget(team.img),
+                _teamImgWidget(),
                 SizedBox(width: 16.w),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,13 +52,10 @@ class TeamProjectWidget extends StatelessWidget {
     );
   }
 
-  Widget _teamImgWidget(String img) {
+  Widget _teamImgWidget() {
     TeamPlayController controller = Get.find<TeamPlayController>();
+    String randomImagePath = controller.imagePaths[team.imageId];
 
-    int randomIndex = Random().nextInt(controller.imagePaths.length);
-    String randomImagePath = controller.imagePaths[randomIndex];
-
-    // TODO : 이미지 표시하기
     return SizedBox(
       width: 50.w,
       height: 50.h,

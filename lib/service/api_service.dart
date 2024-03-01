@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
+import '../controller/mainpage/tp_controller.dart';
 import '../controller/wtm/wtm_current_controller.dart';
 import '../main.dart';
 import '../model/team_project.dart';
@@ -60,13 +61,16 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// return: 성공 여부
   Future<bool> createTeamProject(String name, DateTime startedAt,
       DateTime endedAt, String explanation) async {
+    TeamPlayController controller = Get.find<TeamPlayController>();
+    int randomImageIndex = Random().nextInt(controller.imagePaths.length);
     Map data = {
       'name': name,
       'startedAt':
           "${startedAt.year}-${startedAt.month.toString().padLeft(2, '0')}-${startedAt.day.toString().padLeft(2, '0')}",
       'endedAt':
           "${endedAt.year}-${endedAt.month.toString().padLeft(2, '0')}-${endedAt.day.toString().padLeft(2, '0')}",
-      'explanation': explanation
+      'explanation': explanation,
+      'imageId': randomImageIndex
     };
     Response rp = await post('/api/projects', data);
     return rp.isOk;
@@ -236,8 +240,6 @@ class ApiService extends CustomGetConnect implements GetxService {
     for (var element in timeList) {
       timeMapList.add(element.toMap());
     }
-
-    log(jsonEncode(timeMapList));
 
     Response rp = await patch('/api/meeting-users/$meetingId/time', timeMapList);
     return rp.isOk;

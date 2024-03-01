@@ -348,7 +348,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                   microsecond: 0))
               .inDays
               .isNegative,
-          img: widget.teamData!.img);
+          imageId: widget.teamData!.imageId);
       /*widget.teamData!.title = titleController.text.trim();
       widget.teamData!.description = contentController.text.trim();
       widget.teamData!.startedAt = startTime;
