@@ -56,12 +56,17 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                     Positioned(
                       right: 0,
                       bottom: 0,
-                      child: Text(
-                        '참여자 확인>',
-                        style: TextStyle(
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 9.sp),
+                      child: GestureDetector(
+                        onTap: () {
+                          // TODO : 옆으로 넘어가기
+                        },
+                        child: Text(
+                          '참여자 확인>',
+                          style: TextStyle(
+                              fontFamily: 'NanumSquareNeo',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.sp),
+                        ),
                       ),
                     ),
                   ]),

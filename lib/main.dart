@@ -61,14 +61,14 @@ Future<void> main() async {
   await _init();
 
   // 팀플 목록 3분마다 조회
-  Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
-    try {
-      if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
-          MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
-        updateTeamProjectLists();
-      }
-    } catch (_) {}
-  });
+  // Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
+  //   try {
+  //     if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
+  //         MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
+  //       updateTeamProjectLists();
+  //     }
+  //   } catch (_) {}
+  // });
 
   runApp(Phoenix(child: MyApp()));
 }
@@ -116,9 +116,8 @@ class MyApp extends StatelessWidget {
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home = Get.find<AuthService>().user.value != null
-        ? const App()
-        : LoginMain();
+    home =
+        Get.find<AuthService>().user.value != null ? const App() : LoginMain();
     return super.createElement();
   }
 
