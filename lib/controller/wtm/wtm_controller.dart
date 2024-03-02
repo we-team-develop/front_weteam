@@ -11,6 +11,7 @@ import '../mainpage/home_controller.dart';
 
 class WTMController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
+  final PageController overlayPageController = PageController();
 
   final ScrollController wtmScrollController = ScrollController();
 
@@ -24,7 +25,7 @@ class WTMController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    _removeOverlay(); // 튜토리얼 오버레이를 닫습니다.
+    removeOverlay(); // 튜토리얼 오버레이를 닫습니다.
   }
 
   // WTM MAIN
@@ -60,10 +61,13 @@ class WTMController extends GetxController {
     print(
         'Attempting to show overlay. showOverlay: ${shouldShowOverlay.value}'); // 로그 출력
 
-    TutorialOverlay();
+    _overlayEntry.value = OverlayEntry(
+      builder: (context) => const TutorialOverlay(),
+    );
+    Overlay.of(context).insert(_overlayEntry.value!);
   }
 
-  void _removeOverlay() {
+  void removeOverlay() {
     _overlayEntry.value?.remove();
     _overlayEntry.value = null;
   }
