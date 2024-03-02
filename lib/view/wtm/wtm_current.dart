@@ -52,7 +52,18 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                     WTMProjectWidget(
                       controller.wtm.value,
                       showlink: false,
-                    )
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Text(
+                        '참여자 확인>',
+                        style: TextStyle(
+                            fontFamily: 'NanumSquareNeo',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9.sp),
+                      ),
+                    ),
                   ]),
                 ),
                 SizedBox(
@@ -70,14 +81,13 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                     height: 19.h,
                   ),
                 ),
-                Expanded(
-                    child: WTMSchedule(controller.wtm.value, false)),
+                Expanded(child: WTMSchedule(controller.wtm.value, false)),
                 SizedBox(height: 11.05.h),
-              NormalButton(
-                  text: '가능 시간 입력',
-                  onTap: () async {
-                    Get.to(() => const WTMSelectTime());
-                  }),
+                NormalButton(
+                    text: '가능 시간 입력',
+                    onTap: () async {
+                      Get.to(() => const WTMSelectTime());
+                    }),
                 SizedBox(height: 12.h)
               ],
             ),
