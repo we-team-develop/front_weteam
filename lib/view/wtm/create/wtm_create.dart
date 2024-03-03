@@ -236,6 +236,7 @@ class _Search extends GetView<WTMCreateController> {
                     style: TextStyle(
                         fontFamily: 'NanumGothic',
                         fontSize: 15.0.sp,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.Black),
                     decoration: const InputDecoration(
                         border: InputBorder.none, isDense: true),
