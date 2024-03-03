@@ -51,7 +51,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   List<TeamProject> _oldTpList = [];
 
   @override
-  void initState () {
+  void initState() {
     fetchTeamProjectList();
     if (!widget.isOtherUser) {
       tpListUpdateRequiredListenerList.add(fetchTeamProjectList);
@@ -66,17 +66,17 @@ class _UserInfoPageState extends State<UserInfoPage> {
       result = await Get.find<ApiService>()
           .getTeamProjectList(0, true, 'DESC', 'DONE', widget.user.value!.id);
     } else {
-      String? json = sharedPreferences.getString(
-          SharedPreferencesKeys.teamProjectDoneListJson);
+      String? json = sharedPreferences
+          .getString(SharedPreferencesKeys.teamProjectDoneListJson);
       if (json != null) {
-        tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json)).projectList;
+        tpList.value =
+            GetTeamProjectListResult.fromJson(jsonDecode(json)).projectList;
         _oldTpList = tpList.value;
       }
 
-      result = await Get.find<ApiService>()
-          .getTeamProjectList(0, true, 'DESC', 'DONE', widget.user.value!.id,
-          cacheKey: SharedPreferencesKeys
-              .teamProjectDoneListJson);
+      result = await Get.find<ApiService>().getTeamProjectList(
+          0, true, 'DESC', 'DONE', widget.user.value!.id,
+          cacheKey: SharedPreferencesKeys.teamProjectDoneListJson);
     }
 
     if (result != null && !listEquals(result.projectList, _oldTpList)) {
@@ -94,27 +94,31 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   Widget _body() {
-    return RefreshIndicator(child: CustomScrollView(
-      slivers: [
-        SliverList(delegate: SliverChildListDelegate(
-            [
+    return RefreshIndicator(
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildListDelegate([
               _head(),
               SizedBox(height: 16.0.h),
               _profileContainer(),
               SizedBox(height: 24.h),
-            ]
-        )),
-        SliverPadding(padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
-            sliver: SliverToBoxAdapter(
-              child: _bottomContainerTitle(),
-            )
+            ])),
+            SliverPadding(
+                padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
+                sliver: SliverToBoxAdapter(
+                  child: _bottomContainerTitle(),
+                )),
+            SliverPadding(
+                padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
+                sliver: (tpList.value.isNotEmpty)
+                    ? _teamProjectList()
+                    : _noTeamProject())
+          ],
         ),
-        SliverPadding(padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
-        sliver: (tpList.value.isNotEmpty) ? _teamProjectList() : _noTeamProject())
-      ],
-    ), onRefresh: () async {
-      await updateTeamProjectLists();
-    });
+        onRefresh: () async {
+          await updateTeamProjectLists();
+        });
   }
 
   Widget _head() {
@@ -141,40 +145,40 @@ class _UserInfoPageState extends State<UserInfoPage> {
           SizedBox(width: 33.w),
           Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.ideographic,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.ideographic,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                          child: Text(
-                            '${widget.user.value!.username}님 ',
-                            style: TextStyle(
-                              color: AppColors.Black,
-                              fontSize: 16.sp,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis,
-                              height: 1,
-                            ),
-                          )),
-                      Visibility(
-                          visible: !widget.isOtherUser,
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => const Profile());
-                            },
-                            child: Image.asset(ImagePath.icRightGray30,
-                                width: 15.w, height: 15.h),
-                          ))
-                    ],
-                  ),
-                  SizedBox(height: 5.h),
-                  Obx(() => Text(
+                  Flexible(
+                      child: Text(
+                    '${widget.user.value!.username}님 ',
+                    style: TextStyle(
+                      color: AppColors.Black,
+                      fontSize: 16.sp,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w600,
+                      overflow: TextOverflow.ellipsis,
+                      height: 1,
+                    ),
+                  )),
+                  Visibility(
+                      visible: !widget.isOtherUser,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => const Profile());
+                        },
+                        child: Image.asset(ImagePath.icRightGray30,
+                            width: 15.w, height: 15.h),
+                      ))
+                ],
+              ),
+              SizedBox(height: 5.h),
+              Obx(() => Text(
                     widget.user.value?.organization ?? '미입력',
                     style: TextStyle(
                       color: AppColors.G_04,
@@ -183,34 +187,40 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       fontWeight: FontWeight.w400,
                     ),
                   )),
-                ],
-              ))
+            ],
+          ))
         ],
       ),
     );
   }
 
   Widget _noTeamProject() {
-    return SliverFillRemaining(
-        hasScrollBody: false,
-        child: Image.asset(
-          ImagePath.myNoTeamProjectTimi,
-          width: 165.37.w,
-          height: 171.44.h,
-        ));
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(top: 88.h),
+        child: Center(
+          child: Image.asset(
+            ImagePath.myNoTeamProjectTimi,
+            width: 165.37.w,
+            height: 171.44.h,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _teamProjectList() {
-    return  SliverList(delegate: SliverChildBuilderDelegate(
-    childCount: tpList.value.length + 1,
-    (context, index) {
-      if (index == 0) {
-        return SizedBox(height: 24.h);
-      }
-      return Padding(padding: EdgeInsets.only(bottom: 12.h),
-          child: TeamProjectWidget(
-              tpList.value[index - 1]));
-    },
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+      childCount: tpList.value.length + 1,
+      (context, index) {
+        if (index == 0) {
+          return SizedBox(height: 24.h);
+        }
+        return Padding(
+            padding: EdgeInsets.only(bottom: 12.h),
+            child: TeamProjectWidget(tpList.value[index - 1]));
+      },
     ));
   }
 
