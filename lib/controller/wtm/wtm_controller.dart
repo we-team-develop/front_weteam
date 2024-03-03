@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../model/wtm_project.dart';
 import '../../service/api_service.dart';
 import '../../service/overlay_service.dart';
-import '../../view/widget/overlay_widget.dart';
+import '../../view/widget/tutorial_overlay_widget.dart';
 import '../mainpage/home_controller.dart';
 
 class WTMController extends GetxController {

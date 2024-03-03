@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:flutter/material.dart';
+import '../../view/widget/wtm_info_overlay_widget.dart';
 import 'package:get/get.dart';
 
 import '../../model/weteam_user.dart';
@@ -20,9 +22,31 @@ class WTMCurrentController extends GetxController {
     fetchWTMProjectDetail();
   }
 
+  //오버레이 관련
+  OverlayEntry? _overlayEntry;
+
+  void showOverlay(BuildContext context) {
+    if (_overlayEntry != null) return; // 이미 오버레이가 있는지 확인
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) => InfoOverlay(
+        onConfirm: removeOverlay, // 확인 버튼을 눌렀을 때 오버레이를 지우는 콜백
+      ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry!);
+  }
+
+  void removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
+  //
   Future<void> fetchWTMProjectDetail() async {
     ApiService service = Get.find<ApiService>();
-    WTMProjectDetail? wtmProjectDetail = await service.getWTMProjectDetail(wtm.value.id);
+    WTMProjectDetail? wtmProjectDetail =
+        await service.getWTMProjectDetail(wtm.value.id);
 
     // 불러오지 못했을 경우
     if (wtmProjectDetail == null) {
@@ -39,12 +63,14 @@ class WTMCurrentController extends GetxController {
       Map<String, HashSet<int>> myTimeMap = {}; // 앱 사용자가 선택한 날짜들
 
       for (WTMUser user in wtmProjectDetail.wtmUserList) {
-        bool isMe =
-            user.user.id == Get.find<AuthService>().user.value?.id; // 이 유저가 이 앱 실행한 유저인지를 담는 변수
+        bool isMe = user.user.id ==
+            Get.find<AuthService>().user.value?.id; // 이 유저가 이 앱 실행한 유저인지를 담는 변수
 
-        if (user.timeList.isEmpty) { // 시간 입력 안 한 유저
+        if (user.timeList.isEmpty) {
+          // 시간 입력 안 한 유저
           notJoinedUserList.add(user.user); // 참여한 유저 목록에 추가
-        } else { // 시간 입력 데이터가 있음
+        } else {
+          // 시간 입력 데이터가 있음
           joinedUserList.add(user.user); // 참여 안 한 유저 목록에 추가
 
           for (MeetingTime time in user.timeList) {
@@ -52,13 +78,11 @@ class WTMCurrentController extends GetxController {
             DateTime endedAt = time.endedAt;
 
             DateTime parentDt =
-            DateTime(startedAt.year, startedAt.month, startedAt.day);
+                DateTime(startedAt.year, startedAt.month, startedAt.day);
             String strDtKey =
-            WeteamUtils.formatDateTime(parentDt, withTime: false);
+                WeteamUtils.formatDateTime(parentDt, withTime: false);
 
-            int length = endedAt
-                .difference(startedAt)
-                .inHours;
+            int length = endedAt.difference(startedAt).inHours;
             for (int i = 0; i <= length; i++) {
               int year = startedAt.year;
               int month = startedAt.month;
@@ -132,12 +156,13 @@ class WTMCurrentController extends GetxController {
       }
     });
 
-    bool success = await Get.find<ApiService>().setWtmSchedule(wtm.value.id, timeList);
+    bool success =
+        await Get.find<ApiService>().setWtmSchedule(wtm.value.id, timeList);
     return success;
   }
 }
 
-class MeetingTime{
+class MeetingTime {
   final int? id;
   final DateTime startedAt;
   final DateTime endedAt;
@@ -146,8 +171,7 @@ class MeetingTime{
 
   factory MeetingTime.fromJson(Map map) {
     return MeetingTime(
-        DateTime.parse(map['startedAt']),
-        DateTime.parse(map['endedAt']),
+        DateTime.parse(map['startedAt']), DateTime.parse(map['endedAt']),
         id: map['id']);
   }
 

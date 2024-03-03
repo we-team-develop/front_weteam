@@ -22,13 +22,13 @@ class WTMCurrent extends GetView<WTMCurrentController> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 21.0.h),
-          child: _body(),
+          child: _body(context),
         ),
       ),
     );
   }
 
-  Widget _body() {
+  Widget _body(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
       child: Column(
@@ -61,10 +61,14 @@ class WTMCurrent extends GetView<WTMCurrentController> {
           Divider(height: 1.h, color: AppColors.G_01),
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 6.h),
-            child: Image.asset(
-              ImagePath.inforicon,
-              width: 19.w,
-              height: 19.h,
+            // info icon
+            child: GestureDetector(
+              onTap: () => controller.showOverlay(context),
+              child: Image.asset(
+                ImagePath.inforicon,
+                width: 19.w,
+                height: 19.h,
+              ),
             ),
           ),
           Expanded(child: WTMSchedule(controller.wtm.value, false)),
