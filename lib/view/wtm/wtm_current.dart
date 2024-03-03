@@ -115,8 +115,53 @@ class WTMCurrent extends GetView<WTMCurrentController> {
   }
 
   Widget _participantsPage() {
-    return Container(
-      color: Colors.black,
+    return Row(
+      children: [
+        Expanded(
+          child: _participant(),
+        ),
+        VerticalDivider(
+          width: 1.w,
+          color: AppColors.G_02,
+        ),
+        Expanded(
+          child: _nonParticipant(),
+        ),
+      ],
+    );
+  }
+
+  Widget _participant() {
+    return Padding(
+      padding: EdgeInsets.only(left: 14.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '참여 완료',
+            style: TextStyle(
+              fontFamily: 'NanumSquareNeoBold',
+              fontSize: 12.sp,
+            ),
+          ),
+          // 참여한 사용자 받아오기
+        ],
+      ),
+    );
+  }
+
+  Widget _nonParticipant() {
+    return Padding(
+      padding: EdgeInsets.only(left: 14.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '미참여',
+            style: TextStyle(fontFamily: 'NanumSquareNeoBold', fontSize: 12.sp),
+          ),
+        ],
+      ),
     );
   }
 }
