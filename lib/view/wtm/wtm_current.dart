@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm/wtm_current_controller.dart';
@@ -144,9 +145,39 @@ class WTMCurrent extends GetView<WTMCurrentController> {
               fontSize: 12.sp,
             ),
           ),
-          // 참여한 사용자 받아오기
+          // 참여한 사용자 불러오기
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                itemCount:
+                    controller.joinedUserList.length, // 참여한 유저 수만큼 아이템을 생성합니다.
+                itemBuilder: (context, index) {
+                  var user = controller.joinedUserList[index]; // 참여한 유저를 가져옵니다.
+                  return Align(
+                      alignment: Alignment.centerLeft,
+                      child: _joinedUser(user));
+                },
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _joinedUser(user) {
+    return Column(
+      children: [
+        SizedBox(
+          width: 26.w,
+          height: 26.h,
+          child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
+        ),
+        Text(
+          user.username,
+          style: TextStyle(fontFamily: 'NanumSquareNeoBold', fontSize: 10.sp),
+        ),
+      ],
     );
   }
 
@@ -159,6 +190,22 @@ class WTMCurrent extends GetView<WTMCurrentController> {
           Text(
             '미참여',
             style: TextStyle(fontFamily: 'NanumSquareNeoBold', fontSize: 12.sp),
+          ),
+          // 미참여 불러오기
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                itemCount: controller
+                    .notJoinedUserList.length, // 참여한 유저 수만큼 아이템을 생성합니다.
+                itemBuilder: (context, index) {
+                  var user =
+                      controller.notJoinedUserList[index]; // 참여한 유저를 가져옵니다.
+                  return Align(
+                      alignment: Alignment.centerLeft,
+                      child: _joinedUser(user));
+                },
+              ),
+            ),
           ),
         ],
       ),
