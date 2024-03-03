@@ -11,7 +11,9 @@ import '../widget/wtm_schedule_widget.dart';
 import 'wtm_select_time.dart';
 
 class WTMCurrent extends GetView<WTMCurrentController> {
-  const WTMCurrent({super.key});
+  WTMCurrent({super.key});
+
+  final PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,68 +37,43 @@ class WTMCurrent extends GetView<WTMCurrentController> {
           SizedBox(
             height: 16.h,
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Divider(
-                  height: 1.h,
-                  color: AppColors.G_01,
-                ),
-                SizedBox(
-                  height: 14.h,
-                ),
-                // TODO : wtm_widget
-                Obx(
-                  () => Stack(children: [
-                    WTMProjectWidget(
-                      controller.wtm.value,
-                      showlink: false,
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          // TODO : 옆으로 넘어가기
-                        },
-                        child: Text(
-                          '참여자 확인>',
-                          style: TextStyle(
-                              fontFamily: 'NanumSquareNeo',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.sp),
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-                SizedBox(
-                  height: 14.h,
-                ),
-                Divider(
-                  height: 1.h,
-                  color: AppColors.G_01,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 4.w, top: 6.h),
-                  child: Image.asset(
-                    ImagePath.inforicon,
-                    width: 19.w,
-                    height: 19.h,
-                  ),
-                ),
-                Expanded(child: WTMSchedule(controller.wtm.value, false)),
-                SizedBox(height: 11.05.h),
-                NormalButton(
-                    text: '가능 시간 입력',
-                    onTap: () async {
-                      Get.to(() => const WTMSelectTime());
-                    }),
-                SizedBox(height: 12.h)
-              ],
+          Divider(
+            height: 1.h,
+            color: AppColors.G_01,
+          ),
+          SizedBox(
+            height: 14.h,
+          ),
+          SizedBox(
+            height: 57.h,
+            child: Obx(
+              () => PageView(
+                controller: pageController,
+                children: [
+                  _teamInfo(), // 첫 번째 페이지: 해당 팀플 정보
+                  _participantsPage(), // 두 번째 페이지: 참여자 확인 페이지
+                ],
+              ),
             ),
           ),
+          SizedBox(height: 14.h),
+          Divider(height: 1.h, color: AppColors.G_01),
+          Padding(
+            padding: EdgeInsets.only(left: 4.w, top: 6.h),
+            child: Image.asset(
+              ImagePath.inforicon,
+              width: 19.w,
+              height: 19.h,
+            ),
+          ),
+          Expanded(child: WTMSchedule(controller.wtm.value, false)),
+          SizedBox(height: 11.05.h),
+          NormalButton(
+              text: '가능 시간 입력',
+              onTap: () async {
+                Get.to(() => const WTMSelectTime());
+              }),
+          SizedBox(height: 12.h),
         ],
       ),
     );
@@ -112,6 +89,34 @@ class WTMCurrent extends GetView<WTMCurrentController> {
           fontSize: 14.sp,
         ),
       ),
+    );
+  }
+
+  Widget _teamInfo() {
+    return Stack(
+      children: [
+        WTMProjectWidget(
+          controller.wtm.value,
+          showlink: false,
+        ),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: Text(
+            '참여자 확인>',
+            style: TextStyle(
+                fontFamily: 'NanumSquareNeo',
+                fontWeight: FontWeight.bold,
+                fontSize: 9.sp),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _participantsPage() {
+    return Container(
+      color: Colors.black,
     );
   }
 }

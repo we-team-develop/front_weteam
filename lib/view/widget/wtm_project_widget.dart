@@ -22,7 +22,7 @@ class WTMProjectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(() => GetBuilder(
-          builder: (controller) => const WTMCurrent(),
+          builder: (controller) => WTMCurrent(),
           init: WTMCurrentController(team))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
@@ -73,7 +73,9 @@ class WTMProjectWidget extends StatelessWidget {
       width: 50.w,
       height: 50.h,
       decoration: ShapeDecoration(
-        image: DecorationImage(image: AssetImage(controller.imagePaths[imageIndex]), fit: BoxFit.fill),
+          image: DecorationImage(
+              image: AssetImage(controller.imagePaths[imageIndex]),
+              fit: BoxFit.fill),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
           color: AppColors.G_02),
