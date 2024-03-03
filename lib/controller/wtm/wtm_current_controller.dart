@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:get/get.dart';
 
+import '../../model/weteam_user.dart';
 import '../../model/wtm_project.dart';
 import '../../model/wtm_project_detail.dart';
 import '../../service/api_service.dart';
@@ -11,6 +12,8 @@ import 'wtm_schedule_controller.dart';
 
 class WTMCurrentController extends GetxController {
   late final Rx<WTMProject> wtm;
+  final RxList<WeteamUser> joinedUserList = RxList(); // 시간 선택한 유저
+  final RxList<WeteamUser> notJoinedUserList = RxList(); // 시간 선택 안 한 유저
 
   WTMCurrentController(WTMProject team) {
     wtm = team.obs;
@@ -19,54 +22,66 @@ class WTMCurrentController extends GetxController {
 
   Future<void> fetchWTMProjectDetail() async {
     ApiService service = Get.find<ApiService>();
-    WTMProjectDetail? wtmPD = await service.getWTMProjectDetail(wtm.value.id);
+    WTMProjectDetail? wtmProjectDetail = await service.getWTMProjectDetail(wtm.value.id);
 
-    if (wtmPD == null) {
+    // 불러오지 못했을 경우
+    if (wtmProjectDetail == null) {
       WeteamUtils.snackbar('불러오지 못함', '오류가 있었습니다');
     } else {
-      wtm.value = wtmPD.wtmProject;
+      // 미팅 정보 업데이트(적용)
+      wtm.value = wtmProjectDetail.wtmProject;
+
+      // 미팅 스케쥴(시간입력) 관련 데이터 처리 부분 시작
       WTMScheduleController schController = Get.find<WTMScheduleController>();
 
-      int maxPopulation = 0;
-      Map<String, int> populationMap = {};
-      Map<String, HashSet<int>> currentUserTimeMap = {};
+      int maxPopulation = 0; // 날짜별 최대 참여자 수
+      Map<String, int> populationMap = {}; // 날짜별 참여자 수
+      Map<String, HashSet<int>> myTimeMap = {}; // 앱 사용자가 선택한 날짜들
 
-      for (WTMUser user in wtmPD.wtmUserList) {
-        bool isCurrentUser =
-            user.user.id == Get.find<AuthService>().user.value?.id;
+      for (WTMUser user in wtmProjectDetail.wtmUserList) {
+        bool isMe =
+            user.user.id == Get.find<AuthService>().user.value?.id; // 이 유저가 이 앱 실행한 유저인지를 담는 변수
 
-        for (MeetingTime time in user.timeList) {
-          DateTime startedAt = time.startedAt;
-          DateTime endedAt = time.endedAt;
+        if (user.timeList.isEmpty) { // 시간 입력 안 한 유저
+          notJoinedUserList.add(user.user); // 참여한 유저 목록에 추가
+        } else { // 시간 입력 데이터가 있음
+          joinedUserList.add(user.user); // 참여 안 한 유저 목록에 추가
 
-          DateTime parentDt =
-              DateTime(startedAt.year, startedAt.month, startedAt.day);
-          String strDtKey =
-              WeteamUtils.formatDateTime(parentDt, withTime: false);
+          for (MeetingTime time in user.timeList) {
+            DateTime startedAt = time.startedAt;
+            DateTime endedAt = time.endedAt;
 
-          int length = endedAt.difference(startedAt).inHours;
-          for (int i = 0; i <= length; i++) {
-            int year = startedAt.year;
-            int month = startedAt.month;
-            int day = startedAt.day;
-            int hour = startedAt.hour + i;
+            DateTime parentDt =
+            DateTime(startedAt.year, startedAt.month, startedAt.day);
+            String strDtKey =
+            WeteamUtils.formatDateTime(parentDt, withTime: false);
 
-            DateTime dt = DateTime(year , month, day, hour);
-            String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
+            int length = endedAt
+                .difference(startedAt)
+                .inHours;
+            for (int i = 0; i <= length; i++) {
+              int year = startedAt.year;
+              int month = startedAt.month;
+              int day = startedAt.day;
+              int hour = startedAt.hour + i;
 
-            int population = populationMap[pMapKey] ?? 0; // 몇 명이 선택?
-            ++population;
+              DateTime dt = DateTime(year, month, day, hour);
+              String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
 
-            if (maxPopulation < population) {
-              maxPopulation = population;
-            }
+              int population = populationMap[pMapKey] ?? 0; // 몇 명이 선택?
+              ++population;
 
-            populationMap[pMapKey] = population;
+              if (maxPopulation < population) {
+                maxPopulation = population;
+              }
 
-            if (isCurrentUser) {
-              HashSet<int> set = currentUserTimeMap[strDtKey] ?? HashSet();
-              set.add(hour);
-              currentUserTimeMap[strDtKey] = set;
+              populationMap[pMapKey] = population;
+
+              if (isMe) {
+                HashSet<int> set = myTimeMap[strDtKey] ?? HashSet();
+                set.add(hour);
+                myTimeMap[strDtKey] = set;
+              }
             }
           }
         }
@@ -74,7 +89,7 @@ class WTMCurrentController extends GetxController {
 
       schController.maxPopulation.value = maxPopulation;
       schController.populationMap.value = populationMap;
-      schController.selected.value = currentUserTimeMap;
+      schController.selected.value = myTimeMap;
     }
   }
 
