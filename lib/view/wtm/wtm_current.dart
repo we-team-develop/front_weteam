@@ -228,8 +228,6 @@ class WTMCurrent extends GetView<WTMCurrentController> {
               ),
             ],
           ),
-          SizedBox(height: 20.h),
-          // 미참여 불러오기
           Expanded(
             child: Obx(
               () => ListView.builder(
