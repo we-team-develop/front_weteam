@@ -29,7 +29,7 @@ class TeamProject {
         hashedId: data['hashedId'] ?? "",
         id: data['id'],
         title: data['name'],
-        imageId: data['imageId'],
+        imageId: data['imageId'] ?? 0, //null 예외 생김 수정
         description: data['explanation'],
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),

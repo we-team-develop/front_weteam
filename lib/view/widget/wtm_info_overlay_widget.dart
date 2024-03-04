@@ -56,7 +56,7 @@ class InfoOverlay extends StatelessWidget {
                   ),
                   // 확인 버튼
                   GestureDetector(
-                    onTap: () => onConfirm,
+                    onTap: onConfirm, //확인 버튼 안 눌림 수정
                     child: Text(
                       '확인',
                       style: TextStyle(

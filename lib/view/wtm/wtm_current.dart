@@ -107,12 +107,22 @@ class WTMCurrent extends GetView<WTMCurrentController> {
         Positioned(
           right: 0,
           bottom: 0,
-          child: Text(
-            '참여자 확인>',
-            style: TextStyle(
-                fontFamily: 'NanumSquareNeo',
-                fontWeight: FontWeight.bold,
-                fontSize: 9.sp),
+          child: GestureDetector(
+            // 텍스트 위젯을 GestureDetector로 랩하여 탭 처리
+            onTap: () {
+              pageController.animateToPage(
+                1, //
+                duration: Duration(milliseconds: 300), //
+                curve: Curves.easeInOut, // Animation curve
+              );
+            },
+            child: Text(
+              '참여자 확인>',
+              style: TextStyle(
+                  fontFamily: 'NanumSquareNeo',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 9.sp),
+            ),
           ),
         ),
       ],
@@ -187,14 +197,38 @@ class WTMCurrent extends GetView<WTMCurrentController> {
 
   Widget _nonParticipant() {
     return Padding(
-      padding: EdgeInsets.only(left: 14.w),
+      padding: EdgeInsets.only(left: 14.w, right: 14.w), // 패딩이 양쪽에서 대칭인지 확인
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '미참여',
-            style: TextStyle(fontFamily: 'NanumSquareNeoBold', fontSize: 12.sp),
+          Row(
+            children: [
+              Text(
+                '미참여',
+                style: TextStyle(
+                    fontFamily: 'NanumSquareNeoBold', fontSize: 12.sp),
+              ),
+              Spacer(), // 텍스트 및 제스처 디텍터 분리
+              GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(
+                    0, // Index of the _teamInfo page in the PageView
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Text(
+                  '돌아가기>',
+                  style: TextStyle(
+                    fontFamily: 'NanumSquareNeo',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 9.sp,
+                  ),
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 20.h),
           // 미참여 불러오기
           Expanded(
             child: Obx(
