@@ -45,6 +45,8 @@ class WTMCurrentController extends GetxController {
   //
   Future<void> fetchWTMProjectDetail() async {
     ApiService service = Get.find<ApiService>();
+    notJoinedUserList.clear();
+    joinedUserList.clear();
     WTMProjectDetail? wtmProjectDetail =
         await service.getWTMProjectDetail(wtm.value.id);
 
