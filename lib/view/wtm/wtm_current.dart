@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../widget/profile_image_widget.dart';
 import 'package:get/get.dart';
 
 import '../../controller/wtm/wtm_current_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../widget/normal_button.dart';
+import '../widget/profile_image_widget.dart';
 import '../widget/wtm_project_widget.dart';
 import '../widget/wtm_schedule_widget.dart';
 import 'wtm_select_time.dart';
 
 class WTMCurrent extends GetView<WTMCurrentController> {
-  WTMCurrent({super.key});
-
   final PageController pageController = PageController();
+
+  WTMCurrent({super.key});
 
   @override
   Widget build(BuildContext context) {

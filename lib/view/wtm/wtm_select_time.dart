@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,6 @@ import 'package:get/get.dart';
 import '../../controller/wtm/wtm_current_controller.dart';
 import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
-import '../../data/image_data.dart';
 import '../../util/weteam_utils.dart';
 import '../widget/normal_button.dart';
 import '../widget/wtm_project_widget.dart';
@@ -76,9 +74,7 @@ class _WTMSelectTimeState extends State<WTMSelectTime> {
                   height: 1.h,
                   color: AppColors.G_01,
                 ),
-                SizedBox(
-                  height: 14.h,
-                ),
+                SizedBox(height: 14.h),
                 // TODO : wtm_widget
                 Obx(
                   () => WTMProjectWidget(
@@ -86,13 +82,12 @@ class _WTMSelectTimeState extends State<WTMSelectTime> {
                     showlink: false,
                   ),
                 ),
-                SizedBox(
-                  height: 14.h,
-                ),
+                SizedBox(height: 14.h),
                 Divider(
                   height: 1.h,
                   color: AppColors.G_01,
                 ),
+                SizedBox(height: 25.h),
                 Expanded(
                     child: WTMSchedule(controller.wtm.value, true)),
                 SizedBox(height: 11.05.h),

@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import '../../view/widget/wtm_info_overlay_widget.dart';
 import 'package:get/get.dart';
 
 import '../../model/weteam_user.dart';
@@ -10,6 +9,7 @@ import '../../model/wtm_project_detail.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
+import '../../view/widget/wtm_info_overlay_widget.dart';
 import 'wtm_schedule_controller.dart';
 
 class WTMCurrentController extends GetxController {
@@ -18,6 +18,7 @@ class WTMCurrentController extends GetxController {
   final RxList<WeteamUser> notJoinedUserList = RxList(); // 시간 선택 안 한 유저
 
   WTMCurrentController(WTMProject team) {
+    Get.put(WTMScheduleController());
     wtm = team.obs;
     fetchWTMProjectDetail();
   }
