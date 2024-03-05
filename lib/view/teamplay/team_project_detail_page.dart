@@ -415,16 +415,23 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                   children: [
                     SizedBox(height: 24.h),
                     NormalButton(
-                      onTap: () {
+                      onTap: () async {
+                        Future inviteUrlFuture = Get.find<ApiService>()
+                            .getTeamProjectInviteUrl(controller.tp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
-                        String hashedId = controller.tp.value.hashedId;
 
-                        String inviteText =
-                            '$userName님이 $teamProjectName에 초대했어요!\nweteam://projects/acceptInvite?id=$hashedId';
-                        debugPrint(inviteText);
-                        Share.share(inviteText);
+                        String? inviteUrl = await inviteUrlFuture;
+                        if (inviteUrl != null) { // 링크 받아오기 성공
+                          inviteUrl = Uri.decodeComponent(inviteUrl);
+                          String inviteText =
+                              '$userName님이 $teamProjectName에 초대했어요!\n$inviteUrl';
+                          debugPrint(inviteText);
+                          Share.share(inviteText);
+                        } else {
+                          WeteamUtils.snackbar('', '링크를 생성하지 못했어요');
+                        }
                       },
                       width: 330.w,
                       height: 40.h,
