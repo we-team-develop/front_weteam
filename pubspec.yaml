@@ -30,6 +30,8 @@ dependencies:
   firebase_messaging: ^14.7.16
   firebase_crashlytics: ^3.4.15
   permission_handler: ^11.3.0
+  bottom_sheet: ^4.0.0
+  see_more: ^0.0.1
 
 dev_dependencies:
   flutter_test:
