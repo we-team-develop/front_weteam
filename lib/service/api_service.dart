@@ -346,6 +346,16 @@ class ApiService extends CustomGetConnect implements GetxService {
     return ret;
   }
 
+  /// 팀플 팀원 목록 조회 API
+  ///
+  /// return: 성공시 WeteamProjectUser 리스트, 실패시 null
+  Future<String?> getTeamProjectInviteUrl(int projectId) async {
+    Response rp = await post('/api/project-users/$projectId', {});
+    if (rp.hasError) return null;
+
+    return rp.bodyString;
+  }
+
   /// 팀플 탈퇴 API
   ///
   /// return: 성공 여부
