@@ -430,6 +430,30 @@ hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,androidstudio,intellij
 
+# Created by https://www.toptal.com/developers/gitignore/api/xcode
+# Edit at https://www.toptal.com/developers/gitignore?templates=xcode
+
+### Xcode ###
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# End of https://www.toptal.com/developers/gitignore/api/xcode
+project.pbxproj
+Package.resolved
+
 *.env
 /lib/firebase_options.dart
 
@@ -441,3 +465,4 @@ firebase_app_id_file.json
 
 ### 위팀 ###
 weteam.properties
+/ios/Runner/Info.plist
