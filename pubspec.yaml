@@ -55,13 +55,13 @@ flutter:
       - asset: assets/fonts/NanumGothicExtraBold.ttf
     - family: SBaggroM
       fonts:
-      - asset: assets/fonts/SB 어그로 M.ttf
+      - asset: assets/fonts/SB 어그로OTF M.otf
     - family: SBaggroB
       fonts:
-      - asset: assets/fonts/SB 어그로 B.ttf
+      - asset: assets/fonts/SB 어그로OTF B.otf
     - family: SBaggroL
       fonts:
-      - asset: assets/fonts/SB 어그로 L.ttf
+      - asset: assets/fonts/SB 어그로OTF L.otf
     - family: NanumSquareNeo
       fonts:
         - asset: assets/fonts/NanumSquareNeoOTF-Rg.otf
