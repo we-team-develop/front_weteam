@@ -11,12 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.6
-  flutter_native_splash: ^2.3.8
+  flutter_native_splash: ^2.3.10
   kakao_flutter_sdk: ^1.8.0
   flutter_dotenv: ^5.1.0
   cloud_functions: ^4.5.8
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.15.3
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
   flutter_naver_login: ^1.8.0
   flutter_screenutil: ^5.9.0
   google_sign_in: ^6.2.1
@@ -27,8 +27,8 @@ dependencies:
   uni_links: ^0.5.1
   share_plus: ^7.2.2
   auto_size_text: ^3.0.0
-  firebase_messaging: ^14.7.16
-  firebase_crashlytics: ^3.4.15
+  firebase_messaging: ^14.7.19
+  firebase_crashlytics: ^3.4.18
   permission_handler: ^11.3.0
 
 dev_dependencies:
