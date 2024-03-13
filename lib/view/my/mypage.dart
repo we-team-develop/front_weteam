@@ -15,7 +15,6 @@ import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/profile_image_widget.dart';
-import '../widget/team_project_list_view.dart';
 import '../widget/team_project_widget.dart';
 import 'profile.dart';
 

@@ -187,7 +187,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
             controller.selected[dtKey] = set;
           } else {
-            this.showBottomSheet();
+            showBottomSheet();
           }
         },
         child: Obx(() {
@@ -240,7 +240,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
   // 여기서 유저 id는 WeteamUser의 ID입니다.
   HashSet<int> _getJoinUserIdSet() {
     List<WTMUser> pList = _getPopulationList();
-    HashSet<int> ret = new HashSet();
+    HashSet<int> ret = HashSet();
 
     for (WTMUser user in pList) {
       ret.add(user.user.id);
@@ -291,7 +291,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                     color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 20,
                     blurRadius: 20,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ]
             ),
@@ -313,7 +313,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox.shrink(),
+                    const SizedBox.shrink(),
                     Text(
                       '${widget.dt.year}. ${WeteamUtils.padLeft(widget.dt.month)}. ${WeteamUtils.padLeft(widget.dt.day)} ${WeteamUtils.padLeft(widget.dt.hour)}:00',
                       style: TextStyle(
@@ -405,7 +405,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 class _HourTextList extends StatefulWidget {
   final Rx<double> verticalScrollOffset;
 
-  const _HourTextList({super.key, required this.verticalScrollOffset});
+  const _HourTextList({required this.verticalScrollOffset});
   @override
   State<_HourTextList> createState() => _HourTextListState();
 }
@@ -465,7 +465,7 @@ class _UserNameContainer extends StatelessWidget {
   final String name;
   final bool colored;
 
-  const _UserNameContainer({super.key, required this.name, required this.colored});
+  const _UserNameContainer({required this.name, required this.colored});
 
   @override
   Widget build(BuildContext context) {
@@ -475,7 +475,7 @@ class _UserNameContainer extends StatelessWidget {
       decoration: BoxDecoration(
           color: colored ? AppColors.Orange_03 : AppColors.White,
           borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x3F000000),
               blurRadius: 3,

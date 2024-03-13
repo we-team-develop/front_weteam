@@ -43,8 +43,5 @@ class WeteamUser {
         profile == other.profile;
   }
 
-  @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
 
 }

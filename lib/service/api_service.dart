@@ -235,9 +235,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     return WTMProject.fromJson(data);
   }
 
-  /**
-   * MEETING_USER
-   */
+  /// MEETING_USER
 
   Future<bool> setWtmSchedule(int meetingId, List<MeetingTime> timeList) async {
     List<Map<String, String>> timeMapList = [];
