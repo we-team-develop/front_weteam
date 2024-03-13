@@ -91,6 +91,7 @@ class ImagePath {
       'assets/images/snackbar_success_ic.png';
   static String get snackbarInfoIc => 'assets/images/snackbar_info_ic.png';
   static String get infoImage => 'assets/images/wtm_info_overlay_color.png';
+  static String get icCrossClose => 'assets/images/ic_cross_close.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
 }

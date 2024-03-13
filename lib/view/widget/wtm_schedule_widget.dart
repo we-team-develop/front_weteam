@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/wtm/wtm_current_controller.dart';
 import '../../controller/wtm/wtm_schedule_controller.dart';
 import '../../data/color_data.dart';
+import '../../data/image_data.dart';
+import '../../model/weteam_user.dart';
 import '../../model/wtm_project.dart';
+import '../../model/wtm_project_detail.dart';
 import '../../util/weteam_utils.dart';
 
 class WTMSchedule extends StatefulWidget {
@@ -183,24 +187,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
             controller.selected[dtKey] = set;
           } else {
-            showStickyFlexibleBottomSheet(
-              minHeight: 0,
-              initHeight: 0.5,
-              maxHeight: 1,
-              headerHeight: 200,
-              context: context,
-              headerBuilder: (BuildContext context, double offset) {
-                return Container(
-                child: Text("WOW"),
-                );
-              },
-              bodyBuilder: (BuildContext context, double offset) {
-                return SliverChildListDelegate(
-                  <Widget>[],
-                );
-              },
-              anchors: [0, 0.5, 1],
-            );
+            this.showBottomSheet();
           }
         },
         child: Obx(() {
@@ -213,13 +200,13 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
             color = selected ? AppColors.Blue_07 : AppColors.G_02;
           } else {
-            String pMapKey = WeteamUtils.formatDateTime(widget.dt, withTime: true);
-            int population = controller.populationMap[pMapKey] ?? 0;
+            List<WTMUser> pList = _getPopulationList();
+            int populationSize = pList.length;
 
-            if (population == 0) {
+            if (populationSize == 0) {
               color = AppColors.G_02;
             } else {
-              double percent = population / controller.maxPopulation.value;
+              double percent = populationSize / controller.maxPopulation.value;
 
               if (percent >= 0.75) {
                 color = AppColors.Blue_07;
@@ -240,6 +227,177 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
           );
         }),
       ),
+    );
+  }
+
+  List<WTMUser> _getPopulationList() {
+    String pMapKey = WeteamUtils.formatDateTime(widget.dt, withTime: true);
+    List<WTMUser> populationList = controller.populationMap[pMapKey] ?? [];
+
+    return populationList;
+  }
+
+  // 여기서 유저 id는 WeteamUser의 ID입니다.
+  HashSet<int> _getJoinUserIdSet() {
+    List<WTMUser> pList = _getPopulationList();
+    HashSet<int> ret = new HashSet();
+
+    for (WTMUser user in pList) {
+      ret.add(user.user.id);
+    }
+
+    return ret;
+  }
+
+
+  void showBottomSheet() {
+    HashSet<int> joinUserIdSet = _getJoinUserIdSet();
+    List<WeteamUser> allJoinUserList = Get.find<WTMCurrentController>().joinedUserList;
+
+    List<String> joinUserNameList = [];
+    List<String> notJoinUserNameList = [];
+
+    for (WeteamUser user in allJoinUserList) {
+      if (joinUserIdSet.contains(user.id)) { // 이 날짜에 참여합니다
+        joinUserNameList.add("${user.username}");
+      } else { // 이 날짜에 참여하지 않습니다
+        notJoinUserNameList.add("${user.username}");
+      }
+    }
+
+    DraggableScrollableController dsController = DraggableScrollableController();
+
+    showFlexibleBottomSheet(
+      isExpand: true,
+      decoration: const BoxDecoration(
+          color: Colors.transparent
+      ),
+      isDismissible: true,
+      bottomSheetColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      draggableScrollableController: dsController,
+      isSafeArea: false,
+      context: context,
+      builder: (context, scrollController, bottomSheetOffset) {
+        return Padding(
+          padding: EdgeInsets.only(top: 20.h),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+            decoration: BoxDecoration(
+                color: AppColors.White,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+                boxShadow:[
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 20,
+                    blurRadius: 20,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ]
+            ),
+            child: ListView(
+              controller: scrollController,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 40.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2.r),
+                        color: AppColors.G_03
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox.shrink(),
+                    Text(
+                      '${widget.dt.year}. ${WeteamUtils.padLeft(widget.dt.month)}. ${WeteamUtils.padLeft(widget.dt.day)} ${WeteamUtils.padLeft(widget.dt.hour)}:00',
+                      style: TextStyle(
+                          fontFamily: "NanumSquareNeo",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Image.asset(ImagePath.icCrossClose, width: 25.w, height: 25.h),
+                    )
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                Container(height: 0.5.h,
+                    color: AppColors.G_02),
+
+                SizedBox(height: 8.h),
+                Text('참여 가능 : ${joinUserNameList.length}명',
+                  style: TextStyle(
+                      fontFamily: "NanumSquareNeo",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.sp
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Visibility(
+                  visible: joinUserNameList.isNotEmpty,
+                  replacement: Text(
+                    '참여 가능한 팀원이 없습니다.',
+                    style: TextStyle(
+                        fontFamily: 'NanumSquareNeo',
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w200),
+                  ),
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    spacing: 12.w,
+                    runSpacing: 8.h,
+                    children: [
+                      for (int i = 0; i < joinUserNameList.length; i++)
+                        _UserNameContainer(
+                            name: joinUserNameList[i], colored: true)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                Text('참여 불가능 : ${notJoinUserNameList.length}명',
+                  style: TextStyle(
+                      fontFamily: "NanumSquareNeo",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.sp
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Visibility(
+                  visible: notJoinUserNameList.isNotEmpty,
+                  replacement: Text(
+                    '참여 불가능한 팀원이 없습니다.',
+                    style: TextStyle(
+                        fontFamily: 'NanumSquareNeo',
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w200),
+                  ),
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    spacing: 12.w,
+                    runSpacing: 8.h,
+                    children: [
+                      for (int i = 0; i < notJoinUserNameList.length; i++)
+                        _UserNameContainer(
+                            name: notJoinUserNameList[i], colored: false)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      anchors: [0, 0.5, 1],
     );
   }
 }
@@ -301,4 +459,47 @@ class _HourTextListState extends State<_HourTextList> {
         }
     );
   }
+}
+
+class _UserNameContainer extends StatelessWidget {
+  final String name;
+  final bool colored;
+
+  const _UserNameContainer({super.key, required this.name, required this.colored});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 56.w,
+      height: 24.h,
+      decoration: BoxDecoration(
+          color: colored ? AppColors.Orange_03 : AppColors.White,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 3,
+              offset: Offset(0, 0),
+              spreadRadius: 0,
+            )
+          ]
+      ),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 9.w),
+          child: AutoSizeText(
+            name,
+            //overflow: TextOverflow.ellipsis,
+            minFontSize: 1,
+            style: TextStyle(
+                fontSize: 10,
+                fontFamily: 'NanumGothic',
+                color: colored ? AppColors.White : AppColors.Black
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

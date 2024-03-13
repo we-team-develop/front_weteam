@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -131,90 +130,6 @@ class LoginMain extends StatelessWidget {
   }
 
   void login(AuthHelper helper, BuildContext context) async {
-    showFlexibleBottomSheet(
-      decoration: BoxDecoration(
-          color: Colors.transparent
-      ),
-      bottomSheetColor: Colors.transparent,
-      barrierColor: Colors.transparent,
-      draggableScrollableController: DraggableScrollableController(),
-      isSafeArea: true,
-      context: context,
-      builder: (context, scrollController, bottomSheetOffset) {
-        return SingleChildScrollView(
-          controller: scrollController,
-          child: Padding(
-            padding: EdgeInsets.only(top: 20.h),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-              decoration: BoxDecoration(
-                  color: AppColors.White,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-                  boxShadow:[
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 20,
-                      blurRadius: 20,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ]
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: 40.w,
-                      height: 4.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.r),
-                          color: AppColors.G_03
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox.shrink(),
-                      Text(
-                        '2024. 01. 20 17:00',
-                        style: TextStyle(
-                            fontFamily: "NanumSquareNeo",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp
-                        ),
-                      ),
-                      Text("X")
-                    ],
-                  ),
-                  Text('',
-                  maxLines: 4,
-                  overflow: TextOverflow(
-                    
-                  ),)
-                  SizedBox(height: 16.h),
-                  Container(height: 0.5.h,
-                      color: AppColors.G_02),
-                  SizedBox(height: 8.h),
-                  Text('참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n참여 가능 : 40명\n',
-                    style: TextStyle(
-                        fontFamily: "NanumSquareNeo",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 11.sp
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      anchors: [0, 0.5, 1],
-    );
-
-    return;
     try {
       _showOverlay(context);
       // TODO: 로그인 버튼 중복 클릭 방지
