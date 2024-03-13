@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -181,6 +182,25 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
             }
 
             controller.selected[dtKey] = set;
+          } else {
+            showStickyFlexibleBottomSheet(
+              minHeight: 0,
+              initHeight: 0.5,
+              maxHeight: 1,
+              headerHeight: 200,
+              context: context,
+              headerBuilder: (BuildContext context, double offset) {
+                return Container(
+                child: Text("WOW"),
+                );
+              },
+              bodyBuilder: (BuildContext context, double offset) {
+                return SliverChildListDelegate(
+                  <Widget>[],
+                );
+              },
+              anchors: [0, 0.5, 1],
+            );
           }
         },
         child: Obx(() {
