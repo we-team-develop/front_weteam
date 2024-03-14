@@ -3,13 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/wtm/wtm_current_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
+import '../../model/weteam_user.dart';
 import '../../model/wtm_project.dart';
+import '../../service/api_service.dart';
+import '../../service/auth_service.dart';
 import '../wtm/wtm_current.dart';
 
 class WTMProjectWidget extends StatelessWidget {
@@ -46,10 +50,21 @@ class WTMProjectWidget extends StatelessWidget {
                     ),
                   ),
                   if (showlink)
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: Image.asset(ImagePath.wtmlink,
-                            width: 13.5.w, height: 15.h)),
+                    GestureDetector(
+                      onTap: () async {
+                        String? inviteLink = await Get.find<ApiService>()
+                            .getWtmInvitLink(team.id);
+                        WeteamUser currentUser =
+                            Get.find<AuthService>().user.value!;
+
+                        Share.share(
+                            '${currentUser.username}님이 [${team.title}] 언제보까에 초대했어요!\n$inviteLink');
+                      },
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Image.asset(ImagePath.wtmlink,
+                              width: 13.5.w, height: 15.h)),
+                    ),
                 ],
               ),
             ),

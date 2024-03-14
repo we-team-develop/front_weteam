@@ -256,6 +256,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     return WTMProjectDetail.fromJson(rp.body);
   }
 
+  Future<String?> getWtmInvitLink(int meetingId) async {
+    Response rp = await get('/api/meeting-users/$meetingId');
+    return rp.bodyString?.trim();
+  }
+
   /**
    * USER
    */
