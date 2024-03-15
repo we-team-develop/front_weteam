@@ -105,12 +105,13 @@ class _WTMScheduleState extends State<WTMSchedule> {
     return SizedBox(
       width: (43.29 + 5).w,
       child: AutoSizeText(
-        '${WTMSchedule._dateName[date.weekday - 1]}\n${date.day}',
+        '${WTMSchedule._dateName[date.weekday - 1]}\n${WeteamUtils.padLeft(date.month)}.${date.day}',
         style: TextStyle(
             fontFamily: 'NanumGothic',
             fontSize: 10.sp,
             fontWeight: FontWeight.bold,
             height: 0),
+        minFontSize: 1,
         textAlign: TextAlign.center,
       ),
     );
