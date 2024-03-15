@@ -235,9 +235,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     return WTMProject.fromJson(data);
   }
 
-  /**
-   * MEETING_USER
-   */
+  /// MEETING_USER
 
   Future<bool> setWtmSchedule(int meetingId, List<MeetingTime> timeList) async {
     List<Map<String, String>> timeMapList = [];
@@ -245,7 +243,8 @@ class ApiService extends CustomGetConnect implements GetxService {
       timeMapList.add(element.toMap());
     }
 
-    Response rp = await patch('/api/meeting-users/$meetingId/time', timeMapList);
+    Response rp =
+        await patch('/api/meeting-users/$meetingId/time', timeMapList);
     return rp.isOk;
   }
 
@@ -256,6 +255,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     }
 
     return WTMProjectDetail.fromJson(rp.body);
+  }
+
+  Future<String?> getWtmInvitLink(int meetingId) async {
+    Response rp = await get('/api/meeting-users/$meetingId');
+    return rp.bodyString?.trim();
   }
 
   /**
@@ -344,6 +348,16 @@ class ApiService extends CustomGetConnect implements GetxService {
         data.length, (index) => WeteamProjectUser.fromJson(data[index]));
 
     return ret;
+  }
+
+  /// 팀플 팀원 목록 조회 API
+  ///
+  /// return: 성공시 WeteamProjectUser 리스트, 실패시 null
+  Future<String?> getTeamProjectInviteUrl(int projectId) async {
+    Response rp = await post('/api/project-users/$projectId', {});
+    if (rp.hasError) return null;
+
+    return rp.bodyString;
   }
 
   /// 팀플 탈퇴 API

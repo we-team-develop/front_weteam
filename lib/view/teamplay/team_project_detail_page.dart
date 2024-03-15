@@ -229,8 +229,8 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
         if (controller.isKickMode.isFalse &&
             controller.isChangeHostMode.isFalse) {
           if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
-            Get.to(
-                () => UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+            Get.to(() =>
+                UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
           }
         }
       },
@@ -423,7 +423,8 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         String teamProjectName = controller.tp.value.title;
 
                         String? inviteUrl = await inviteUrlFuture;
-                        if (inviteUrl != null) { // 링크 받아오기 성공
+                        if (inviteUrl != null) {
+                          // 링크 받아오기 성공
                           inviteUrl = Uri.decodeComponent(inviteUrl);
                           String inviteText =
                               '$userName님이 $teamProjectName에 초대했어요!\n$inviteUrl';
@@ -580,7 +581,8 @@ class _CancelOrActionBottomPanel
         SizedBox(height: 10.h),
         Row(
           children: [
-            Expanded(child: NormalButton(
+            Expanded(
+                child: NormalButton(
               whiteButton: true,
               height: 38.h,
               text: '취소',
@@ -593,7 +595,8 @@ class _CancelOrActionBottomPanel
               ),
             )),
             SizedBox(width: 10.w),
-            Expanded(child: NormalButton(
+            Expanded(
+                child: NormalButton(
               onTap: () async {
                 try {
                   dynamic ret = action.call();
