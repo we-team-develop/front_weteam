@@ -62,7 +62,7 @@ class WTMCurrentController extends GetxController {
       WTMScheduleController schController = Get.find<WTMScheduleController>();
 
       int maxPopulation = 0; // 날짜별 최대 참여자 수
-      Map<String, int> populationMap = {}; // 날짜별 참여자 수
+      Map<String, List<WTMUser>> populationMap = {}; // 날짜별 참여자 목록
       Map<String, HashSet<int>> myTimeMap = {}; // 앱 사용자가 선택한 날짜들
 
       for (WTMUser user in wtmProjectDetail.wtmUserList) {
@@ -95,11 +95,11 @@ class WTMCurrentController extends GetxController {
               DateTime dt = DateTime(year, month, day, hour);
               String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
 
-              int population = populationMap[pMapKey] ?? 0; // 몇 명이 선택?
-              ++population;
+              List<WTMUser> population = populationMap[pMapKey] ?? []; // 누구누구가 선택?
+              population.add(user); // 선택한 유저 목록에 추가
 
-              if (maxPopulation < population) {
-                maxPopulation = population;
+              if (maxPopulation < population.length) {
+                maxPopulation = population.length;
               }
 
               populationMap[pMapKey] = population;

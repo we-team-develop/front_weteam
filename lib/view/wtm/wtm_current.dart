@@ -112,7 +112,7 @@ class WTMCurrent extends GetView<WTMCurrentController> {
             onTap: () {
               pageController.animateToPage(
                 1, //
-                duration: Duration(milliseconds: 300), //
+                duration: const Duration(milliseconds: 300), //
                 curve: Curves.easeInOut, // Animation curve
               );
             },
@@ -208,12 +208,12 @@ class WTMCurrent extends GetView<WTMCurrentController> {
                 style: TextStyle(
                     fontFamily: 'NanumSquareNeoBold', fontSize: 12.sp),
               ),
-              Spacer(), // 텍스트 및 제스처 디텍터 분리
+              const Spacer(), // 텍스트 및 제스처 디텍터 분리
               GestureDetector(
                 onTap: () {
                   pageController.animateToPage(
                     0, // Index of the _teamInfo page in the PageView
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                 },

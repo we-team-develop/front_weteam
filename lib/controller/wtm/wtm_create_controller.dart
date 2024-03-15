@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:front_weteam/controller/wtm/wtm_controller.dart';
+import 'wtm_controller.dart';
 import 'package:get/get.dart';
 
 import '../../model/team_project.dart';
