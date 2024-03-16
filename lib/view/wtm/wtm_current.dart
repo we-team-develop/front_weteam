@@ -61,13 +61,29 @@ class WTMCurrent extends GetView<WTMCurrentController> {
           Divider(height: 1.h, color: AppColors.G_01),
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 6.h),
-            // info icon
-            child: GestureDetector(
-              onTap: () => controller.showOverlay(context),
-              child: Image.asset(
-                ImagePath.inforicon,
-                width: 19.w,
-                height: 19.h,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      '타임블록에서 참여 가능한 인원을 확인할 수 있어요.',
+                      style: TextStyle(
+                        fontFamily: 'NanumSquareNeoBold',
+                        fontSize: 12.sp,
+                      ),
+                      textAlign: TextAlign.center, // 가운데 정렬
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  // 이미지 경로를 동적으로 변경
+                  Image.asset(
+                    controller.getImagePathForUserCount(), // 동적 이미지 경로
+                    height: 30.h,
+                  ),
+                ],
               ),
             ),
           ),

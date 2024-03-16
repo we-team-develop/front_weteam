@@ -43,6 +43,18 @@ class WTMCurrentController extends GetxController {
     _overlayEntry = null;
   }
 
+  // 이미지 경로를 반환하는 메서드 추가
+  String getImagePathForUserCount() {
+    // 합산된 유저 수 계산
+    int totalUserCount = joinedUserList.length + notJoinedUserList.length;
+
+    // 팀원 1명이어도 2명으로 보이게 함
+    int validUserCount = (totalUserCount > 1) ? totalUserCount : 2;
+    // 최대 10명
+    validUserCount = validUserCount.clamp(2, 10);
+    return 'assets/images/wtm$validUserCount.png'; // 경로는 실제 경로에 맞게 조정 필요
+  }
+
   //
   Future<void> fetchWTMProjectDetail() async {
     ApiService service = Get.find<ApiService>();
@@ -95,7 +107,8 @@ class WTMCurrentController extends GetxController {
               DateTime dt = DateTime(year, month, day, hour);
               String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
 
-              List<WTMUser> population = populationMap[pMapKey] ?? []; // 누구누구가 선택?
+              List<WTMUser> population =
+                  populationMap[pMapKey] ?? []; // 누구누구가 선택?
               population.add(user); // 선택한 유저 목록에 추가
 
               if (maxPopulation < population.length) {

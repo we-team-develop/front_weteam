@@ -94,4 +94,13 @@ class ImagePath {
   static String get icCrossClose => 'assets/images/ic_cross_close.png';
   static asset(String googlelogin,
       {required double width, required double height}) {}
+  static String get wtm2 => 'assets/images/wtm2.png';
+  static String get wtm3 => 'assets/images/wtm3.png';
+  static String get wtm4 => 'assets/images/wtm4.png';
+  static String get wtm5 => 'assets/images/wtm5.png';
+  static String get wtm6 => 'assets/images/wtm6.png';
+  static String get wtm7 => 'assets/images/wtm7.png';
+  static String get wtm8 => 'assets/images/wtm8.png';
+  static String get wtm9 => 'assets/images/wtm9.png';
+  static String get wtm10 => 'assets/images/wtm10.png';
 }
