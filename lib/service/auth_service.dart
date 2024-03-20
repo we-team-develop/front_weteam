@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
+import '../model/login_result.dart';
 import '../model/weteam_user.dart';
 import '../util/helper/auth_helper.dart';
 import '../util/helper/google_auth_helper.dart';
@@ -24,31 +25,40 @@ class AuthService extends GetxService {
   void onInit() {
     dynamic firebaseIdToken = MemCache.get(MemCacheKey.firebaseAuthIdToken);
     dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
+
+    // 로그인 정보가 있는지 확인합니다.
+    // 만약 있다면, 로그인이 된 상태로 간주합니다.
     if (firebaseIdToken != null && userJson != null) {
       token = firebaseIdToken;
+      // 토큰 디버그용 로깅
       log("$token");
+      // 위팀 유저 데이터를 로드합니다.
       user.value = WeteamUser.fromJson(jsonDecode(userJson));
+
+      // 프로필이 있는지 확인합니다.
+      // 만약, 프로필 데이터가 없다면 정상적인 로그인이 아니거나, 데이터가 손상되었거나,
+      // 회원가입이 완료된 상태가 아닐 수 있기에 로그인 상태를 해제합니다.
       if (user.value!.profile == null) {
         user.value = null; // 로그인 취소
         return;
       }
 
+      // 어떤 플랫폼으로 로그인되었는지 확인하기 위해 firebase uid를 불러옵니다.
+      // 또한, 로그인 핼퍼를 초기화합니다.
       String uid = FirebaseAuth.instance.currentUser!.uid;
       if (uid.startsWith('naver')) {
         helper = NaverAuthHelper();
         currentLoginService.value = "네이버";
-        debugPrint("네이버");
       } else if (uid.startsWith('kakao')) {
         helper = KakaoAuthHelper();
         currentLoginService.value = "카카오";
-        debugPrint("카카오");
       } else {
         helper = GoogleAuthHelper();
         currentLoginService.value = "구글";
-        debugPrint("구글");
       }
     }
 
+    // 서버에서 현재 유저 정보를 비동기로 불러와서 업데이트합니다.
     Get.put(ApiService());
     Get.find<ApiService>().getCurrentUser().then((value) {
       if (value != null) user.value = value;
@@ -57,6 +67,7 @@ class AuthService extends GetxService {
     super.onInit();
   }
 
+  /// 로그인 메소드
   Future<LoginResult> login(AuthHelper authHelper) async {
     try {
       if (helper != null) {
@@ -92,6 +103,9 @@ class AuthService extends GetxService {
     }
   }
 
+  /// 유저 로그아웃 메소드
+  /// 로그아웃시 SharedPreferenced의 데이터가 모두 초기화됩니다!!
+  /// ㄷ그에따라 D-Day 데이터도 삭제됩니다.
   Future<bool> logout() async {
     try {
       if (helper == null) return true; // false?
@@ -113,6 +127,7 @@ class AuthService extends GetxService {
     }
   }
 
+  /// 로그인 상태인지 확인하는 메소드
   Future<bool> isLoggedIn() async {
     try {
       if (helper == null) return false;
@@ -123,6 +138,7 @@ class AuthService extends GetxService {
     }
   }
 
+  /// 회원 탈퇴를 시도하는 메소드
   Future<bool> withdrawal() async {
     try {
       if (helper == null) return false;
@@ -154,13 +170,4 @@ class AuthService extends GetxService {
     }
     return null;
   }
-}
-
-class LoginResult {
-  final WeteamUser? user;
-  final bool isSuccess;
-  final bool isNewUser;
-
-  const LoginResult(
-      {required this.isSuccess, this.isNewUser = false, this.user});
 }

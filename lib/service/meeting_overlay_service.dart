@@ -2,10 +2,11 @@ import 'package:flutter/foundation.dart';
 
 import '../main.dart';
 
-class OverlayService {
+class MeetingOverlayService {
   static const String _keyShowOverlay =
-      SharedPreferencesKeys.showWTMOverlay;
+      SharedPreferencesKeys.showMeetingOverlay;
 
+  /// 오버레이를 표시해야하는지 확인하는 메소드
   static bool shouldShowOverlay() {
     final prefs = sharedPreferences;
     bool shouldShow =
@@ -15,7 +16,7 @@ class OverlayService {
     return shouldShow;
   }
 
-  static Future<void> setShouldShowOvelay(bool value) async {
+  static Future<void> setShouldShowOverlay(bool value) async {
     final prefs = sharedPreferences;
     await prefs.setBool(_keyShowOverlay, value);
     // 로그 출력 추가

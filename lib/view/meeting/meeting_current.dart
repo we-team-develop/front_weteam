@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/wtm/wtm_current_controller.dart';
+import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/color_data.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
-import '../widget/wtm_project_widget.dart';
-import '../widget/wtm_schedule_widget.dart';
-import 'wtm_select_time.dart';
+import '../widget/meeting_widget.dart';
+import '../widget/meeting_schedule_widget.dart';
+import 'meeting_select_time.dart';
 
-class WTMCurrent extends GetView<WTMCurrentController> {
+class MeetingCurrent extends GetView<CurrentMeetingController> {
   final PageController pageController = PageController();
 
-  WTMCurrent({super.key});
+  MeetingCurrent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,12 +86,12 @@ class WTMCurrent extends GetView<WTMCurrentController> {
               ),
             ),
           ),
-          Expanded(child: WTMSchedule(controller.wtm.value, false)),
+          Expanded(child: MeetingSchedule(controller.meeting.value, false)),
           SizedBox(height: 11.05.h),
           NormalButton(
               text: '가능 시간 입력',
               onTap: () async {
-                Get.to(() => const WTMSelectTime());
+                Get.to(() => const MeetingSelectTime());
               }),
           SizedBox(height: 12.h),
         ],
@@ -115,8 +115,8 @@ class WTMCurrent extends GetView<WTMCurrentController> {
   Widget _teamInfo() {
     return Stack(
       children: [
-        WTMProjectWidget(
-          controller.wtm.value,
+        MeetingWidget(
+          controller.meeting.value,
           showlink: false,
         ),
         Positioned(

@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'wtm_controller.dart';
+import '../../view/meeting/create/meeting_create_finish.dart';
+import 'meeting_controller.dart';
 import 'package:get/get.dart';
 
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
-import '../../model/wtm_project.dart';
+import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
-import '../../view/wtm/create/wtm_create_finish.dart';
 import '../custom_calendar_controller.dart';
 
-class WTMCreateController extends GetxController {
-  WTMProject? wtmProject;
+class MeetingCreateController extends GetxController {
+  Meeting? meeting;
 
   final Rx<String> searchText = Rx("");
   String? searchWait;
@@ -29,7 +29,7 @@ class WTMCreateController extends GetxController {
   DateTime? startedAt;
   DateTime? endedAt;
 
-  // wtm_create.dart
+  // meeting_create.dart
   void setSelectedTpList(String tpList) {
     selectedTpList.value = tpList;
     bool done = tpList == "완료된 팀플";
@@ -77,30 +77,30 @@ class WTMCreateController extends GetxController {
 
     bool success = false;
 
-    if (wtmProject == null) {
-      WTMProject? wtmProject = await Get.find<ApiService>()
-          .createWTM(
+    if (meeting == null) {
+      Meeting? meetingProject = await Get.find<ApiService>()
+          .createMeeting(
           title: title,
           startedAt: startedAt!,
           endedAt: endedAt!,
           projectId: projectId);
 
-      success = (wtmProject != null);
+      success = (meetingProject != null);
       if (success) {
-        wtmProject = wtmProject;
+        meetingProject = meetingProject;
       }
     } else {
-      int wtmId = wtmProject!.id;
-      success = await Get.find<ApiService>().editWTM(
-          wtmProjectId: wtmId,
+      int meetingId = meeting!.id;
+      success = await Get.find<ApiService>().editMeeting(
+          meetingId: meetingId,
           title: title,
           startedAt: startedAt!,
           endedAt: endedAt!);
     }
 
     if (success) {
-      Get.find<WTMController>().updateWTMProjectList();
-      Get.to(() => const WTMCreateFinish());
+      Get.find<MeetingController>().updateMeetingList();
+      Get.to(() => const MeetingCreateFinish());
     } else {
       WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다',
           icon: SnackbarIcon.fail);

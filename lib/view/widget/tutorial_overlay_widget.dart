@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../controller/wtm/wtm_controller.dart';
+import '../../controller/meeting/meeting_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 
-class TutorialOverlay extends GetView<WTMController> {
+class TutorialOverlay extends GetView<MeetingController> {
   const TutorialOverlay({super.key});
 
   @override
@@ -38,7 +38,7 @@ class TutorialOverlay extends GetView<WTMController> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: Image.asset(
-                        ImagePath.wtmcross,
+                        ImagePath.meetingCross,
                         width: 15.75.w,
                         height: 15.75.h,
                       ),
@@ -92,7 +92,7 @@ class TutorialOverlay extends GetView<WTMController> {
                   child: Center(
                       child: Image.asset(
                         alignment: Alignment.bottomCenter,
-                        ImagePath.wtmtutorial1,
+                        ImagePath.meetingTutorial1,
                         width: 296.w,
                         height: 474.h,
                       )),
@@ -113,7 +113,7 @@ class TutorialOverlay extends GetView<WTMController> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: Image.asset(
-                        ImagePath.wtmcross,
+                        ImagePath.meetingCross,
                         width: 15.75.w,
                         height: 15.75.h,
                       ),
@@ -188,8 +188,8 @@ class TutorialOverlay extends GetView<WTMController> {
                       children: [
                         Obx(() => Image.asset(
                             controller.shouldShowOverlay.isTrue
-                                ? ImagePath.checktutorialfalse
-                                : ImagePath.checktutorialtrue,
+                                ? ImagePath.checkTutorialFalse
+                                : ImagePath.checkTutorialTrue,
                             width: 12.w,
                             height: 12.h)),
                         SizedBox(
@@ -212,7 +212,7 @@ class TutorialOverlay extends GetView<WTMController> {
                   child: Center(
                       child: Image.asset(
                         alignment: Alignment.bottomCenter,
-                        ImagePath.wtmtutorial2,
+                        ImagePath.meetingTutorial2,
                         width: 296.w,
                         height: 474.h,
                       )),

@@ -3,32 +3,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/wtm_project.dart';
+import '../../model/meeting.dart';
 import '../../service/api_service.dart';
-import '../../service/overlay_service.dart';
+import '../../service/meeting_overlay_service.dart';
 import '../../view/widget/tutorial_overlay_widget.dart';
 import '../mainpage/home_controller.dart';
 
-class WTMController extends GetxController {
+class MeetingController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);
   final PageController overlayPageController = PageController();
 
-  final ScrollController wtmScrollController = ScrollController();
+  final ScrollController meetingScrollController = ScrollController();
 
-  final Rxn<List<WTMProject>> wtmList = Rxn<List<WTMProject>>();
+  final Rxn<List<Meeting>> meetingList = Rxn<List<Meeting>>();
 
-  WTMController() {
-    updateWTMProjectList();
+  MeetingController() {
+    updateMeetingList();
   }
 
-  // 웬투밋 관련 페이지가 모두 닫혔을 때 호출됩니다.
+  // 미팅 관련 페이지가 모두 닫혔을 때 호출됩니다.
   @override
   void onClose() {
     super.onClose();
     removeOverlay(); // 튜토리얼 오버레이를 닫습니다.
   }
 
-  // WTM MAIN
+  // Meeting MAIN
   // 오버레이
   RxBool shouldShowOverlay = RxBool(true);
 
@@ -41,14 +41,14 @@ class WTMController extends GetxController {
 
 // 사용자의 선호를 반영하여 showOverlay 값을 설정합니다.
   void loadPreference() {
-    bool shouldShow = OverlayService.shouldShowOverlay();
+    bool shouldShow = MeetingOverlayService.shouldShowOverlay();
     shouldShowOverlay.value = shouldShow;
     print('Load showOverlay Preference: ${shouldShowOverlay.value}');
   }
 
   void toggleShouldShowOverlay() async {
     shouldShowOverlay.value = !shouldShowOverlay.value;
-    await OverlayService.setShouldShowOvelay(shouldShowOverlay.value);
+    await MeetingOverlayService.setShouldShowOverlay(shouldShowOverlay.value);
     print('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
   }
 
@@ -72,15 +72,15 @@ class WTMController extends GetxController {
     _overlayEntry.value = null;
   }
 
-  // wtm list 관련
-  Future<void> updateWTMProjectList() async {
-    GetWTMProjectListResult? result =
-        await Get.find<ApiService>().getWTMProjectList(0, 'DESC', 'STARTED_AT');
+  // Meeting list 관련
+  Future<void> updateMeetingList() async {
+    GetMeetingListResult? result =
+        await Get.find<ApiService>().getMeetingList(0, 'DESC', 'STARTED_AT');
     if (result != null) {
-      wtmList.value = result.wtmprojectList;
+      meetingList.value = result.meetingList;
     } else {
-      wtmList.value = [
-        WTMProject(
+      meetingList.value = [
+        Meeting(
             id: 1,
             title: 'title',
             startedAt: DateTime.now(),

@@ -89,8 +89,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                                       .user
                                                       .value!
                                                       .id
-                                              ? ImagePath.icHostoutGray
-                                              : ImagePath.icGuestoutGray,
+                                              ? ImagePath.icHostOutGray
+                                              : ImagePath.icGuestOutGray,
                                           width: 21.w,
                                           height: 21.h),
                                       Text(

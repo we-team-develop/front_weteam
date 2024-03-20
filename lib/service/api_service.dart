@@ -5,14 +5,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 import '../controller/mainpage/tp_controller.dart';
-import '../controller/wtm/wtm_current_controller.dart';
+import '../controller/meeting/meeting_current_controller.dart';
 import '../main.dart';
 import '../model/team_project.dart';
-import '../model/weteam_notification.dart';
+import '../model/weteam_alarm.dart';
 import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
-import '../model/wtm_project.dart';
-import '../model/wtm_project_detail.dart';
+import '../model/meeting.dart';
+import '../model/meeting_detail.dart';
 import '../util/custom_get_connect.dart';
 import '../util/weteam_utils.dart';
 
@@ -147,8 +147,8 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   /// 미팅 생성
   ///
-  /// return: [WTMProject]?
-  Future<WTMProject?> createWTM(
+  /// return: [Meeting]?
+  Future<Meeting?> createMeeting(
       {required String title,
       required DateTime startedAt,
       required DateTime endedAt,
@@ -179,14 +179,14 @@ class ApiService extends CustomGetConnect implements GetxService {
       return null;
     }
 
-    return WTMProject.fromJson(json.decode(rp.bodyString!));
+    return Meeting.fromJson(json.decode(rp.bodyString!));
   }
 
   /// 미팅 수정
   ///
   /// return: [bool]
-  Future<bool> editWTM(
-      {required int wtmProjectId,
+  Future<bool> editMeeting(
+      {required int meetingId,
       required String title,
       required DateTime startedAt,
       required DateTime endedAt}) async {
@@ -200,15 +200,15 @@ class ApiService extends CustomGetConnect implements GetxService {
     };
 
     // 서버로 API요청
-    Response rp = await patch('/api/meetings/$wtmProjectId', requestBody);
+    Response rp = await patch('/api/meetings/$meetingId', requestBody);
 
     return rp.isOk;
   }
 
-  /// wtm 목록 조회 API
+  /// meeting 목록 조회 API
   ///
-  /// return: 성공시 GetWTMProjectListResult, 실패시 null
-  Future<GetWTMProjectListResult?> getWTMProjectList(
+  /// return: 성공시 GetMeetingProjectListResult, 실패시 null
+  Future<GetMeetingListResult?> getMeetingList(
       int page, String direction, String field) async {
     Response rp = await get('/api/meetings', query: {
       'page': page.toString(),
@@ -219,25 +219,25 @@ class ApiService extends CustomGetConnect implements GetxService {
     });
 
     if (rp.hasError) return null;
-    return GetWTMProjectListResult.fromJson(jsonDecode(rp.bodyString!));
+    return GetMeetingListResult.fromJson(jsonDecode(rp.bodyString!));
   }
 
-  /// wtm 단건 조회 API
+  /// meeting 단건 조회 API
   ///
-  /// return: 성공시  wtmProject, 실패시 null
-  Future<WTMProject?> getWTMProject(int projectId) async {
+  /// return: 성공시  Meeting, 실패시 null
+  Future<Meeting?> getMeetingProject(int projectId) async {
     Response rp = await get('/api/meetings/$projectId');
     if (rp.hasError) return null;
 
     String json = rp.bodyString ?? "{}";
     Map data = jsonDecode(json);
 
-    return WTMProject.fromJson(data);
+    return Meeting.fromJson(data);
   }
 
   /// MEETING_USER
 
-  Future<bool> setWtmSchedule(int meetingId, List<MeetingTime> timeList) async {
+  Future<bool> setMeetingSchedule(int meetingId, List<MeetingTime> timeList) async {
     List<Map<String, String>> timeMapList = [];
     for (var element in timeList) {
       timeMapList.add(element.toMap());
@@ -247,16 +247,16 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.isOk;
   }
 
-  Future<WTMProjectDetail?> getWTMProjectDetail(int meetingId) async {
+  Future<MeetingDetail?> getMeetingDetail(int meetingId) async {
     Response rp = await get('/api/meetings/$meetingId');
     if (rp.hasError || rp.body == null) {
       return null;
     }
 
-    return WTMProjectDetail.fromJson(rp.body);
+    return MeetingDetail.fromJson(rp.body);
   }
 
-  Future<String?> getWtmInvitLink(int meetingId) async {
+  Future<String?> getMeetingInviteLink(int meetingId) async {
     Response rp = await get('/api/meeting-users/$meetingId');
     return rp.bodyString?.trim();
   }
@@ -392,7 +392,7 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// 유저 알림 목록 조회 API
   ///
   /// return: 성공시 위팀 알림 객제 리스트, 실패시 null
-  Future<List<WeteamNotification>?> getAlarms(int page) async {
+  Future<List<WeteamAlarm>?> getAlarms(int page) async {
     Map<String, dynamic> query = {
       'page': page.toString(),
       'size': 20.toString(),
@@ -403,10 +403,10 @@ class ApiService extends CustomGetConnect implements GetxService {
     if (rp.hasError) return null;
 
     List alarmList = jsonDecode(rp.bodyString ?? '{}')['alarmList'] ?? [];
-    List<WeteamNotification> ret = [];
+    List<WeteamAlarm> ret = [];
 
     for (var element in alarmList) {
-      ret.add(WeteamNotification.fromJson(element));
+      ret.add(WeteamAlarm.fromJson(element));
     }
 
     return ret;
@@ -450,23 +450,23 @@ class GetTeamProjectListResult {
   }
 }
 
-// WTM 조회 API의 결과에 대한 객체
-class GetWTMProjectListResult {
+// Meeting 조회 API의 결과에 대한 객체
+class GetMeetingListResult {
   final int totalPages;
   final int totalElements;
-  final List<WTMProject> wtmprojectList;
+  final List<Meeting> meetingList;
 
-  const GetWTMProjectListResult(
+  const GetMeetingListResult(
       {required this.totalPages,
       required this.totalElements,
-      required this.wtmprojectList});
+      required this.meetingList});
 
-  factory GetWTMProjectListResult.fromJson(Map data) {
-    List wtmList = data['meetingDtoList'];
-    return GetWTMProjectListResult(
+  factory GetMeetingListResult.fromJson(Map data) {
+    List meetingList = data['meetingDtoList'];
+    return GetMeetingListResult(
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
-        wtmprojectList: List<WTMProject>.generate(
-            wtmList.length, (index) => WTMProject.fromJson(wtmList[index])));
+        meetingList: List<Meeting>.generate(
+            meetingList.length, (index) => Meeting.fromJson(meetingList[index])));
   }
 }

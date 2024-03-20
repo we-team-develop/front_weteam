@@ -6,28 +6,28 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../controller/mainpage/tp_controller.dart';
-import '../../controller/wtm/wtm_current_controller.dart';
+import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
-import '../../model/wtm_project.dart';
+import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
-import '../wtm/wtm_current.dart';
+import '../meeting/meeting_current.dart';
 
-class WTMProjectWidget extends StatelessWidget {
-  final WTMProject team;
+class MeetingWidget extends StatelessWidget {
+  final Meeting team;
   final bool showlink;
 
-  const WTMProjectWidget(this.team, {super.key, this.showlink = true});
+  const MeetingWidget(this.team, {super.key, this.showlink = true});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(() => GetBuilder(
-          builder: (controller) => WTMCurrent(),
-          init: WTMCurrentController(team))),
+          builder: (controller) => MeetingCurrent(),
+          init: CurrentMeetingController(team))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
@@ -36,15 +36,15 @@ class WTMProjectWidget extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  _wtmImgWidget(),
+                  _meetingImgWidget(),
                   SizedBox(width: 14.w),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _wtmTitleWidget(team.title),
-                        if (team.project != null) _wtmTeamWidget(team.project!),
+                        _meetingTitleWidget(team.title),
+                        if (team.project != null) _meetingTeamWidget(team.project!),
                         _dateWidget(),
                       ],
                     ),
@@ -53,7 +53,7 @@ class WTMProjectWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () async {
                         String? inviteLink = await Get.find<ApiService>()
-                            .getWtmInvitLink(team.id);
+                            .getMeetingInviteLink(team.id);
                         WeteamUser currentUser =
                             Get.find<AuthService>().user.value!;
 
@@ -62,7 +62,7 @@ class WTMProjectWidget extends StatelessWidget {
                       },
                       child: Align(
                           alignment: Alignment.centerRight,
-                          child: Image.asset(ImagePath.wtmlink,
+                          child: Image.asset(ImagePath.meetingLink,
                               width: 13.5.w, height: 15.h)),
                     ),
                 ],
@@ -74,7 +74,7 @@ class WTMProjectWidget extends StatelessWidget {
     );
   }
 
-  Widget _wtmImgWidget() {
+  Widget _meetingImgWidget() {
     TeamPlayController controller = Get.find<TeamPlayController>();
 
     int imageIndex = 0;
@@ -97,8 +97,8 @@ class WTMProjectWidget extends StatelessWidget {
     );
   }
 
-  // TODO : wtm title
-  Widget _wtmTitleWidget(String title) {
+  // TODO : meeting title
+  Widget _meetingTitleWidget(String title) {
     return Text(
       title,
       style: TextStyle(
@@ -111,7 +111,7 @@ class WTMProjectWidget extends StatelessWidget {
     );
   }
 
-  Widget _wtmTeamWidget(TeamProject project) {
+  Widget _meetingTeamWidget(TeamProject project) {
     return Text(
       "팀플명 : ${project.title}",
       style: TextStyle(

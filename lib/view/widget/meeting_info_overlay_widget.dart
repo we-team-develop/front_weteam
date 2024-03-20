@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/image_data.dart';
 
-class InfoOverlay extends StatelessWidget {
+class MeetingInfoOverlay extends StatelessWidget {
   final VoidCallback onConfirm;
 
-  const InfoOverlay({super.key, required this.onConfirm});
+  const MeetingInfoOverlay({super.key, required this.onConfirm});
 
   @override
   Widget build(BuildContext context) {

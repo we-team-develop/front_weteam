@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../binding/wtm_bindings.dart';
+import '../../binding/meeting_bindings.dart';
 import '../../controller/mainpage/home_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';
 import '../dialog/home/dday_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
+import '../meeting/meeting_main.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/normal_button.dart';
-import '../wtm/wtm_main.dart';
-import 'notification_page.dart';
+import 'alarm_list_page.dart';
 
 class Home extends GetView<HomeController> {
   const Home({super.key});
@@ -86,7 +86,7 @@ class Home extends GetView<HomeController> {
                             )),
                       GestureDetector(
                           onTap: () {
-                            Get.to(() => WTM(), binding: WTMBindings());
+                            Get.to(() => MeetingMainPage(), binding: MeetingBindings());
                           },
                           child: _bottomBanner()),
                       SizedBox(height: 15.h)
@@ -112,13 +112,13 @@ class Home extends GetView<HomeController> {
   Widget _bellIcon() {
     return Obx(() => GestureDetector(
         onTap: () {
-          Get.to(() => const NotificationPage());
-          controller.hasNewNoti.value = false;
+          Get.to(() => const AlarmListPage());
+          controller.hasNewAlarm.value = false;
         },
         child: Image.asset(
             width: 24.65.w,
             height: 22.99.h,
-            controller.hasNewNoti.isTrue
+            controller.hasNewAlarm.isTrue
                 ? ImagePath.icBellNew
                 : ImagePath.icBell)));
   }

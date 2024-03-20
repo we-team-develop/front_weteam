@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+/// API요청시 도움을 주는 클래스입니다.
+/// 기본적으로 firebase token을 header에 삽입합니다.
+/// 필요한 경우 오류와 api요청 정보를 로그에 남깁니다.
 class CustomGetConnect extends GetConnect {
   /// API 요청에 대한 정보를 로깅합니다.
   ///
