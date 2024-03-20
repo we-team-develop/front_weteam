@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../controller/wtm/wtm_current_controller.dart';
 import '../../data/color_data.dart';
-import '../../data/image_data.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/wtm_project_widget.dart';
