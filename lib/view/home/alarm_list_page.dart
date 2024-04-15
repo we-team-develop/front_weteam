@@ -3,19 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../../controller/notification_controller.dart';
+import '../../controller/alarm_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/color_data.dart';
-import '../../model/weteam_notification.dart';
+import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../teamplay/team_project_detail_page.dart';
 
-class NotificationPage extends GetView<NotificationController> {
-  const NotificationPage({super.key});
+class AlarmListPage extends GetView<AlarmController> {
+  const AlarmListPage({super.key});
 
   @override
   StatelessElement createElement() {
-    Get.put(NotificationController());
+    Get.put(AlarmController());
     return super.createElement();
   }
 
@@ -41,9 +41,9 @@ class NotificationPage extends GetView<NotificationController> {
           ),
           SizedBox(height: 16.h),
           Expanded(
-              child: PagedListView<int, WeteamNotification>(
+              child: PagedListView<int, WeteamAlarm>(
             pagingController: controller.getPagingController(),
-            builderDelegate: PagedChildBuilderDelegate<WeteamNotification>(
+            builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
               itemBuilder: (context, item, index) =>
                   NotificationContainer(item),
               noItemsFoundIndicatorBuilder: (context) => Center(
@@ -61,7 +61,7 @@ class NotificationPage extends GetView<NotificationController> {
 }
 
 class NotificationContainer extends StatefulWidget {
-  final WeteamNotification notification;
+  final WeteamAlarm notification;
 
   const NotificationContainer(this.notification, {super.key});
 

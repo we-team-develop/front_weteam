@@ -10,7 +10,15 @@ enum SnackbarIcon {
 }
 
 class WeteamUtils {
+  /// 마지막으로 표시된 스낵바의 컨트롤러
   static SnackbarController? _snackbarController;
+
+  /// 스낵바를 표시합니다.
+  /// title: 스낵바의 제목(옵션)
+  /// content: 스낵바의 내용(옵션)
+  /// icon: 스낵바의 아이콘(옵션)
+  ///
+  /// 화면에 이미 스낵바가 존재한다면, 즉시 제거하고 새로운 스낵바를 표시합니다.
   static void snackbar(title, content, {SnackbarIcon? icon}) async {
     late String iconPath;
     if (icon == SnackbarIcon.fail) {
@@ -33,6 +41,7 @@ class WeteamUtils {
       content = '$content';
     }
 
+    // 현재 표시되고 있는 스낵바 강제로 닫기
     await closeSnackbarNow();
 
     _snackbarController = Get.showSnackbar(GetSnackBar(
@@ -63,6 +72,7 @@ class WeteamUtils {
         borderRadius: 8.r));
   }
 
+  /// 현재 화면에 있는 스낵바를 애니메이션 없이 강제로 제거합니다.
   static Future<void> closeSnackbarNow() async {
     if (_snackbarController != null) {
       try {

@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/custom_calendar_controller.dart';
-import '../../../controller/wtm/wtm_create_controller.dart';
+import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../widget/custom_calendart.dart';
 import '../../widget/normal_button.dart';
 
-class WTMDate extends GetView<WTMCreateController> {
-  const WTMDate({super.key});
+class MeetingDate extends GetView<MeetingCreateController> {
+  const MeetingDate({super.key});
 
   @override
   Widget build(BuildContext context) {

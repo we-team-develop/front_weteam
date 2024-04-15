@@ -16,10 +16,12 @@ class BottomNavController extends GetxController {
 
   int get index => _pageIndex.value;
 
-  void changeIndex(int value) {
-    var page = Page.values[value];
+  /// 페이지의 인덱스를 변경하는 메소드
+  /// 설정될 인덱스랑 현재 인덱스가 같다면, 화면을 최상단으로 스크롤합니다.
+  void changeIndex(int pageIndex) {
+    var page = Page.values[pageIndex];
     try {
-      if (value == _pageIndex.value) {
+      if (pageIndex == _pageIndex.value) {
         switch (page) {
           case Page.TEAMPLAY:
             Get.find<TeamPlayController>().tpScrollUp();
@@ -33,10 +35,12 @@ class BottomNavController extends GetxController {
         }
       }
     } catch (_) {}
-    moveToPage(value);
+
+    // 페이지 이동
+    _moveToPage(pageIndex);
   }
 
-  void moveToPage(int value) {
+  void _moveToPage(int value) {
     if (_history.last != value && Platform.isAndroid) {
       _history.add(value);
       debugPrint(_history.toString());

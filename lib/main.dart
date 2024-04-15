@@ -58,53 +58,14 @@ Future<void> main() async {
     return true;
   };
 
-  await _init();
+  await _initApp();
 
-  // 팀플 목록 3분마다 조회
-  // Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
-  //   try {
-  //     if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
-  //         MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
-  //       updateTeamProjectLists();
-  //     }
-  //   } catch (_) {}
-  // });
+  /**
+   * 3분 업데이트
+   * _makeTeamProjectListRefreshTimer();
+   */
 
   runApp(Phoenix(child: MyApp()));
-}
-
-Future<void> _init() async {
-  try {
-    bool? isRegistered =
-        sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
-    if (isRegistered == true) {
-      String? weteamUserJson =
-          sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
-
-      User? fbUser = FirebaseAuth.instance.currentUser;
-      if (fbUser != null && weteamUserJson != null) {
-        MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
-        MemCache.put(
-            MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
-      }
-    }
-  } catch (e, st) {
-    debugPrint("앱 초기화 실패 : $e\n$st");
-    MemCache.put(MemCacheKey.weteamUserJson, null);
-    MemCache.put(MemCacheKey.firebaseAuthIdToken, null);
-  }
-}
-
-Future<void> updateTeamProjectLists() async {
-  List<Future> futures = [];
-  for (Function() func in tpListUpdateRequiredListenerList) {
-    dynamic ret = func.call();
-    if (ret is Future) futures.add(ret);
-  }
-
-  for (Future ft in futures) {
-    await ft;
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -165,14 +126,66 @@ class SharedPreferencesKeys {
   static const String teamProjectNotDoneListJson =
       "team_project_not_done_list_json";
 
-  static const String showWTMOverlay = "show_wtm_overlay";
+  static const String showMeetingOverlay = "show_meeting_overlay";
 }
 
+/// 앱 실행을 위한 초기화 수행
+Future<void> _initApp() async {
+  try {
+    // 회원가입이 완료되어 있는 상태였는지 확인
+    bool? isRegistered =
+    sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
+
+    if (isRegistered == true) { // 회원가입이 완료되어 있던 회원
+      String? weteamUserJson =
+      sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
+
+      User? fbUser = FirebaseAuth.instance.currentUser;
+      if (fbUser != null && weteamUserJson != null) { // 로그인 정보가 남아 있다면
+        MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
+        MemCache.put(
+            MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
+      }
+    }
+  } catch (e, st) {
+    debugPrint("앱 초기화 실패 : $e\n$st");
+    MemCache.put(MemCacheKey.weteamUserJson, null);
+    MemCache.put(MemCacheKey.firebaseAuthIdToken, null);
+  }
+}
+
+/// 앱을 재실행합니다
 Future<void> resetApp() async {
   Get.deleteAll(force: true);
   MemCache.clear();
   tpListUpdateRequiredListenerList.clear();
-  await _init();
+  await _initApp();
   Phoenix.rebirth(Get.context!);
   Get.reset();
+}
+
+/// 팀플 목록을 업데이트합니다
+/// 업데이트 되는 대상은 tpListUpdateRequiredListenerList에 등록된 것들입니다.
+Future<void> updateTeamProjectLists() async {
+  List<Future> futures = [];
+  for (Function() func in tpListUpdateRequiredListenerList) {
+    dynamic ret = func.call();
+    if (ret is Future) futures.add(ret);
+  }
+
+  for (Future ft in futures) {
+    await ft;
+  }
+}
+
+/// 팀플 목록 3분마다 조회 타이머 생성
+void _makeTeamProjectListRefreshTimer() {
+  Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
+    try {
+      if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
+          MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
+        updateTeamProjectLists();
+      }
+    } catch (_) {}
+  });
 }

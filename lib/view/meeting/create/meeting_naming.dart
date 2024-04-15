@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_create_controller.dart';
+import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../widget/normal_button.dart';
-import 'wtm_date.dart';
+import 'meeting_date.dart';
 
-class WTMNaming extends GetView<WTMCreateController> {
-  const WTMNaming({super.key});
+class MeetingNaming extends GetView<MeetingCreateController> {
+  const MeetingNaming({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class WTMNaming extends GetView<WTMCreateController> {
   Widget _bottom() {
     return Obx(() => NormalButton(
           text: '입력 완료',
-          onTap: () => Get.to(() => const WTMDate()),
+          onTap: () => Get.to(() => const MeetingDate()),
           enable: controller.nameInputText.value.isNotEmpty,
           width: 330.w, // 너비 설정
           height: 40.h, // 높이 설정
@@ -60,7 +60,7 @@ class WTMNaming extends GetView<WTMCreateController> {
   }
 }
 
-class _TextInput extends GetView<WTMCreateController> {
+class _TextInput extends GetView<MeetingCreateController> {
   final int maxLength = 20;
 
   @override

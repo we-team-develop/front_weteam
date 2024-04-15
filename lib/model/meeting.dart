@@ -1,13 +1,13 @@
 import 'team_project.dart';
 
-class WTMProject {
+class Meeting {
   final int id;
   final String title;
   final DateTime startedAt;
   final DateTime endedAt;
   final TeamProject? project;
 
-  const WTMProject({
+  const Meeting({
     required this.id,
     required this.title,
     required this.startedAt,
@@ -15,8 +15,8 @@ class WTMProject {
     required this.project
   });
 
-  factory WTMProject.fromJson(Map data) {
-    return WTMProject(
+  factory Meeting.fromJson(Map data) {
+    return Meeting(
         id: data['id'],
         title: data['title'],
         startedAt: DateTime.parse(data['startedAt']),
@@ -26,7 +26,7 @@ class WTMProject {
 
   @override
   bool operator ==(Object other) {
-    if (other is! WTMProject) return false;
+    if (other is! Meeting) return false;
     if (other.hashCode == hashCode) return true;
     return id == other.id &&
         title == other.title &&

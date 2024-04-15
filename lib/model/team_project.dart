@@ -1,15 +1,25 @@
 import 'weteam_user.dart';
 
 class TeamProject {
+  /// 팀플 초대용 id
   String hashedId;
+  /// 팀플 id
   int id;
+  /// 팀플 이미지 id
   int imageId;
+  /// 팀플 이름
   String title;
+  /// 팀플 설명
   String description;
+  /// 팀플 멤버 수
   int memberSize;
+  /// 팀플 시작일
   DateTime startedAt;
+  /// 팀플 종료일
   DateTime endedAt;
+  /// 팀플 완료 여부
   bool done;
+  /// 팀플 호스트 유저
   WeteamUser host;
 
   TeamProject(

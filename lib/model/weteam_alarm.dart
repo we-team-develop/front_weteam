@@ -1,7 +1,7 @@
 import 'team_project.dart';
 import 'weteam_user.dart';
 
-class WeteamNotification {
+class WeteamAlarm {
   final int id;
   final String status;
   final String date;
@@ -10,7 +10,7 @@ class WeteamNotification {
   final WeteamUser? user;
   final TeamProject? project;
 
-  WeteamNotification(
+  WeteamAlarm(
       {required this.id,
       required this.status,
       required this.date,
@@ -18,8 +18,8 @@ class WeteamNotification {
       this.user,
       this.project});
 
-  factory WeteamNotification.fromJson(Map data) {
-    return WeteamNotification(
+  factory WeteamAlarm.fromJson(Map data) {
+    return WeteamAlarm(
       id: data['id'],
       status: data['status'],
       date: data['date'],

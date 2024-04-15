@@ -43,10 +43,10 @@ class App extends GetView<BottomNavController> {
                 icon: SnackbarIcon.fail);
           }
         }
-      } else if (host == "wtm") {
+      } else if (host == "meeting") {
         if (path.startsWith('add')) {
-          int wtmId = int.parse(query['id'] ?? '-1');
-          WeteamUtils.snackbar('아직 구현되지 않음', '웬투밋 수락 기능을 구현하지 않았습니다.');
+          int meetingId = int.parse(query['id'] ?? '-1');
+          WeteamUtils.snackbar('아직 구현되지 않음', '언제보까 수락 기능을 구현하지 않았습니다.');
           // TODO: 구현하기
         }
       }

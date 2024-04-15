@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/weteam_user.dart';
-import '../../model/wtm_project.dart';
-import '../../model/wtm_project_detail.dart';
+import '../../model/meeting.dart';
+import '../../model/meeting_detail.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
-import '../../view/widget/wtm_info_overlay_widget.dart';
-import 'wtm_schedule_controller.dart';
+import '../../view/widget/meeting_info_overlay_widget.dart';
+import 'meeting_schedule_controller.dart';
 
-class WTMCurrentController extends GetxController {
-  late final Rx<WTMProject> wtm;
+class CurrentMeetingController extends GetxController {
+  late final Rx<Meeting> meeting;
   final RxList<WeteamUser> joinedUserList = RxList(); // 시간 선택한 유저
   final RxList<WeteamUser> notJoinedUserList = RxList(); // 시간 선택 안 한 유저
 
-  WTMCurrentController(WTMProject team) {
-    Get.put(WTMScheduleController());
-    wtm = team.obs;
-    fetchWTMProjectDetail();
+  CurrentMeetingController(Meeting team) {
+    Get.put(MeetingScheduleController());
+    meeting = team.obs;
+    fetchMeetingDetail();
   }
 
   //오버레이 관련
@@ -30,7 +30,7 @@ class WTMCurrentController extends GetxController {
     if (_overlayEntry != null) return; // 이미 오버레이가 있는지 확인
 
     _overlayEntry = OverlayEntry(
-      builder: (context) => InfoOverlay(
+      builder: (context) => MeetingInfoOverlay(
         onConfirm: removeOverlay, // 확인 버튼을 눌렀을 때 오버레이를 지우는 콜백
       ),
     );
@@ -43,29 +43,41 @@ class WTMCurrentController extends GetxController {
     _overlayEntry = null;
   }
 
+  // 이미지 경로를 반환하는 메서드 추가
+  String getImagePathForUserCount() {
+    // 합산된 유저 수 계산
+    int totalUserCount = joinedUserList.length + notJoinedUserList.length;
+
+    // 팀원 1명이어도 2명으로 보이게 함
+    int validUserCount = (totalUserCount > 1) ? totalUserCount : 2;
+    // 최대 10명
+    validUserCount = validUserCount.clamp(2, 10);
+    return 'assets/images/meeting$validUserCount.png'; // 경로는 실제 경로에 맞게 조정 필요
+  }
+
   //
-  Future<void> fetchWTMProjectDetail() async {
+  Future<void> fetchMeetingDetail() async {
     ApiService service = Get.find<ApiService>();
     notJoinedUserList.clear();
     joinedUserList.clear();
-    WTMProjectDetail? wtmProjectDetail =
-        await service.getWTMProjectDetail(wtm.value.id);
+    MeetingDetail? meetingDetail =
+        await service.getMeetingDetail(meeting.value.id);
 
     // 불러오지 못했을 경우
-    if (wtmProjectDetail == null) {
+    if (meetingDetail == null) {
       WeteamUtils.snackbar('불러오지 못함', '오류가 있었습니다');
     } else {
       // 미팅 정보 업데이트(적용)
-      wtm.value = wtmProjectDetail.wtmProject;
+      meeting.value = meetingDetail.meetingProject;
 
       // 미팅 스케쥴(시간입력) 관련 데이터 처리 부분 시작
-      WTMScheduleController schController = Get.find<WTMScheduleController>();
+      MeetingScheduleController schController = Get.find<MeetingScheduleController>();
 
       int maxPopulation = 0; // 날짜별 최대 참여자 수
-      Map<String, List<WTMUser>> populationMap = {}; // 날짜별 참여자 목록
+      Map<String, List<MeetingUser>> populationMap = {}; // 날짜별 참여자 목록
       Map<String, HashSet<int>> myTimeMap = {}; // 앱 사용자가 선택한 날짜들
 
-      for (WTMUser user in wtmProjectDetail.wtmUserList) {
+      for (MeetingUser user in meetingDetail.meetingUserList) {
         bool isMe = user.user.id ==
             Get.find<AuthService>().user.value?.id; // 이 유저가 이 앱 실행한 유저인지를 담는 변수
 
@@ -95,7 +107,8 @@ class WTMCurrentController extends GetxController {
               DateTime dt = DateTime(year, month, day, hour);
               String pMapKey = WeteamUtils.formatDateTime(dt, withTime: true);
 
-              List<WTMUser> population = populationMap[pMapKey] ?? []; // 누구누구가 선택?
+              List<MeetingUser> population =
+                  populationMap[pMapKey] ?? []; // 누구누구가 선택?
               population.add(user); // 선택한 유저 목록에 추가
 
               if (maxPopulation < population.length) {
@@ -121,7 +134,7 @@ class WTMCurrentController extends GetxController {
   }
 
   Future<bool> setSelectedTimes() async {
-    WTMScheduleController schController = Get.find<WTMScheduleController>();
+    MeetingScheduleController schController = Get.find<MeetingScheduleController>();
     List<MeetingTime> timeList = [];
 
     schController.selected.forEach((key, value) {
@@ -160,7 +173,7 @@ class WTMCurrentController extends GetxController {
     });
 
     bool success =
-        await Get.find<ApiService>().setWtmSchedule(wtm.value.id, timeList);
+        await Get.find<ApiService>().setMeetingSchedule(meeting.value.id, timeList);
     return success;
   }
 }

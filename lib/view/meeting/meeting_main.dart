@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../binding/wtm_create_bindings.dart';
-import '../../controller/wtm/wtm_controller.dart';
+import '../../binding/meeting_create_bindings.dart';
+import '../../controller/meeting/meeting_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
-import '../../model/wtm_project.dart';
-import '../widget/wtm_project_column.dart';
-import 'create/wtm_create.dart';
+import '../../model/meeting.dart';
+import '../widget/meeting_listview.dart';
+import 'create/meeting_create.dart';
 
-class WTM extends GetView<WTMController> {
-  WTM({super.key});
+class MeetingMainPage extends GetView<MeetingController> {
+  MeetingMainPage({super.key});
 
   final overlayKey = GlobalKey();
 
@@ -26,7 +26,7 @@ class WTM extends GetView<WTMController> {
         padding: EdgeInsets.only(top: 47.0.h),
         child: RefreshIndicator(
           onRefresh: () async {
-            await controller.updateWTMProjectList();
+            await controller.updateMeetingList();
           },
           child: _body(),
         ),
@@ -43,13 +43,13 @@ class WTM extends GetView<WTMController> {
           _head(),
           Expanded(
             child: Obx(() {
-              if (controller.wtmList.value == null ||
-                  controller.wtmList.value!.isEmpty) {
-                return _noWTMWidget();
+              if (controller.meetingList.value == null ||
+                  controller.meetingList.value!.isEmpty) {
+                return _noMeetingWidget();
               } else {
-                List<WTMProject> wtmList = controller.wtmList.value!;
-                return WTMProjectListView(wtmList,
-                    scrollController: controller.wtmScrollController);
+                List<Meeting> meetingList = controller.meetingList.value!;
+                return MeetingListView(meetingList,
+                    scrollController: controller.meetingScrollController);
               }
             }),
           ),
@@ -57,9 +57,9 @@ class WTM extends GetView<WTMController> {
             padding: EdgeInsets.only(bottom: 25.h),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const WTMCreate(), binding: WTMCreateBindings());
+                  Get.to(() => const MeetingCreate(), binding: MeetingCreateBindings());
                 },
-                child: _newWTMButton()),
+                child: _newMeetingButton()),
           )
         ],
       ),
@@ -79,7 +79,7 @@ class WTM extends GetView<WTMController> {
     );
   }
 
-  Widget _noWTMWidget() {
+  Widget _noMeetingWidget() {
     return Padding(
       padding: EdgeInsets.only(top: 153.h),
       child: SizedBox(
@@ -90,7 +90,7 @@ class WTM extends GetView<WTMController> {
               child: Column(
                 children: [
                   Image.asset(
-                    ImagePath.wtmEmptyTimi,
+                    ImagePath.meetingEmptyTimi,
                     width: 127.w,
                     height: 131.h,
                   ),
@@ -114,9 +114,9 @@ class WTM extends GetView<WTMController> {
     );
   }
 
-  Widget _newWTMButton() {
+  Widget _newMeetingButton() {
     return Image.asset(
-      ImagePath.makewtmbutton,
+      ImagePath.makeMeetingButton,
       width: 330.w,
       height: 49.h,
     );

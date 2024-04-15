@@ -19,11 +19,11 @@ class ImageData extends StatelessWidget {
 
 class ImagePath {
   static String get splash => 'assets/images/splash.png';
-  static String get appicon => 'assets/images/app_icon.png';
-  static String get googlelogin => 'assets/images/login_google.png';
-  static String get kakaologin => 'assets/images/kakao_login_large_wide.png';
-  static String get naverlogin => 'assets/images/naver_login.png';
-  static String get applelogin => 'assets/images/apple_login.png';
+  static String get appIcon => 'assets/images/app_icon.png';
+  static String get googleLogin => 'assets/images/login_google.png';
+  static String get kakaoLogin => 'assets/images/kakao_login_large_wide.png';
+  static String get naverLogin => 'assets/images/naver_login.png';
+  static String get appleLogin => 'assets/images/apple_login.png';
   static String get profile1 => 'assets/images/profile_1.png';
   static String get profile2 => 'assets/images/profile_2.png';
   static String get profile3 => 'assets/images/profile_3.png';
@@ -42,7 +42,7 @@ class ImagePath {
   static String get icSearch => 'assets/images/ic_search.png';
   static String get icBellNew => 'assets/images/ic_bell_new.png';
   static String get icEmptyTimi => 'assets/images/ic_empty_timi.png';
-  static String get wtmEmptyTimi => 'assets/images/wtm_empty_timi.png';
+  static String get meetingEmptyTimi => 'assets/images/meeting_empty_timi.png';
   static String get icGroup => 'assets/images/ic_group.png';
   static String get icKebabWhite => 'assets/images/ic_kebab_white.png';
   static String get icPinWhite => 'assets/images/ic_pin_white.png';
@@ -53,24 +53,24 @@ class ImagePath {
   static String get icRightGray30 => 'assets/images/ic_right_gray_30px.png';
   static String get myNoTeamProjectTimi =>
       'assets/images/my_no_team_project_timi.png';
-  static String get makewtmbutton => 'assets/images/make_wtm_button.png';
-  static String get wtmtutorial1 => 'assets/images/tutorial_1.png';
-  static String get wtmtutorial2 => 'assets/images/tutorial_2.png';
-  static String get wtmcross => 'assets/images/wtm_cross.png';
+  static String get makeMeetingButton => 'assets/images/make_meeting_button.png';
+  static String get meetingTutorial1 => 'assets/images/tutorial_1.png';
+  static String get meetingTutorial2 => 'assets/images/tutorial_2.png';
+  static String get meetingCross => 'assets/images/meeting_cross.png';
   static String get icSolarCrownBold => 'assets/images/ic_solar_crown-bold.png';
   static String get icCheckWhite => 'assets/images/ic_check_white.png';
   static String get icCheckWhiteActivated =>
       'assets/images/ic_check_white_activated.png';
-  static String get icHostoutGray => 'assets/images/ic_hostout_gray.png';
-  static String get icGuestoutGray => 'assets/images/ic_guestout_gray.png';
-  static String get checktutorialfalse =>
+  static String get icHostOutGray => 'assets/images/ic_hostout_gray.png';
+  static String get icGuestOutGray => 'assets/images/ic_guestout_gray.png';
+  static String get checkTutorialFalse =>
       'assets/images/tutorial_checkbox_false.png';
-  static String get checktutorialtrue =>
+  static String get checkTutorialTrue =>
       'assets/images/tutorial_checkbox_true.png';
   static String get greenCheck => 'assets/images/green_check.png';
   static String get thumbTimi => 'assets/images/thumb_timi.png';
-  static String get wtmlink => 'assets/images/wtm_list_link.png';
-  static String get inforicon => 'assets/images/infor_icon.png';
+  static String get meetingLink => 'assets/images/meeting_list_link.png';
+  static String get inforIcon => 'assets/images/infor_icon.png';
   static String get loggedInGoogle => 'assets/images/loggedin_google.png';
   static String get loggedInKakao => 'assets/images/loggedin_kakao.png';
   static String get loggedInNaver => 'assets/images/loggedin_naver.png';
@@ -90,8 +90,15 @@ class ImagePath {
   static String get snackbarSuccessIc =>
       'assets/images/snackbar_success_ic.png';
   static String get snackbarInfoIc => 'assets/images/snackbar_info_ic.png';
-  static String get infoImage => 'assets/images/wtm_info_overlay_color.png';
+  static String get infoImage => 'assets/images/meeting_info_overlay_color.png';
   static String get icCrossClose => 'assets/images/ic_cross_close.png';
-  static asset(String googlelogin,
-      {required double width, required double height}) {}
+  static String get meeting2 => 'assets/images/meeting2.png';
+  static String get meeting3 => 'assets/images/meeting3.png';
+  static String get meeting4 => 'assets/images/meeting4.png';
+  static String get meeting5 => 'assets/images/meeting5.png';
+  static String get meeting6 => 'assets/images/meeting6.png';
+  static String get meeting7 => 'assets/images/meeting7.png';
+  static String get meeting8 => 'assets/images/meeting8.png';
+  static String get meeting9 => 'assets/images/meeting9.png';
+  static String get meeting10 => 'assets/images/meeting10.png';
 }

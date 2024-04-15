@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/wtm/wtm_current_controller.dart';
-import '../../controller/wtm/wtm_schedule_controller.dart';
+import '../../controller/meeting/meeting_current_controller.dart';
+import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../model/weteam_user.dart';
-import '../../model/wtm_project.dart';
-import '../../model/wtm_project_detail.dart';
+import '../../model/meeting.dart';
+import '../../model/meeting_detail.dart';
 import '../../util/weteam_utils.dart';
 
-class WTMSchedule extends StatefulWidget {
+class MeetingSchedule extends StatefulWidget {
   static const List<String> _dateName = ['월', '화', '수', '목', '금', '토', '일'];
-  final WTMProject wtm;
+  final Meeting meeting;
   final bool selectionMode;
 
-  const WTMSchedule(this.wtm, this.selectionMode, {super.key});
+  const MeetingSchedule(this.meeting, this.selectionMode, {super.key});
 
   @override
-  State<WTMSchedule> createState() => _WTMScheduleState();
+  State<MeetingSchedule> createState() => _MeetingScheduleState();
 }
 
-class _WTMScheduleState extends State<WTMSchedule> {
+class _MeetingScheduleState extends State<MeetingSchedule> {
   final ScrollController dateTextHorizontalScrollController = ScrollController();
 
   final ScrollController calendarHorizontalScrollController = ScrollController();
@@ -73,9 +73,9 @@ class _WTMScheduleState extends State<WTMSchedule> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   controller: dateTextHorizontalScrollController,
-                  itemCount: widget.wtm.endedAt.difference(widget.wtm.startedAt).inDays + 1,
+                  itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                   itemBuilder: (_, i) =>
-                      _dayText(widget.wtm.startedAt.add(Duration(days: i))),
+                      _dayText(widget.meeting.startedAt.add(Duration(days: i))),
                 )))
           ],
         ),
@@ -91,9 +91,9 @@ class _WTMScheduleState extends State<WTMSchedule> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       controller: calendarHorizontalScrollController,
-                      itemCount: widget.wtm.endedAt.difference(widget.wtm.startedAt).inDays + 1,
+                      itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                       itemBuilder: (_, i) =>
-                          _day(context, widget.wtm.startedAt.add(Duration(days: i))),
+                          _day(context, widget.meeting.startedAt.add(Duration(days: i))),
                     ))
               ],
             ))
@@ -105,7 +105,7 @@ class _WTMScheduleState extends State<WTMSchedule> {
     return SizedBox(
       width: (43.29 + 5).w,
       child: AutoSizeText(
-        '${WTMSchedule._dateName[date.weekday - 1]}\n${WeteamUtils.padLeft(date.month)}.${date.day}',
+        '${MeetingSchedule._dateName[date.weekday - 1]}\n${WeteamUtils.padLeft(date.month)}.${date.day}',
         style: TextStyle(
             fontFamily: 'NanumGothic',
             fontSize: 10.sp,
@@ -167,7 +167,7 @@ class _HourSelectBox extends StatefulWidget {
 }
 
 class _HourSelectBoxState extends State<_HourSelectBox> {
-  final WTMScheduleController controller = Get.find<WTMScheduleController>();
+  final MeetingScheduleController controller = Get.find<MeetingScheduleController>();
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +201,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
             color = selected ? AppColors.Blue_07 : AppColors.G_02;
           } else {
-            List<WTMUser> pList = _getPopulationList();
+            List<MeetingUser> pList = _getPopulationList();
             int populationSize = pList.length;
 
             if (populationSize == 0) {
@@ -231,19 +231,19 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
     );
   }
 
-  List<WTMUser> _getPopulationList() {
+  List<MeetingUser> _getPopulationList() {
     String pMapKey = WeteamUtils.formatDateTime(widget.dt, withTime: true);
-    List<WTMUser> populationList = controller.populationMap[pMapKey] ?? [];
+    List<MeetingUser> populationList = controller.populationMap[pMapKey] ?? [];
 
     return populationList;
   }
 
   // 여기서 유저 id는 WeteamUser의 ID입니다.
   HashSet<int> _getJoinUserIdSet() {
-    List<WTMUser> pList = _getPopulationList();
+    List<MeetingUser> pList = _getPopulationList();
     HashSet<int> ret = HashSet();
 
-    for (WTMUser user in pList) {
+    for (MeetingUser user in pList) {
       ret.add(user.user.id);
     }
 
@@ -253,7 +253,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
   void showBottomSheet() {
     HashSet<int> joinUserIdSet = _getJoinUserIdSet();
-    List<WeteamUser> allJoinUserList = Get.find<WTMCurrentController>().joinedUserList;
+    List<WeteamUser> allJoinUserList = Get.find<CurrentMeetingController>().joinedUserList;
 
     List<String> joinUserNameList = [];
     List<String> notJoinUserNameList = [];

@@ -87,7 +87,7 @@ class Profile extends GetView<ProfileController> {
                     children: [
                       Expanded(
                         child: TextField(
-                          controller: controller.textController,
+                          controller: controller.organizationTextEditingController,
                           maxLength: 20,
                           decoration: InputDecoration(
                             border: InputBorder.none,

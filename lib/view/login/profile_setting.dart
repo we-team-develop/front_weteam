@@ -62,7 +62,7 @@ class ProfileSettingPage extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 32.h),
               child: Obx(() {
-                controller.isSelected; // 리스너에 등록
+                controller.isSelectedList; // 리스너에 등록
                 return NormalButton(
                   text: 'WE TEAM 시작하기',
                   enable: controller.getSelectedProfileId() != null,

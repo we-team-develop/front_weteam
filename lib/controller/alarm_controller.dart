@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../model/weteam_notification.dart';
+import '../model/weteam_alarm.dart';
 import '../service/api_service.dart';
 
-class NotificationController extends GetxController {
-  late PagingController<int, WeteamNotification> _pagingController;
+class AlarmController extends GetxController {
+  late PagingController<int, WeteamAlarm> _pagingController;
   int currentPage = 0;
 
   @override
@@ -16,7 +16,7 @@ class NotificationController extends GetxController {
     _init();
 
     _pagingController.addPageRequestListener((pageKey) async {
-      List<WeteamNotification>? newList = await _fetchPage(pageKey);
+      List<WeteamAlarm>? newList = await _fetchPage(pageKey);
       try {
         if (newList == null) {
           _pagingController.appendPage([], currentPage);
@@ -47,11 +47,11 @@ class NotificationController extends GetxController {
     currentPage = 0;
   }
 
-  Future<List<WeteamNotification>?> _fetchPage(int page) async {
+  Future<List<WeteamAlarm>?> _fetchPage(int page) async {
     return await Get.find<ApiService>().getAlarms(page);
   }
 
-  PagingController<int, WeteamNotification> getPagingController() {
+  PagingController<int, WeteamAlarm> getPagingController() {
     return _pagingController;
   }
 

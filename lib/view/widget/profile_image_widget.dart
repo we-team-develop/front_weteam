@@ -31,7 +31,7 @@ class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
                 alignment: Alignment.center,
                 children: [
                   ProfileImageWidget(id: index),
-                  if (controller.isSelected[index])
+                  if (controller.isSelectedList[index])
                     Image.asset(
                       ImagePath.check,
                       width: checkMarkSize,

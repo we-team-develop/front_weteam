@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_create_controller.dart';
+import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/normal_button.dart';
 
-class WTMCreateFinish extends GetView<WTMCreateController> {
-  const WTMCreateFinish({super.key});
+class MeetingCreateFinish extends GetView<MeetingCreateController> {
+  const MeetingCreateFinish({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +117,12 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _CopyLinkButton extends GetView<WTMCreateController> {
+class _CopyLinkButton extends GetView<MeetingCreateController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Clipboard.setData(const ClipboardData(text: 'weteam://wtm/add?id=0'));
+        Clipboard.setData(const ClipboardData(text: 'weteam://meeting/add?id=0'));
         WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', icon: SnackbarIcon.success);
       },
       child: Container(

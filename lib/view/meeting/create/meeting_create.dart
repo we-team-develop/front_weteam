@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/wtm/wtm_create_controller.dart';
+import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
 import '../../../model/team_project.dart';
 import '../../widget/normal_button.dart';
 import '../../widget/team_project_widget.dart';
-import 'wtm_naming.dart';
+import 'meeting_naming.dart';
 
-class WTMCreate extends GetView<WTMCreateController> {
-  const WTMCreate({super.key});
+class MeetingCreate extends GetView<MeetingCreateController> {
+  const MeetingCreate({super.key});
 
   @override
   StatelessElement createElement() {
@@ -147,7 +147,7 @@ class WTMCreate extends GetView<WTMCreateController> {
   Widget _checkBox() {
     return Obx(() => NormalButton(
           text: '선택 완료',
-          onTap: () => Get.to(() => const WTMNaming(),
+          onTap: () => Get.to(() => const MeetingNaming(),
               transition: Transition.rightToLeft),
           enable: controller.selectedTeamProject.value != null,
           width: 330.w,
@@ -170,7 +170,7 @@ class WTMCreate extends GetView<WTMCreateController> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => const WTMNaming());
+              Get.to(() => const MeetingNaming());
             },
             child: Text(
               '다음으로',
@@ -213,7 +213,7 @@ class _SelectButton extends StatelessWidget {
   }
 }
 
-class _Search extends GetView<WTMCreateController> {
+class _Search extends GetView<MeetingCreateController> {
   const _Search();
 
   @override

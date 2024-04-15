@@ -7,17 +7,16 @@ import 'package:get/get.dart';
 
 import '../../main.dart';
 import '../../model/team_project.dart';
-import '../../model/weteam_notification.dart';
+import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../view/widget/team_project_widget.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
-  int teamProjectPage = 0;
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
   final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
-  final RxBool hasNewNoti = RxBool(false);
+  final RxBool hasNewAlarm = RxBool(false);
 
   List<TeamProject> oldTpList = [];
 
@@ -26,7 +25,7 @@ class HomeController extends GetxController {
     super.onInit();
     tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     updateDDay();
-    checkNotification();
+    checkNewAlarm();
 
     String? tpListCache =
         sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
@@ -53,12 +52,12 @@ class HomeController extends GetxController {
             Padding(padding: padding, child: TeamProjectWidget(tpList[index])));
   }
 
-  Future<void> checkNotification() async {
-    List<WeteamNotification>? list = await Get.find<ApiService>().getAlarms(0);
+  Future<void> checkNewAlarm() async {
+    List<WeteamAlarm>? list = await Get.find<ApiService>().getAlarms(0);
     if (list != null && list.isNotEmpty) {
-      hasNewNoti.value = !list[0].read;
+      hasNewAlarm.value = !list[0].read;
     } else {
-      hasNewNoti.value = false;
+      hasNewAlarm.value = false;
     }
   }
 
@@ -76,7 +75,7 @@ class HomeController extends GetxController {
 
   Future<void> updateTeamProjectList() async {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(teamProjectPage, false, 'DESC', 'DONE',
+        .getTeamProjectList(0, false, 'DESC', 'DONE',
             Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
     if (result != null && !listEquals(oldTpList, result.projectList)) {

@@ -4,25 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/wtm/wtm_current_controller.dart';
-import '../../controller/wtm/wtm_schedule_controller.dart';
+import '../../controller/meeting/meeting_current_controller.dart';
+import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/color_data.dart';
 import '../../util/weteam_utils.dart';
 import '../widget/normal_button.dart';
-import '../widget/wtm_project_widget.dart';
-import '../widget/wtm_schedule_widget.dart';
+import '../widget/meeting_widget.dart';
+import '../widget/meeting_schedule_widget.dart';
 
-class WTMSelectTime extends StatefulWidget {
-  const WTMSelectTime({super.key});
+class MeetingSelectTime extends StatefulWidget {
+  const MeetingSelectTime({super.key});
 
   @override
-  State<WTMSelectTime> createState() => _WTMSelectTimeState();
+  State<MeetingSelectTime> createState() => _MeetingSelectTimeState();
 }
 
-class _WTMSelectTimeState extends State<WTMSelectTime> {
+class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   Map<String, HashSet<int>>? tmpSelectedMap; // 뒤로가기로 페이지 나가면 원래 값으로 되돌림
-  final WTMCurrentController controller = Get.find<WTMCurrentController>();
-  final WTMScheduleController schController = Get.find<WTMScheduleController>();
+  final CurrentMeetingController controller = Get.find<CurrentMeetingController>();
+  final MeetingScheduleController schController = Get.find<MeetingScheduleController>();
 
   @override
   void initState() {
@@ -75,10 +75,10 @@ class _WTMSelectTimeState extends State<WTMSelectTime> {
                   color: AppColors.G_01,
                 ),
                 SizedBox(height: 14.h),
-                // TODO : wtm_widget
+                // TODO : meeting_widget
                 Obx(
-                  () => WTMProjectWidget(
-                    controller.wtm.value,
+                  () => MeetingWidget(
+                    controller.meeting.value,
                     showlink: false,
                   ),
                 ),
@@ -89,13 +89,13 @@ class _WTMSelectTimeState extends State<WTMSelectTime> {
                 ),
                 SizedBox(height: 25.h),
                 Expanded(
-                    child: WTMSchedule(controller.wtm.value, true)),
+                    child: MeetingSchedule(controller.meeting.value, true)),
                 SizedBox(height: 11.05.h),
               NormalButton(
                   text: '입력 완료',
                   onTap: () async {
                       bool success = await controller.setSelectedTimes();
-                      await controller.fetchWTMProjectDetail(); // 정보 조회
+                      await controller.fetchMeetingDetail(); // 정보 조회
                       if (!success) {
                         WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
                       } else {

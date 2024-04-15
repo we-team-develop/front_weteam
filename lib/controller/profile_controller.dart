@@ -9,7 +9,8 @@ import '../service/api_service.dart';
 import '../service/auth_service.dart';
 
 class ProfileController extends GetxController {
-  RxList<String> imagePaths = RxList<String>([
+  /// 프로필 티미 이미지 목록
+  final RxList<String> imagePaths = RxList<String>([
     ImagePath.profile1,
     ImagePath.profile2,
     ImagePath.profile3,
@@ -18,9 +19,8 @@ class ProfileController extends GetxController {
     ImagePath.profile6,
   ]);
 
-  var isSelected = List.generate(6, (index) => false).obs;
-
-  RxList<Color> backgroundColors = RxList<Color>([
+  /// 프로필 배경 목록
+  final RxList<Color> backgroundColors = RxList<Color>([
     AppColors.Purple,
     AppColors.Blue_02,
     AppColors.Pink_01,
@@ -29,29 +29,62 @@ class ProfileController extends GetxController {
     AppColors.Pink_02,
   ]);
 
+  /// 프로필 선택 여부 리스트
+  var isSelectedList = List.generate(6, (index) => false).obs;
+
+  /// 푸쉬 알림 토글 활성화 여부
   RxBool isPushNotificationEnabled = false.obs;
 
-  void selectProfile(int index) {
-    Future.microtask(() {
-      for (int i = 0; i < isSelected.length; i++) {
-        isSelected[i] = i == index;
-      }
-      isSelected.refresh();
+  /// 소속 입력칸에 대한 TextEditingController
+  final TextEditingController organizationTextEditingController = TextEditingController();
+  /// 소속 입력칸에 입력된 값의 글자 수
+  final RxInt textLength = 0.obs;
+
+
+  /// 컨트롤러가 초기화될 때 실행됩니다.
+  @override
+  void onInit() {
+    super.onInit();
+    // 소속 입력칸의 값이 변경되면 textLength 변수를 업데이트합니다.
+    organizationTextEditingController.addListener(() {
+      textLength.value = organizationTextEditingController.text.length;
     });
   }
 
+  @override
+  void onClose() {
+    organizationTextEditingController.dispose();
+    super.onClose();
+  }
+
+  /// 프로필 선택하는 메소드입니다. 프로필 선택시 기존에 선택된 프로필은 선택 해제됩니다.
+  void selectProfile(int index) {
+    Future.microtask(() {
+      for (int i = 0; i < isSelectedList.length; i++) {
+        bool selected = i.isEqual(index);
+        isSelectedList[i] = selected;
+      }
+
+      // 목록이 수정되었음을 알립니다.
+      isSelectedList.refresh();
+    });
+  }
+
+  /// 선택된 프로필 이미지의 인덱스를 받습니다. 선택된 프로필이 없을 경우 null을 받습니다.
   int? getSelectedProfileId() {
-    for (int i = 0; i < isSelected.length; i++) {
-      if (isSelected[i]) return i;
+    for (int i = 0; i < isSelectedList.length; i++) {
+      if (isSelectedList[i]) return i;
     }
 
     return null;
   }
 
+  /// 푸시 알림 토글의 값을 변경합니다.
   void togglePushNotification(bool value) {
     isPushNotificationEnabled.value = value;
   }
 
+  /// 현재 유저의 소속을 얻습니다.
   String _getUserOrganization() {
     String? organization = Get.find<AuthService>().user.value?.organization;
     if (organization == null || organization.trim().isEmpty) {
@@ -60,10 +93,12 @@ class ProfileController extends GetxController {
     return organization;
   }
 
+  /// 현재 유저의 소속을 소속 입력 텍스트 필드에 적용합니다.
   void updateOrganization() {
-    textController.text = _getUserOrganization();
+    organizationTextEditingController.text = _getUserOrganization();
   }
 
+  /// 입력된 소속 값을 서버에 저장합니다.
   Future<void> saveOrganization(String organization) async {
     WeteamUser user = Get.find<AuthService>().user.value!;
     // 서버에 요청하기 전, 변경사항을 로컬에 적용
@@ -92,7 +127,7 @@ class ProfileController extends GetxController {
   /// * 변경사항이 있으면 서버로부터 유저 정보를 최신화합니다.
   Future<void> saveChanges() async {
     WeteamUser user = Get.find<AuthService>().user.value!;
-    String organization = textController.text;
+    String organization = organizationTextEditingController.text;
     int selectedProfileId = getSelectedProfileId() ?? 0;
 
     Future? organizationFuture;
@@ -122,22 +157,5 @@ class ProfileController extends GetxController {
         Get.find<AuthService>().user.refresh();
       }
     }
-  }
-
-  final TextEditingController textController = TextEditingController();
-  final RxInt textLength = 0.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    textController.addListener(() {
-      textLength.value = textController.text.length;
-    });
-  }
-
-  @override
-  void onClose() {
-    textController.dispose();
-    super.onClose();
   }
 }

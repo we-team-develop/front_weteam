@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../data/color_data.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
+import '../../model/login_result.dart';
 import '../../service/auth_service.dart';
 import '../../util/helper/auth_helper.dart';
 import '../../util/helper/google_auth_helper.dart';
@@ -52,7 +53,7 @@ class LoginMain extends StatelessWidget {
               GestureDetector(
                 onTap: () => login(GoogleAuthHelper(), context),
                 child: Image.asset(
-                  ImagePath.googlelogin,
+                  ImagePath.googleLogin,
                   width: 302.w,
                   height: 39.h,
                 ),
@@ -64,7 +65,7 @@ class LoginMain extends StatelessWidget {
                   Get.to(() => const SignUpCompleted());
                 },
                 child: Image.asset(
-                  ImagePath.applelogin,
+                  ImagePath.appleLogin,
                   width: 302.w,
                   height: 39.h,
                 ),
@@ -72,7 +73,7 @@ class LoginMain extends StatelessWidget {
               SizedBox(height: padding),
               GestureDetector(
                 child: Image.asset(
-                  ImagePath.naverlogin,
+                  ImagePath.naverLogin,
                   width: 302.w,
                   height: 39.h,
                 ),
@@ -82,7 +83,7 @@ class LoginMain extends StatelessWidget {
               GestureDetector(
                 onTap: () => login(KakaoAuthHelper(), context),
                 child: Image.asset(
-                  ImagePath.kakaologin,
+                  ImagePath.kakaoLogin,
                   width: 302.w,
                   height: 39.h,
                 ),
