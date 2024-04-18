@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../model/weteam_user.dart';
@@ -43,16 +44,24 @@ class CurrentMeetingController extends GetxController {
     _overlayEntry = null;
   }
 
+  // 합산된 유저 수 계산
+  int getTotalUserCount() {
+    return joinedUserList.length + notJoinedUserList.length;
+  }
+
   // 이미지 경로를 반환하는 메서드 추가
   String getImagePathForUserCount() {
-    // 합산된 유저 수 계산
-    int totalUserCount = joinedUserList.length + notJoinedUserList.length;
-
+    int totalUserCount = getTotalUserCount();
     // 팀원 1명이어도 2명으로 보이게 함
     int validUserCount = (totalUserCount > 1) ? totalUserCount : 2;
     // 최대 10명
     validUserCount = validUserCount.clamp(2, 10);
     return 'assets/images/meeting$validUserCount.png'; // 경로는 실제 경로에 맞게 조정 필요
+  }
+
+  double getImageHeightForUserCount() {
+    int totalUserCount = getTotalUserCount();
+    return (totalUserCount <= 5) ? 15.82.h : 42.82.h;
   }
 
   //
@@ -71,7 +80,8 @@ class CurrentMeetingController extends GetxController {
       meeting.value = meetingDetail.meetingProject;
 
       // 미팅 스케쥴(시간입력) 관련 데이터 처리 부분 시작
-      MeetingScheduleController schController = Get.find<MeetingScheduleController>();
+      MeetingScheduleController schController =
+          Get.find<MeetingScheduleController>();
 
       int maxPopulation = 0; // 날짜별 최대 참여자 수
       Map<String, List<MeetingUser>> populationMap = {}; // 날짜별 참여자 목록
@@ -134,7 +144,8 @@ class CurrentMeetingController extends GetxController {
   }
 
   Future<bool> setSelectedTimes() async {
-    MeetingScheduleController schController = Get.find<MeetingScheduleController>();
+    MeetingScheduleController schController =
+        Get.find<MeetingScheduleController>();
     List<MeetingTime> timeList = [];
 
     schController.selected.forEach((key, value) {
@@ -172,8 +183,8 @@ class CurrentMeetingController extends GetxController {
       }
     });
 
-    bool success =
-        await Get.find<ApiService>().setMeetingSchedule(meeting.value.id, timeList);
+    bool success = await Get.find<ApiService>()
+        .setMeetingSchedule(meeting.value.id, timeList);
     return success;
   }
 }

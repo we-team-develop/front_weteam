@@ -80,7 +80,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
                   // 이미지 경로를 동적으로 변경
                   Image.asset(
                     controller.getImagePathForUserCount(), // 동적 이미지 경로
-                    height: 30.h,
+                    height: controller.getImageHeightForUserCount(),
                   ),
                 ],
               ),
