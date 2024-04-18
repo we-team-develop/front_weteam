@@ -30,21 +30,6 @@ class TutorialOverlay extends GetView<MeetingController> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 닫기 버튼
-                GestureDetector(
-                  onTap: () => controller.removeOverlay(),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 19.w, bottom: 76.h),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Image.asset(
-                        ImagePath.meetingCross,
-                        width: 15.75.w,
-                        height: 15.75.h,
-                      ),
-                    ),
-                  ),
-                ),
                 // 텍스트
                 Padding(
                   padding: EdgeInsets.only(left: 50.w),
@@ -91,35 +76,21 @@ class TutorialOverlay extends GetView<MeetingController> {
                   padding: EdgeInsets.only(top: 47.h),
                   child: Center(
                       child: Image.asset(
-                        alignment: Alignment.bottomCenter,
-                        ImagePath.meetingTutorial1,
-                        width: 296.w,
-                        height: 474.h,
-                      )),
+                    alignment: Alignment.bottomCenter,
+                    ImagePath.meetingTutorial1,
+                    width: 296.w,
+                    height: 474.h,
+                  )),
                 ),
               ],
             ),
+
             // 두 번째 페이지
             Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 닫기 버튼
-                GestureDetector(
-                  onTap: () => controller.removeOverlay(),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 19.w, bottom: 76.h),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Image.asset(
-                        ImagePath.meetingCross,
-                        width: 15.75.w,
-                        height: 15.75.h,
-                      ),
-                    ),
-                  ),
-                ),
                 // 텍스트
                 Padding(
                   padding: EdgeInsets.only(
@@ -211,11 +182,11 @@ class TutorialOverlay extends GetView<MeetingController> {
                   padding: EdgeInsets.only(top: 24.h),
                   child: Center(
                       child: Image.asset(
-                        alignment: Alignment.bottomCenter,
-                        ImagePath.meetingTutorial2,
-                        width: 296.w,
-                        height: 474.h,
-                      )),
+                    alignment: Alignment.bottomCenter,
+                    ImagePath.meetingTutorial2,
+                    width: 296.w,
+                    height: 474.h,
+                  )),
                 ),
               ],
             ),
@@ -243,6 +214,25 @@ class TutorialOverlay extends GetView<MeetingController> {
                   curve: Curves.easeInOut,
                 );
               },
+            ),
+          ),
+        ),
+        // 닫기 버튼
+        Positioned(
+          top: 44.h,
+          right: 0.w,
+          child: GestureDetector(
+            onTap: () => controller.removeOverlay(),
+            child: Padding(
+              padding: EdgeInsets.only(right: 19.w, bottom: 76.h),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  ImagePath.meetingCross,
+                  width: 15.75.w,
+                  height: 15.75.h,
+                ),
+              ),
             ),
           ),
         ),
