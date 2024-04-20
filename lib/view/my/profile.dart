@@ -39,15 +39,42 @@ class Profile extends GetView<ProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 47.h),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                '내 정보 관리',
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 14.0.sp,
-                    fontWeight: FontWeight.bold),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 대칭 공간 용
+                SizedBox(
+                  width: 62.w,
+                  height: 25.h,
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '내 정보 관리',
+                      style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontSize: 14.0.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                // 저장 버튼
+                Container(
+                  width: 62.w,
+                  height: 25.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '저장',
+                      style: TextStyle(
+                          fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 17.0.h),
             Text(
@@ -87,7 +114,8 @@ class Profile extends GetView<ProfileController> {
                     children: [
                       Expanded(
                         child: TextField(
-                          controller: controller.organizationTextEditingController,
+                          controller:
+                              controller.organizationTextEditingController,
                           maxLength: 20,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -259,7 +287,8 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 탈퇴 실패
-      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다", icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다",
+          icon: SnackbarIcon.fail);
     }
   }
 
@@ -275,13 +304,16 @@ class Profile extends GetView<ProfileController> {
   }
 
   Future<void> toggleAlarmSwitch(bool v) async {
-    if (v) { // 비활성화 하기
+    if (v) {
+      // 비활성화 하기
       controller.togglePushNotification(false);
-    } else { // 활성화 하기
+    } else {
+      // 활성화 하기
       // 알림 권한
-      PermissionStatus notificationStatus = await Permission.notification
-          .status;
-      if (!notificationStatus.isGranted) { // 권한 받기 시도
+      PermissionStatus notificationStatus =
+          await Permission.notification.status;
+      if (!notificationStatus.isGranted) {
+        // 권한 받기 시도
         PermissionStatus newStatus = await Permission.notification.request();
         if (newStatus.isGranted) {
           controller.togglePushNotification(true);

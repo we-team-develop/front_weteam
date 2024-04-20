@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/color_data.dart';
 import '../widget/normal_button.dart';
