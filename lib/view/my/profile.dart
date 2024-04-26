@@ -116,6 +116,10 @@ class Profile extends GetView<ProfileController> {
                         child: TextField(
                           controller:
                               controller.organizationTextEditingController,
+                          onTapOutside: (v) {
+                            // 다른 곳 터치시 키보드 숨김
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
                           maxLength: 20,
                           decoration: InputDecoration(
                             border: InputBorder.none,
