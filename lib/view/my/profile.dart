@@ -59,7 +59,7 @@ class Profile extends GetView<ProfileController> {
                   ),
                 ),
                 // 저장 버튼
-                _save_button(),
+                _saveButton(),
               ],
             ),
             SizedBox(height: 17.0.h),
@@ -87,22 +87,21 @@ class Profile extends GetView<ProfileController> {
     );
   }
 
-  Container _save_button() {
+  Container _saveButton() {
     return Container(
-                width: 62.w,
-                height: 25.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  color: const Color(0xFFD9D9D9),
-                ),
-                child: Center(
-                  child: Text(
-                    '저장',
-                    style: TextStyle(
-                        fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
-                  ),
-                ),
-              );
+      width: 62.w,
+      height: 25.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.r),
+        color: const Color(0xFFD9D9D9),
+      ),
+      child: Center(
+        child: Text(
+          '저장',
+          style: TextStyle(fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
+        ),
+      ),
+    );
   }
 
   GestureDetector _withdrawButton() {
