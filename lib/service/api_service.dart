@@ -350,11 +350,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     return ret;
   }
 
-  /// 팀플 팀원 목록 조회 API
+  /// 팀플 팀원 초대 링크 생성 api
   ///
-  /// return: 성공시 WeteamProjectUser 리스트, 실패시 null
+  /// return: 성공시 url(String), 실패시 null
   Future<String?> getTeamProjectInviteUrl(int projectId) async {
-    Response rp = await post('/api/project-users/$projectId', {});
+    Response rp = await get('/api/project-users/$projectId/invite');
     if (rp.hasError) return null;
 
     return rp.bodyString;
