@@ -92,6 +92,7 @@ class ImagePath {
   static String get snackbarInfoIc => 'assets/images/snackbar_info_ic.png';
   static String get infoImage => 'assets/images/meeting_info_overlay_color.png';
   static String get icCrossClose => 'assets/images/ic_cross_close.png';
+  static String get meeting1 => 'assets/images/meeting1.png';
   static String get meeting2 => 'assets/images/meeting2.png';
   static String get meeting3 => 'assets/images/meeting3.png';
   static String get meeting4 => 'assets/images/meeting4.png';

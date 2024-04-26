@@ -52,10 +52,8 @@ class CurrentMeetingController extends GetxController {
   // 이미지 경로를 반환하는 메서드 추가
   String getImagePathForUserCount() {
     int totalUserCount = getTotalUserCount();
-    // 팀원 1명이어도 2명으로 보이게 함
-    int validUserCount = (totalUserCount > 1) ? totalUserCount : 2;
     // 최대 10명
-    validUserCount = validUserCount.clamp(2, 10);
+    int validUserCount = totalUserCount.clamp(1, 10);
     return 'assets/images/meeting$validUserCount.png'; // 경로는 실제 경로에 맞게 조정 필요
   }
 
