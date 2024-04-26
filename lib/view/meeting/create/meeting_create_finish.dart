@@ -14,80 +14,81 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Expanded(child: SizedBox()),
-          const _Title(),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            child:
-                Image.asset(ImagePath.thumbTimi, width: 153.w, height: 54.6.h),
-          ),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 12.sp,
-                    color: AppColors.Black),
-                children: [
-                  _boldTS(_formatDateTime(controller.startedAt!)),
-                  const TextSpan(text: ' 부터 '),
-                  _boldTS(_formatDateTime(controller.endedAt!)),
-                  const TextSpan(text: '까지\n'),
-                  _boldTS(
-                      '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n'),
-                  if (controller.selectedTeamProject.value != null) TextSpan(
-                    children: [
-                      _boldTS('[${controller.selectedTeamProject.value?.title}]'),
-                      const TextSpan(text: '의\n'),
-                    ]
-                  ),
-                  _boldTS('[${controller.nameInputText.value}]'),
-                  const TextSpan(text: ' 약속을 잡는\n언제보까가 생성되었습니다~!'),
-                ]),
-          ),
-          _CopyLinkButton(),
-          const Expanded(child: SizedBox()),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-              child: NormalButton(
-                  text: '확인',
-                  onTap: () async {
-                    await WeteamUtils.closeSnackbarNow();
-                    Get.back();
-                    Get.back();
-                    Get.back();
-                    Get.back();
-                  })),
-          GestureDetector(
-            onTap: () async {
-              await WeteamUtils.closeSnackbarNow();
-              Get.back();
-              Get.back();
-            },
-            child: RichText(
-                text: TextSpan(
-              children: const [
-                TextSpan(text: '수정할게 있어요. '),
-                TextSpan(
-                    text: '수정하기',
-                    style: TextStyle(decoration: TextDecoration.underline))
-              ],
-              style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.G_05,
-                  fontSize: 10.sp),
-            )),
-          ),
-          SizedBox(height: 15.h)
-        ],
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Expanded(child: SizedBox()),
+            const _Title(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.h),
+              child:
+              Image.asset(ImagePath.thumbTimi, width: 153.w, height: 54.6.h),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                  style: TextStyle(
+                      fontFamily: 'NanumGothic',
+                      fontSize: 12.sp,
+                      color: AppColors.Black),
+                  children: [
+                    _boldTS(_formatDateTime(controller.startedAt!)),
+                    const TextSpan(text: ' 부터 '),
+                    _boldTS(_formatDateTime(controller.endedAt!)),
+                    const TextSpan(text: '까지\n'),
+                    _boldTS(
+                        '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n'),
+                    if (controller.selectedTeamProject.value != null) TextSpan(
+                        children: [
+                          _boldTS('[${controller.selectedTeamProject.value?.title}]'),
+                          const TextSpan(text: '의\n'),
+                        ]
+                    ),
+                    _boldTS('[${controller.nameInputText.value}]'),
+                    const TextSpan(text: ' 약속을 잡는\n언제보까가 생성되었습니다~!'),
+                  ]),
+            ),
+            _CopyLinkButton(),
+            const Expanded(child: SizedBox()),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+                child: NormalButton(
+                    text: '확인',
+                    onTap: () async {
+                      await WeteamUtils.closeSnackbarNow();
+                      Get.back();
+                      Get.back();
+                      Get.back();
+                      Get.back();
+                    })),
+            GestureDetector(
+              onTap: () async {
+                await WeteamUtils.closeSnackbarNow();
+                Get.back();
+                Get.back();
+              },
+              child: RichText(
+                  text: TextSpan(
+                    children: const [
+                      TextSpan(text: '수정할게 있어요. '),
+                      TextSpan(
+                          text: '수정하기',
+                          style: TextStyle(decoration: TextDecoration.underline))
+                    ],
+                    style: TextStyle(
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.G_05,
+                        fontSize: 10.sp),
+                  )),
+            ),
+            SizedBox(height: 15.h)
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   TextSpan _boldTS(String text) {

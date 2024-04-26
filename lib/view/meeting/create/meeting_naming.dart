@@ -12,13 +12,14 @@ class MeetingNaming extends GetView<MeetingCreateController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w),
-        child: _body(),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: _body(),
+        ),
       ),
-    ));
+    );
   }
 
   Widget _body() {

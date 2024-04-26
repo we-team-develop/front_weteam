@@ -21,42 +21,43 @@ class AlarmListPage extends GetView<AlarmController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 16.h),
-          Center(
-            child: Text(
-              '알림',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 14.sp,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-          Expanded(
-              child: PagedListView<int, WeteamAlarm>(
-            pagingController: controller.getPagingController(),
-            builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
-              itemBuilder: (context, item, index) =>
-                  NotificationContainer(item),
-              noItemsFoundIndicatorBuilder: (context) => Center(
-                child: Text(
-                  "아직 받은 알림이 없어요!",
-                  style: TextStyle(fontFamily: "NanumSquareNeo", fontSize: 12.sp),
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 16.h),
+            Center(
+              child: Text(
+                '알림',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                  height: 0,
                 ),
               ),
             ),
-          )),
-        ],
+            SizedBox(height: 16.h),
+            Expanded(
+                child: PagedListView<int, WeteamAlarm>(
+                  pagingController: controller.getPagingController(),
+                  builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
+                    itemBuilder: (context, item, index) =>
+                        NotificationContainer(item),
+                    noItemsFoundIndicatorBuilder: (context) => Center(
+                      child: Text(
+                        "아직 받은 알림이 없어요!",
+                        style: TextStyle(fontFamily: "NanumSquareNeo", fontSize: 12.sp),
+                      ),
+                    ),
+                  ),
+                )),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
 

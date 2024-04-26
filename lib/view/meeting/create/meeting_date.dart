@@ -13,10 +13,11 @@ class MeetingDate extends GetView<MeetingCreateController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: _body(),
-    ));
+    return Scaffold(
+      body: SafeArea(
+        child: _body(),
+      ),
+    );
   }
 
   Widget _body() {
