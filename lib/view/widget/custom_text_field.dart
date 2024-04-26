@@ -21,6 +21,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
+      onTapOutside: (v) {
+        // 다른 곳 터치시 키보드 숨김
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       decoration: InputDecoration(
           // 기본 제공 카운터 제거
           counterText: "",
