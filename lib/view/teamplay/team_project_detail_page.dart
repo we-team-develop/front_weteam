@@ -416,18 +416,21 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     SizedBox(height: 24.h),
                     NormalButton(
                       onTap: () async {
-                        Future inviteUrlFuture = Get.find<ApiService>()
-                            .getTeamProjectInviteUrl(controller.tp.value.id);
+                        ApiService service = Get.find<ApiService>();
+                        Future invUrlFuture = service.getTeamProjectInviteUrl(controller.tp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
 
-                        String? inviteUrl = await inviteUrlFuture;
-                        if (inviteUrl != null) {
+                        String? invUrl = await invUrlFuture;
+                        if (invUrl != null) {
                           // 링크 받아오기 성공
-                          inviteUrl = Uri.decodeComponent(inviteUrl);
+                          invUrl = Uri.decodeComponent(invUrl);
+                          invUrl = Get.find<ApiService>().getDeepLinkUrl(invUrl);
+
                           String inviteText =
-                              '$userName님이 $teamProjectName에 초대했어요!\n$inviteUrl';
+                              '$userName님이 $teamProjectName에 초대했어요!\n$invUrl';
+
                           debugPrint(inviteText);
                           Share.share(inviteText);
                         } else {

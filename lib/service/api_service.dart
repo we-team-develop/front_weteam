@@ -428,6 +428,14 @@ class ApiService extends CustomGetConnect implements GetxService {
     Response rp = await patch('/api/alarms/$id', {});
     return rp.isOk;
   }
+
+  /// 딥링크용 url 반환 API
+  ///
+  /// return: String - 딥링크 실행용 url
+  String getDeepLinkUrl(String url) {
+    url = Uri.encodeComponent(url);
+    return "$_baseUrl/api/common/$url";
+  }
 }
 
 // 팀플 조회 API의 결과에 대한 객체

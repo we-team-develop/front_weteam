@@ -14,6 +14,7 @@ import '../../model/weteam_user.dart';
 import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../util/weteam_utils.dart';
 import '../meeting/meeting_current.dart';
 
 class MeetingWidget extends StatelessWidget {
@@ -56,6 +57,13 @@ class MeetingWidget extends StatelessWidget {
                             .getMeetingInviteLink(team.id);
                         WeteamUser currentUser =
                             Get.find<AuthService>().user.value!;
+
+                        if (inviteLink == null) {
+                          WeteamUtils.snackbar('', '초대 링크를 준비하지 못했어요', icon: SnackbarIcon.fail);
+                          return;
+                        }
+
+                        inviteLink = Get.find<ApiService>().getDeepLinkUrl(inviteLink);
 
                         Share.share(
                             '${currentUser.username}님이 [${team.title}] 언제보까에 초대했어요!\n$inviteLink');

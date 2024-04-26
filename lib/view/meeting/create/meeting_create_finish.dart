@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/color_data.dart';
 import '../../../data/image_data.dart';
+import '../../../service/api_service.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/normal_button.dart';
 
@@ -123,7 +124,9 @@ class _CopyLinkButton extends GetView<MeetingCreateController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Clipboard.setData(const ClipboardData(text: 'weteam://meeting/add?id=0'));
+        Clipboard.setData(ClipboardData(
+            text: Get.find<ApiService>()
+                .getDeepLinkUrl('weteam://meeting/add?id=0')));
         WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', icon: SnackbarIcon.success);
       },
       child: Container(
