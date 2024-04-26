@@ -59,228 +59,283 @@ class Profile extends GetView<ProfileController> {
                   ),
                 ),
                 // 저장 버튼
-                Container(
-                  width: 62.w,
-                  height: 25.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: const Color(0xFFD9D9D9),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '저장',
-                      style: TextStyle(
-                          fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
-                    ),
-                  ),
-                ),
+                _save_button(),
               ],
             ),
             SizedBox(height: 17.0.h),
-            Text(
-              '프로필 사진',
-              style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.G_04),
-            ),
-            const ProfileImageSelectContainerWidget(),
+            // 프로필 선택
+            _profileSelection(),
             SizedBox(height: 4.0.h),
-            Text(
-              '소속',
-              style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.G_04),
-            ),
-            SizedBox(height: 4.0.h),
-            Container(
-              width: 330.w,
-              height: 39.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0.r),
-                border: Border.all(
-                  color: AppColors.G_01,
-                  width: 1.0.w,
-                ),
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 9.0.w),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller:
-                              controller.organizationTextEditingController,
-                          onTapOutside: (v) {
-                            // 다른 곳 터치시 키보드 숨김
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
-                          maxLength: 20,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: '티미대 벌집조형학과',
-                            hintStyle: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontSize: 14.sp,
-                              color: AppColors.G_06,
-                            ),
-                            counterText: '',
-                          ),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: 'NanumGothic',
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      Obx(() => Padding(
-                            padding: EdgeInsets.only(right: 9.0.w),
-                            child: Text(
-                              '${controller.textLength}/20',
-                              style: TextStyle(
-                                fontFamily: 'NanumGothic',
-                                fontSize: 14.sp,
-                                color: AppColors.G_06,
-                              ),
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // 소속 입력
+            _organization(),
             SizedBox(height: 24.h),
-            Text(
-              '알림 설정',
-              style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.G_04),
-            ),
-            SizedBox(height: 16.0.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '푸시 알림',
-                  style: TextStyle(
-                      fontFamily: 'NanumGothic',
-                      fontSize: 15.0.sp,
-                      color: AppColors.Black),
-                ),
-                CustomSwitch(
-                  onChanged: toggleAlarmSwitch,
-                  value: controller.isPushNotificationEnabled.value,
-                ),
-              ],
-            ),
+            // 푸시 알림
+            _pushAlarm(),
             SizedBox(height: 34.h),
-            Text(
-              '연결된 계정',
-              style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.G_04),
-            ),
-            SizedBox(height: 14.h),
-            // TODO: 연결된 계정에 따른 버튼 변경
-            Obx(() {
-              // AuthService의 인스턴스를 얻습니다.
-              final AuthService authService = Get.find<AuthService>();
-
-              String imagePath = ImagePath.loggedInGoogle; // 기본 이미지
-
-              // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
-              switch (authService.currentLoginService.value) {
-                case '네이버':
-                  imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
-                  break;
-                case '카카오':
-                  imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
-                  break;
-                case '구글':
-                  imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
-                  break;
-                case '애플':
-                  imagePath = ImagePath.loggedInApple; // 애플 로그인 이미지 경로
-                  break;
-              }
-
-              // 설정된 imagePath를 사용하여 Image.asset 위젯을 반환
-              return Image.asset(imagePath, width: 330.w, height: 39.h);
-            }),
-            //Image.asset(ImagePath.kakaologin, width: 330.w, height: 39.h), 기존 코드
+            // 연결된 계정
+            _linkedAccount(),
             SizedBox(height: 24.0.h),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                showDialog(
-                    context: Get.context!,
-                    builder: (BuildContext context) {
-                      return CustomCheckDialog(
-                        title: "정말 로그아웃 하시겠습니까?",
-                        content: "다시 돌아올 거라 믿어요😢",
-                        denyName: '아니오',
-                        admitName: '로그아웃',
-                        denyCallback: () {
-                          Get.back();
-                        },
-                        admitCallback: () async {
-                          await logout();
-                        },
-                      );
-                    });
-              },
-              child: Text(
-                '로그아웃',
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 15.0.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.Black),
-              ),
-            ),
+            // 로그아웃 버튼
+            _logoutButton(),
             SizedBox(height: 16.0.h),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                showDialog(
-                    context: Get.context!,
-                    builder: (BuildContext context) {
-                      return CustomCheckDialog(
-                        title: "정말 탈퇴하겠습니까?",
-                        content: "위팀과 함께한 모든 추억이 사라집니다😢",
-                        denyName: '취소',
-                        admitName: '탈퇴',
-                        denyCallback: () {
-                          Get.back();
-                        },
-                        admitCallback: () async {
-                          await withdrawal();
-                        },
-                      );
-                    });
-              },
-              child: Text(
-                '회원탈퇴',
-                style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontSize: 15.0.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.Red),
-              ),
-            ),
+            // 회원 탈퇴 버튼
+            _withdrawButton(),
             SizedBox(height: 20.h)
           ],
         ),
       ),
+    );
+  }
+
+  Container _save_button() {
+    return Container(
+                width: 62.w,
+                height: 25.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.r),
+                  color: const Color(0xFFD9D9D9),
+                ),
+                child: Center(
+                  child: Text(
+                    '저장',
+                    style: TextStyle(
+                        fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
+                  ),
+                ),
+              );
+  }
+
+  GestureDetector _withdrawButton() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        showDialog(
+            context: Get.context!,
+            builder: (BuildContext context) {
+              return CustomCheckDialog(
+                title: "정말 탈퇴하겠습니까?",
+                content: "위팀과 함께한 모든 추억이 사라집니다😢",
+                denyName: '취소',
+                admitName: '탈퇴',
+                denyCallback: () {
+                  Get.back();
+                },
+                admitCallback: () async {
+                  await withdrawal();
+                },
+              );
+            });
+      },
+      child: Text(
+        '회원탈퇴',
+        style: TextStyle(
+            fontFamily: 'NanumGothic',
+            fontSize: 15.0.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.Red),
+      ),
+    );
+  }
+
+  GestureDetector _logoutButton() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        showDialog(
+            context: Get.context!,
+            builder: (BuildContext context) {
+              return CustomCheckDialog(
+                title: "정말 로그아웃 하시겠습니까?",
+                content: "다시 돌아올 거라 믿어요😢",
+                denyName: '아니오',
+                admitName: '로그아웃',
+                denyCallback: () {
+                  Get.back();
+                },
+                admitCallback: () async {
+                  await logout();
+                },
+              );
+            });
+      },
+      child: Text(
+        '로그아웃',
+        style: TextStyle(
+            fontFamily: 'NanumGothic',
+            fontSize: 15.0.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.Black),
+      ),
+    );
+  }
+
+  Column _linkedAccount() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '연결된 계정',
+          style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.G_04),
+        ),
+        SizedBox(height: 14.h),
+        Obx(() {
+          // AuthService의 인스턴스를 얻습니다.
+          final AuthService authService = Get.find<AuthService>();
+
+          String imagePath = ImagePath.loggedInGoogle; // 기본 이미지
+
+          // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
+          switch (authService.currentLoginService.value) {
+            case '네이버':
+              imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
+              break;
+            case '카카오':
+              imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
+              break;
+            case '구글':
+              imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
+              break;
+            case '애플':
+              imagePath = ImagePath.loggedInApple; // 애플 로그인 이미지 경로
+              break;
+          }
+
+          // 설정된 imagePath를 사용하여 Image.asset 위젯을 반환
+          return Image.asset(imagePath, width: 330.w, height: 39.h);
+        }),
+      ],
+    );
+  }
+
+  Column _pushAlarm() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '알림 설정',
+          style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.G_04),
+        ),
+        SizedBox(height: 16.0.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '푸시 알림',
+              style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontSize: 15.0.sp,
+                  color: AppColors.Black),
+            ),
+            CustomSwitch(
+              onChanged: toggleAlarmSwitch,
+              value: controller.isPushNotificationEnabled.value,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column _organization() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '소속',
+          style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.G_04),
+        ),
+        SizedBox(height: 4.0.h),
+        _organizationTextField(),
+      ],
+    );
+  }
+
+  Container _organizationTextField() {
+    return Container(
+      width: 330.w,
+      height: 39.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0.r),
+        border: Border.all(
+          color: AppColors.G_01,
+          width: 1.0.w,
+        ),
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: 9.0.w),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller.organizationTextEditingController,
+                  onTapOutside: (v) {
+                    // 다른 곳 터치시 키보드 숨김
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  maxLength: 20,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '티미대 벌집조형학과',
+                    hintStyle: TextStyle(
+                      fontFamily: 'NanumGothic',
+                      fontSize: 14.sp,
+                      color: AppColors.G_06,
+                    ),
+                    counterText: '',
+                  ),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'NanumGothic',
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
+              Obx(() => Padding(
+                    padding: EdgeInsets.only(right: 9.0.w),
+                    child: Text(
+                      '${controller.textLength}/20',
+                      style: TextStyle(
+                        fontFamily: 'NanumGothic',
+                        fontSize: 14.sp,
+                        color: AppColors.G_06,
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column _profileSelection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '프로필 사진',
+          style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.G_04),
+        ),
+        const ProfileImageSelectContainerWidget(),
+      ],
     );
   }
 
