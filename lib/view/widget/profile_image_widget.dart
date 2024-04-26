@@ -58,33 +58,25 @@ class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
   }
 }
 
-class ProfileImageWidget extends StatefulWidget {
+class ProfileImageWidget extends StatelessWidget {
   final int id;
   const ProfileImageWidget({super.key, required this.id});
 
   @override
-  State<StatefulWidget> createState() {
-    return _ProfileImageWidgetState();
-  }
-}
-
-class _ProfileImageWidgetState extends State<ProfileImageWidget> {
-  @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
       builder: (controller) {
-        Color backgroundColor = controller.backgroundColors[widget.id];
+        Color backgroundColor = controller.backgroundColors[id];
         return Container(
           width: circleSize,
           height: circleSize,
+          padding: EdgeInsets.all(4.r),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: backgroundColor,
-            image: DecorationImage(
-              image: AssetImage(controller.imagePaths[widget.id]),
-              fit: BoxFit.cover,
-            ),
           ),
+          child: Image.asset(controller.imagePaths[id],
+          fit: BoxFit.cover,),
         );
       },
     );
