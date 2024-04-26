@@ -65,22 +65,22 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
                 mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Flexible(
-                    child: Text(
-                      '타임블록에서 참여 가능한 인원을 확인할 수 있어요.',
-                      style: TextStyle(
-                        fontFamily: 'NanumSquareNeoBold',
-                        fontSize: 12.sp,
-                      ),
-                      textAlign: TextAlign.center, // 가운데 정렬
+                  SizedBox(height: 15.h),
+                  Text(
+                    '타임블록에서 참여 가능한 인원을 확인할 수 있어요.',
+                    style: TextStyle(
+                      fontFamily: 'NanumSquareNeoBold',
+                      fontSize: 12.sp,
                     ),
+                    textAlign: TextAlign.center, // 가운데 정렬
                   ),
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 15.h),
                   // 이미지 경로를 동적으로 변경
                   Image.asset(
                     controller.getImagePathForUserCount(), // 동적 이미지 경로
                     height: controller.getImageHeightForUserCount(),
                   ),
+                  SizedBox(height: 22.h),
                 ],
               ),
             ),
