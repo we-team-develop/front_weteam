@@ -10,6 +10,7 @@ class NormalButton extends StatefulWidget {
   final double? height;
   final double? fontSize;
   final bool whiteButton;
+  final Color? color; // 컬러 설정시 whiteButton 무시됩니다
   final TextStyle? textStyle;
   final bool enable;
 
@@ -22,6 +23,7 @@ class NormalButton extends StatefulWidget {
     this.fontSize,
     this.whiteButton = false,
     this.textStyle,
+    this.color,
     this.enable = true
   });
 
@@ -31,6 +33,20 @@ class NormalButton extends StatefulWidget {
 
 class _NormalButtonState extends State<NormalButton> {
   bool isLoading = false;
+
+  Color _getButtonColor() {
+    // 정해진 컬러 값이 있다면
+    if (widget.color != null) {
+      return widget.color!;
+    }
+
+    // 하얀색 버튼이라면
+    if (widget.whiteButton) {
+      return AppColors.White;
+    }
+
+    return widget.enable ? AppColors.MainOrange : AppColors.G_02;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +77,7 @@ class _NormalButtonState extends State<NormalButton> {
         height: widget.height ?? 40.h,
         alignment: Alignment.center,
         decoration: ShapeDecoration(
-          color: widget.whiteButton
-                ? AppColors.White
-                : (widget.enable ? AppColors.MainOrange : AppColors.G_02),
+          color: _getButtonColor(),
             shape:
               RoundedRectangleBorder(
                   side: widget.whiteButton

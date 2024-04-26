@@ -39,15 +39,22 @@ class ProfileController extends GetxController {
   final TextEditingController organizationTextEditingController = TextEditingController();
   /// 소속 입력칸에 입력된 값의 글자 수
   final RxInt textLength = 0.obs;
+  final RxBool changes = RxBool(false);
 
 
   /// 컨트롤러가 초기화될 때 실행됩니다.
   @override
   void onInit() {
     super.onInit();
-    // 소속 입력칸의 값이 변경되면 textLength 변수를 업데이트합니다.
-    organizationTextEditingController.addListener(() {
+    // 소속 입력칸의 값이 변경되면 textLength 변수를 업데이트하고, 변경사항이 있는지 확인.
+    organizationTextEditingController.addListener(() async {
       textLength.value = organizationTextEditingController.text.length;
+      changes.value = anyChanges();
+    });
+
+    // 프로필 선택이 바뀌면 변경사항이 있는지 확인합니다.
+    isSelectedList.listen((p0) {
+      changes.value = anyChanges();
     });
   }
 
@@ -121,11 +128,36 @@ class ProfileController extends GetxController {
     await Get.find<ApiService>().changeUserProfiles(id);
   }
 
+  /// checkAnyChanges
+  ///
+  /// description:
+  /// 프로필 사진이나 소속 중 어느 하나라도 변경사항이 있는지 확인합니다.
+  ///
+  /// return: true - 변경사항이 있음
+  ///         false - 변경사항이 없음
+  bool anyChanges() {
+    ////////////// 소속 변경 사항 확인 //////////////
+    String org = organizationTextEditingController.text;
+    bool orgChanged = _getUserOrganization() != org;
+
+    ////////////// 프로필 사진 변경 사항 확인 //////////////
+    int selectedProfileId = getSelectedProfileId() ?? 0;
+    WeteamUser user = Get.find<AuthService>().user.value!;
+    bool prfChanged = user.profile!.imageIdx != selectedProfileId;
+
+    return orgChanged || prfChanged;
+  }
+
   /// 변경사항을 저장하는 메소드
   ///
   /// * 변경사항이 없는 경우 api 요청을 보내지 않습니다.
   /// * 변경사항이 있으면 서버로부터 유저 정보를 최신화합니다.
   Future<void> saveChanges() async {
+    // 저장할 변경사항이 없다면 함수 종료
+    if (!anyChanges()) {
+      return;
+    }
+
     WeteamUser user = Get.find<AuthService>().user.value!;
     String organization = organizationTextEditingController.text;
     int selectedProfileId = getSelectedProfileId() ?? 0;

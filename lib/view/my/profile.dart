@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../widget/custom_switch.dart';
+import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 
 class Profile extends GetView<ProfileController> {
@@ -87,20 +90,39 @@ class Profile extends GetView<ProfileController> {
     );
   }
 
-  Container _saveButton() {
-    return Container(
-      width: 62.w,
-      height: 25.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        color: const Color(0xFFD9D9D9),
-      ),
-      child: Center(
-        child: Text(
-          '저장',
-          style: TextStyle(fontFamily: 'NanumGothicExtraBold', fontSize: 12.sp),
-        ),
-      ),
+  Obx _saveButton() {
+    return Obx(
+       () {
+         // 저장 가능 여부(변경사항이 있는가?)
+         bool enable = controller.changes.value;
+
+         return NormalButton(onTap: () async {
+           // 변경사항 없으면 무시
+           if (!enable) return;
+
+           try {
+             // 서버에 저장 시도
+             await controller.saveChanges();
+             // 변경사항 확인
+             controller.changes.value = controller.anyChanges();
+
+             WeteamUtils.snackbar('', '저장하였습니다.', icon: SnackbarIcon.success);
+           } catch(e) {
+             // 오류 출력
+             debugPrint(e.toString());
+             WeteamUtils.snackbar('', '저장하지 못했습니다.', icon: SnackbarIcon.fail);
+           }
+         },
+           width: 62.w,
+           height: 25.h,
+           fontSize: 12.sp,
+           text: '저장',
+           textStyle: TextStyle(fontFamily: 'NanumGothicExtraBold',
+               fontSize: 12.sp,
+               color: enable ? AppColors.White : AppColors.Black),
+           color: enable ? AppColors.MainOrange : AppColors.G_02,
+         );
+       },
     );
   }
 
