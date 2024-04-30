@@ -50,9 +50,9 @@ class TeamProject {
 
   @override
   bool operator ==(Object other) {
-    if (other is! TeamProject) return false;
     if (other.hashCode == hashCode) return true;
-    return id == other.id &&
+    return other is TeamProject &&
+        id == other.id &&
         imageId == other.imageId &&
         title == other.title &&
         description == other.description &&
@@ -62,4 +62,7 @@ class TeamProject {
         done == other.done &&
         host == other.host;
   }
+
+  @override
+  int get hashCode => Object.hash(id, imageId, title, description, memberSize, startedAt, endedAt, done, host);
 }

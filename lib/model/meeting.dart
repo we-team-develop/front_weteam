@@ -26,12 +26,16 @@ class Meeting {
 
   @override
   bool operator ==(Object other) {
-    if (other is! Meeting) return false;
     if (other.hashCode == hashCode) return true;
-    return id == other.id &&
+    return other is Meeting &&
+        id == other.id &&
         title == other.title &&
         startedAt.isAtSameMomentAs(other.startedAt) &&
         endedAt.isAtSameMomentAs(other.endedAt) &&
         project == other.project;
   }
+
+  @override
+  int get hashCode => Object.hash(id, title, startedAt, endedAt, project);
+
 }

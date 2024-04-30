@@ -33,9 +33,9 @@ class WeteamUser {
 
   @override
   bool operator ==(Object other) {
-    if (other is! WeteamUser) return false;
     if (other.hashCode == hashCode) return true;
-    return id == other.id &&
+    return other is WeteamUser &&
+        id == other.id &&
         username == other.username &&
         email == other.email &&
         organization == other.organization &&
@@ -43,5 +43,8 @@ class WeteamUser {
         profile == other.profile;
   }
 
+  @override
+  // TODO: implement hashCode
+  int get hashCode => Object.hash(id, username, email, organization, role, profile);
 
 }

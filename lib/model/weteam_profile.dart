@@ -10,9 +10,14 @@ class WeteamProfile {
 
   @override
   bool operator ==(Object other) {
-    if (other is! WeteamProfile) return false;
     if (other.hashCode == hashCode) return true;
-    return userId == other.userId &&
+    return other is WeteamProfile &&
+        userId == other.userId &&
         imageIdx == other.imageIdx;
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => Object.hash(userId, imageIdx);
+
 }
