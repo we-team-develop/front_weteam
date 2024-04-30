@@ -268,6 +268,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     return "weteam://meeting/acceptInvite?id=$hashedId";
   }
 
+  Future<bool> acceptMeetingInvite(String hashedId) async {
+    Response rp = await patch("/api/meeting-users/$hashedId", {});
+    return rp.isOk;
+  }
+
   /**
    * USER
    */

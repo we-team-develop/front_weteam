@@ -21,34 +21,55 @@ class App extends GetView<BottomNavController> {
   StatelessElement createElement() {
     linkStream.listen((event) async {
       if (event == null) return;
+
       bool isLoggedIn = Get.find<AuthService>().user.value != null;
       Uri uri = Uri.parse(event);
+      ApiService api = Get.find<ApiService>();
 
       String host = uri.host;
       String path = uri.path;
       Map<String, String> query = uri.queryParameters;
 
-      if (host == "projects") {
-        if (path.startsWith("/acceptInvite")) {
-          String hashedId = query['id'] ?? '-1';
-          if (!isLoggedIn) return;
+      try { // 예외 처리되지 않은 오류 핸들링
+        if (host == "projects") {
+          if (path.startsWith("/acceptInvite")) {
+            String hashedId = query['id'] ?? '-1';
+            if (!isLoggedIn) return;
 
-          bool success = await Get.find<ApiService>().acceptInvite(hashedId);
-          if (success) {
-            Get.find<HomeController>().updateTeamProjectList();
-            WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',
-                icon: SnackbarIcon.success);
-          } else {
-            WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
-                icon: SnackbarIcon.fail);
+            bool success = await api.acceptInvite(hashedId);
+            if (success) {
+              Get.find<HomeController>().updateTeamProjectList();
+              WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',
+                  icon: SnackbarIcon.success);
+            } else {
+              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
+                  icon: SnackbarIcon.fail);
+              return;
+            }
+          }
+        } else if (host == "meeting") {
+          if (path.startsWith('/acceptInvite')) {
+            String hashedId = query['id'] ?? '';
+
+            // 올바르지 않은 id
+            if (hashedId.isEmpty) {
+              WeteamUtils.snackbar('', '올바르지 않은 언제보까 초대예요.', icon: SnackbarIcon.fail);
+              return;
+            }
+
+            bool success = await api.acceptMeetingInvite(hashedId);
+            if (success) {
+              WeteamUtils.snackbar("", '언제보까 초대를 성공적으로 수락했어요!',
+                  icon: SnackbarIcon.success);
+            } else {
+              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
+                  icon: SnackbarIcon.fail);
+            }
           }
         }
-      } else if (host == "meeting") {
-        if (path.startsWith('add')) {
-          int meetingId = int.parse(query['id'] ?? '-1');
-          WeteamUtils.snackbar('아직 구현되지 않음', '언제보까 수락 기능을 구현하지 않았습니다.');
-          // TODO: 구현하기
-        }
+      } catch(e) {
+        WeteamUtils.snackbar('', '요청을 처리하지 못했어요.', icon: SnackbarIcon.fail);
+        return;
       }
     });
     return super.createElement();
