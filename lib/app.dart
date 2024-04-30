@@ -36,7 +36,7 @@ class App extends GetView<BottomNavController> {
             String hashedId = query['id'] ?? '-1';
             if (!isLoggedIn) return;
 
-            bool success = await api.acceptInvite(hashedId);
+            bool success = await api.acceptProjectInvite(hashedId);
             if (success) {
               Get.find<HomeController>().updateTeamProjectList();
               WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',

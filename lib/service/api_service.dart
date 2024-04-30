@@ -382,7 +382,7 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// 팀플 초대 수락 API
   ///
   /// return: 성공 여부
-  Future<bool> acceptInvite(String hashedId) async {
+  Future<bool> acceptProjectInvite(String hashedId) async {
     Response rp = await patch('/api/project-users/$hashedId', {});
     return rp.isOk;
   }
