@@ -54,7 +54,7 @@ class MeetingWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () async {
                         String? inviteLink = await Get.find<ApiService>()
-                            .getMeetingInviteLink(team.id);
+                            .getMeetingInviteDeepLink(team.id);
                         WeteamUser currentUser =
                             Get.find<AuthService>().user.value!;
 

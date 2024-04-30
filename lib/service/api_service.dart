@@ -257,9 +257,15 @@ class ApiService extends CustomGetConnect implements GetxService {
     return MeetingDetail.fromJson(rp.body);
   }
 
-  Future<String?> getMeetingInviteLink(int meetingId) async {
+  Future<String?> getMeetingInviteDeepLink(int meetingId) async {
     Response rp = await get('/api/meeting-users/$meetingId');
-    return rp.bodyString?.trim();
+    String? hashedId = rp.bodyString?.trim();
+
+    if (hashedId == null) {
+      return null;
+    }
+
+    return "weteam://meeting/acceptInvite?id=$hashedId";
   }
 
   /**
