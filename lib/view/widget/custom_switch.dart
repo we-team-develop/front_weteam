@@ -26,10 +26,10 @@ class CustomSwitch extends StatefulWidget {
     this.toggleActiveColor = AppColors.White,
   });
   @override
-  _CustomSwitchState createState() => _CustomSwitchState();
+  CustomSwitchState createState() => CustomSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch> {
+class CustomSwitchState extends State<CustomSwitch> {
   bool _isSwitched = false;
 
   @override
