@@ -443,7 +443,7 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// 딥링크용 url 반환 API
   ///
   /// return: String - 딥링크 실행용 url
-  String getDeepLinkUrl(String url) {
+  String convertDeepLink(String url) {
     url = base64Url.encode(utf8.encode(url));
     return "$_baseUrl/api/common/$url";
   }

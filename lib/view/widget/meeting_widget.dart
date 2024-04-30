@@ -63,7 +63,7 @@ class MeetingWidget extends StatelessWidget {
                           return;
                         }
 
-                        inviteLink = Get.find<ApiService>().getDeepLinkUrl(inviteLink);
+                        inviteLink = Get.find<ApiService>().convertDeepLink(inviteLink);
 
                         Share.share(
                             '${currentUser.username}님이 [${team.title}] 언제보까에 초대했어요!\n$inviteLink');

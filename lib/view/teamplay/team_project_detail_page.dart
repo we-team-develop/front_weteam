@@ -426,7 +426,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         if (invUrl != null) {
                           // 링크 받아오기 성공
                           invUrl = Uri.decodeComponent(invUrl);
-                          invUrl = Get.find<ApiService>().getDeepLinkUrl(invUrl);
+                          invUrl = Get.find<ApiService>().convertDeepLink(invUrl);
 
                           String inviteText =
                               '$userName님이 $teamProjectName에 초대했어요!\n$invUrl';

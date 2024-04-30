@@ -126,7 +126,7 @@ class _CopyLinkButton extends GetView<MeetingCreateController> {
       onTap: () {
         Clipboard.setData(ClipboardData(
             text: Get.find<ApiService>()
-                .getDeepLinkUrl('weteam://meeting/add?id=0')));
+                .convertDeepLink('weteam://meeting/add?id=0')));
         WeteamUtils.snackbar('', '언제보까 링크를 복사했어요.', icon: SnackbarIcon.success);
       },
       child: Container(
