@@ -166,15 +166,3 @@ Future<void> updateTeamProjectLists() async {
     await ft;
   }
 }
-
-/// 팀플 목록 3분마다 조회 타이머 생성
-void _makeTeamProjectListRefreshTimer() {
-  Timer.periodic(const Duration(seconds: 60 * 3), (timer) {
-    try {
-      if (MemCache.get(MemCacheKey.weteamUserJson) != null &&
-          MemCache.get(MemCacheKey.firebaseAuthIdToken) != null) {
-        updateTeamProjectLists();
-      }
-    } catch (_) {}
-  });
-}
