@@ -36,29 +36,29 @@ class MeetingController extends GetxController {
   void onInit() {
     super.onInit();
     loadPreference();
-    print('check');
+    debugPrint('check');
   }
 
 // 사용자의 선호를 반영하여 showOverlay 값을 설정합니다.
   void loadPreference() {
     bool shouldShow = MeetingOverlayService.shouldShowOverlay();
     shouldShowOverlay.value = shouldShow;
-    print('Load showOverlay Preference: ${shouldShowOverlay.value}');
+    debugPrint('Load showOverlay Preference: ${shouldShowOverlay.value}');
   }
 
   void toggleShouldShowOverlay() async {
     shouldShowOverlay.value = !shouldShowOverlay.value;
     await MeetingOverlayService.setShouldShowOverlay(shouldShowOverlay.value);
-    print('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
+    debugPrint('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
   }
 
   void showOverlay(BuildContext context) async {
     if (_overlayEntry.value != null || shouldShowOverlay.isFalse) {
-      print('Overlay not shown due to conditions.');
+      debugPrint('Overlay not shown due to conditions.');
       // 이미 오버레이가 표시되어 있거나 사용자가 "다시 보지 않기"를 선택한 경우 무시합니다.
       return;
     }
-    print(
+    debugPrint(
         'Attempting to show overlay. showOverlay: ${shouldShowOverlay.value}'); // 로그 출력
 
     _overlayEntry.value = OverlayEntry(
