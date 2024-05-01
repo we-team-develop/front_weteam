@@ -95,12 +95,12 @@ class ProfileSettingPage extends StatelessWidget {
         // 끝
         await resetApp();
       } else {
-        WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다(1)", icon: SnackbarIcon.fail);
+        WeteamUtils.snackbar("", "잠시 문제가 발생했어요", icon: SnackbarIcon.fail);
       }
     } catch (e, st) {
       debugPrint('$e');
       debugPrintStack(stackTrace: st);
-      WeteamUtils.snackbar("죄송합니다", "문제가 발생했습니다(2)", icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar("", "잠시 오류가 발생했어요", icon: SnackbarIcon.fail);
     }
   }
 }

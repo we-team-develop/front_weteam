@@ -39,10 +39,10 @@ class App extends GetView<BottomNavController> {
             bool success = await api.acceptProjectInvite(hashedId);
             if (success) {
               Get.find<HomeController>().updateTeamProjectList();
-              WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요!',
+              WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요',
                   icon: SnackbarIcon.success);
             } else {
-              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
+              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요',
                   icon: SnackbarIcon.fail);
               return;
             }
@@ -53,22 +53,22 @@ class App extends GetView<BottomNavController> {
 
             // 올바르지 않은 id
             if (hashedId.isEmpty) {
-              WeteamUtils.snackbar('', '올바르지 않은 언제보까 초대예요.', icon: SnackbarIcon.fail);
+              WeteamUtils.snackbar('', '올바르지 않은 언제보까 초대예요', icon: SnackbarIcon.fail);
               return;
             }
 
             bool success = await api.acceptMeetingInvite(hashedId);
             if (success) {
-              WeteamUtils.snackbar("", '언제보까 초대를 성공적으로 수락했어요!',
+              WeteamUtils.snackbar("", '언제보까 초대를 성공적으로 수락했어요',
                   icon: SnackbarIcon.success);
             } else {
-              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요.',
+              WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요',
                   icon: SnackbarIcon.fail);
             }
           }
         }
       } catch(e) {
-        WeteamUtils.snackbar('', '요청을 처리하지 못했어요.', icon: SnackbarIcon.fail);
+        WeteamUtils.snackbar('', '요청을 처리하지 못했어요', icon: SnackbarIcon.fail);
         return;
       }
     });

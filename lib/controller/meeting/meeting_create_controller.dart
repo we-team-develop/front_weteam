@@ -47,7 +47,7 @@ class MeetingCreateController extends GetxController {
     if (result != null) {
       tpList.addAll(result.projectList);
     } else {
-      WeteamUtils.snackbar('문제가 발생했습니다', '팀플 목록을 불러오지 못했습니다', icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar('', '팀플 목록을 불러오지 못했어요', icon: SnackbarIcon.fail);
     }
   }
 
@@ -102,7 +102,7 @@ class MeetingCreateController extends GetxController {
       Get.find<MeetingController>().updateMeetingList();
       Get.to(() => const MeetingCreateFinish());
     } else {
-      WeteamUtils.snackbar('생성 실패', '오류가 발생했습니다',
+      WeteamUtils.snackbar('', '잠시 오류가 발생했어요',
           icon: SnackbarIcon.fail);
     }
   }

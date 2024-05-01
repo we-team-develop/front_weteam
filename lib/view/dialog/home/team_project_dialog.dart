@@ -299,7 +299,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                 } catch (e, st) {
                   debugPrint('$e');
                   debugPrintStack(stackTrace: st);
-                  WeteamUtils.snackbar('문제가 발생했습니다', '오류가 있었습니다');
+                  WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요');
                 }
               }),
         )
@@ -314,7 +314,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
     if (name.isEmpty) {
       setState(() {
         warningVisible = true;
-        warningContent = "팀플명을 입력해주세요!";
+        warningContent = "팀플명을 입력해 주세요!";
       });
       return;
     }
@@ -322,7 +322,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
     if (content.isEmpty) {
       setState(() {
         warningVisible = true;
-        warningContent = "상세내용을 입력해주세요!";
+        warningContent = "상세내용을 입력해 주세요!";
       });
       return;
     }

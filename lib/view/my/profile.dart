@@ -105,11 +105,11 @@ class Profile extends GetView<ProfileController> {
              // 변경사항 확인
              controller.changes.value = controller.anyChanges();
 
-             WeteamUtils.snackbar('', '저장하였습니다.', icon: SnackbarIcon.success);
+             WeteamUtils.snackbar('', '변경사항을 저장했어요', icon: SnackbarIcon.success);
            } catch(e) {
              // 오류 출력
              debugPrint(e.toString());
-             WeteamUtils.snackbar('', '저장하지 못했습니다.', icon: SnackbarIcon.fail);
+             WeteamUtils.snackbar('', '변경사항을 저장하지 못했어요', icon: SnackbarIcon.fail);
            }
          },
            width: 62.w,
@@ -366,7 +366,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 탈퇴 실패
-      WeteamUtils.snackbar("탈퇴하지 못했습니다", "호스트인 팀플이 있거나 오류가 발생했습니다",
+      WeteamUtils.snackbar("탈퇴할 수 없어요", "호스트인 팀플이 있거나 오류가 있어요",
           icon: SnackbarIcon.fail);
     }
   }
@@ -378,7 +378,7 @@ class Profile extends GetView<ProfileController> {
       resetApp();
     } else {
       // 로그아웃 실패
-      WeteamUtils.snackbar("로그아웃 실패", "오류가 있었습니다", icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar("로그아웃 실패", "오류가 발생했어요", icon: SnackbarIcon.fail);
     }
   }
 
@@ -397,7 +397,7 @@ class Profile extends GetView<ProfileController> {
         if (newStatus.isGranted) {
           controller.togglePushNotification(true);
         } else {
-          WeteamUtils.snackbar('', '알림 권한이 거부되었어요.', icon: SnackbarIcon.fail);
+          WeteamUtils.snackbar('', '알림 권한이 거부되었어요', icon: SnackbarIcon.fail);
         }
       } else {
         controller.togglePushNotification(true);

@@ -146,7 +146,7 @@ class _DDayDialogState extends State<DDayDialog> {
                   } catch (e, st) {
                     debugPrint(e.toString());
                     debugPrintStack(stackTrace: st);
-                    WeteamUtils.snackbar('문제가 발생했습니다', '오류가 있었습니다');
+                    WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요');
                   }
                 }),
           ],
@@ -165,7 +165,7 @@ class _DDayDialogState extends State<DDayDialog> {
     String name = teController.text.trim();
     if (name.isEmpty) {
       setState(() {
-        warningContent = '디데이명을 입력해주세요!';
+        warningContent = '디데이명을 입력해 주세요!';
         warningVisible = true;
       });
       return;

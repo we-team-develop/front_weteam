@@ -144,7 +144,7 @@ class LoginMain extends StatelessWidget {
           resetApp();
         }
       } else {
-        WeteamUtils.snackbar("", "로그인에 실패하였습니다", icon: SnackbarIcon.fail);
+        WeteamUtils.snackbar("", "로그인에 실패했어요", icon: SnackbarIcon.fail);
       }
     } catch (e) {
       log("$e");

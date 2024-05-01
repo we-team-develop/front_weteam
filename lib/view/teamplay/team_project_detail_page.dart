@@ -160,10 +160,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         await WeteamUtils.closeSnackbarNow();
         Get.back();
         Get.back();
-        WeteamUtils.snackbar("", '팀플이 성공적으로 삭제되었어요.',
+        WeteamUtils.snackbar("", '팀플이 성공적으로 삭제되었어요',
             icon: SnackbarIcon.success);
       } else {
-        WeteamUtils.snackbar("", '팀플을 삭제하지 못했어요.', icon: SnackbarIcon.fail);
+        WeteamUtils.snackbar("", '팀플을 삭제하지 못했어요', icon: SnackbarIcon.fail);
       }
     } else {
       // 팀플 탈퇴
@@ -174,9 +174,9 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         await WeteamUtils.closeSnackbarNow();
         Get.back();
         Get.back();
-        WeteamUtils.snackbar("", '팀플을 탈퇴했습니다.', icon: SnackbarIcon.success);
+        WeteamUtils.snackbar("", '팀플을 탈퇴했어요', icon: SnackbarIcon.success);
       } else {
-        WeteamUtils.snackbar("", '팀플을 탈퇴하지 못했어요.', icon: SnackbarIcon.fail);
+        WeteamUtils.snackbar("", '팀플을 탈퇴하지 못했어요', icon: SnackbarIcon.fail);
       }
     }
   }
@@ -604,7 +604,7 @@ class _CancelOrActionBottomPanel
                   dynamic ret = action.call();
                   if (ret is Future) await ret;
                 } catch (e, st) {
-                  WeteamUtils.snackbar("죄송합니다", "오류가 발생했습니다",
+                  WeteamUtils.snackbar("", "오류가 발생했어요",
                       icon: SnackbarIcon.fail);
                   debugPrint("$e");
                   debugPrintStack(stackTrace: st);
@@ -679,7 +679,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
   Future<void> setRole() async {
     String newRole = tec.text.trim();
     if (newRole.isEmpty) {
-      WeteamUtils.snackbar("", "역할을 입력해주세요", icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar("", "역할을 입력해 주세요", icon: SnackbarIcon.fail);
       return;
     }
     bool result = await Get.find<ApiService>()
@@ -688,7 +688,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       Get.back();
       controller.fetchUserList();
     } else {
-      WeteamUtils.snackbar("역할을 변경하지 못함", "오류가 있었습니다", icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar("", "역할을 저장하지 못했어요", icon: SnackbarIcon.fail);
     }
   }
 }

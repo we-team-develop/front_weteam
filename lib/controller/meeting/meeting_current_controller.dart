@@ -72,7 +72,7 @@ class CurrentMeetingController extends GetxController {
 
     // 불러오지 못했을 경우
     if (meetingDetail == null) {
-      WeteamUtils.snackbar('불러오지 못함', '오류가 있었습니다');
+      WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요');
     } else {
       // 미팅 정보 업데이트(적용)
       meeting.value = meetingDetail.meetingProject;

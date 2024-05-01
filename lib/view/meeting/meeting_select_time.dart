@@ -97,7 +97,7 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
                       bool success = await controller.setSelectedTimes();
                       await controller.fetchMeetingDetail(); // 정보 조회
                       if (!success) {
-                        WeteamUtils.snackbar('저장하지 못했습니다', '오류가 있었습니다');
+                        WeteamUtils.snackbar('', '오류로 인해 저장하지 못했어요');
                       } else {
                         await WeteamUtils.closeSnackbarNow();
                         tmpSelectedMap = null;
