@@ -364,11 +364,11 @@ class ApiService extends CustomGetConnect implements GetxService {
   /// 팀플 팀원 초대 링크 생성 api
   ///
   /// return: 성공시 url(String), 실패시 null
-  Future<String?> getTeamProjectInviteUrl(int projectId) async {
+  Future<String?> getTeamProjectInviteDeepLink(int projectId) async {
     Response rp = await get('/api/project-users/$projectId/invite');
     if (rp.hasError) return null;
 
-    return rp.bodyString;
+    return "weteam://projects/acceptInvite?id=${rp.bodyString}";
   }
 
   /// 팀플 탈퇴 API

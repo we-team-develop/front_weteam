@@ -417,15 +417,14 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     NormalButton(
                       onTap: () async {
                         ApiService service = Get.find<ApiService>();
-                        Future invUrlFuture = service.getTeamProjectInviteUrl(controller.tp.value.id);
+                        Future invUrlFuture = service.getTeamProjectInviteDeepLink(controller.tp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
 
                         String? invUrl = await invUrlFuture;
                         if (invUrl != null) {
-                          // 링크 받아오기 성공
-                          invUrl = Uri.decodeComponent(invUrl);
+                          // 딥링크 생성 성공
                           invUrl = Get.find<ApiService>().convertDeepLink(invUrl);
 
                           String inviteText =
