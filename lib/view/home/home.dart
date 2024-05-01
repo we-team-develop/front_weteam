@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../binding/meeting_bindings.dart';
 import '../../controller/mainpage/home_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';
 import '../dialog/home/dday_dialog.dart';

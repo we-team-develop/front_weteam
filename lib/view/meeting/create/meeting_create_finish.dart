@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/meeting/meeting_create_controller.dart';
-import '../../../data/color_data.dart';
+import '../../../data/app_colors.dart';
 import '../../../data/image_data.dart';
 import '../../../service/api_service.dart';
 import '../../../util/weteam_utils.dart';

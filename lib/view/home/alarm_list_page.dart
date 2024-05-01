@@ -5,7 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../controller/alarm_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../teamplay/team_project_detail_page.dart';

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/profile_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../main.dart';
 import '../../service/api_service.dart';
 import '../../util/weteam_utils.dart';

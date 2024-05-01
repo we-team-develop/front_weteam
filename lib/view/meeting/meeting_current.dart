@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/meeting_widget.dart';

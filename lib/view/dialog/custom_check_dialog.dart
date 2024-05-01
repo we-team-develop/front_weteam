@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 
 class CustomCheckDialog extends StatelessWidget {
   final String? title; // 예시: 정말 로그아웃 하시겠습니까?

@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../controller/meeting/meeting_schedule_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/weteam_user.dart';
 import '../../model/meeting.dart';

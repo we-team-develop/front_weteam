@@ -6,7 +6,7 @@ import 'package:get/instance_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../controller/custom_calendar_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 
 class CustomCalendar extends StatefulWidget {
 

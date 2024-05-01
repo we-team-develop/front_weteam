@@ -7,7 +7,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';

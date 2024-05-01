@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 
-import '../data/color_data.dart';
+import '../data/app_colors.dart';
 import '../data/image_data.dart';
 
 enum SnackbarIcon {

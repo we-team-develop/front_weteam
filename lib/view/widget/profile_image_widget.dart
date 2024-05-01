@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../controller/profile_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 
 double circleSize = 85.0.w;
 double checkMarkSize = circleSize / 2;

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/mainpage/tp_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/team_project_widget.dart';

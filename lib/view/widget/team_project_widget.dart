@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
-import '../../data/color_data.dart';
+import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
 import '../teamplay/team_project_detail_page.dart';

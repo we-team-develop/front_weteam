@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/mainpage/home_controller.dart';
-import '../../../data/color_data.dart';
+import '../../../data/app_colors.dart';
 import '../../../main.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_date_picker.dart';

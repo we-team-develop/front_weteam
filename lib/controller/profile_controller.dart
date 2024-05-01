@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../data/color_data.dart';
+import '../data/app_colors.dart';
 import '../data/image_data.dart';
 import '../model/weteam_profile.dart';
 import '../model/weteam_user.dart';

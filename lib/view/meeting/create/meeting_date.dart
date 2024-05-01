@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/custom_calendar_controller.dart';
 import '../../../controller/meeting/meeting_create_controller.dart';
-import '../../../data/color_data.dart';
+import '../../../data/app_colors.dart';
 import '../../widget/custom_calendart.dart';
 import '../../widget/normal_button.dart';
 
