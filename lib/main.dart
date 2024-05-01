@@ -15,7 +15,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'binding/main_bindings.dart';
-import 'controller/profile_controller.dart';
 import 'data/color_data.dart';
 import 'firebase_options.dart';
 import 'service/auth_service.dart';
