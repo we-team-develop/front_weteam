@@ -97,13 +97,13 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                               style: TextStyle(
                                   fontFamily: 'NanumSquareNeo',
                                   fontSize: 12.sp,
-                                  color: AppColors.G_05)),
+                                  color: AppColors.g5)),
                           Text(' ${widget.teamData?.title}',
                               style: TextStyle(
                                   fontFamily: 'NanumSquareNeo',
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.Black)),
+                                  color: AppColors.black)),
                         ],
                       )
                     ],
@@ -136,7 +136,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                 decoration: ShapeDecoration(
                                   shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                          width: 1.r, color: AppColors.G_02),
+                                          width: 1.r, color: AppColors.g2),
                                       borderRadius: BorderRadius.circular(8.r)),
                                 ),
                                 child: TextField(
@@ -151,10 +151,10 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                     isDense: true,
                                   ),
                                   cursorColor:
-                                  AppColors.MainOrange, // 깜빡이는 커서의 색 변경
+                                  AppColors.mainOrange, // 깜빡이는 커서의 색 변경
                                   style: TextStyle(
                                       fontSize: 10.sp,
-                                      color: AppColors.G_05,
+                                      color: AppColors.g5,
                                       fontFamily: 'NanumSqaureNeo',
                                       fontWeight: FontWeight.bold),
                                   onChanged: (newV) {
@@ -226,7 +226,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                         height: 90.h,
                         margin: EdgeInsets.symmetric(horizontal: 21.w),
                         decoration: const BoxDecoration(
-                          color: AppColors.G_02,
+                          color: AppColors.g2,
                         ),
                       ),
                       Flexible(
@@ -264,7 +264,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       Text(
                         '※ 종료일은 금일 이후 날짜부터 변경 가능합니다.',
                         style: TextStyle(
-                            color: AppColors.G_05,
+                            color: AppColors.g5,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 10.sp),
                       ),
@@ -276,7 +276,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                   child: Text(warningContent,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.MainOrange,
+                          color: AppColors.mainOrange,
                           fontFamily: 'NanumSquareNeo',
                           fontSize: 10.sp))),
             ],

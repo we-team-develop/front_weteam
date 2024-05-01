@@ -45,7 +45,7 @@ class ProfileImageSelectContainerWidget extends GetView<ProfileController> {
                           color: Colors.transparent,
                           border: Border.all(
                             width: 7.w,
-                            color: AppColors.Orange_03,
+                            color: AppColors.orange3,
                           ),
                         ),
                       ),

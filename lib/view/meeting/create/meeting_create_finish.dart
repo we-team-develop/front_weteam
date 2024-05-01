@@ -33,7 +33,7 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
                   style: TextStyle(
                       fontFamily: 'NanumGothic',
                       fontSize: 12.sp,
-                      color: AppColors.Black),
+                      color: AppColors.black),
                   children: [
                     _boldTS(_formatDateTime(controller.startedAt!)),
                     const TextSpan(text: ' 부터 '),
@@ -81,7 +81,7 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
                     style: TextStyle(
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.bold,
-                        color: AppColors.G_05,
+                        color: AppColors.g5,
                         fontSize: 10.sp),
                   )),
             ),
@@ -135,8 +135,8 @@ class _CopyLinkButton extends GetView<MeetingCreateController> {
         margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(color: AppColors.G_01, width: 1),
-            color: AppColors.Orange_01),
+            border: Border.all(color: AppColors.g1, width: 1),
+            color: AppColors.orange1),
         child: Center(
           child: Text("공유 링크 복사",
               style:

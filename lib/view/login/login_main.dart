@@ -25,7 +25,7 @@ class LoginMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.White,
+      backgroundColor: AppColors.white,
       body: SafeArea(child: _body(context)),
     );
   }
@@ -120,7 +120,7 @@ class LoginMain extends StatelessWidget {
                               fontSize: 14.sp,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.bold,
-                              color: AppColors.White
+                              color: AppColors.white
                           ))
                     ],
                   ),

@@ -12,7 +12,7 @@ class AppTitleWidget extends StatelessWidget {
       'WE TEAM',
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: AppColors.Black,
+        color: AppColors.black,
         fontSize: 16.sp,
         fontFamily: 'SBaggroB',
         fontWeight: FontWeight.w400,

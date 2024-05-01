@@ -42,10 +42,10 @@ class _NormalButtonState extends State<NormalButton> {
 
     // 하얀색 버튼이라면
     if (widget.whiteButton) {
-      return AppColors.White;
+      return AppColors.white;
     }
 
-    return widget.enable ? AppColors.MainOrange : AppColors.G_02;
+    return widget.enable ? AppColors.mainOrange : AppColors.g2;
   }
 
   @override
@@ -81,7 +81,7 @@ class _NormalButtonState extends State<NormalButton> {
             shape:
               RoundedRectangleBorder(
                   side: widget.whiteButton
-                    ? BorderSide(width: 1.r, color: AppColors.G_02)
+                    ? BorderSide(width: 1.r, color: AppColors.g2)
                     : BorderSide.none,
                 borderRadius: BorderRadius.circular(8.r)),
         ),
@@ -91,7 +91,7 @@ class _NormalButtonState extends State<NormalButton> {
           child: Text(
             widget.text,
             style: widget.textStyle ?? TextStyle(
-              color: AppColors.White,
+              color: AppColors.white,
               fontSize: widget.fontSize ?? 15.sp,
               fontFamily: 'NanumGothicExtraBold',
             ),

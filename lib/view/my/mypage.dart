@@ -133,7 +133,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     return Container(
       width: 360.w,
       height: 135.h,
-      decoration: const BoxDecoration(color: AppColors.Orange_01),
+      decoration: const BoxDecoration(color: AppColors.orange1),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -157,7 +157,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       child: Text(
                     '${widget.user.value!.username}님 ',
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 16.sp,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w600,
@@ -180,7 +180,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
               Obx(() => Text(
                     widget.user.value?.organization ?? '미입력',
                     style: TextStyle(
-                      color: AppColors.G_04,
+                      color: AppColors.g4,
                       fontSize: 10.sp,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w400,
@@ -236,7 +236,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
       return Text(
         text,
         style: TextStyle(
-          color: AppColors.Black,
+          color: AppColors.black,
           fontSize: 14.sp,
           fontFamily: 'NanumGothic',
           fontWeight: FontWeight.w600,

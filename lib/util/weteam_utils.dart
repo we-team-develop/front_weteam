@@ -51,17 +51,17 @@ class WeteamUtils {
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.bold,
                 fontSize: 15.sp,
-                color: AppColors.White
+                color: AppColors.white
             )),
         messageText: content == null ? null : Text(
           content,
           style: TextStyle(
-            color: AppColors.White,
+            color: AppColors.white,
             fontFamily: 'NanumGothic',
             fontWeight: FontWeight.bold,
             fontSize: 13.sp
           )),
-        backgroundColor: AppColors.G_04,
+        backgroundColor: AppColors.g4,
         snackPosition: SnackPosition.BOTTOM,
         icon: Image.asset(iconPath, width: 12.w, height: 12.h),
         duration: const Duration(seconds: 2),

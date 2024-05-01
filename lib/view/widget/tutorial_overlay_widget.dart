@@ -42,7 +42,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
                             height: 2,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '팀원 간 ',
@@ -50,7 +50,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '일정을 조율',
@@ -59,7 +59,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '할 수 있는 기능이에요',
@@ -67,7 +67,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                     ]),
                   ),
@@ -104,7 +104,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '서로 가능한 ',
@@ -112,7 +112,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '시간대를 선택',
@@ -121,7 +121,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '하고 \n',
@@ -129,7 +129,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '일정을 비교',
@@ -138,7 +138,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                       TextSpan(
                         text: '해보세요!',
@@ -146,7 +146,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
-                            color: AppColors.White),
+                            color: AppColors.white),
                       ),
                     ]),
                   ),
@@ -172,7 +172,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                               decorationThickness: 0,
                               fontFamily: 'NanumSquareNeo',
                               fontSize: 11.sp,
-                              color: AppColors.White),
+                              color: AppColors.white),
                         )
                       ],
                     ),
@@ -201,8 +201,8 @@ class TutorialOverlay extends GetView<MeetingController> {
               controller: controller.overlayPageController,
               count: 2,
               effect: WormEffect(
-                dotColor: AppColors.G_03,
-                activeDotColor: AppColors.White,
+                dotColor: AppColors.g3,
+                activeDotColor: AppColors.white,
                 dotHeight: 7.h,
                 dotWidth: 7.w,
               ),

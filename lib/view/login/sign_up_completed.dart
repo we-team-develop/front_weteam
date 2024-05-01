@@ -23,7 +23,7 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.White,
+      backgroundColor: AppColors.white,
       body: _body(),
     );
   }

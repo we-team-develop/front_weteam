@@ -37,7 +37,7 @@ class ProfileSettingPage extends StatelessWidget {
                   'WE TEAM',
                   style: TextStyle(
                     fontFamily: 'SBaggroB',
-                    color: AppColors.MainOrange,
+                    color: AppColors.mainOrange,
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0.sp,
                   ),

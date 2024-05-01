@@ -93,9 +93,9 @@ class MyApp extends StatelessWidget {
                     centerTitle: true,
                     elevation: 0.0,
                   ),
-                  scaffoldBackgroundColor: AppColors.White,
+                  scaffoldBackgroundColor: AppColors.white,
                   colorScheme:
-                      ColorScheme.fromSeed(seedColor: AppColors.MainOrange),
+                      ColorScheme.fromSeed(seedColor: AppColors.mainOrange),
                   bottomNavigationBarTheme:
                       const BottomNavigationBarThemeData()),
               home: home,

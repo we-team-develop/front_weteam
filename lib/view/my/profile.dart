@@ -119,8 +119,8 @@ class Profile extends GetView<ProfileController> {
            text: '저장',
            textStyle: TextStyle(fontFamily: 'NanumGothicExtraBold',
                fontSize: 12.sp,
-               color: enable ? AppColors.White : AppColors.Black),
-           color: enable ? AppColors.MainOrange : AppColors.G_02,
+               color: enable ? AppColors.white : AppColors.black),
+           color: enable ? AppColors.mainOrange : AppColors.g2,
          );
        },
     );
@@ -153,7 +153,7 @@ class Profile extends GetView<ProfileController> {
             fontFamily: 'NanumGothic',
             fontSize: 15.0.sp,
             fontWeight: FontWeight.w400,
-            color: AppColors.Red),
+            color: AppColors.red),
       ),
     );
   }
@@ -185,7 +185,7 @@ class Profile extends GetView<ProfileController> {
             fontFamily: 'NanumGothic',
             fontSize: 15.0.sp,
             fontWeight: FontWeight.w400,
-            color: AppColors.Black),
+            color: AppColors.black),
       ),
     );
   }
@@ -200,7 +200,7 @@ class Profile extends GetView<ProfileController> {
               fontFamily: 'NanumGothic',
               fontSize: 14.0.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.G_04),
+              color: AppColors.g4),
         ),
         SizedBox(height: 14.h),
         Obx(() {
@@ -242,7 +242,7 @@ class Profile extends GetView<ProfileController> {
               fontFamily: 'NanumGothic',
               fontSize: 14.0.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.G_04),
+              color: AppColors.g4),
         ),
         SizedBox(height: 16.0.h),
         Row(
@@ -253,7 +253,7 @@ class Profile extends GetView<ProfileController> {
               style: TextStyle(
                   fontFamily: 'NanumGothic',
                   fontSize: 15.0.sp,
-                  color: AppColors.Black),
+                  color: AppColors.black),
             ),
             CustomSwitch(
               onChanged: toggleAlarmSwitch,
@@ -275,7 +275,7 @@ class Profile extends GetView<ProfileController> {
               fontFamily: 'NanumGothic',
               fontSize: 14.0.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.G_04),
+              color: AppColors.g4),
         ),
         SizedBox(height: 4.0.h),
         _organizationTextField(),
@@ -290,7 +290,7 @@ class Profile extends GetView<ProfileController> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0.r),
         border: Border.all(
-          color: AppColors.G_01,
+          color: AppColors.g1,
           width: 1.0.w,
         ),
       ),
@@ -314,7 +314,7 @@ class Profile extends GetView<ProfileController> {
                     hintStyle: TextStyle(
                       fontFamily: 'NanumGothic',
                       fontSize: 14.sp,
-                      color: AppColors.G_06,
+                      color: AppColors.g6,
                     ),
                     counterText: '',
                   ),
@@ -332,7 +332,7 @@ class Profile extends GetView<ProfileController> {
                       style: TextStyle(
                         fontFamily: 'NanumGothic',
                         fontSize: 14.sp,
-                        color: AppColors.G_06,
+                        color: AppColors.g6,
                       ),
                     ),
                   )),
@@ -353,7 +353,7 @@ class Profile extends GetView<ProfileController> {
               fontFamily: 'NanumGothic',
               fontSize: 14.0.sp,
               fontWeight: FontWeight.bold,
-              color: AppColors.G_04),
+              color: AppColors.g4),
         ),
         const ProfileImageSelectContainerWidget(),
       ],

@@ -72,7 +72,7 @@ class TeamPlay extends GetView<TeamPlayController> {
             '진행 중인 팀플이 없어요.\n홈화면에서 팀플을 생성해보세요!',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AppColors.Black,
+              color: AppColors.black,
               fontSize: 11.sp,
               fontFamily: 'NanumSquareNeo',
               fontWeight: FontWeight.w400,

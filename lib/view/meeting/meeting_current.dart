@@ -38,7 +38,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
           ),
           Divider(
             height: 1.h,
-            color: AppColors.G_01,
+            color: AppColors.g1,
           ),
           SizedBox(
             height: 14.h,
@@ -56,7 +56,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
             ),
           ),
           SizedBox(height: 14.h),
-          Divider(height: 1.h, color: AppColors.G_01),
+          Divider(height: 1.h, color: AppColors.g1),
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 6.h),
             child: Center(
@@ -151,7 +151,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
         ),
         VerticalDivider(
           width: 1.w,
-          color: AppColors.G_02,
+          color: AppColors.g2,
         ),
         Expanded(
           child: _nonParticipant(),

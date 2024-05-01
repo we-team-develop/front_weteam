@@ -21,9 +21,9 @@ class CustomSwitch extends StatefulWidget {
     this.trackWidth = 44,
     this.toggleWidth = 21,
     this.toggleHeight = 21,
-    this.trackActiveColor = AppColors.Orange_03,
+    this.trackActiveColor = AppColors.orange3,
     this.trackInActiveColor = const Color(0xffcccccc),
-    this.toggleActiveColor = AppColors.White,
+    this.toggleActiveColor = AppColors.white,
   });
   @override
   CustomSwitchState createState() => CustomSwitchState();

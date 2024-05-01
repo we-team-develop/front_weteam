@@ -88,7 +88,7 @@ class _NotificationContainerState extends State<NotificationContainer> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
-        color: widget.notification.read ? Colors.transparent : AppColors.Orange_01,
+        color: widget.notification.read ? Colors.transparent : AppColors.orange1,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,7 +105,7 @@ class _NotificationContainerState extends State<NotificationContainer> {
             Text(
               widget.notification.getContent(),
               style: TextStyle(
-                color: AppColors.Black,
+                color: AppColors.black,
                 fontSize: 11.sp,
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w300,
@@ -115,7 +115,7 @@ class _NotificationContainerState extends State<NotificationContainer> {
             Text(
               widget.notification.date,
               style: TextStyle(
-                color: AppColors.G_04,
+                color: AppColors.g4,
                 fontSize: 10.sp,
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w300,

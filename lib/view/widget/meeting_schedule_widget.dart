@@ -199,24 +199,24 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
             bool selected =
                 controller.selected[sMapKey]?.contains(widget.dt.hour) == true;
 
-            color = selected ? AppColors.Blue_07 : AppColors.G_02;
+            color = selected ? AppColors.blue7 : AppColors.g2;
           } else {
             List<MeetingUser> pList = _getPopulationList();
             int populationSize = pList.length;
 
             if (populationSize == 0) {
-              color = AppColors.G_02;
+              color = AppColors.g2;
             } else {
               double percent = populationSize / controller.maxPopulation.value;
 
               if (percent >= 0.75) {
-                color = AppColors.Blue_07;
+                color = AppColors.blue7;
               } else if (percent >= 0.5) {
-                color = AppColors.Blue_06;
+                color = AppColors.blue6;
               } else if (percent >= 0.25) {
-                color = AppColors.Blue_05;
+                color = AppColors.blue5;
               } else {
-                color = AppColors.Blue_04;
+                color = AppColors.blue4;
               }
             }
           }
@@ -285,7 +285,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             decoration: BoxDecoration(
-                color: AppColors.White,
+                color: AppColors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
                 boxShadow:[
                   BoxShadow(
@@ -306,7 +306,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                     height: 4.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.r),
-                        color: AppColors.G_03
+                        color: AppColors.g3
                     ),
                   ),
                 ),
@@ -333,7 +333,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                 ),
                 SizedBox(height: 16.h),
                 Container(height: 0.5.h,
-                    color: AppColors.G_02),
+                    color: AppColors.g2),
 
                 SizedBox(height: 8.h),
                 Text('참여 가능 : ${joinUserNameList.length}명',
@@ -474,7 +474,7 @@ class _UserNameContainer extends StatelessWidget {
       width: 56.w,
       height: 24.h,
       decoration: BoxDecoration(
-          color: colored ? AppColors.Orange_03 : AppColors.White,
+          color: colored ? AppColors.orange3 : AppColors.white,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: const [
             BoxShadow(
@@ -495,7 +495,7 @@ class _UserNameContainer extends StatelessWidget {
             style: TextStyle(
                 fontSize: 10,
                 fontFamily: 'NanumGothic',
-                color: colored ? AppColors.White : AppColors.Black
+                color: colored ? AppColors.white : AppColors.black
             ),
           ),
         ),

@@ -60,7 +60,7 @@ class _CalendarItem extends StatelessWidget {
           child: Text(
             str[index],
             style: TextStyle(
-                color: AppColors.G_04,
+                color: AppColors.g4,
                 fontFamily: 'NanumGothic',
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold),
@@ -164,7 +164,7 @@ class _BlankDay extends GetView<CustomCalendarController> {
             (later.isAfter(date) || later.isAtSameMomentAs(date))) {
           return Container(
               height: 26.h,
-              decoration: const BoxDecoration(color: AppColors.Blue_03));
+              decoration: const BoxDecoration(color: AppColors.blue3));
         }
       } else {
         // 뒤에 있음
@@ -172,7 +172,7 @@ class _BlankDay extends GetView<CustomCalendarController> {
             (earlier.isBefore(date) || earlier.isAtSameMomentAs(date))) {
           return Container(
               height: 26.h,
-              decoration: const BoxDecoration(color: AppColors.Blue_03));
+              decoration: const BoxDecoration(color: AppColors.blue3));
         }
       }
 
@@ -193,13 +193,13 @@ class _DayWidget extends GetView<CustomCalendarController> {
 
       late Color textColor;
       if (!isEnabled) {
-        textColor = AppColors.G_03;
+        textColor = AppColors.g3;
       } else if (date.weekday == 6) {
-        textColor = AppColors.Blue_01;
+        textColor = AppColors.blue1;
       } else if (date.weekday == 7) {
-        textColor = AppColors.Red;
+        textColor = AppColors.red;
       } else {
-        textColor = AppColors.Black;
+        textColor = AppColors.black;
       }
 
       bool selectedCompletely = controller.selectedDt1.value != null &&
@@ -223,7 +223,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
 
       bool amILater = false;
       if (selected) {
-        textColor = AppColors.White;
+        textColor = AppColors.white;
         if (selectedCompletely) {
           if (controller.selectedDt1.value == date) {
             amILater =
@@ -275,7 +275,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
                         child: Container(
                             height: 26.h,
                             decoration: const BoxDecoration(
-                              color: AppColors.Blue_03
+                              color: AppColors.blue3
                             )))),
                 Positioned(
                     left: amILater ? 0 : null,
@@ -286,14 +286,14 @@ class _DayWidget extends GetView<CustomCalendarController> {
                             height: 26.h,
                             width: 20.w,
                             decoration:
-                                const BoxDecoration(color: AppColors.Blue_03)))),
+                                const BoxDecoration(color: AppColors.blue3)))),
                 Visibility(
                     visible: selected,
                     child: Container(
                         width: 30.w,
                         height: 30.h,
                         decoration: const BoxDecoration(
-                            color: AppColors.Blue_01,
+                            color: AppColors.blue1,
                           shape: BoxShape.circle
                             ))),
                 Text('${date.day}',

@@ -69,7 +69,7 @@ class _TextInput extends GetView<MeetingCreateController> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: AppColors.G_01, width: 1.r)),
+          border: Border.all(color: AppColors.g1, width: 1.r)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -86,7 +86,7 @@ class _TextInput extends GetView<MeetingCreateController> {
                 hintStyle: TextStyle(
                     fontFamily: "NanumGothic",
                     fontSize: 14.sp,
-                    color: AppColors.G_06)),
+                    color: AppColors.g6)),
             maxLength: maxLength,
             onChanged: (value) =>
                 controller.nameInputText.value = value.trimRight(),
@@ -96,7 +96,7 @@ class _TextInput extends GetView<MeetingCreateController> {
                 style: TextStyle(
                     fontFamily: 'NanumSquareNeo',
                     fontSize: 12.sp,
-                    color: AppColors.G_05),
+                    color: AppColors.g5),
               )),
           SizedBox(width: 8.w)
         ],

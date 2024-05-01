@@ -54,7 +54,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
           if (controller.tpList.isEmpty) {
             return Center(
                 child: Text('표시할 팀플이 없어요',
-                    style: TextStyle(color: AppColors.Black, fontSize: 12.sp)));
+                    style: TextStyle(color: AppColors.black, fontSize: 12.sp)));
           }
 
           return Padding(
@@ -129,7 +129,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isSelected ? AppColors.MainOrange : Colors.transparent,
+              color: isSelected ? AppColors.mainOrange : Colors.transparent,
               width: 2.r,
             ),
           ),
@@ -139,7 +139,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
           style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
-              color: isSelected ? AppColors.MainOrange : AppColors.G_02),
+              color: isSelected ? AppColors.mainOrange : AppColors.g2),
         ),
       ),
     );
@@ -165,7 +165,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
             '팀플을 미선택 할래요. ',
             style: TextStyle(
                 fontFamily: 'NanumGothic',
-                color: AppColors.G_05,
+                color: AppColors.g5,
                 fontWeight: FontWeight.bold,
                 fontSize: 10.sp),
           ),
@@ -178,7 +178,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
               style: TextStyle(
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.bold,
-                  color: AppColors.G_05,
+                  color: AppColors.g5,
                   decoration: TextDecoration.underline,
                   fontSize: 10.sp),
             ),
@@ -199,13 +199,13 @@ class _SelectButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 4.h),
       decoration: BoxDecoration(
-          color: isSelected ? AppColors.Orange_03 : AppColors.G_02,
+          color: isSelected ? AppColors.orange3 : AppColors.g2,
           borderRadius: BorderRadius.circular(10.r)),
       child: Center(
           child: Text(
         '선택',
         style: TextStyle(
-            color: isSelected ? AppColors.White : AppColors.G_05,
+            color: isSelected ? AppColors.white : AppColors.g5,
             fontFamily: 'NanumSquareNeo',
             fontSize: 9.sp,
             fontWeight: FontWeight.bold),
@@ -223,7 +223,7 @@ class _Search extends GetView<MeetingCreateController> {
       height: 49.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: AppColors.G_02, width: 1.w),
+        border: Border.all(color: AppColors.g2, width: 1.w),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -238,7 +238,7 @@ class _Search extends GetView<MeetingCreateController> {
                         fontFamily: 'NanumGothic',
                         fontSize: 15.0.sp,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.Black),
+                        color: AppColors.black),
                     decoration: const InputDecoration(
                         border: InputBorder.none, isDense: true),
                   ))),

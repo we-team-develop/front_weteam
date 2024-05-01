@@ -52,12 +52,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
 
           // 각종 색 변경
-          focusColor: AppColors.MainOrange,
-          fillColor: AppColors.MainOrange,
-          prefixIconColor: AppColors.MainOrange,
-          suffixIconColor: AppColors.MainOrange,
-          hoverColor: AppColors.MainOrange,
-          iconColor: AppColors.MainOrange,
+          focusColor: AppColors.mainOrange,
+          fillColor: AppColors.mainOrange,
+          prefixIconColor: AppColors.mainOrange,
+          suffixIconColor: AppColors.mainOrange,
+          hoverColor: AppColors.mainOrange,
+          iconColor: AppColors.mainOrange,
 
           // hint와 underline 사이의 공간 제거
           contentPadding: EdgeInsets.zero,
@@ -65,9 +65,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
           // Underline의 색을 변경합니다
           focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.MainOrange),
+            borderSide: BorderSide(color: AppColors.mainOrange),
           )),
-      cursorColor: AppColors.MainOrange, // 깜빡이는 커서의 색 변경
+      cursorColor: AppColors.mainOrange, // 깜빡이는 커서의 색 변경
       maxLength: widget.maxLength, // 최대 20자
 
       style: TextStyle(

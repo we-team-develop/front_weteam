@@ -87,7 +87,7 @@ class _DDayDialogState extends State<DDayDialog> {
                       height: 90.h,
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
                       decoration: const BoxDecoration(
-                        color: AppColors.G_02,
+                        color: AppColors.g2,
                       ),
                     ),
                     Flexible(
@@ -126,7 +126,7 @@ class _DDayDialogState extends State<DDayDialog> {
                       warningContent,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.MainOrange,
+                          color: AppColors.mainOrange,
                           fontFamily: 'NanumSquareNeo',
                           fontSize: 10.sp),
                     ),

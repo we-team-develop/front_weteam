@@ -33,7 +33,7 @@ class MeetingDate extends GetView<MeetingCreateController> {
         ),
         Divider(
           height: 1.h,
-          color: AppColors.G_02,
+          color: AppColors.g2,
         ),
         SizedBox(
           height: 24.h,

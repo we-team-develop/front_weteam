@@ -60,7 +60,7 @@ class Home extends GetView<HomeController> {
                         height: 0.7,
                         width: double.infinity,
                         child: ColoredBox(
-                          color: AppColors.G_02,
+                          color: AppColors.g2,
                         ),
                       ),
                       SizedBox(height: 15.h),
@@ -133,7 +133,7 @@ class Home extends GetView<HomeController> {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.r, color: AppColors.G_02),
+            side: BorderSide(width: 1.r, color: AppColors.g2),
             borderRadius: BorderRadius.circular(8.r),
           ),
         ),
@@ -149,7 +149,7 @@ class Home extends GetView<HomeController> {
             Text(
               '팀플 추가하기',
               style: TextStyle(
-                color: AppColors.Black,
+                color: AppColors.black,
                 fontSize: 11.sp,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.w700,
@@ -193,7 +193,7 @@ class Home extends GetView<HomeController> {
                   '진행 중인 팀플이 없어요.\n지금 바로 생성해보세요!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: AppColors.Black,
+                    color: AppColors.black,
                     fontSize: 11.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w400,
@@ -222,7 +222,7 @@ class Home extends GetView<HomeController> {
       width: double.infinity,
       height: 70.h,
       decoration: ShapeDecoration(
-        color: AppColors.Orange_01,
+        color: AppColors.orange1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
       child: Stack(
@@ -344,7 +344,7 @@ class _DDayWidgetState extends State<DDayWidget> {
         width: 330.w,
         height: 176.h,
         decoration: ShapeDecoration(
-          color: AppColors.MainOrange,
+          color: AppColors.mainOrange,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
@@ -412,7 +412,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                           child: Text(
                                             '수정하기',
                                             style: TextStyle(
-                                              color: AppColors.Black,
+                                              color: AppColors.black,
                                               fontSize: 8.sp,
                                               fontFamily: 'NanumSquareNeo',
                                               fontWeight: FontWeight.w400,
@@ -425,7 +425,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                     width: 67.w,
                                     height: 0.50.h,
                                     decoration: const BoxDecoration(
-                                        color: AppColors.G_02),
+                                        color: AppColors.g2),
                                   ),
                                   GestureDetector(
                                       behavior: HitTestBehavior.translucent,
@@ -446,7 +446,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             child: Text(
                                               '삭제하기',
                                               style: TextStyle(
-                                                color: AppColors.Red,
+                                                color: AppColors.red,
                                                 fontSize: 8.sp,
                                                 fontFamily: 'NanumSquareNeo',
                                                 fontWeight: FontWeight.w400,
@@ -510,9 +510,9 @@ class _DDayWidgetState extends State<DDayWidget> {
       width: 330.w,
       height: 176.h,
       decoration: ShapeDecoration(
-        color: AppColors.Orange_01,
+        color: AppColors.orange1,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1.r, color: AppColors.G_02),
+          side: BorderSide(width: 1.r, color: AppColors.g2),
           borderRadius: BorderRadius.circular(16.r),
         ),
       ),
@@ -526,7 +526,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '중요한 일정을 ',
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
@@ -536,7 +536,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '추가',
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w700,
@@ -546,7 +546,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                   TextSpan(
                     text: '해보세요!\n언제든 수정가능합니다:)',
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,

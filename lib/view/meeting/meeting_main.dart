@@ -98,7 +98,7 @@ class MeetingMainPage extends GetView<MeetingController> {
                     '생성된 언제보까가 없어요.\n지금 바로 생성해보세요!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 11.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,

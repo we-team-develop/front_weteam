@@ -30,8 +30,8 @@ class CustomCheckDialog extends StatelessWidget {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       //titlePadding: const EdgeInsets.fromLTRB(40, 28, 40, 5),
-      backgroundColor: AppColors.White,
-      surfaceTintColor: AppColors.White,
+      backgroundColor: AppColors.white,
+      surfaceTintColor: AppColors.white,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         //Dialog Main Title
@@ -56,7 +56,7 @@ class CustomCheckDialog extends StatelessWidget {
                     title!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: AppColors.Black,
+                      color: AppColors.black,
                       fontSize: 12.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w700,
@@ -74,7 +74,7 @@ class CustomCheckDialog extends StatelessWidget {
                           content!,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AppColors.Black,
+                            color: AppColors.black,
                             fontSize: 10.sp,
                             fontFamily: 'NanumSquareNeo',
                             fontWeight: FontWeight.w400,
@@ -94,7 +94,7 @@ class CustomCheckDialog extends StatelessWidget {
                   width: double.infinity,
                   height: 0.5.r,
                   decoration: const BoxDecoration(
-                    color: AppColors.G_02,
+                    color: AppColors.g2,
                   ),
                 ),
                 IntrinsicHeight(
@@ -109,7 +109,7 @@ class CustomCheckDialog extends StatelessWidget {
                     Container(
                       width: 0.5.r,
                       height: 42.h,
-                      decoration: const BoxDecoration(color: AppColors.G_02),
+                      decoration: const BoxDecoration(color: AppColors.g2),
                     ),
                     _Button(
                         name: admitName,

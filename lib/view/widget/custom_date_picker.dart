@@ -139,7 +139,7 @@ class _CustomPicker extends StatelessWidget {
               items[index],
               maxLines: 1,
               style: const TextStyle(
-                color: AppColors.Black,
+                color: AppColors.black,
                 fontFamily: 'NanumSquareNeo',
                 fontWeight: FontWeight.bold,
                 height: 0,

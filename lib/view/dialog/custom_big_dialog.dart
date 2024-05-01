@@ -12,8 +12,8 @@ class CustomBigDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppColors.White,
-      surfaceTintColor: AppColors.White,
+      backgroundColor: AppColors.white,
+      surfaceTintColor: AppColors.white,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       titlePadding: EdgeInsets.symmetric(vertical: 29.h),
@@ -23,7 +23,7 @@ class CustomBigDialog extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: AppColors.Black,
+          color: AppColors.black,
           fontSize: 12.sp,
           fontFamily: 'NanumSquareNeo',
           fontWeight: FontWeight.w800,

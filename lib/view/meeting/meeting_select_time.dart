@@ -72,7 +72,7 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
               children: [
                 Divider(
                   height: 1.h,
-                  color: AppColors.G_01,
+                  color: AppColors.g1,
                 ),
                 SizedBox(height: 14.h),
                 // TODO : meeting_widget
@@ -85,7 +85,7 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
                 SizedBox(height: 14.h),
                 Divider(
                   height: 1.h,
-                  color: AppColors.G_01,
+                  color: AppColors.g1,
                 ),
                 SizedBox(height: 25.h),
                 Expanded(

@@ -101,7 +101,7 @@ class MeetingWidget extends StatelessWidget {
               fit: BoxFit.fill),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-          color: AppColors.G_02),
+          color: AppColors.g2),
     );
   }
 
@@ -110,7 +110,7 @@ class MeetingWidget extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        color: AppColors.Black,
+        color: AppColors.black,
         fontSize: 12.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w700,
@@ -123,7 +123,7 @@ class MeetingWidget extends StatelessWidget {
     return Text(
       "팀플명 : ${project.title}",
       style: TextStyle(
-        color: AppColors.Black,
+        color: AppColors.black,
         fontSize: 9.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,
@@ -136,7 +136,7 @@ class MeetingWidget extends StatelessWidget {
     return Text(
       "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
       style: TextStyle(
-        color: AppColors.G_04,
+        color: AppColors.g4,
         fontSize: 9.sp,
         fontFamily: 'NanumSquareNeo',
         fontWeight: FontWeight.w400,

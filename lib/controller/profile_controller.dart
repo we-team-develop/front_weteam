@@ -21,12 +21,12 @@ class ProfileController extends GetxController {
 
   /// 프로필 배경 목록
   final RxList<Color> backgroundColors = RxList<Color>([
-    AppColors.Purple,
-    AppColors.Blue_02,
-    AppColors.Pink_01,
-    AppColors.Blue_01,
-    AppColors.Yellow_01,
-    AppColors.Pink_02,
+    AppColors.purple,
+    AppColors.blue2,
+    AppColors.pink1,
+    AppColors.blue1,
+    AppColors.yellow1,
+    AppColors.pink2,
   ]);
 
   /// 프로필 선택 여부 리스트
