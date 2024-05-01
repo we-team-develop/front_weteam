@@ -444,8 +444,8 @@ class ApiService extends CustomGetConnect implements GetxService {
   ///
   /// return: String - 딥링크 실행용 url
   String convertDeepLink(String url) {
-    url = base64Url.encode(utf8.encode(url));
-    return "$_baseUrl/api/common/$url";
+    url = Uri.encodeComponent(url);
+    return "$_baseUrl/api/common?url=$url";
   }
 }
 
