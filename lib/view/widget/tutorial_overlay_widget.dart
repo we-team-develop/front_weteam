@@ -32,44 +32,46 @@ class TutorialOverlay extends GetView<MeetingController> {
               children: [
                 // 텍스트
                 Padding(
-                  padding: EdgeInsets.only(left: 50.w),
+                  padding: EdgeInsets.only(left: 66.w),
                   child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                        text: '\'언제보까\'는 \n',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            height: 2,
-                            color: AppColors.white),
-                      ),
-                      TextSpan(
-                        text: '팀원 간 ',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            color: AppColors.white),
-                      ),
-                      TextSpan(
-                        text: '일정을 조율',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white),
-                      ),
-                      TextSpan(
-                        text: '할 수 있는 기능이에요',
-                        style: TextStyle(
-                            decorationThickness: 0,
-                            fontFamily: 'NanumSquareNeo',
-                            fontSize: 13.sp,
-                            color: AppColors.white),
-                      ),
-                    ]),
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '\'언제보까\'는 \n',
+                          style: TextStyle(
+                              decorationThickness: 0,
+                              fontFamily: 'NanumSquareNeo',
+                              fontSize: 13.sp,
+                              height: 2,
+                              color: AppColors.white),
+                        ),
+                        TextSpan(
+                          text: '팀원 간 ',
+                          style: TextStyle(
+                              decorationThickness: 0,
+                              fontFamily: 'NanumSquareNeo',
+                              fontSize: 13.sp,
+                              color: AppColors.white),
+                        ),
+                        TextSpan(
+                          text: '일정을 조율',
+                          style: TextStyle(
+                              decorationThickness: 0,
+                              fontFamily: 'NanumSquareNeo',
+                              fontSize: 13.sp,
+                              color: AppColors.white),
+                        ),
+                        TextSpan(
+                          text: '할 수 있는 기능이에요',
+                          style: TextStyle(
+                              decorationThickness: 0,
+                              fontFamily: 'NanumSquareNeo',
+                              fontSize: 13.sp,
+                              color: AppColors.white),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
@@ -94,7 +96,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                 // 텍스트
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 50.w,
+                    left: 97.w,
                   ),
                   child: Text.rich(
                     TextSpan(children: [
@@ -103,6 +105,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                         style: TextStyle(
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
+                            height: 2,
                             fontSize: 13.sp,
                             color: AppColors.white),
                       ),
@@ -129,6 +132,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
+                            height: 2,
                             color: AppColors.white),
                       ),
                       TextSpan(
@@ -137,6 +141,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                             decorationThickness: 0,
                             fontFamily: 'NanumSquareNeo',
                             fontSize: 13.sp,
+                            height: 2,
                             fontWeight: FontWeight.bold,
                             color: AppColors.white),
                       ),
@@ -149,10 +154,11 @@ class TutorialOverlay extends GetView<MeetingController> {
                             color: AppColors.white),
                       ),
                     ]),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 10.h, left: 223.w),
+                  padding: EdgeInsets.only(top: 37.h, left: 223.w),
                   child: GestureDetector(
                     onTap: () => controller.toggleShouldShowOverlay(),
                     child: Row(
@@ -179,7 +185,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 24.h),
+                  padding: EdgeInsets.only(top: 8.h),
                   child: Center(
                       child: Image.asset(
                     alignment: Alignment.bottomCenter,
