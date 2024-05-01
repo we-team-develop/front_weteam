@@ -7,7 +7,7 @@ import 'mainpage/home_controller.dart';
 import 'mainpage/my_page_controller.dart';
 import 'mainpage/tp_controller.dart';
 
-enum Page { TEAMPLAY, HOME, MYPAGE }
+enum Page { project, home, myPage }
 
 class BottomNavController extends GetxController {
   final RxInt _pageIndex = 1.obs;
@@ -23,13 +23,13 @@ class BottomNavController extends GetxController {
     try {
       if (pageIndex == _pageIndex.value) {
         switch (page) {
-          case Page.TEAMPLAY:
+          case Page.project:
             Get.find<TeamPlayController>().tpScrollUp();
             break;
-          case Page.HOME:
+          case Page.home:
             Get.find<HomeController>().scrollUp();
             break;
-          case Page.MYPAGE:
+          case Page.myPage:
             Get.find<MyPageController>().scrollUp();
             break;
         }
