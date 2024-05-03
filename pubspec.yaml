@@ -25,13 +25,13 @@ dependencies:
   flutter_phoenix: ^1.1.1
   smooth_page_indicator: ^1.1.0
   uni_links: ^0.5.1
-  share_plus: ^7.2.2
+  share_plus: ^9.0.0
   auto_size_text: ^3.0.0
   firebase_messaging: ^14.7.19
-  firebase_crashlytics: ^3.5.4
   permission_handler: ^11.3.0
   bottom_sheet: ^4.0.0
   see_more: ^0.0.1
+  firebase_crashlytics: ^3.5.2
 
 dev_dependencies:
   flutter_test:
