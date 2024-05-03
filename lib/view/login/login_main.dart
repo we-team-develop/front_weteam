@@ -10,6 +10,7 @@ import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../model/login_result.dart';
 import '../../service/auth_service.dart';
+import '../../util/helper/apple_auth_helper.dart';
 import '../../util/helper/auth_helper.dart';
 import '../../util/helper/google_auth_helper.dart';
 import '../../util/helper/kakao_auth_helper.dart';
@@ -61,9 +62,7 @@ class LoginMain extends StatelessWidget {
               SizedBox(height: padding),
               // 임시 회원
               GestureDetector(
-                onTap: () {
-                  Get.to(() => const SignUpCompleted());
-                },
+                onTap: () => login(AppleAuthHelper(), context),
                 child: Image.asset(
                   ImagePath.appleLogin,
                   width: 302.w,

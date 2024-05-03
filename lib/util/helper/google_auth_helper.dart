@@ -50,4 +50,9 @@ class GoogleAuthHelper extends AuthHelper {
 
     return true;
   }
+
+  @override
+  WeteamAuthProvider getProvider() {
+    return WeteamAuthProvider.google;
+  }
 }

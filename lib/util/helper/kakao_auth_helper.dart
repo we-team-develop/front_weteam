@@ -29,4 +29,9 @@ class KakaoAuthHelper extends AuthHelper {
     await Kakao.logout();
     return true;
   }
+
+  @override
+  WeteamAuthProvider getProvider() {
+    return WeteamAuthProvider.kakao;
+  }
 }

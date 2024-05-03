@@ -61,4 +61,9 @@ class NaverAuthHelper extends AuthHelper {
       return false;
     }
   }
+
+  @override
+  WeteamAuthProvider getProvider() {
+    return WeteamAuthProvider.naver;
+  }
 }
