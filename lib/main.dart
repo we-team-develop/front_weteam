@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -122,14 +121,16 @@ Future<void> _initApp() async {
   try {
     // 회원가입이 완료되어 있는 상태였는지 확인
     bool? isRegistered =
-    sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
+        sharedPreferences.getBool(SharedPreferencesKeys.isRegistered);
 
-    if (isRegistered == true) { // 회원가입이 완료되어 있던 회원
+    if (isRegistered == true) {
+      // 회원가입이 완료되어 있던 회원
       String? weteamUserJson =
-      sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
+          sharedPreferences.getString(SharedPreferencesKeys.weteamUserJson);
 
       User? fbUser = FirebaseAuth.instance.currentUser;
-      if (fbUser != null && weteamUserJson != null) { // 로그인 정보가 남아 있다면
+      if (fbUser != null && weteamUserJson != null) {
+        // 로그인 정보가 남아 있다면
         MemCache.put(MemCacheKey.weteamUserJson, weteamUserJson);
         MemCache.put(
             MemCacheKey.firebaseAuthIdToken, await fbUser.getIdToken());
