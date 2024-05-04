@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'dart:io' show Platform;
 
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
@@ -32,16 +33,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
           child: Column(
             children: [
               SizedBox(height: 15.h),
-              Center(
-                  child: Text(
-                '팀플방',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
+              Platform.isIOS ? iosTitle(context) : androidTitle(),
               SizedBox(height: 15.h),
               Expanded(
                   child: SingleChildScrollView(
@@ -145,6 +137,50 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
               )),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget iosTitle(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 유지
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          child: IconButton(
+            icon: Image.asset(ImagePath.backios), // 뒤로가기 버튼 이미지
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            '팀플방',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14.sp,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        Container(), // 균형 유지를 위한 빈 컨테이너
+      ],
+    );
+  }
+
+  Widget androidTitle() {
+    return Center(
+      child: Text(
+        '팀플방',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 14.sp,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w600,
+          height: 0,
         ),
       ),
     );
@@ -417,7 +453,9 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     NormalButton(
                       onTap: () async {
                         ApiService service = Get.find<ApiService>();
-                        Future invUrlFuture = service.getTeamProjectInviteDeepLink(controller.tp.value.id);
+                        Future invUrlFuture =
+                            service.getTeamProjectInviteDeepLink(
+                                controller.tp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
                         String teamProjectName = controller.tp.value.title;
@@ -425,7 +463,8 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         String? invUrl = await invUrlFuture;
                         if (invUrl != null) {
                           // 딥링크 생성 성공
-                          invUrl = Get.find<ApiService>().convertDeepLink(invUrl);
+                          invUrl =
+                              Get.find<ApiService>().convertDeepLink(invUrl);
 
                           String inviteText =
                               '$userName님이 $teamProjectName에 초대했어요!\n$invUrl';

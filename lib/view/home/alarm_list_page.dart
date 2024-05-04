@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'dart:io' show Platform;
 
 import '../../controller/alarm_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
+import '../../data/image_data.dart';
 import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../teamplay/team_project_detail_page.dart';
@@ -19,6 +21,7 @@ class AlarmListPage extends GetView<AlarmController> {
     return super.createElement();
   }
 
+  //ios andorid 구분
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,35 +29,68 @@ class AlarmListPage extends GetView<AlarmController> {
         child: Column(
           children: [
             SizedBox(height: 16.h),
-            Center(
-              child: Text(
-                '알림',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                ),
-              ),
-            ),
+            Platform.isIOS ? iosTitle(context) : androidTitle(),
             SizedBox(height: 16.h),
             Expanded(
                 child: PagedListView<int, WeteamAlarm>(
-                  pagingController: controller.getPagingController(),
-                  builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
-                    itemBuilder: (context, item, index) =>
-                        NotificationContainer(item),
-                    noItemsFoundIndicatorBuilder: (context) => Center(
-                      child: Text(
-                        "아직 받은 알림이 없어요!",
-                        style: TextStyle(fontFamily: "NanumSquareNeo", fontSize: 12.sp),
-                      ),
-                    ),
+              pagingController: controller.getPagingController(),
+              builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
+                itemBuilder: (context, item, index) =>
+                    NotificationContainer(item),
+                noItemsFoundIndicatorBuilder: (context) => Center(
+                  child: Text(
+                    "아직 받은 알림이 없어요!",
+                    style: TextStyle(
+                        fontFamily: "NanumSquareNeo", fontSize: 12.sp),
                   ),
-                )),
+                ),
+              ),
+            )),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget iosTitle(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 유지
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          child: IconButton(
+            icon: Image.asset(ImagePath.backios), // 뒤로가기 버튼 이미지
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            '알림',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14.sp,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        Container(), // 균형 유지를 위한 빈 컨테이너
+      ],
+    );
+  }
+
+  Widget androidTitle() {
+    return Center(
+      child: Text(
+        '알림',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 14.sp,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w600,
+          height: 0,
         ),
       ),
     );
@@ -83,12 +119,14 @@ class _NotificationContainerState extends State<NotificationContainer> {
           });
           Get.to(() => GetBuilder(
               builder: (controller) => const TeamProjectDetailPage(),
-              init: TeamProjectDetailPageController(widget.notification.project!)));
+              init: TeamProjectDetailPageController(
+                  widget.notification.project!)));
         }
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 16.h),
-        color: widget.notification.read ? Colors.transparent : AppColors.orange1,
+        color:
+            widget.notification.read ? Colors.transparent : AppColors.orange1,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

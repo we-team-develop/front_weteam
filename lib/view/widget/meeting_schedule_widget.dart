@@ -28,9 +28,11 @@ class MeetingSchedule extends StatefulWidget {
 }
 
 class _MeetingScheduleState extends State<MeetingSchedule> {
-  final ScrollController dateTextHorizontalScrollController = ScrollController();
+  final ScrollController dateTextHorizontalScrollController =
+      ScrollController();
 
-  final ScrollController calendarHorizontalScrollController = ScrollController();
+  final ScrollController calendarHorizontalScrollController =
+      ScrollController();
 
   final Rx<double> verticalScrollOffset = 0.0.obs;
 
@@ -40,14 +42,18 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
   void initState() {
     super.initState();
     calendarHorizontalScrollController.addListener(() {
-      if (horizontalScrollOffset.value != calendarHorizontalScrollController.offset) {
-        horizontalScrollOffset.value = calendarHorizontalScrollController.offset;
+      if (horizontalScrollOffset.value !=
+          calendarHorizontalScrollController.offset) {
+        horizontalScrollOffset.value =
+            calendarHorizontalScrollController.offset;
       }
     });
 
     dateTextHorizontalScrollController.addListener(() {
-      if (horizontalScrollOffset.value != dateTextHorizontalScrollController.offset) {
-        horizontalScrollOffset.value = dateTextHorizontalScrollController.offset;
+      if (horizontalScrollOffset.value !=
+          dateTextHorizontalScrollController.offset) {
+        horizontalScrollOffset.value =
+            dateTextHorizontalScrollController.offset;
       }
     });
 
@@ -68,37 +74,44 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
         Row(
           children: [
             SizedBox(width: 44.79.w),
-            Expanded(child: SizedBox(
-                height: 21.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const ClampingScrollPhysics(),
-                  controller: dateTextHorizontalScrollController,
-                  itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
-                  itemBuilder: (_, i) =>
-                      _dayText(widget.meeting.startedAt.add(Duration(days: i))),
-                )))
+            Expanded(
+                child: SizedBox(
+                    height: 21.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const ClampingScrollPhysics(),
+                      controller: dateTextHorizontalScrollController,
+                      itemCount: widget.meeting.endedAt
+                              .difference(widget.meeting.startedAt)
+                              .inDays +
+                          1,
+                      itemBuilder: (_, i) => _dayText(
+                          widget.meeting.startedAt.add(Duration(days: i))),
+                    )))
           ],
         ),
         SizedBox(height: 6.h),
         Expanded(
             child: Row(
-              children: [
-                SizedBox(
-                  width: 44.79.w,
-                  child: _HourTextList(verticalScrollOffset: verticalScrollOffset),
-                ),
-                Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const ClampingScrollPhysics(),
-                      controller: calendarHorizontalScrollController,
-                      itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
-                      itemBuilder: (_, i) =>
-                          _day(context, widget.meeting.startedAt.add(Duration(days: i))),
-                    ))
-              ],
+          children: [
+            SizedBox(
+              width: 44.79.w,
+              child: _HourTextList(verticalScrollOffset: verticalScrollOffset),
+            ),
+            Expanded(
+                child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const ClampingScrollPhysics(),
+              controller: calendarHorizontalScrollController,
+              itemCount: widget.meeting.endedAt
+                      .difference(widget.meeting.startedAt)
+                      .inDays +
+                  1,
+              itemBuilder: (_, i) => _day(
+                  context, widget.meeting.startedAt.add(Duration(days: i))),
             ))
+          ],
+        ))
       ],
     );
   }
@@ -125,12 +138,14 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
         initialScrollOffset: verticalScrollOffset.value,
         onDetach: (p) => listener.cancel());
 
-    sc.addListener(() { // 스크롤이 변경되었을 때
+    sc.addListener(() {
+      // 스크롤이 변경되었을 때
       if (sc.offset == verticalScrollOffset.value) return;
       verticalScrollOffset.value = sc.offset;
     });
 
-    listener = verticalScrollOffset.listen((p0) { // offset값이 변경되었을 때
+    listener = verticalScrollOffset.listen((p0) {
+      // offset값이 변경되었을 때
       if (sc.offset != p0) {
         sc.jumpTo(p0);
       }
@@ -162,14 +177,16 @@ class _HourSelectBox extends StatefulWidget {
   final DateTime parentDt;
   final bool selectionMode;
 
-  const _HourSelectBox({required this.parentDt, required this.dt, required this.selectionMode});
+  const _HourSelectBox(
+      {required this.parentDt, required this.dt, required this.selectionMode});
 
   @override
   State<_HourSelectBox> createState() => _HourSelectBoxState();
 }
 
 class _HourSelectBoxState extends State<_HourSelectBox> {
-  final MeetingScheduleController controller = Get.find<MeetingScheduleController>();
+  final MeetingScheduleController controller =
+      Get.find<MeetingScheduleController>();
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +200,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
             set ??= HashSet<int>();
 
             if (set.contains(widget.dt.hour)) {
-             set.remove(widget.dt.hour);
+              set.remove(widget.dt.hour);
             } else {
               set.add(widget.dt.hour);
             }
@@ -252,32 +269,32 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
     return ret;
   }
 
-
   void showBottomSheet() {
     HashSet<int> joinUserIdSet = _getJoinUserIdSet();
-    List<WeteamUser> allJoinUserList = Get.find<CurrentMeetingController>().joinedUserList;
+    List<WeteamUser> allJoinUserList =
+        Get.find<CurrentMeetingController>().joinedUserList;
 
     List<String> joinUserNameList = [];
     List<String> notJoinUserNameList = [];
 
     for (WeteamUser user in allJoinUserList) {
-      if (joinUserIdSet.contains(user.id)) { // 이 날짜에 참여합니다
+      if (joinUserIdSet.contains(user.id)) {
+        // 이 날짜에 참여합니다
         joinUserNameList.add("${user.username}");
-      } else { // 이 날짜에 참여하지 않습니다
+      } else {
+        // 이 날짜에 참여하지 않습니다
         notJoinUserNameList.add("${user.username}");
       }
     }
 
-    DraggableScrollableController dsController = DraggableScrollableController();
+    DraggableScrollableController dsController =
+        DraggableScrollableController();
 
     showFlexibleBottomSheet(
       isExpand: true,
-      decoration: BoxDecoration(
-          color: Colors.transparent,
-        boxShadow: [
-          BoxShadow(color: AppColors.black.withOpacity(0.1), blurRadius: 20)
-        ]
-      ),
+      decoration: BoxDecoration(color: Colors.transparent, boxShadow: [
+        BoxShadow(color: AppColors.black.withOpacity(0.1), blurRadius: 20)
+      ]),
       isDismissible: true,
       bottomSheetColor: Colors.transparent,
       barrierColor: Colors.transparent,
@@ -292,15 +309,14 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
             decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-                boxShadow:[
+                boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 20,
                     blurRadius: 20,
                     offset: const Offset(0, 3), // changes position of shadow
                   ),
-                ]
-            ),
+                ]),
             child: ListView(
               controller: scrollController,
               children: [
@@ -311,8 +327,7 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                     height: 4.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.r),
-                        color: AppColors.g3
-                    ),
+                        color: AppColors.g3),
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -325,28 +340,26 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                       style: TextStyle(
                           fontFamily: "NanumSquareNeo",
                           fontWeight: FontWeight.bold,
-                          fontSize: 15.sp
-                      ),
+                          fontSize: 15.sp),
                     ),
                     GestureDetector(
                       onTap: () {
                         Get.back();
                       },
-                      child: Image.asset(ImagePath.icCrossClose, width: 25.w, height: 25.h),
+                      child: Image.asset(ImagePath.icCrossClose,
+                          width: 25.w, height: 25.h),
                     )
                   ],
                 ),
                 SizedBox(height: 16.h),
-                Container(height: 0.5.h,
-                    color: AppColors.g2),
-
+                Container(height: 0.5.h, color: AppColors.g2),
                 SizedBox(height: 8.h),
-                Text('참여 가능 : ${joinUserNameList.length}명',
+                Text(
+                  '참여 가능 : ${joinUserNameList.length}명',
                   style: TextStyle(
                       fontFamily: "NanumSquareNeo",
                       fontWeight: FontWeight.bold,
-                      fontSize: 11.sp
-                  ),
+                      fontSize: 11.sp),
                 ),
                 SizedBox(height: 8.h),
                 Visibility(
@@ -370,12 +383,12 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-                Text('참여 불가능 : ${notJoinUserNameList.length}명',
+                Text(
+                  '참여 불가능 : ${notJoinUserNameList.length}명',
                   style: TextStyle(
                       fontFamily: "NanumSquareNeo",
                       fontWeight: FontWeight.bold,
-                      fontSize: 11.sp
-                  ),
+                      fontSize: 11.sp),
                 ),
                 SizedBox(height: 8.h),
                 Visibility(
@@ -424,15 +437,16 @@ class _HourTextListState extends State<_HourTextList> {
     super.initState();
     late StreamSubscription listener;
 
-    sc = ScrollController(
-        onDetach: (p) => listener.cancel());
+    sc = ScrollController(onDetach: (p) => listener.cancel());
 
-    sc.addListener(() { // 스크롤이 변경되었을 때
+    sc.addListener(() {
+      // 스크롤이 변경되었을 때
       if (sc.offset == widget.verticalScrollOffset.value) return;
       widget.verticalScrollOffset.value = sc.offset;
     });
 
-    listener = widget.verticalScrollOffset.listen((p0) { // offset값이 변경되었을 때
+    listener = widget.verticalScrollOffset.listen((p0) {
+      // offset값이 변경되었을 때
       if (sc.offset != p0) {
         sc.jumpTo(p0);
       }
@@ -462,8 +476,7 @@ class _HourTextListState extends State<_HourTextList> {
               ),
             ),
           );
-        }
-    );
+        });
   }
 }
 
@@ -488,8 +501,7 @@ class _UserNameContainer extends StatelessWidget {
               offset: Offset(0, 0),
               spreadRadius: 0,
             )
-          ]
-      ),
+          ]),
       child: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 9.w),
@@ -500,12 +512,10 @@ class _UserNameContainer extends StatelessWidget {
             style: TextStyle(
                 fontSize: 10,
                 fontFamily: 'NanumGothic',
-                color: colored ? AppColors.white : AppColors.black
-            ),
+                color: colored ? AppColors.white : AppColors.black),
           ),
         ),
       ),
     );
   }
-
 }

@@ -53,7 +53,8 @@ class ImagePath {
   static String get icRightGray30 => 'assets/images/ic_right_gray_30px.png';
   static String get myNoTeamProjectTimi =>
       'assets/images/my_no_team_project_timi.png';
-  static String get makeMeetingButton => 'assets/images/make_meeting_button.png';
+  static String get makeMeetingButton =>
+      'assets/images/make_meeting_button.png';
   static String get meetingTutorial1 => 'assets/images/tutorial_1.png';
   static String get meetingTutorial2 => 'assets/images/tutorial_2.png';
   static String get meetingCross => 'assets/images/meeting_cross.png';
@@ -102,4 +103,5 @@ class ImagePath {
   static String get meeting8 => 'assets/images/meeting8.png';
   static String get meeting9 => 'assets/images/meeting9.png';
   static String get meeting10 => 'assets/images/meeting10.png';
+  static String get backios => 'assets/images/backios';
 }
