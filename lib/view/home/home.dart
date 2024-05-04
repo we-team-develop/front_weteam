@@ -51,7 +51,7 @@ class Home extends GetView<HomeController> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                      DDayWidget(dDayData: controller.dDayData.value)
+                  Obx(() => DDayWidget(dDayData: controller.dDayData.value))
                 ])),
                 if (!(controller.tpWidgetList.value == null ||
                     controller.tpWidgetList.value!.isEmpty))
@@ -88,7 +88,8 @@ class Home extends GetView<HomeController> {
                             )),
                       GestureDetector(
                           onTap: () {
-                            Get.to(() => MeetingMainPage(), binding: MeetingBindings());
+                            Get.to(() => MeetingMainPage(),
+                                binding: MeetingBindings());
                           },
                           child: _bottomBanner()),
                       SizedBox(height: 15.h)
@@ -297,7 +298,6 @@ class _DDayWidgetState extends State<DDayWidget> {
 
   @override
   void initState() {
-    updateLeftDays();
     super.initState();
 
     _subscription = Get.find<HomeController>().dDayData.listen((p0) {
@@ -314,6 +314,7 @@ class _DDayWidgetState extends State<DDayWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.dDayData != null) {
+      updateLeftDays();
       return _ddayWidget();
     } else {
       return _noDDayWidget();
@@ -338,8 +339,7 @@ class _DDayWidgetState extends State<DDayWidget> {
     }
 
     leftDays = updatedLeftDays;
-    setState(() {
-    });
+    setState(() {});
   }
 
   Widget _ddayWidget() {
