@@ -72,6 +72,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
                 height: 21.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const ClampingScrollPhysics(),
                   controller: dateTextHorizontalScrollController,
                   itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                   itemBuilder: (_, i) =>
@@ -90,6 +91,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
                 Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      physics: const ClampingScrollPhysics(),
                       controller: calendarHorizontalScrollController,
                       itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                       itemBuilder: (_, i) =>
