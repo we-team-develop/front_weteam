@@ -83,7 +83,7 @@ class Profile extends GetView<ProfileController> {
             SizedBox(height: 16.0.h),
             // 회원 탈퇴 버튼
             _withdrawButton(),
-            SizedBox(height: 20.h)
+            SizedBox(height: 40.h)
           ],
         ),
       ),
