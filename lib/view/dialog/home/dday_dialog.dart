@@ -167,7 +167,7 @@ class _DDayDialogState extends State<DDayDialog> {
     await sharedPreferences.setString(SharedPreferencesKeys.dDayData, jsonEncode(map));
     HomeController hc = Get.find<HomeController>();
     hc.updateDDay();
-    Get.find<HomeController>().update();
+    hc.update();
     Get.back();
   }
 }

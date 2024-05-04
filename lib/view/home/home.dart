@@ -51,7 +51,7 @@ class Home extends GetView<HomeController> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  Obx(() => DDayWidget(dDayData: controller.dDayData.value))
+                      DDayWidget(dDayData: controller.dDayData.value)
                 ])),
                 if (!(controller.tpWidgetList.value == null ||
                     controller.tpWidgetList.value!.isEmpty))
@@ -291,21 +291,24 @@ class DDayWidget extends StatefulWidget {
 }
 
 class _DDayWidgetState extends State<DDayWidget> {
-  Timer? timer;
   bool showPopupMenu = false;
   String leftDays = "";
+  StreamSubscription? _subscription;
 
   @override
   void initState() {
     super.initState();
     updateLeftDays();
-    timer = Timer.periodic(const Duration(seconds: 1), (t) => updateLeftDays());
+
+    _subscription = Get.find<HomeController>().dDayData.listen((p0) {
+      updateLeftDays();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    timer?.cancel();
+    _subscription?.cancel();
   }
 
   @override
@@ -334,11 +337,9 @@ class _DDayWidgetState extends State<DDayWidget> {
       updatedLeftDays = "D + $numStr";
     }
 
-    if (leftDays != updatedLeftDays) {
-      setState(() {
-        leftDays = updatedLeftDays;
-      });
-    }
+    setState(() {
+      leftDays = updatedLeftDays;
+    });
   }
 
   Widget _ddayWidget() {
