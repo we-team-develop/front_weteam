@@ -297,8 +297,8 @@ class _DDayWidgetState extends State<DDayWidget> {
 
   @override
   void initState() {
-    super.initState();
     updateLeftDays();
+    super.initState();
 
     _subscription = Get.find<HomeController>().dDayData.listen((p0) {
       updateLeftDays();
@@ -337,8 +337,8 @@ class _DDayWidgetState extends State<DDayWidget> {
       updatedLeftDays = "D + $numStr";
     }
 
+    leftDays = updatedLeftDays;
     setState(() {
-      leftDays = updatedLeftDays;
     });
   }
 
