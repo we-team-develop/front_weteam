@@ -95,6 +95,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Widget _body() {
     return RefreshIndicator(
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: ClampingScrollPhysics()),
           slivers: [
             SliverList(
                 delegate: SliverChildListDelegate([

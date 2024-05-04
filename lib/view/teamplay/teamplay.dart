@@ -27,7 +27,8 @@ class TeamPlay extends GetView<TeamPlayController> {
         },
         child: Obx(() => CustomScrollView(
           controller: controller.tpScrollController,
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: ClampingScrollPhysics()),
           slivers: [
             SliverList(
                 delegate: SliverChildListDelegate([

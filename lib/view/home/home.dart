@@ -45,7 +45,9 @@ class Home extends GetView<HomeController> {
           Expanded(child: Obx(() {
             return CustomScrollView(
               controller: controller.scrollController,
-              physics: const AlwaysScrollableScrollPhysics(), // 항상 스크롤 가능하도록 설정
+              // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
+              physics: const AlwaysScrollableScrollPhysics(
+                  parent: ClampingScrollPhysics()),
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
