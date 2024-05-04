@@ -114,7 +114,7 @@ class LoginMain extends StatelessWidget {
                     children: [
                       _AnimatedTimi(),
                       SizedBox(height: 15.h),
-                      Text('로그인 중 입니다',
+                      Text('로그인 중입니다',
                           style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: 'NanumGothic',
