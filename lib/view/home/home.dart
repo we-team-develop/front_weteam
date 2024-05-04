@@ -410,7 +410,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             });
                                       },
                                       child: SizedBox(
-                                        height: 21.h,
+                                        height: 25.h,
                                         child: Center(
                                           child: Text(
                                             '수정하기',
@@ -425,7 +425,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         ),
                                       )),
                                   Container(
-                                    width: 67.w,
+                                    width: 80.w,
                                     height: 0.50.h,
                                     decoration: const BoxDecoration(
                                         color: AppColors.g2),
@@ -444,7 +444,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         });
                                       },
                                       child: SizedBox(
-                                          height: 21.h,
+                                          height: 25.h,
                                           child: Center(
                                             child: Text(
                                               '삭제하기',
