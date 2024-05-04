@@ -196,7 +196,7 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map<String, String> requestBody = {
       'title': title,
       'startedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
-      'endedAt': WeteamUtils.formatDateTime(startedAt, withTime: true),
+      'endedAt': WeteamUtils.formatDateTime(endedAt, withTime: true),
     };
 
     // 서버로 API요청

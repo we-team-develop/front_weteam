@@ -45,11 +45,13 @@ class Home extends GetView<HomeController> {
           Expanded(child: Obx(() {
             return CustomScrollView(
               controller: controller.scrollController,
-              physics: const AlwaysScrollableScrollPhysics(), // 항상 스크롤 가능하도록 설정
+              // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
+              physics: const AlwaysScrollableScrollPhysics(
+                  parent: ClampingScrollPhysics()),
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  Obx(() => DDayWidget(dDayData: controller.dDayData.value))
+                      DDayWidget(dDayData: controller.dDayData.value)
                 ])),
                 if (!(controller.tpWidgetList.value == null ||
                     controller.tpWidgetList.value!.isEmpty))
@@ -289,21 +291,24 @@ class DDayWidget extends StatefulWidget {
 }
 
 class _DDayWidgetState extends State<DDayWidget> {
-  Timer? timer;
   bool showPopupMenu = false;
   String leftDays = "";
+  StreamSubscription? _subscription;
 
   @override
   void initState() {
-    super.initState();
     updateLeftDays();
-    timer = Timer.periodic(const Duration(seconds: 1), (t) => updateLeftDays());
+    super.initState();
+
+    _subscription = Get.find<HomeController>().dDayData.listen((p0) {
+      updateLeftDays();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    timer?.cancel();
+    _subscription?.cancel();
   }
 
   @override
@@ -332,11 +337,9 @@ class _DDayWidgetState extends State<DDayWidget> {
       updatedLeftDays = "D + $numStr";
     }
 
-    if (leftDays != updatedLeftDays) {
-      setState(() {
-        leftDays = updatedLeftDays;
-      });
-    }
+    leftDays = updatedLeftDays;
+    setState(() {
+    });
   }
 
   Widget _ddayWidget() {
@@ -407,7 +410,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             });
                                       },
                                       child: SizedBox(
-                                        height: 21.h,
+                                        height: 25.h,
                                         child: Center(
                                           child: Text(
                                             '수정하기',
@@ -422,7 +425,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         ),
                                       )),
                                   Container(
-                                    width: 67.w,
+                                    width: 80.w,
                                     height: 0.50.h,
                                     decoration: const BoxDecoration(
                                         color: AppColors.g2),
@@ -441,7 +444,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         });
                                       },
                                       child: SizedBox(
-                                          height: 21.h,
+                                          height: 25.h,
                                           child: Center(
                                             child: Text(
                                               '삭제하기',

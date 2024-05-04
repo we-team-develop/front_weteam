@@ -72,6 +72,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
                 height: 21.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const ClampingScrollPhysics(),
                   controller: dateTextHorizontalScrollController,
                   itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                   itemBuilder: (_, i) =>
@@ -90,6 +91,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
                 Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      physics: const ClampingScrollPhysics(),
                       controller: calendarHorizontalScrollController,
                       itemCount: widget.meeting.endedAt.difference(widget.meeting.startedAt).inDays + 1,
                       itemBuilder: (_, i) =>
@@ -270,8 +272,11 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
     showFlexibleBottomSheet(
       isExpand: true,
-      decoration: const BoxDecoration(
-          color: Colors.transparent
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+        boxShadow: [
+          BoxShadow(color: AppColors.black.withOpacity(0.1), blurRadius: 20)
+        ]
       ),
       isDismissible: true,
       bottomSheetColor: Colors.transparent,

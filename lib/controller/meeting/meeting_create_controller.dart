@@ -87,7 +87,7 @@ class MeetingCreateController extends GetxController {
 
       success = (meetingProject != null);
       if (success) {
-        meetingProject = meetingProject;
+        meeting = meetingProject;
       }
     } else {
       int meetingId = meeting!.id;

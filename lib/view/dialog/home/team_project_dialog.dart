@@ -36,9 +36,6 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
-  bool warningVisible = false;
-  String warningContent = "";
-
   String title = "";
 
   @override
@@ -141,6 +138,10 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                 ),
                                 child: TextField(
                                   controller: contentController,
+                                  onTapOutside: (v) {
+                                    // 다른 곳 터치시 키보드 숨김
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                  },
                                   maxLines: 5,
                                   maxLength: maxContentLength,
                                   decoration: const InputDecoration(
@@ -271,14 +272,6 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       SizedBox(height: 23.h)
                     ],
                   )),
-              Visibility(
-                  visible: warningVisible,
-                  child: Text(warningContent,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.mainOrange,
-                          fontFamily: 'NanumSquareNeo',
-                          fontSize: 10.sp))),
             ],
           ),
         )),
@@ -313,24 +306,28 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
 
     if (name.isEmpty) {
       setState(() {
-        warningVisible = true;
-        warningContent = "팀플명을 입력해 주세요!";
+        WeteamUtils.snackbar('', '팀플명을 입력해 주세요', icon: SnackbarIcon.info);
       });
       return;
     }
 
     if (content.isEmpty) {
       setState(() {
-        warningVisible = true;
-        warningContent = "상세내용을 입력해 주세요!";
+        WeteamUtils.snackbar('', '상세내용을 입력해 주세요', icon: SnackbarIcon.info);
       });
       return;
     }
 
-    if (endTime.difference(startTime).inDays.isNegative) {
+    if (endTime.isBefore(startTime)) {
       setState(() {
-        warningVisible = true;
-        warningContent = "시작일은 종료일보다 빠를 수 없어요!";
+        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요', icon: SnackbarIcon.info);
+      });
+      return;
+    }
+
+    if (endTime.isBefore(DateTime.now())) {
+      setState(() {
+        WeteamUtils.snackbar('', '종료일은 오늘 이전일 수 없어요', icon: SnackbarIcon.info);
       });
       return;
     }
@@ -338,8 +335,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
     if (widget.mode == TeamProjectDialogMode.revive) {
       if (endTime.difference(DateTime.now()).inSeconds.isNegative) {
         setState(() {
-          warningVisible = true;
-          warningContent = "종료일이 잘못 되었습니다.";
+          WeteamUtils.snackbar('', '종료일이 잘못 되었어요', icon: SnackbarIcon.info);
         });
         return;
       }
@@ -383,8 +379,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       Get.find<TeamPlayController>().updateTeamProjectList();
     } else {
       setState(() {
-        warningVisible = true;
-        warningContent = "저장하지 못했어요";
+        WeteamUtils.snackbar('', '저장하지 못했어요', icon: SnackbarIcon.fail);
       });
       return;
     }

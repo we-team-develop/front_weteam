@@ -143,7 +143,7 @@ class ProfileController extends GetxController {
     ////////////// 프로필 사진 변경 사항 확인 //////////////
     int selectedProfileId = getSelectedProfileId() ?? 0;
     WeteamUser user = Get.find<AuthService>().user.value!;
-    bool prfChanged = user.profile!.imageIdx != selectedProfileId;
+    bool prfChanged = user.profile?.imageIdx != selectedProfileId;
 
     return orgChanged || prfChanged;
   }

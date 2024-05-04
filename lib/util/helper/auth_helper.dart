@@ -1,3 +1,7 @@
+enum WeteamAuthProvider {
+  naver, kakao, google, apple
+}
+
 abstract class AuthHelper {
   /// 로그인을 시도하는 메소드
   Future<bool> login();
@@ -10,4 +14,6 @@ abstract class AuthHelper {
 
   /// 로그인 여부를 확인하는 메소드
   Future<bool> isLoggedIn();
+
+  WeteamAuthProvider getProvider();
 }

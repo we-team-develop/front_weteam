@@ -9,6 +9,7 @@ import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
 import '../../service/auth_service.dart';
+import '../../util/helper/auth_helper.dart';
 import '../../util/weteam_utils.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../widget/custom_switch.dart';
@@ -82,7 +83,7 @@ class Profile extends GetView<ProfileController> {
             SizedBox(height: 16.0.h),
             // 회원 탈퇴 버튼
             _withdrawButton(),
-            SizedBox(height: 20.h)
+            SizedBox(height: 40.h)
           ],
         ),
       ),
@@ -190,6 +191,27 @@ class Profile extends GetView<ProfileController> {
   }
 
   Column _linkedAccount() {
+    // AuthService의 인스턴스를 얻습니다.
+    final AuthService authService = Get.find<AuthService>();
+
+    String imagePath = ImagePath.loggedInGoogle; // 기본 이미지
+
+    // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
+    switch (authService.helper!.getProvider()) {
+      case WeteamAuthProvider.naver:
+        imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
+        break;
+      case WeteamAuthProvider.kakao:
+        imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
+        break;
+      case WeteamAuthProvider.google:
+        imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
+        break;
+      case WeteamAuthProvider.apple:
+        imagePath = ImagePath.loggedInApple; // 애플 로그인 이미지 경로
+        break;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,31 +224,7 @@ class Profile extends GetView<ProfileController> {
               color: AppColors.g4),
         ),
         SizedBox(height: 14.h),
-        Obx(() {
-          // AuthService의 인스턴스를 얻습니다.
-          final AuthService authService = Get.find<AuthService>();
-
-          String imagePath = ImagePath.loggedInGoogle; // 기본 이미지
-
-          // authService 인스턴스를 통해 currentLoginService에 접근하여 케이스별로 이미지 경로를 설정
-          switch (authService.currentLoginService.value) {
-            case '네이버':
-              imagePath = ImagePath.loggedInNaver; // 네이버 로그인 이미지 경로
-              break;
-            case '카카오':
-              imagePath = ImagePath.loggedInKakao; // 카카오 로그인 이미지 경로
-              break;
-            case '구글':
-              imagePath = ImagePath.loggedInGoogle; // 구글 로그인 이미지 경로
-              break;
-            case '애플':
-              imagePath = ImagePath.loggedInApple; // 애플 로그인 이미지 경로
-              break;
-          }
-
-          // 설정된 imagePath를 사용하여 Image.asset 위젯을 반환
-          return Image.asset(imagePath, width: 330.w, height: 39.h);
-        }),
+        Image.asset(imagePath, width: 330.w, height: 39.h),
       ],
     );
   }

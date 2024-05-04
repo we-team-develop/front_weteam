@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../main.dart';
 import '../model/login_result.dart';
 import '../model/weteam_user.dart';
+import '../util/helper/apple_auth_helper.dart';
 import '../util/helper/auth_helper.dart';
 import '../util/helper/google_auth_helper.dart';
 import '../util/helper/kakao_auth_helper.dart';
@@ -19,7 +20,6 @@ class AuthService extends GetxService {
   AuthHelper? helper;
   String? token;
   Rxn<WeteamUser> user = Rxn<WeteamUser>();
-  RxString currentLoginService = ''.obs;
 
   @override
   void onInit() {
@@ -45,16 +45,19 @@ class AuthService extends GetxService {
 
       // 어떤 플랫폼으로 로그인되었는지 확인하기 위해 firebase uid를 불러옵니다.
       // 또한, 로그인 핼퍼를 초기화합니다.
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+      var FbUser = FirebaseAuth.instance.currentUser!;
+      String uid = FbUser.uid;
       if (uid.startsWith('naver')) {
         helper = NaverAuthHelper();
-        currentLoginService.value = "네이버";
       } else if (uid.startsWith('kakao')) {
         helper = KakaoAuthHelper();
-        currentLoginService.value = "카카오";
       } else {
-        helper = GoogleAuthHelper();
-        currentLoginService.value = "구글";
+        String provider = FbUser.providerData[0].providerId;
+        if (provider.contains("google")) {
+          helper = GoogleAuthHelper();
+        } else {
+          helper = AppleAuthHelper();
+        }
       }
     }
 
@@ -97,8 +100,9 @@ class AuthService extends GetxService {
         debugPrint("user값을 받아오지 못함!");
         return const LoginResult(isSuccess: false);
       }
-    } catch (e) {
+    } catch (e, st) {
       debugPrint("로그인 실패: $e");
+      debugPrintStack(stackTrace: st);
       return const LoginResult(isSuccess: false);
     }
   }
