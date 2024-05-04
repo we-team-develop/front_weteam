@@ -26,8 +26,6 @@ class DDayDialog extends StatefulWidget {
 class _DDayDialogState extends State<DDayDialog> {
   String title = "";
   TextEditingController teController = TextEditingController();
-  bool warningVisible = false;
-  String warningContent = "";
   DateTime startTime = DateTime.now();
   DateTime endTime = DateTime.now();
 
@@ -118,23 +116,6 @@ class _DDayDialogState extends State<DDayDialog> {
             SizedBox(
               height: 24.h,
             ),
-            Visibility(
-                visible: warningVisible,
-                child: Column(
-                  children: [
-                    Text(
-                      warningContent,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.mainOrange,
-                          fontFamily: 'NanumSquareNeo',
-                          fontSize: 10.sp),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    )
-                  ],
-                )),
             NormalButton(
                 text: '확인',
                 width: 185.w,
@@ -146,7 +127,7 @@ class _DDayDialogState extends State<DDayDialog> {
                   } catch (e, st) {
                     debugPrint(e.toString());
                     debugPrintStack(stackTrace: st);
-                    WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요');
+                    WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요', icon: SnackbarIcon.fail);
                   }
                 }),
           ],
@@ -156,8 +137,7 @@ class _DDayDialogState extends State<DDayDialog> {
   Future<void> onTapButton() async {
     if (endTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch < 0) {
       setState(() {
-        warningContent = '시작일은 종료일보다 빠를 수 없어요!';
-        warningVisible = true;
+        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요', icon: SnackbarIcon.info);
       });
       return;
     }
@@ -165,8 +145,7 @@ class _DDayDialogState extends State<DDayDialog> {
     String name = teController.text.trim();
     if (name.isEmpty) {
       setState(() {
-        warningContent = '디데이명을 입력해 주세요!';
-        warningVisible = true;
+        WeteamUtils.snackbar('', '디데이명을 입력해 주세요', icon: SnackbarIcon.info);
       });
       return;
     }
