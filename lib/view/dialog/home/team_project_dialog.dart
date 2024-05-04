@@ -141,6 +141,10 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                 ),
                                 child: TextField(
                                   controller: contentController,
+                                  onTapOutside: (v) {
+                                    // 다른 곳 터치시 키보드 숨김
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                  },
                                   maxLines: 5,
                                   maxLength: maxContentLength,
                                   decoration: const InputDecoration(
