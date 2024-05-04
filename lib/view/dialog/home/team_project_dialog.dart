@@ -318,7 +318,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       return;
     }
 
-    if (endTime.difference(startTime).inDays.isNegative) {
+    if (endTime.isBefore(startTime)) {
       setState(() {
         WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요', icon: SnackbarIcon.info);
       });

@@ -153,7 +153,7 @@ class _BlankDay extends GetView<CustomCalendarController> {
         return const SizedBox();
       }
 
-      if (later.difference(controller.selectedDt2.value!).isNegative) {
+      if (later.isBefore(controller.selectedDt2.value!)) {
         later = controller.selectedDt2.value!;
         earlier = controller.selectedDt1.value!;
       }
@@ -189,7 +189,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      bool isEnabled = controller.now.difference(date).inSeconds.isNegative;
+      bool isEnabled = controller.now.isBefore(date);
 
       late Color textColor;
       if (!isEnabled) {
@@ -210,13 +210,13 @@ class _DayWidget extends GetView<CustomCalendarController> {
       if (selectedCompletely) {
         DateTime later = controller.selectedDt1.value!;
         DateTime earlier = controller.selectedDt2.value!;
-        if (later.difference(controller.selectedDt2.value!).isNegative) {
+        if (later.isBefore(controller.selectedDt2.value!)) {
           later = controller.selectedDt2.value!;
           earlier = controller.selectedDt1.value!;
         }
 
-        if (earlier.difference(date).isNegative &&
-            date.difference(later).isNegative) {
+        if (earlier.isBefore(date) &&
+            date.isBefore(later)) {
           isContained = true;
         }
       }
@@ -227,17 +227,17 @@ class _DayWidget extends GetView<CustomCalendarController> {
         if (selectedCompletely) {
           if (controller.selectedDt1.value == date) {
             amILater =
-                controller.selectedDt2.value!.difference(date).isNegative;
+                controller.selectedDt2.value!.isBefore(date);
           } else {
             amILater =
-                controller.selectedDt1.value!.difference(date).isNegative;
+                controller.selectedDt1.value!.isBefore(date);
           }
         }
       }
 
       return GestureDetector(
           onTap: () {
-            if (!controller.now.difference(date).inSeconds.isNegative) return;
+            if (!controller.now.isBefore(date)) return;
             if (controller.selectedDt1.value == null) {
               controller.selectedDt1.value = date;
               return;
