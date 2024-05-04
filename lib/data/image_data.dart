@@ -103,5 +103,5 @@ class ImagePath {
   static String get meeting8 => 'assets/images/meeting8.png';
   static String get meeting9 => 'assets/images/meeting9.png';
   static String get meeting10 => 'assets/images/meeting10.png';
-  static String get backios => 'assets/images/backios';
+  static String get backios => 'assets/images/backios.png';
 }

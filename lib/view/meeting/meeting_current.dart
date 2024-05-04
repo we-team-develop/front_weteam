@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/app_colors.dart';
 import '../widget/normal_button.dart';
@@ -99,16 +100,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
   }
 
   Widget _head() {
-    return Center(
-      child: Text(
-        '언제보까 현황',
-        style: TextStyle(
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.bold,
-          fontSize: 14.sp,
-        ),
-      ),
-    );
+    return CustomTitleBar(title: '언제보까 현황');
   }
 
   Widget _teamInfo() {

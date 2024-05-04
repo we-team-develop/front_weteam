@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:io' show Platform;
 
+import '../../controller/backios_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
@@ -33,7 +33,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
           child: Column(
             children: [
               SizedBox(height: 15.h),
-              Platform.isIOS ? iosTitle(context) : androidTitle(),
+              CustomTitleBar(title: '팀플방'),
               SizedBox(height: 15.h),
               Expanded(
                   child: SingleChildScrollView(
@@ -137,50 +137,6 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
               )),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget iosTitle(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 유지
-      children: <Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          child: IconButton(
-            icon: Image.asset(ImagePath.backios), // 뒤로가기 버튼 이미지
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            '팀플방',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        Container(), // 균형 유지를 위한 빈 컨테이너
-      ],
-    );
-  }
-
-  Widget androidTitle() {
-    return Center(
-      child: Text(
-        '팀플방',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14.sp,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w600,
-          height: 0,
         ),
       ),
     );

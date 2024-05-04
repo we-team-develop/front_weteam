@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../binding/meeting_create_bindings.dart';
+import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
@@ -57,7 +58,8 @@ class MeetingMainPage extends GetView<MeetingController> {
             padding: EdgeInsets.only(bottom: 25.h),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(() => const MeetingCreate(), binding: MeetingCreateBindings());
+                  Get.to(() => const MeetingCreate(),
+                      binding: MeetingCreateBindings());
                 },
                 child: _newMeetingButton()),
           )
@@ -67,16 +69,7 @@ class MeetingMainPage extends GetView<MeetingController> {
   }
 
   Widget _head() {
-    return Center(
-      child: Text(
-        '언제보까',
-        style: TextStyle(
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.bold,
-          fontSize: 14.sp,
-        ),
-      ),
-    );
+    return CustomTitleBar(title: '언제보까');
   }
 
   Widget _noMeetingWidget() {

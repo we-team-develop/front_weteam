@@ -5,6 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'dart:io' show Platform;
 
 import '../../controller/alarm_controller.dart';
+import '../../controller/backios_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
@@ -29,7 +30,7 @@ class AlarmListPage extends GetView<AlarmController> {
         child: Column(
           children: [
             SizedBox(height: 16.h),
-            Platform.isIOS ? iosTitle(context) : androidTitle(),
+            CustomTitleBar(title: '알림'),
             SizedBox(height: 16.h),
             Expanded(
                 child: PagedListView<int, WeteamAlarm>(
@@ -51,7 +52,7 @@ class AlarmListPage extends GetView<AlarmController> {
       ),
     );
   }
-
+  /*
   Widget iosTitle(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 유지
@@ -95,6 +96,7 @@ class AlarmListPage extends GetView<AlarmController> {
       ),
     );
   }
+  */
 }
 
 class NotificationContainer extends StatefulWidget {

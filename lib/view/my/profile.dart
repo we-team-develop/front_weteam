@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io' show Platform;
 
 import '../../controller/profile_controller.dart';
 import '../../data/app_colors.dart';
@@ -30,11 +30,12 @@ class Profile extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _body(),
+      body: _body(context), // context를 _body 메서드에 전달
     );
   }
 
-  Widget _body() {
+  Widget _body(BuildContext context) {
+    // context 매개변수 추가
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: SingleChildScrollView(
@@ -49,6 +50,17 @@ class Profile extends GetView<ProfileController> {
                 SizedBox(
                   width: 62.w,
                   height: 25.h,
+                  child: Platform.isIOS
+                      ? IconButton(
+                          icon: Image.asset(
+                            ImagePath.backios,
+                            width: 30.w,
+                            height: 30.h,
+                          ),
+                          onPressed: () =>
+                              Navigator.of(context).pop(), // context 사용 가능
+                        )
+                      : null,
                 ),
                 Expanded(
                   child: Center(
@@ -92,37 +104,41 @@ class Profile extends GetView<ProfileController> {
 
   Obx _saveButton() {
     return Obx(
-       () {
-         // 저장 가능 여부(변경사항이 있는가?)
-         bool enable = controller.changes.value;
+      () {
+        // 저장 가능 여부(변경사항이 있는가?)
+        bool enable = controller.changes.value;
 
-         return NormalButton(onTap: () async {
-           // 변경사항 없으면 무시
-           if (!enable) return;
+        return NormalButton(
+          onTap: () async {
+            // 변경사항 없으면 무시
+            if (!enable) return;
 
-           try {
-             // 서버에 저장 시도
-             await controller.saveChanges();
-             // 변경사항 확인
-             controller.changes.value = controller.anyChanges();
+            try {
+              // 서버에 저장 시도
+              await controller.saveChanges();
+              // 변경사항 확인
+              controller.changes.value = controller.anyChanges();
 
-             WeteamUtils.snackbar('', '변경사항을 저장했어요', icon: SnackbarIcon.success);
-           } catch(e) {
-             // 오류 출력
-             debugPrint(e.toString());
-             WeteamUtils.snackbar('', '변경사항을 저장하지 못했어요', icon: SnackbarIcon.fail);
-           }
-         },
-           width: 62.w,
-           height: 25.h,
-           fontSize: 12.sp,
-           text: '저장',
-           textStyle: TextStyle(fontFamily: 'NanumGothicExtraBold',
-               fontSize: 12.sp,
-               color: enable ? AppColors.white : AppColors.black),
-           color: enable ? AppColors.mainOrange : AppColors.g2,
-         );
-       },
+              WeteamUtils.snackbar('', '변경사항을 저장했어요',
+                  icon: SnackbarIcon.success);
+            } catch (e) {
+              // 오류 출력
+              debugPrint(e.toString());
+              WeteamUtils.snackbar('', '변경사항을 저장하지 못했어요',
+                  icon: SnackbarIcon.fail);
+            }
+          },
+          width: 62.w,
+          height: 25.h,
+          fontSize: 12.sp,
+          text: '저장',
+          textStyle: TextStyle(
+              fontFamily: 'NanumGothicExtraBold',
+              fontSize: 12.sp,
+              color: enable ? AppColors.white : AppColors.black),
+          color: enable ? AppColors.mainOrange : AppColors.g2,
+        );
+      },
     );
   }
 

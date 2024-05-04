@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
+import '../../../data/image_data.dart';
 import '../../widget/normal_button.dart';
 import 'meeting_date.dart';
 
@@ -41,12 +44,8 @@ class MeetingNaming extends GetView<MeetingCreateController> {
   }
 
   Widget _head() {
-    return Text(
-      '약속 이름을 정해주세요!',
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily: 'NanumGothic',
-          fontSize: 20.sp),
+    return CustomTitleBAR(
+      title: '약속 이름을 정해주세요!',
     );
   }
 
@@ -102,5 +101,57 @@ class _TextInput extends GetView<MeetingCreateController> {
         ],
       ),
     );
+  }
+}
+
+class CustomTitleBAR extends StatelessWidget {
+  final String title;
+
+  CustomTitleBAR({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    if (Platform.isIOS) {
+      // iOS: 왼쪽에 뒤로 가기 버튼과 텍스트를 세로로 정렬
+      return Container(
+        alignment: Alignment.topLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset(
+                ImagePath.backios,
+                width: 30.w,
+                height: 30.h,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8.h), // 텍스트와 버튼 사이 간격 조정
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'NanumGothic',
+                  fontSize: 20.sp,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // Android: 왼쪽 정렬
+      return Text(
+        title,
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: 'NanumGothic',
+          fontSize: 20.sp,
+        ),
+      );
+    }
   }
 }

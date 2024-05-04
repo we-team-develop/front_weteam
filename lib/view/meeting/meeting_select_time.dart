@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/app_colors.dart';
@@ -21,8 +22,10 @@ class MeetingSelectTime extends StatefulWidget {
 
 class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   Map<String, HashSet<int>>? tmpSelectedMap; // 뒤로가기로 페이지 나가면 원래 값으로 되돌림
-  final CurrentMeetingController controller = Get.find<CurrentMeetingController>();
-  final MeetingScheduleController schController = Get.find<MeetingScheduleController>();
+  final CurrentMeetingController controller =
+      Get.find<CurrentMeetingController>();
+  final MeetingScheduleController schController =
+      Get.find<MeetingScheduleController>();
 
   @override
   void initState() {
@@ -49,7 +52,8 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Padding(
+      body: SafeArea(
+          child: Padding(
         padding: EdgeInsets.only(top: 21.0.h),
         child: _body(),
       )),
@@ -91,9 +95,9 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
                 Expanded(
                     child: MeetingSchedule(controller.meeting.value, true)),
                 SizedBox(height: 11.05.h),
-              NormalButton(
-                  text: '입력 완료',
-                  onTap: () async {
+                NormalButton(
+                    text: '입력 완료',
+                    onTap: () async {
                       bool success = await controller.setSelectedTimes();
                       await controller.fetchMeetingDetail(); // 정보 조회
                       if (!success) {
@@ -114,15 +118,6 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   }
 
   Widget _head() {
-    return Center(
-      child: Text(
-        '내 시간 입력',
-        style: TextStyle(
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.bold,
-          fontSize: 14.sp,
-        ),
-      ),
-    );
+    return CustomTitleBar(title: '내 시간 입력');
   }
 }
