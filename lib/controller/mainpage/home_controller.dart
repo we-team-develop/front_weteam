@@ -71,12 +71,13 @@ class HomeController extends GetxController {
     Map data = jsonDecode(json);
     DDayData dDayData = DDayData.fromJson(data);
     this.dDayData.value = dDayData;
+    this.dDayData.refresh();
   }
 
   Future<void> updateTeamProjectList() async {
     GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(0, false, 'DESC', 'DONE',
-            Get.find<AuthService>().user.value!.id,
+        .getTeamProjectList(
+            0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
     if (result != null && !listEquals(oldTpList, result.projectList)) {
       oldTpList = result.projectList;

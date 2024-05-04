@@ -32,7 +32,7 @@ class TutorialOverlay extends GetView<MeetingController> {
               children: [
                 // 텍스트
                 Padding(
-                  padding: EdgeInsets.only(left: 66.w),
+                  padding: EdgeInsets.only(left: 66.w, top: 105.h),
                   child: Text.rich(
                     TextSpan(
                       children: [
@@ -51,6 +51,7 @@ class TutorialOverlay extends GetView<MeetingController> {
                               decorationThickness: 0,
                               fontFamily: 'NanumSquareNeo',
                               fontSize: 13.sp,
+                              height: 2,
                               color: AppColors.white),
                         ),
                         TextSpan(
@@ -95,9 +96,7 @@ class TutorialOverlay extends GetView<MeetingController> {
               children: [
                 // 텍스트
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: 97.w,
-                  ),
+                  padding: EdgeInsets.only(left: 97.w, top: 105.h),
                   child: Text.rich(
                     TextSpan(children: [
                       TextSpan(
@@ -158,12 +157,13 @@ class TutorialOverlay extends GetView<MeetingController> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 10.h, left: 223.w),
+                  padding: EdgeInsets.only(top: 1.h, left: 223.w),
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () => controller.toggleShouldShowOverlay(),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15.h, horizontal: 20.w),
                       child: Row(
                         children: [
                           Obx(() => Image.asset(
@@ -203,7 +203,7 @@ class TutorialOverlay extends GetView<MeetingController> {
           ],
         ),
         Positioned(
-          bottom: 494.h,
+          bottom: 454.h,
           left: 0,
           right: 0,
           child: Center(
