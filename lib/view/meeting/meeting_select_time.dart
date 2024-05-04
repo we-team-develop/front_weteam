@@ -49,10 +49,10 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: SafeArea(child: Padding(
         padding: EdgeInsets.only(top: 21.0.h),
         child: _body(),
-      ),
+      )),
     );
   }
 
