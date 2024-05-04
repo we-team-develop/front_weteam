@@ -158,29 +158,33 @@ class TutorialOverlay extends GetView<MeetingController> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 37.h, left: 223.w),
+                  padding: EdgeInsets.only(top: 10.h, left: 223.w),
                   child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
                     onTap: () => controller.toggleShouldShowOverlay(),
-                    child: Row(
-                      children: [
-                        Obx(() => Image.asset(
-                            controller.shouldShowOverlay.isTrue
-                                ? ImagePath.checkTutorialFalse
-                                : ImagePath.checkTutorialTrue,
-                            width: 12.w,
-                            height: 12.h)),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Text(
-                          '다시 보지 않기',
-                          style: TextStyle(
-                              decorationThickness: 0,
-                              fontFamily: 'NanumSquareNeo',
-                              fontSize: 11.sp,
-                              color: AppColors.white),
-                        )
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+                      child: Row(
+                        children: [
+                          Obx(() => Image.asset(
+                              controller.shouldShowOverlay.isTrue
+                                  ? ImagePath.checkTutorialFalse
+                                  : ImagePath.checkTutorialTrue,
+                              width: 12.w,
+                              height: 12.h)),
+                          SizedBox(
+                            width: 2.w,
+                          ),
+                          Text(
+                            '다시 보지 않기',
+                            style: TextStyle(
+                                decorationThickness: 0,
+                                fontFamily: 'NanumSquareNeo',
+                                fontSize: 11.sp,
+                                color: AppColors.white),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
