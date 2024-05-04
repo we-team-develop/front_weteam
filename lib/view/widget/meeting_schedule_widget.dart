@@ -272,8 +272,11 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
 
     showFlexibleBottomSheet(
       isExpand: true,
-      decoration: const BoxDecoration(
-          color: Colors.transparent
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+        boxShadow: [
+          BoxShadow(color: AppColors.black.withOpacity(0.1), blurRadius: 20)
+        ]
       ),
       isDismissible: true,
       bottomSheetColor: Colors.transparent,
