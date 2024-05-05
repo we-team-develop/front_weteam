@@ -9,9 +9,9 @@ import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/app_colors.dart';
 import '../../util/weteam_utils.dart';
 import '../widget/custom_title_bar.dart';
-import '../widget/normal_button.dart';
-import '../widget/meeting_widget.dart';
 import '../widget/meeting_schedule_widget.dart';
+import '../widget/meeting_widget.dart';
+import '../widget/normal_button.dart';
 
 class MeetingSelectTime extends StatefulWidget {
   const MeetingSelectTime({super.key});
@@ -56,10 +56,7 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
           child: Padding(
         padding: EdgeInsets.only(top: 16.0.h),
         child: Column(
-          children: [
-            _head(),
-            Expanded(child: _body())
-          ],
+          children: [_head(), Expanded(child: _body())],
         ),
       )),
     );

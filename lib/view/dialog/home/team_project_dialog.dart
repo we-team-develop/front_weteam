@@ -17,6 +17,7 @@ import '../custom_big_dialog.dart';
 class TeamProjectDialog extends StatefulWidget {
   final TeamProject? teamData;
   final TeamProjectDialogMode mode;
+
   const TeamProjectDialog({super.key, this.teamData, required this.mode});
 
   @override
@@ -70,14 +71,16 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       children: [
         // 남은 부분을 채우지만, 자식 크기보다 커질 수는 없습니다.
         Flexible(
-          // 키보드 입력시 일부 내용 가려지도록 scroll view 사용
+            // 키보드 입력시 일부 내용 가려지도록 scroll view 사용
             child: SingleChildScrollView(
-              // 스크롤을 아예 막아두어 의도하지 않은 동작을 방지합니다.
+          // 스크롤을 아예 막아두어 의도하지 않은 동작을 방지합니다.
           physics: const NeverScrollableScrollPhysics(),
           // 팀플명, 상세내용, 시작일, 종요일에 대한 위젯들
           child: Column(
-            mainAxisSize: MainAxisSize.min, // 세로 크기를 최소한으로 설정
-            crossAxisAlignment: CrossAxisAlignment.center, // 자식 위젯 (가로)중앙 정렬
+            mainAxisSize: MainAxisSize.min,
+            // 세로 크기를 최소한으로 설정
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // 자식 위젯 (가로)중앙 정렬
             children: <Widget>[
               Visibility(
                   visible: widget.mode != TeamProjectDialogMode.revive,
@@ -126,8 +129,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       Stack(
                         children: [
                           ConstrainedBox(
-                              constraints:
-                              BoxConstraints(minHeight: 60.h, minWidth: 260.w),
+                              constraints: BoxConstraints(
+                                  minHeight: 60.h, minWidth: 260.w),
                               child: Container(
                                 padding: const EdgeInsets.all(10).r,
                                 decoration: ShapeDecoration(
@@ -140,7 +143,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                   controller: contentController,
                                   onTapOutside: (v) {
                                     // 다른 곳 터치시 키보드 숨김
-                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
                                   },
                                   maxLines: 5,
                                   maxLength: maxContentLength,
@@ -151,8 +155,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                                     contentPadding: EdgeInsets.zero,
                                     isDense: true,
                                   ),
-                                  cursorColor:
-                                  AppColors.mainOrange, // 깜빡이는 커서의 색 변경
+                                  cursorColor: AppColors.mainOrange,
+                                  // 깜빡이는 커서의 색 변경
                                   style: TextStyle(
                                       fontSize: 10.sp,
                                       color: AppColors.g5,
@@ -190,38 +194,40 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                     children: [
                       Flexible(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '시작일',
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '시작일',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 12.sp,
+                              fontFamily: 'NanumSquareNeo',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 15.h),
+                          Visibility(
+                              visible:
+                                  widget.mode != TeamProjectDialogMode.revive,
+                              child: CustomDatePicker(
+                                  start: DateTime(1980, 1, 1),
+                                  end: DateTime(2090, 12, 31),
+                                  init: startTime,
+                                  onChangeListener: (v) {
+                                    startTime = v;
+                                  })),
+                          Visibility(
+                              visible:
+                                  widget.mode == TeamProjectDialogMode.revive,
+                              child: Text(
+                                "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
                                 style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6),
-                                  fontSize: 12.sp,
-                                  fontFamily: 'NanumSquareNeo',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(height: 15.h),
-                              Visibility(
-                                  visible: widget.mode != TeamProjectDialogMode.revive,
-                                  child: CustomDatePicker(
-                                      start: DateTime(1980, 1, 1),
-                                      end: DateTime(2090, 12, 31),
-                                      init: startTime,
-                                      onChangeListener: (v) {
-                                        startTime = v;
-                                      })),
-                              Visibility(
-                                  visible: widget.mode == TeamProjectDialogMode.revive,
-                                  child: Text(
-                                    "${startTime.year}. ${startTime.month.toString().padLeft(2, '0')}. ${startTime.day.toString().padLeft(2, '0')}",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontFamily: 'NanumSquareNeo',
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          )),
+                                    fontSize: 15.sp,
+                                    fontFamily: 'NanumSquareNeo',
+                                    fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      )),
                       Container(
                         width: 1,
                         height: 90.h,
@@ -232,27 +238,27 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
                       ),
                       Flexible(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '종료일',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6),
-                                  fontSize: 12.sp,
-                                  fontFamily: 'NanumSquareNeo',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(height: 15.h),
-                              CustomDatePicker(
-                                  start: DateTime(1980, 1, 1),
-                                  end: DateTime(2090, 12, 31),
-                                  init: endTime,
-                                  onChangeListener: (v) {
-                                    endTime = v;
-                                  }),
-                            ],
-                          ))
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '종료일',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 12.sp,
+                              fontFamily: 'NanumSquareNeo',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 15.h),
+                          CustomDatePicker(
+                              start: DateTime(1980, 1, 1),
+                              end: DateTime(2090, 12, 31),
+                              init: endTime,
+                              onChangeListener: (v) {
+                                endTime = v;
+                              }),
+                        ],
+                      ))
                     ],
                   )),
               SizedBox(
@@ -320,7 +326,8 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
 
     if (endTime.isBefore(startTime)) {
       setState(() {
-        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요', icon: SnackbarIcon.info);
+        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요',
+            icon: SnackbarIcon.info);
       });
       return;
     }

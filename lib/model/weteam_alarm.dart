@@ -25,8 +25,9 @@ class WeteamAlarm {
       date: data['date'],
       read: data['read'],
       user: data['user'] != null ? WeteamUser.fromJson(data['user']) : null,
-      project:
-          data['project'] != null ? TeamProject.fromJson(data['project']) : null,
+      project: data['project'] != null
+          ? TeamProject.fromJson(data['project'])
+          : null,
     );
   }
 
@@ -44,7 +45,6 @@ class WeteamAlarm {
     } else if (status == "DONE") {
       return "[${project?.title}]의 진행 상태가 변경되었어요.";
     }
-
 
     return "";
   }

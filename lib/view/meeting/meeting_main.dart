@@ -32,7 +32,7 @@ class MeetingMainPage extends GetView<MeetingController> {
             },
             child: _body(),
           ),
-        ) ,
+        ),
       ),
     );
   }
@@ -43,7 +43,8 @@ class MeetingMainPage extends GetView<MeetingController> {
       children: [
         _head(),
         SizedBox(height: 9.h),
-        Expanded(child: Padding(
+        Expanded(
+            child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +71,7 @@ class MeetingMainPage extends GetView<MeetingController> {
                     child: _newMeetingButton()),
               )
             ],
-          )
-          ,
+          ),
         ))
       ],
     );

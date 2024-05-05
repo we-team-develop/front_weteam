@@ -6,7 +6,9 @@ import '../data/app_colors.dart';
 import '../data/image_data.dart';
 
 enum SnackbarIcon {
-  info, success, fail;
+  info,
+  success,
+  fail;
 }
 
 class WeteamUtils {
@@ -45,22 +47,22 @@ class WeteamUtils {
     await closeSnackbarNow();
 
     _snackbarController = Get.showSnackbar(GetSnackBar(
-        titleText: title == null ? null : Text(
-            title,
-            style: TextStyle(
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.bold,
-                fontSize: 15.sp,
-                color: AppColors.white
-            )),
-        messageText: content == null ? null : Text(
-          content,
-          style: TextStyle(
-            color: AppColors.white,
-            fontFamily: 'NanumGothic',
-            fontWeight: FontWeight.bold,
-            fontSize: 13.sp
-          )),
+        titleText: title == null
+            ? null
+            : Text(title,
+                style: TextStyle(
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.sp,
+                    color: AppColors.white)),
+        messageText: content == null
+            ? null
+            : Text(content,
+                style: TextStyle(
+                    color: AppColors.white,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13.sp)),
         backgroundColor: AppColors.g4,
         snackPosition: SnackPosition.BOTTOM,
         icon: Image.asset(iconPath, width: 12.w, height: 12.h),
@@ -101,7 +103,6 @@ class WeteamUtils {
   static String padLeft(int num) {
     return num.toString().padLeft(2, '0');
   }
-
 
   /// 시,분,초(mill,micro 포함)를 모두 0으로 설정합니다.
   static DateTime onlyDate(DateTime dt) {

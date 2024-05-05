@@ -54,5 +54,4 @@ class AlarmController extends GetxController {
   PagingController<int, WeteamAlarm> getPagingController() {
     return _pagingController;
   }
-
 }

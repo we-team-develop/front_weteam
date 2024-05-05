@@ -21,6 +21,7 @@ import 'sign_up_completed.dart';
 
 class LoginMain extends StatelessWidget {
   final Rxn<OverlayEntry> _overlayEntry = Rxn<OverlayEntry>();
+
   LoginMain({super.key});
 
   @override
@@ -99,9 +100,9 @@ class LoginMain extends StatelessWidget {
   void _showOverlay(BuildContext context) {
     _overlayEntry.value = OverlayEntry(
         builder: (context) => Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-              child: Stack(fit: StackFit.expand, children: [
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                  child: Stack(fit: StackFit.expand, children: [
                 // 배경
                 const Opacity(
                   opacity: 0.5,
@@ -119,13 +120,12 @@ class LoginMain extends StatelessWidget {
                               fontSize: 14.sp,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.bold,
-                              color: AppColors.white
-                          ))
+                              color: AppColors.white))
                     ],
                   ),
                 )
               ])),
-        ));
+            ));
     Overlay.of(context).insert(_overlayEntry.value!);
   }
 

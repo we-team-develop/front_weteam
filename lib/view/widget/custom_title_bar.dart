@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/bottom_nav_controller.dart';
-import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 
 class CustomTitleBar extends StatelessWidget {
@@ -15,7 +13,11 @@ class CustomTitleBar extends StatelessWidget {
   final bool useNavController;
   final String title;
 
-  const CustomTitleBar({super.key, this.title = "WE TEAM", this.strongFont = false, this.useNavController = false});
+  const CustomTitleBar(
+      {super.key,
+      this.title = "WE TEAM",
+      this.strongFont = false,
+      this.useNavController = false});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +44,8 @@ class CustomTitleBar extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               if (useNavController) {
-                BottomNavController navController = Get.find<
-                    BottomNavController>();
+                BottomNavController navController =
+                    Get.find<BottomNavController>();
                 navController.popAction();
               } else {
                 Get.back();
@@ -68,16 +70,16 @@ class CustomTitleBar extends StatelessWidget {
 
   Expanded _titleWidget() {
     return Expanded(
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: strongFont ? 16.sp : 14.sp,
-            fontFamily: strongFont ? 'SBaggroB' : 'NanumGothic',
-            fontWeight: strongFont ? FontWeight.w600 : FontWeight.bold,
-          ),
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: strongFont ? 16.sp : 14.sp,
+          fontFamily: strongFont ? 'SBaggroB' : 'NanumGothic',
+          fontWeight: strongFont ? FontWeight.w600 : FontWeight.bold,
         ),
-      );
+      ),
+    );
   }
 }

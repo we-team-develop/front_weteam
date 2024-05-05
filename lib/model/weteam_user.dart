@@ -45,6 +45,6 @@ class WeteamUser {
 
   @override
   // TODO: implement hashCode
-  int get hashCode => Object.hash(id, username, email, organization, role, profile);
-
+  int get hashCode =>
+      Object.hash(id, username, email, organization, role, profile);
 }

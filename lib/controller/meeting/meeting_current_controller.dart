@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../model/weteam_user.dart';
 import '../../model/meeting.dart';
 import '../../model/meeting_detail.dart';
+import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';

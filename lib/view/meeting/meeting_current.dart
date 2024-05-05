@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/app_colors.dart';
 import '../widget/custom_title_bar.dart';
+import '../widget/meeting_schedule_widget.dart';
+import '../widget/meeting_widget.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
-import '../widget/meeting_widget.dart';
-import '../widget/meeting_schedule_widget.dart';
 import 'meeting_select_time.dart';
 
 class MeetingCurrent extends GetView<CurrentMeetingController> {
@@ -22,10 +23,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
         child: Padding(
           padding: EdgeInsets.only(top: 16.0.h),
           child: Column(
-            children: [
-              _head(),
-              Expanded(child: _body(context))
-            ],
+            children: [_head(), Expanded(child: _body(context))],
           ),
         ),
       ),

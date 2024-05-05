@@ -7,13 +7,12 @@ class Meeting {
   final DateTime endedAt;
   final TeamProject? project;
 
-  const Meeting({
-    required this.id,
-    required this.title,
-    required this.startedAt,
-    required this.endedAt,
-    required this.project
-  });
+  const Meeting(
+      {required this.id,
+      required this.title,
+      required this.startedAt,
+      required this.endedAt,
+      required this.project});
 
   factory Meeting.fromJson(Map data) {
     return Meeting(
@@ -21,7 +20,9 @@ class Meeting {
         title: data['title'],
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),
-        project: data['project'] != null ? TeamProject.fromJson(data['project']) : null);
+        project: data['project'] != null
+            ? TeamProject.fromJson(data['project'])
+            : null);
   }
 
   @override
@@ -37,5 +38,4 @@ class Meeting {
 
   @override
   int get hashCode => Object.hash(id, title, startedAt, endedAt, project);
-
 }

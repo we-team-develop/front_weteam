@@ -12,8 +12,10 @@ import '../../service/auth_service.dart';
 
 class TeamPlayController extends GetxController {
   final ScrollController tpScrollController = ScrollController();
+
   // 팀플 목록
   final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+
   // 팀플 이미지
   final RxList<String> imagePaths = RxList<String>([
     ImagePath.tpImage1,
@@ -56,7 +58,8 @@ class TeamPlayController extends GetxController {
     // 캐시된 데이터 가져오기
     String? json = sharedPreferences
         .getString(SharedPreferencesKeys.teamProjectNotDoneListJson);
-    if (json != null) { // 데이터가 있는 경우
+    if (json != null) {
+      // 데이터가 있는 경우
       tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json));
       _oldTpList = tpList.value!.projectList;
     }

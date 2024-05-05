@@ -4,8 +4,10 @@ import 'weteam_user.dart';
 class LoginResult {
   /// 유저 데이터
   final WeteamUser? user;
+
   /// 로그인 성공 여부
   final bool isSuccess;
+
   /// 새로운 유저 여부
   final bool isNewUser;
 

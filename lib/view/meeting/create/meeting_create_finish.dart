@@ -24,8 +24,8 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
             const _Title(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 12.h),
-              child:
-              Image.asset(ImagePath.thumbTimi, width: 153.w, height: 54.6.h),
+              child: Image.asset(ImagePath.thumbTimi,
+                  width: 153.w, height: 54.6.h),
             ),
             RichText(
               textAlign: TextAlign.center,
@@ -41,12 +41,12 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
                     const TextSpan(text: '까지\n'),
                     _boldTS(
                         '총 ${controller.endedAt!.difference(controller.startedAt!).inDays}일,\n\n'),
-                    if (controller.selectedTeamProject.value != null) TextSpan(
-                        children: [
-                          _boldTS('[${controller.selectedTeamProject.value?.title}]'),
-                          const TextSpan(text: '의\n'),
-                        ]
-                    ),
+                    if (controller.selectedTeamProject.value != null)
+                      TextSpan(children: [
+                        _boldTS(
+                            '[${controller.selectedTeamProject.value?.title}]'),
+                        const TextSpan(text: '의\n'),
+                      ]),
                     _boldTS('[${controller.nameInputText.value}]'),
                     const TextSpan(text: ' 약속을 잡는\n언제보까가 생성되었습니다~!'),
                   ]),
@@ -72,18 +72,18 @@ class MeetingCreateFinish extends GetView<MeetingCreateController> {
               },
               child: RichText(
                   text: TextSpan(
-                    children: const [
-                      TextSpan(text: '수정할게 있어요. '),
-                      TextSpan(
-                          text: '수정하기',
-                          style: TextStyle(decoration: TextDecoration.underline))
-                    ],
-                    style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.g5,
-                        fontSize: 10.sp),
-                  )),
+                children: const [
+                  TextSpan(text: '수정할게 있어요. '),
+                  TextSpan(
+                      text: '수정하기',
+                      style: TextStyle(decoration: TextDecoration.underline))
+                ],
+                style: TextStyle(
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.g5,
+                    fontSize: 10.sp),
+              )),
             ),
             SizedBox(height: 15.h)
           ],
@@ -139,8 +139,8 @@ class _CopyLinkButton extends GetView<MeetingCreateController> {
             color: AppColors.orange1),
         child: Center(
           child: Text("공유 링크 복사",
-              style:
-              TextStyle(fontFamily: 'NanumGothicExtraBold', fontSize: 15.sp)),
+              style: TextStyle(
+                  fontFamily: 'NanumGothicExtraBold', fontSize: 15.sp)),
         ),
       ),
     );

@@ -30,8 +30,7 @@ class CustomBigDialog extends StatelessWidget {
         ),
       ),
       content: ConstrainedBox(
-        constraints: BoxConstraints(
-            minWidth: 272.w),
+        constraints: BoxConstraints(minWidth: 272.w),
         child: child,
       ),
     );

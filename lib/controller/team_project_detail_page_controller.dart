@@ -74,8 +74,7 @@ class TeamProjectDetailPageController extends GetxController {
       await updateTeamProjectLists();
       isChangeHostMode.value = false;
       Get.back();
-      WeteamUtils.snackbar("", "호스트 권한을 넘겼어요",
-          icon: SnackbarIcon.success);
+      WeteamUtils.snackbar("", "호스트 권한을 넘겼어요", icon: SnackbarIcon.success);
     } else {
       WeteamUtils.snackbar("", "호스트를 넘기지 못했어요", icon: SnackbarIcon.fail);
     }

@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
-import '../../../data/image_data.dart';
 import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
 import 'meeting_date.dart';
@@ -59,7 +56,8 @@ class MeetingNaming extends GetView<MeetingCreateController> {
           text: '입력 완료',
           onTap: () => Get.to(() => const MeetingDate()),
           enable: controller.nameInputText.value.isNotEmpty,
-          width: 330.w, // 너비 설정
+          width: 330.w,
+          // 너비 설정
           height: 40.h, // 높이 설정
         ));
   }

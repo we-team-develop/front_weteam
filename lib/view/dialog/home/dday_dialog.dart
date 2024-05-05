@@ -15,6 +15,7 @@ import '../custom_big_dialog.dart';
 
 class DDayDialog extends StatefulWidget {
   final DDayData? dDayData;
+
   const DDayDialog({super.key, this.dDayData});
 
   @override
@@ -29,7 +30,6 @@ class _DDayDialogState extends State<DDayDialog> {
   DateTime startTime = DateTime.now();
   DateTime endTime = DateTime.now();
 
-
   @override
   void initState() {
     if (widget.dDayData != null) {
@@ -37,7 +37,8 @@ class _DDayDialogState extends State<DDayDialog> {
       teController.text = widget.dDayData!.name;
       startTime = widget.dDayData!.start;
       endTime = widget.dDayData!.end;
-    } else { // 디데이 없음
+    } else {
+      // 디데이 없음
       title = '디데이 추가';
     }
 
@@ -51,7 +52,8 @@ class _DDayDialogState extends State<DDayDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomTextField(hint: '디데이명', maxLength: 20, controller: teController),
+            CustomTextField(
+                hint: '디데이명', maxLength: 20, controller: teController),
             SizedBox(height: 20.h),
             ConstrainedBox(
                 constraints: BoxConstraints(minWidth: 304.w),
@@ -127,7 +129,8 @@ class _DDayDialogState extends State<DDayDialog> {
                   } catch (e, st) {
                     debugPrint(e.toString());
                     debugPrintStack(stackTrace: st);
-                    WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요', icon: SnackbarIcon.fail);
+                    WeteamUtils.snackbar('', '오류가 발생하여 불러오지 못했어요',
+                        icon: SnackbarIcon.fail);
                   }
                 }),
           ],
@@ -137,7 +140,8 @@ class _DDayDialogState extends State<DDayDialog> {
   Future<void> onTapButton() async {
     if (endTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch < 0) {
       setState(() {
-        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요', icon: SnackbarIcon.info);
+        WeteamUtils.snackbar('', '시작일이 종료일보다 빠를 수 없어요',
+            icon: SnackbarIcon.info);
       });
       return;
     }
@@ -164,7 +168,8 @@ class _DDayDialogState extends State<DDayDialog> {
       },
     };
 
-    await sharedPreferences.setString(SharedPreferencesKeys.dDayData, jsonEncode(map));
+    await sharedPreferences.setString(
+        SharedPreferencesKeys.dDayData, jsonEncode(map));
     HomeController hc = Get.find<HomeController>();
     hc.updateDDay();
     hc.update();

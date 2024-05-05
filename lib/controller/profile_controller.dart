@@ -36,11 +36,12 @@ class ProfileController extends GetxController {
   RxBool isPushNotificationEnabled = false.obs;
 
   /// 소속 입력칸에 대한 TextEditingController
-  final TextEditingController organizationTextEditingController = TextEditingController();
+  final TextEditingController organizationTextEditingController =
+      TextEditingController();
+
   /// 소속 입력칸에 입력된 값의 글자 수
   final RxInt textLength = 0.obs;
   final RxBool changes = RxBool(false);
-
 
   /// 컨트롤러가 초기화될 때 실행됩니다.
   @override

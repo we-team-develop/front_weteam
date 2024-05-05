@@ -9,7 +9,6 @@ import '../../controller/custom_calendar_controller.dart';
 import '../../data/app_colors.dart';
 
 class CustomCalendar extends StatefulWidget {
-
   const CustomCalendar({super.key});
 
   @override
@@ -17,7 +16,8 @@ class CustomCalendar extends StatefulWidget {
 }
 
 class _CustomCalendarState extends State<CustomCalendar> {
-  final CustomCalendarController controller = Get.find<CustomCalendarController>();
+  final CustomCalendarController controller =
+      Get.find<CustomCalendarController>();
 
   late PagingController<int, _CalendarItem> _pagingController;
 
@@ -31,7 +31,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
     _pagingController = PagingController(firstPageKey: key);
     _pagingController.addPageRequestListener((pageKey) async {
       DateTime nextDt =
-      DateTime(initDate.year + (pageKey ~/ 12), pageKey % 12 + 1);
+          DateTime(initDate.year + (pageKey ~/ 12), pageKey % 12 + 1);
       _pagingController.appendPage([_CalendarItem(nextDt)], ++key);
     });
   }
@@ -57,15 +57,14 @@ class _CalendarItem extends StatelessWidget {
     rows.add(_CustomRow(List.generate(
         str.length,
         (index) => Center(
-          child: Text(
-            str[index],
-            style: TextStyle(
-                color: AppColors.g4,
-                fontFamily: 'NanumGothic',
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold),
-          )
-        ))));
+                child: Text(
+              str[index],
+              style: TextStyle(
+                  color: AppColors.g4,
+                  fontFamily: 'NanumGothic',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold),
+            )))));
 
     List<int> weeks = [7, 1, 2, 3, 4, 5, 6];
     int endDay = date.month < 12
@@ -118,7 +117,8 @@ class _CustomRow extends StatelessWidget {
     items = List.generate(
         items.length,
         (index) => Expanded(
-                /*flex: 1,*/ child: Padding(
+                /*flex: 1,*/
+                child: Padding(
               padding: EdgeInsets.only(bottom: 13.h),
               child: items[index],
             )));
@@ -215,8 +215,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
           earlier = controller.selectedDt1.value!;
         }
 
-        if (earlier.isBefore(date) &&
-            date.isBefore(later)) {
+        if (earlier.isBefore(date) && date.isBefore(later)) {
           isContained = true;
         }
       }
@@ -226,11 +225,9 @@ class _DayWidget extends GetView<CustomCalendarController> {
         textColor = AppColors.white;
         if (selectedCompletely) {
           if (controller.selectedDt1.value == date) {
-            amILater =
-                controller.selectedDt2.value!.isBefore(date);
+            amILater = controller.selectedDt2.value!.isBefore(date);
           } else {
-            amILater =
-                controller.selectedDt1.value!.isBefore(date);
+            amILater = controller.selectedDt1.value!.isBefore(date);
           }
         }
       }
@@ -274,9 +271,8 @@ class _DayWidget extends GetView<CustomCalendarController> {
                         visible: isContained,
                         child: Container(
                             height: 26.h,
-                            decoration: const BoxDecoration(
-                              color: AppColors.blue3
-                            )))),
+                            decoration:
+                                const BoxDecoration(color: AppColors.blue3)))),
                 Positioned(
                     left: amILater ? 0 : null,
                     right: amILater ? null : 0,
@@ -293,9 +289,7 @@ class _DayWidget extends GetView<CustomCalendarController> {
                         width: 30.w,
                         height: 30.h,
                         decoration: const BoxDecoration(
-                            color: AppColors.blue1,
-                          shape: BoxShape.circle
-                            ))),
+                            color: AppColors.blue1, shape: BoxShape.circle))),
                 Text('${date.day}',
                     style: TextStyle(
                         color: textColor,

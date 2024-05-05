@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'dart:io' show Platform;
 
-import '../../controller/bottom_nav_controller.dart';
-import '../../controller/mainpage/home_controller.dart';
 import '../../controller/mainpage/tp_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
-import '../widget/app_title_widget.dart';
 import '../widget/custom_title_bar.dart';
 import '../widget/team_project_widget.dart';
 
@@ -32,15 +28,16 @@ class TeamPlay extends GetView<TeamPlayController> {
           child: Column(
             children: [
               const CustomTitleBar(strongFont: true, useNavController: true),
-              Expanded(child: Padding(
+              Expanded(
+                  child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Obx(() => CustomScrollView(
-                  controller: controller.tpScrollController,
-                  physics: const AlwaysScrollableScrollPhysics(
-                      parent: ClampingScrollPhysics()),
-                  slivers: [
-                    SliverList(
-                        delegate: SliverChildListDelegate([
+                      controller: controller.tpScrollController,
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: ClampingScrollPhysics()),
+                      slivers: [
+                        SliverList(
+                            delegate: SliverChildListDelegate([
                           SizedBox(height: 22.0.h),
                           Text(
                             '${controller.getUserName()}님이 진행중이신 팀플이에요!',
@@ -59,13 +56,13 @@ class TeamPlay extends GetView<TeamPlayController> {
                           ),
                           SizedBox(height: 24.0.h),
                         ])),
-                    if (controller.tpList.value == null ||
-                        controller.tpList.value!.projectList.isEmpty)
-                      _noTeamProject()
-                    else
-                      _teamProjectList(tpPadding)
-                  ],
-                )),
+                        if (controller.tpList.value == null ||
+                            controller.tpList.value!.projectList.isEmpty)
+                          _noTeamProject()
+                        else
+                          _teamProjectList(tpPadding)
+                      ],
+                    )),
               ))
             ],
           )),

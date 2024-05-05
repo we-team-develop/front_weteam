@@ -7,7 +7,10 @@ class WeteamProjectUser {
   final WeteamUser user;
 
   const WeteamProjectUser(
-      {required this.id, required this.role, required this.enable, required this.user});
+      {required this.id,
+      required this.role,
+      required this.enable,
+      required this.user});
 
   factory WeteamProjectUser.fromJson(Map data) {
     return WeteamProjectUser(

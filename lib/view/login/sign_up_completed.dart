@@ -44,8 +44,8 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
         Text(
           'WE TEAM 회원가입이 완료되었습니다!',
           style: TextStyle(
-              fontFamily: 'NanumGothicExtraBold',
-              fontSize: 14.0.sp,
+            fontFamily: 'NanumGothicExtraBold',
+            fontSize: 14.0.sp,
           ),
         ),
         const Expanded(child: SizedBox()),

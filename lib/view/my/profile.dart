@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -49,7 +48,8 @@ class Profile extends GetView<ProfileController> {
             SizedBox(width: 15.w)
           ],
         ),
-        Expanded(child: Padding(
+        Expanded(
+            child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: SingleChildScrollView(
             child: Column(
@@ -77,8 +77,7 @@ class Profile extends GetView<ProfileController> {
               ],
             ),
           ),
-        )
-        )
+        ))
       ],
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
-import '../widget/app_title_widget.dart';
 import '../widget/custom_title_bar.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
@@ -127,8 +125,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Widget _head() {
     return Padding(
       padding: EdgeInsets.only(top: 25.0.h),
-      child: CustomTitleBar(useNavController: !(widget.isOtherUser),
-      strongFont: true),
+      child: CustomTitleBar(
+          useNavController: !(widget.isOtherUser), strongFont: true),
     );
   }
 
@@ -248,4 +246,3 @@ class _UserInfoPageState extends State<UserInfoPage> {
     });
   }
 }
-

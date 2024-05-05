@@ -9,9 +9,9 @@ import '../../controller/mainpage/tp_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
+import '../../model/meeting.dart';
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
-import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
@@ -45,7 +45,8 @@ class MeetingWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _meetingTitleWidget(team.title),
-                        if (team.project != null) _meetingTeamWidget(team.project!),
+                        if (team.project != null)
+                          _meetingTeamWidget(team.project!),
                         _dateWidget(),
                       ],
                     ),
@@ -59,11 +60,13 @@ class MeetingWidget extends StatelessWidget {
                             Get.find<AuthService>().user.value!;
 
                         if (inviteLink == null) {
-                          WeteamUtils.snackbar('', '초대 링크를 준비하지 못했어요', icon: SnackbarIcon.fail);
+                          WeteamUtils.snackbar('', '초대 링크를 준비하지 못했어요',
+                              icon: SnackbarIcon.fail);
                           return;
                         }
 
-                        inviteLink = Get.find<ApiService>().convertDeepLink(inviteLink);
+                        inviteLink =
+                            Get.find<ApiService>().convertDeepLink(inviteLink);
 
                         Share.share(
                             '${currentUser.username}님이 [${team.title}] 언제보까에 초대했어요!\n$inviteLink');

@@ -30,7 +30,8 @@ class App extends GetView<BottomNavController> {
       String path = uri.path;
       Map<String, String> query = uri.queryParameters;
 
-      try { // 예외 처리되지 않은 오류 핸들링
+      try {
+        // 예외 처리되지 않은 오류 핸들링
         if (host == "projects") {
           if (path.startsWith("/acceptInvite")) {
             String hashedId = query['id'] ?? '-1';
@@ -53,7 +54,8 @@ class App extends GetView<BottomNavController> {
 
             // 올바르지 않은 id
             if (hashedId.isEmpty) {
-              WeteamUtils.snackbar('', '올바르지 않은 언제보까 초대예요', icon: SnackbarIcon.fail);
+              WeteamUtils.snackbar('', '올바르지 않은 언제보까 초대예요',
+                  icon: SnackbarIcon.fail);
               return;
             }
 
@@ -67,7 +69,7 @@ class App extends GetView<BottomNavController> {
             }
           }
         }
-      } catch(e) {
+      } catch (e) {
         WeteamUtils.snackbar('', '요청을 처리하지 못했어요', icon: SnackbarIcon.fail);
         return;
       }
@@ -122,22 +124,19 @@ class App extends GetView<BottomNavController> {
           backgroundColor: Colors.white,
           items: [
             BottomNavigationBarItem(
-                icon:
-                Image.asset(ImagePath.tpOff, width: 25.w, height: 25.h),
+                icon: Image.asset(ImagePath.tpOff, width: 25.w, height: 25.h),
                 activeIcon:
-                Image.asset(ImagePath.tpOn, width: 25.w, height: 25.h),
+                    Image.asset(ImagePath.tpOn, width: 25.w, height: 25.h),
                 label: '진행팀플'),
             BottomNavigationBarItem(
-                icon: Image.asset(
-                    ImagePath.homeOff, width: 25.w, height: 25.h),
-                activeIcon: Image.asset(
-                    ImagePath.homeOn, width: 25.w, height: 25.h),
+                icon: Image.asset(ImagePath.homeOff, width: 25.w, height: 25.h),
+                activeIcon:
+                    Image.asset(ImagePath.homeOn, width: 25.w, height: 25.h),
                 label: '홈'),
             BottomNavigationBarItem(
-                icon:
-                Image.asset(ImagePath.myOff, width: 25.w, height: 25.h),
+                icon: Image.asset(ImagePath.myOff, width: 25.w, height: 25.h),
                 activeIcon:
-                Image.asset(ImagePath.myOn, width: 25.w, height: 25.h),
+                    Image.asset(ImagePath.myOn, width: 25.w, height: 25.h),
                 label: '마이'),
           ],
         ),

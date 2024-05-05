@@ -11,9 +11,9 @@ import '../../controller/meeting/meeting_current_controller.dart';
 import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
-import '../../model/weteam_user.dart';
 import '../../model/meeting.dart';
 import '../../model/meeting_detail.dart';
+import '../../model/weteam_user.dart';
 import '../../util/weteam_utils.dart';
 
 class MeetingSchedule extends StatefulWidget {
@@ -425,6 +425,7 @@ class _HourTextList extends StatefulWidget {
   final Rx<double> verticalScrollOffset;
 
   const _HourTextList({required this.verticalScrollOffset});
+
   @override
   State<_HourTextList> createState() => _HourTextListState();
 }

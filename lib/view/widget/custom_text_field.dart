@@ -8,7 +8,8 @@ class CustomTextField extends StatefulWidget {
   final int? maxLength;
   final TextEditingController? controller;
 
-  const CustomTextField({super.key, this.hint = "", this.maxLength, this.controller});
+  const CustomTextField(
+      {super.key, this.hint = "", this.maxLength, this.controller});
 
   @override
   State<StatefulWidget> createState() {
@@ -67,17 +68,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: AppColors.mainOrange),
           )),
-      cursorColor: AppColors.mainOrange, // 깜빡이는 커서의 색 변경
-      maxLength: widget.maxLength, // 최대 20자
+      cursorColor: AppColors.mainOrange,
+      // 깜빡이는 커서의 색 변경
+      maxLength: widget.maxLength,
+      // 최대 20자
 
       style: TextStyle(
-        fontFamily: 'NanumSquareNeo',
-        fontSize: 18.sp,
-        fontWeight: FontWeight.bold
-      ),
+          fontFamily: 'NanumSquareNeo',
+          fontSize: 18.sp,
+          fontWeight: FontWeight.bold),
       onChanged: (newV) {
-        setState(() {
-        });
+        setState(() {});
       },
     );
   }

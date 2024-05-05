@@ -14,18 +14,17 @@ class NormalButton extends StatefulWidget {
   final TextStyle? textStyle;
   final bool enable;
 
-  const NormalButton({
-    super.key,
-    required this.onTap,
-    this.text = "",
-    this.width,
-    this.height,
-    this.fontSize,
-    this.whiteButton = false,
-    this.textStyle,
-    this.color,
-    this.enable = true
-  });
+  const NormalButton(
+      {super.key,
+      required this.onTap,
+      this.text = "",
+      this.width,
+      this.height,
+      this.fontSize,
+      this.whiteButton = false,
+      this.textStyle,
+      this.color,
+      this.enable = true});
 
   @override
   State<NormalButton> createState() => _NormalButtonState();
@@ -73,31 +72,30 @@ class _NormalButtonState extends State<NormalButton> {
         }
       },
       child: Container(
-        width: widget.width ?? double.infinity,
-        height: widget.height ?? 40.h,
-        alignment: Alignment.center,
-        decoration: ShapeDecoration(
-          color: _getButtonColor(),
-            shape:
-              RoundedRectangleBorder(
-                  side: widget.whiteButton
+          width: widget.width ?? double.infinity,
+          height: widget.height ?? 40.h,
+          alignment: Alignment.center,
+          decoration: ShapeDecoration(
+            color: _getButtonColor(),
+            shape: RoundedRectangleBorder(
+                side: widget.whiteButton
                     ? BorderSide(width: 1.r, color: AppColors.g2)
                     : BorderSide.none,
                 borderRadius: BorderRadius.circular(8.r)),
-        ),
-        child: Visibility(
-          visible: !isLoading,
-          replacement: const CircularProgressIndicator(),
-          child: Text(
-            widget.text,
-            style: widget.textStyle ?? TextStyle(
-              color: AppColors.white,
-              fontSize: widget.fontSize ?? 15.sp,
-              fontFamily: 'NanumGothicExtraBold',
-            ),
           ),
-        )
-      ),
+          child: Visibility(
+            visible: !isLoading,
+            replacement: const CircularProgressIndicator(),
+            child: Text(
+              widget.text,
+              style: widget.textStyle ??
+                  TextStyle(
+                    color: AppColors.white,
+                    fontSize: widget.fontSize ?? 15.sp,
+                    fontFamily: 'NanumGothicExtraBold',
+                  ),
+            ),
+          )),
     );
   }
 }

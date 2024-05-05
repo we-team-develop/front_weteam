@@ -8,7 +8,6 @@ import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
 import '../../../data/image_data.dart';
 import '../../../model/team_project.dart';
-import '../../widget/custom_title_bar.dart';
 import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
 import '../../widget/team_project_widget.dart';

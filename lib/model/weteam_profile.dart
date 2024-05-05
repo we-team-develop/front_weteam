@@ -19,5 +19,4 @@ class WeteamProfile {
   @override
   // TODO: implement hashCode
   int get hashCode => Object.hash(userId, imageIdx);
-
 }

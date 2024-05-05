@@ -49,7 +49,8 @@ class MeetingController extends GetxController {
   void toggleShouldShowOverlay() async {
     shouldShowOverlay.value = !shouldShowOverlay.value;
     await MeetingOverlayService.setShouldShowOverlay(shouldShowOverlay.value);
-    debugPrint('Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
+    debugPrint(
+        'Saved showOverlay: ${shouldShowOverlay.value} to SharedPreferences');
   }
 
   void showOverlay(BuildContext context) async {

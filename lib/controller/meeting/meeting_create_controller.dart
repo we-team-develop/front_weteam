@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../view/meeting/create/meeting_create_finish.dart';
-import 'meeting_controller.dart';
 import 'package:get/get.dart';
 
+import '../../model/meeting.dart';
 import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
-import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/weteam_utils.dart';
+import '../../view/meeting/create/meeting_create_finish.dart';
 import '../custom_calendar_controller.dart';
+import 'meeting_controller.dart';
 
 class MeetingCreateController extends GetxController {
   Meeting? meeting;
@@ -78,8 +78,7 @@ class MeetingCreateController extends GetxController {
     bool success = false;
 
     if (meeting == null) {
-      Meeting? meetingProject = await Get.find<ApiService>()
-          .createMeeting(
+      Meeting? meetingProject = await Get.find<ApiService>().createMeeting(
           title: title,
           startedAt: startedAt!,
           endedAt: endedAt!,
@@ -102,9 +101,7 @@ class MeetingCreateController extends GetxController {
       Get.find<MeetingController>().updateMeetingList();
       Get.to(() => const MeetingCreateFinish());
     } else {
-      WeteamUtils.snackbar('', '잠시 오류가 발생했어요',
-          icon: SnackbarIcon.fail);
+      WeteamUtils.snackbar('', '잠시 오류가 발생했어요', icon: SnackbarIcon.fail);
     }
   }
-
 }

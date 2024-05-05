@@ -1,6 +1,4 @@
-enum WeteamAuthProvider {
-  naver, kakao, google, apple
-}
+enum WeteamAuthProvider { naver, kakao, google, apple }
 
 abstract class AuthHelper {
   /// 로그인을 시도하는 메소드

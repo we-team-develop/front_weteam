@@ -33,40 +33,40 @@ class CustomCheckDialog extends StatelessWidget {
       backgroundColor: AppColors.white,
       surfaceTintColor: AppColors.white,
       // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-        //Dialog Main Title
-        content: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 240.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              // 최소 크기로
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-              Column(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+      //Dialog Main Title
+      content: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 240.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // 최소 크기로
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
               mainAxisSize: MainAxisSize.min, // 최소 크기로
               crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
               children: [
-            Visibility(
-            visible: title != null && title!.isNotEmpty,
-              replacement: SizedBox(height: 24.h),
-              child: Column(
-                children: [
-                  SizedBox(height: 24.h),
-                  Text(
-                    title!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 12.sp,
-                      fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
                 Visibility(
-                  visible: content != null && content!.isNotEmpty,
+                  visible: title != null && title!.isNotEmpty,
+                  replacement: SizedBox(height: 24.h),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 24.h),
+                      Text(
+                        title!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontSize: 12.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                    visible: content != null && content!.isNotEmpty,
                     replacement: SizedBox(height: 24.h),
                     child: Column(
                       children: [

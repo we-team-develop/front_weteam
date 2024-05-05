@@ -5,10 +5,8 @@ import 'custom_title_bar.dart';
 
 class MeetingAppTitleBar extends StatelessWidget {
   final String title;
-  const MeetingAppTitleBar({
-    super.key,
-    required this.title
-  });
+
+  const MeetingAppTitleBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +23,7 @@ class MeetingAppTitleBar extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontFamily: 'NanumGothic',
                 fontSize: 20.sp),
-          )
-          ,
+          ),
         )
       ],
     );

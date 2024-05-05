@@ -13,6 +13,7 @@ class CustomSwitch extends StatefulWidget {
   final Color toggleActiveColor;
   final Color trackInActiveColor;
   final Color trackActiveColor;
+
   const CustomSwitch({
     super.key,
     required this.onChanged,
@@ -25,6 +26,7 @@ class CustomSwitch extends StatefulWidget {
     this.trackInActiveColor = const Color(0xffcccccc),
     this.toggleActiveColor = AppColors.white,
   });
+
   @override
   CustomSwitchState createState() => CustomSwitchState();
 }
@@ -63,10 +65,12 @@ class CustomSwitchState extends State<CustomSwitch> {
               bottom: 2.h,
               left: _isSwitched
                   ? widget.trackWidth.w - widget.toggleWidth.w - 2.w
-                  : 4.w, // 왼쪽 여백
+                  : 4.w,
+              // 왼쪽 여백
               right: _isSwitched
                   ? 4.w
-                  : widget.trackWidth.w - widget.toggleWidth.w - 2.w, // 오른쪽 여백
+                  : widget.trackWidth.w - widget.toggleWidth.w - 2.w,
+              // 오른쪽 여백
               child: GestureDetector(
                 onHorizontalDragUpdate: (DragUpdateDetails details) {
                   setState(() {

@@ -13,6 +13,7 @@ import '../widget/profile_image_widget.dart';
 
 class ProfileSettingPage extends StatelessWidget {
   ProfileSettingPage({super.key});
+
   final ProfileController controller = Get.put(ProfileController());
 
   @override
@@ -81,13 +82,15 @@ class ProfileSettingPage extends StatelessWidget {
     try {
       bool fcmSuccess = await service.setFCMToken(); // FCM토큰을 서버에 전송합니다
 
-      if (fcmSuccess && await service.createUserProfiles(id) &&
+      if (fcmSuccess &&
+          await service.createUserProfiles(id) &&
           (await service.getCurrentUser())?.profile != null) {
         await sharedPreferences.setBool(
             SharedPreferencesKeys.isRegistered, true);
 
         // 알림 권한
-        PermissionStatus notificationStatus = await Permission.notification.status;
+        PermissionStatus notificationStatus =
+            await Permission.notification.status;
         if (!notificationStatus.isGranted) {
           await Permission.notification.request();
         }

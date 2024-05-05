@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import '../controller/mainpage/tp_controller.dart';
 import '../controller/meeting/meeting_current_controller.dart';
 import '../main.dart';
+import '../model/meeting.dart';
+import '../model/meeting_detail.dart';
 import '../model/team_project.dart';
 import '../model/weteam_alarm.dart';
 import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
-import '../model/meeting.dart';
-import '../model/meeting_detail.dart';
 import '../util/custom_get_connect.dart';
 import '../util/weteam_utils.dart';
 
@@ -237,7 +237,8 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   /// MEETING_USER
 
-  Future<bool> setMeetingSchedule(int meetingId, List<MeetingTime> timeList) async {
+  Future<bool> setMeetingSchedule(
+      int meetingId, List<MeetingTime> timeList) async {
     List<Map<String, String>> timeMapList = [];
     for (var element in timeList) {
       timeMapList.add(element.toMap());
@@ -486,7 +487,7 @@ class GetMeetingListResult {
     return GetMeetingListResult(
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
-        meetingList: List<Meeting>.generate(
-            meetingList.length, (index) => Meeting.fromJson(meetingList[index])));
+        meetingList: List<Meeting>.generate(meetingList.length,
+            (index) => Meeting.fromJson(meetingList[index])));
   }
 }
