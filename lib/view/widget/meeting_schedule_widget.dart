@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bottom_sheet/bottom_sheet.dart';
@@ -34,30 +35,33 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
   final ScrollController calendarHorizontalScrollController =
       ScrollController();
 
-  final Rx<double> verticalScrollOffset = 0.0.obs;
+  final ScrollController virtualScrollController = ScrollController();
 
-  final Rx<double> horizontalScrollOffset = 0.0.obs;
+  final Rx<double> vOffset = 0.0.obs;
+  double maxVerticalOffset = 1;
+
+  final Rx<double> hOffset = 0.0.obs;
 
   @override
   void initState() {
     super.initState();
     calendarHorizontalScrollController.addListener(() {
-      if (horizontalScrollOffset.value !=
+      if (hOffset.value !=
           calendarHorizontalScrollController.offset) {
-        horizontalScrollOffset.value =
+        hOffset.value =
             calendarHorizontalScrollController.offset;
       }
     });
 
     dateTextHorizontalScrollController.addListener(() {
-      if (horizontalScrollOffset.value !=
+      if (hOffset.value !=
           dateTextHorizontalScrollController.offset) {
-        horizontalScrollOffset.value =
+        hOffset.value =
             dateTextHorizontalScrollController.offset;
       }
     });
 
-    horizontalScrollOffset.listen((p0) {
+    hOffset.listen((p0) {
       if (p0 != calendarHorizontalScrollController.offset) {
         calendarHorizontalScrollController.jumpTo(p0);
       }
@@ -65,6 +69,39 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
         dateTextHorizontalScrollController.jumpTo(p0);
       }
     });
+  }
+
+  Widget _scrollBar() {
+    final double barHeight = 41.h;
+    final double barWidth = 5.w;
+
+    return Obx(
+        () {
+          double offset = vOffset.value;
+          return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                var height = constraints.maxHeight; // 최대 높이
+                return SizedBox(
+                  width: barWidth,
+                  height: height,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          top: offset / maxVerticalOffset * (height - barHeight),
+                          child: Container(
+                            width: barWidth,
+                            height: barHeight,
+                            decoration: BoxDecoration(
+                                color: AppColors.g4,
+                              borderRadius: BorderRadius.circular(20.r)
+                            ),
+                          ))
+                    ],
+                  ),
+                );
+              });
+        }
+    );
   }
 
   @override
@@ -96,7 +133,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
           children: [
             SizedBox(
               width: 44.79.w,
-              child: _HourTextList(verticalScrollOffset: verticalScrollOffset),
+              child: _HourTextList(verticalScrollOffset: vOffset),
             ),
             Expanded(
                 child: ListView.builder(
@@ -109,7 +146,8 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
                   1,
               itemBuilder: (_, i) => _day(
                   context, widget.meeting.startedAt.add(Duration(days: i))),
-            ))
+            )),
+            _scrollBar()
           ],
         ))
       ],
@@ -135,16 +173,17 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
   Widget _day(BuildContext c, DateTime date) {
     late StreamSubscription listener;
     ScrollController sc = ScrollController(
-        initialScrollOffset: verticalScrollOffset.value,
+        initialScrollOffset: vOffset.value,
         onDetach: (p) => listener.cancel());
 
     sc.addListener(() {
       // 스크롤이 변경되었을 때
-      if (sc.offset == verticalScrollOffset.value) return;
-      verticalScrollOffset.value = sc.offset;
+      if (sc.offset == vOffset.value) return;
+      vOffset.value = sc.offset;
+      maxVerticalOffset = sc.position.maxScrollExtent;
     });
 
-    listener = verticalScrollOffset.listen((p0) {
+    listener = vOffset.listen((p0) {
       // offset값이 변경되었을 때
       if (sc.offset != p0) {
         sc.jumpTo(p0);
