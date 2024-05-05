@@ -120,7 +120,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
     return SizedBox(
       width: (43.29 + 5).w,
       child: AutoSizeText(
-        '${MeetingSchedule._dateName[date.weekday - 1]}\n${WeteamUtils.padLeft(date.month)}.${date.day}',
+        '${MeetingSchedule._dateName[date.weekday - 1]}\n${WeteamUtils.padLeft(date.month)}.${WeteamUtils.padLeft(date.day)}',
         style: TextStyle(
             fontFamily: 'NanumGothic',
             fontSize: 10.sp,
