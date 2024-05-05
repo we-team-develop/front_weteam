@@ -33,113 +33,123 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
             SizedBox(height: 15.h),
             const CustomTitleBar(title: '팀플방'),
             SizedBox(height: 15.h),
-            Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const _CustomDivider(),
-                        Obx(() => Stack(children: [
-                          TeamProjectWidget(controller.tp.value),
-                          Positioned(
-                              top: 0,
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (controller.tp.value.memberSize > 1 &&
-                                      controller.tp.value.host.id ==
-                                          Get.find<AuthService>()
-                                              .user
-                                              .value!
-                                              .id) {
-                                    WeteamUtils.snackbar(
-                                        '', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
-                                        icon: SnackbarIcon.fail);
-                                    return;
-                                  }
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => CustomCheckDialog(
-                                          title: '정말 나가시겠습니까?',
-                                          content: '팀플 목록에서 완전히 삭제됩니다.',
-                                          admitName: '나가기',
-                                          denyName: '아니요',
-                                          denyCallback: () => Get.back(),
-                                          admitCallback:
-                                          exitOrDeleteTeamProject));
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 14.h),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                          controller.tp.value.host.id ==
-                                              Get.find<AuthService>()
-                                                  .user
-                                                  .value!
-                                                  .id
-                                              ? ImagePath.icHostOutGray
-                                              : ImagePath.icGuestOutGray,
-                                          width: 21.w,
-                                          height: 21.h),
-                                      Text(
-                                        '나가기',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 10.sp,
-                                            color:
-                                            controller.tp.value.host.id ==
-                                                Get.find<AuthService>()
-                                                    .user
-                                                    .value!
-                                                    .id
-                                                ? AppColors.g3
-                                                : AppColors.g5),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ))
-                        ])),
-                        const _CustomDivider(),
-                        Obx(() {
-                          if (controller.userList.isEmpty) {
-                            return const CircularProgressIndicator();
-                          } else {
-                            return _UserListView();
-                          }
-                        }),
-                        Obx(() => Visibility(
-                            visible: controller.isKickMode.isFalse &&
-                                controller.isChangeHostMode.isFalse,
-                            child: _BottomWidget())),
-                        Obx(() => Visibility(
-                            visible: controller.isKickMode.isTrue,
-                            child: _CancelOrActionBottomPanel(
-                                message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
-                                actionButtonText: '퇴출하기',
-                                action: controller.showKickDialog,
-                                cancelAction: () =>
-                                controller.isKickMode.value = false))),
-                        Obx(() => Visibility(
-                            visible: controller.isChangeHostMode.isTrue,
-                            child: _CancelOrActionBottomPanel(
-                                message: '호스트 권한을 넘기고 있습니다.',
-                                actionButtonText: '호스트넘기기',
-                                action: controller.showChangeHostDialog,
-                                cancelAction: () =>
-                                controller.isChangeHostMode.value = false)))
-                      ],
-                    ),
-                  ),
-                )),
+            _body(context),
           ],
         ),
       ),
     );
+  }
+
+  Expanded _body(BuildContext context) {
+    return Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const _CustomDivider(),
+                      Obx(() => Stack(children: [
+                        TeamProjectWidget(controller.tp.value),
+                        Positioned(
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            child: _exitButton(context))
+                      ])),
+                      const _CustomDivider(),
+                      Obx(() {
+                        if (controller.userList.isEmpty) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          return _UserListView();
+                        }
+                      }),
+                      Obx(() => Visibility(
+                          visible: controller.isKickMode.isFalse &&
+                              controller.isChangeHostMode.isFalse,
+                          child: _BottomWidget())),
+                      Obx(() => Visibility(
+                          visible: controller.isKickMode.isTrue,
+                          child: _CancelOrActionBottomPanel(
+                              message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
+                              actionButtonText: '퇴출하기',
+                              action: controller.showKickDialog,
+                              cancelAction: () =>
+                              controller.isKickMode.value = false))),
+                      Obx(() => Visibility(
+                          visible: controller.isChangeHostMode.isTrue,
+                          child: _CancelOrActionBottomPanel(
+                              message: '호스트 권한을 넘기고 있습니다.',
+                              actionButtonText: '호스트넘기기',
+                              action: controller.showChangeHostDialog,
+                              cancelAction: () =>
+                              controller.isChangeHostMode.value = false)))
+                    ],
+                  ),
+                ),
+              ));
+  }
+
+  GestureDetector _exitButton(BuildContext context) {
+    return GestureDetector(
+                            onTap: _exitButtonOnTap,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 14.h),
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                      controller.tp.value.host.id ==
+                                          Get.find<AuthService>()
+                                              .user
+                                              .value!
+                                              .id
+                                          ? ImagePath.icHostOutGray
+                                          : ImagePath.icGuestOutGray,
+                                      width: 21.w,
+                                      height: 21.h),
+                                  Text(
+                                    '나가기',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10.sp,
+                                        color:
+                                        controller.tp.value.host.id ==
+                                            Get.find<AuthService>()
+                                                .user
+                                                .value!
+                                                .id
+                                            ? AppColors.g3
+                                            : AppColors.g5),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+  }
+
+  void _exitButtonOnTap() {
+    if (controller.tp.value.memberSize > 1 &&
+        controller.tp.value.host.id ==
+            Get.find<AuthService>()
+                .user
+                .value!
+                .id) {
+      WeteamUtils.snackbar(
+          '', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
+          icon: SnackbarIcon.fail);
+      return;
+    }
+    showDialog(
+        context: Get.context!,
+        builder: (context) => CustomCheckDialog(
+            title: '정말 나가시겠습니까?',
+            content: '팀플 목록에서 완전히 삭제됩니다.',
+            admitName: '나가기',
+            denyName: '아니요',
+            denyCallback: () => Get.back(),
+            admitCallback:
+            exitOrDeleteTeamProject));
   }
 
   Future<void> exitOrDeleteTeamProject() async {
