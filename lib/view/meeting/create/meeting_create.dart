@@ -8,6 +8,8 @@ import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
 import '../../../data/image_data.dart';
 import '../../../model/team_project.dart';
+import '../../widget/custom_title_bar.dart';
+import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
 import '../../widget/team_project_widget.dart';
 import 'meeting_naming.dart';
@@ -34,10 +36,8 @@ class MeetingCreate extends GetView<MeetingCreateController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: 40.h, left: 15.w),
-          child: _head(),
-        ),
+        SizedBox(height: 16.h),
+        _head(),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
           child: const _Search(),
@@ -113,9 +113,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
   }
 
   Widget _head() {
-    return CustomTitleBAR(
-      title: '어떤 팀플의 약속인가요?',
-    );
+    return const MeetingAppTitleBar(title: '어떤 팀플의 약속인가요?');
   }
 
   Widget _tplist(String text, bool isSelected) {

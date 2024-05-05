@@ -6,6 +6,7 @@ import '../../../controller/custom_calendar_controller.dart';
 import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
 import '../../widget/custom_calendart.dart';
+import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
 
 class MeetingDate extends GetView<MeetingCreateController> {
@@ -25,7 +26,7 @@ class MeetingDate extends GetView<MeetingCreateController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 40.h, left: 15.w),
+          padding: EdgeInsets.only(top: 16.h),
           child: Align(alignment: Alignment.topLeft, child: _head()),
         ),
         SizedBox(
@@ -48,13 +49,7 @@ class MeetingDate extends GetView<MeetingCreateController> {
   }
 
   Widget _head() {
-    return Text(
-      '언제부터 언제까지의 일정을\n조사할까요?',
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontFamily: 'NanumGothic',
-          fontSize: 20.sp),
-    );
+    return const MeetingAppTitleBar(title: '언제부터 언제까지의 일정을\n조사할까요?');
   }
 
   Widget _bottom() {

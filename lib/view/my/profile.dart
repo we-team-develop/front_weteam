@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io' show Platform;
 
 import '../../controller/profile_controller.dart';
 import '../../data/app_colors.dart';
@@ -13,6 +13,7 @@ import '../../util/helper/auth_helper.dart';
 import '../../util/weteam_utils.dart';
 import '../dialog/custom_check_dialog.dart';
 import '../widget/custom_switch.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 
@@ -36,69 +37,49 @@ class Profile extends GetView<ProfileController> {
 
   Widget _body(BuildContext context) {
     // context 매개변수 추가
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      children: [
+        SizedBox(height: 47.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 47.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 대칭 공간 용
-                SizedBox(
-                  width: 62.w,
-                  height: 25.h,
-                  child: Platform.isIOS
-                      ? IconButton(
-                          icon: Image.asset(
-                            ImagePath.backios,
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                          onPressed: () =>
-                              Navigator.of(context).pop(), // context 사용 가능
-                        )
-                      : null,
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      '내 정보 관리',
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontSize: 14.0.sp,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                // 저장 버튼
-                _saveButton(),
-              ],
-            ),
-            SizedBox(height: 17.0.h),
-            // 프로필 선택
-            _profileSelection(),
-            SizedBox(height: 4.0.h),
-            // 소속 입력
-            _organization(),
-            SizedBox(height: 24.h),
-            // 푸시 알림
-            _pushAlarm(),
-            SizedBox(height: 34.h),
-            // 연결된 계정
-            _linkedAccount(),
-            SizedBox(height: 24.0.h),
-            // 로그아웃 버튼
-            _logoutButton(),
-            SizedBox(height: 16.0.h),
-            // 회원 탈퇴 버튼
-            _withdrawButton(),
-            SizedBox(height: 40.h)
+            const Expanded(child: CustomTitleBar(title: '내 정보 관리')),
+            // 저장 버튼
+            _saveButton(),
+            SizedBox(width: 15.w)
           ],
         ),
-      ),
+        Expanded(child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 17.0.h),
+                // 프로필 선택
+                _profileSelection(),
+                SizedBox(height: 4.0.h),
+                // 소속 입력
+                _organization(),
+                SizedBox(height: 24.h),
+                // 푸시 알림
+                _pushAlarm(),
+                SizedBox(height: 34.h),
+                // 연결된 계정
+                _linkedAccount(),
+                SizedBox(height: 24.0.h),
+                // 로그아웃 버튼
+                _logoutButton(),
+                SizedBox(height: 16.0.h),
+                // 회원 탈퇴 버튼
+                _withdrawButton(),
+                SizedBox(height: 40.h)
+              ],
+            ),
+          ),
+        )
+        )
+      ],
     );
   }
 

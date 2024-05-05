@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/app_colors.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/meeting_widget.dart';
@@ -20,8 +20,13 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: 21.0.h),
-          child: _body(context),
+          padding: EdgeInsets.only(top: 16.0.h),
+          child: Column(
+            children: [
+              _head(),
+              Expanded(child: _body(context))
+            ],
+          ),
         ),
       ),
     );
@@ -33,17 +38,12 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _head(),
-          SizedBox(
-            height: 16.h,
-          ),
+          SizedBox(height: 11.h),
           Divider(
             height: 1.h,
             color: AppColors.g1,
           ),
-          SizedBox(
-            height: 14.h,
-          ),
+          SizedBox(height: 14.h),
           SizedBox(
             height: 57.h,
             child: Obx(
@@ -100,7 +100,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
   }
 
   Widget _head() {
-    return CustomTitleBar(title: '언제보까 현황');
+    return const CustomTitleBar(title: '언제보까 현황');
   }
 
   Widget _teamInfo() {

@@ -12,7 +12,7 @@ enum Page { project, home, myPage }
 class BottomNavController extends GetxController {
   final RxInt _pageIndex = 1.obs;
 
-  final List<int> _history = [0];
+  final List<int> _history = [1];
 
   int get index => _pageIndex.value;
 
@@ -41,7 +41,7 @@ class BottomNavController extends GetxController {
   }
 
   void _moveToPage(int value) {
-    if (_history.last != value && Platform.isAndroid) {
+    if (_history.last != value) {
       _history.add(value);
       debugPrint(_history.toString());
     }
@@ -54,7 +54,7 @@ class BottomNavController extends GetxController {
       return true;
     } else {
       _history.removeLast();
-      _pageIndex(_history.last);
+      changeIndex(_history.last);
       return false;
     }
   }

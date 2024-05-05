@@ -5,13 +5,13 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'dart:io' show Platform;
 
 import '../../controller/alarm_controller.dart';
-import '../../controller/backios_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../teamplay/team_project_detail_page.dart';
+import '../widget/custom_title_bar.dart';
 
 class AlarmListPage extends GetView<AlarmController> {
   const AlarmListPage({super.key});
@@ -30,7 +30,7 @@ class AlarmListPage extends GetView<AlarmController> {
         child: Column(
           children: [
             SizedBox(height: 16.h),
-            CustomTitleBar(title: '알림'),
+            const CustomTitleBar(title: '알림'),
             SizedBox(height: 16.h),
             Expanded(
                 child: PagedListView<int, WeteamAlarm>(

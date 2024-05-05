@@ -3,10 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:io' show Platform;
 
+import '../../controller/bottom_nav_controller.dart';
+import '../../controller/mainpage/home_controller.dart';
 import '../../controller/mainpage/tp_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../widget/app_title_widget.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/team_project_widget.dart';
 
 class TeamPlay extends GetView<TeamPlayController> {
@@ -21,44 +24,51 @@ class TeamPlay extends GetView<TeamPlayController> {
     EdgeInsets tpPadding = EdgeInsets.only(bottom: 12.h);
 
     return Padding(
-      padding: EdgeInsets.only(left: 15.0.w, right: 15.0.w, top: 25.0.h),
+      padding: EdgeInsets.only(top: 25.0.h),
       child: RefreshIndicator(
           onRefresh: () async {
             await controller.updateTeamProjectList();
           },
-          child: Obx(() => CustomScrollView(
-                controller: controller.tpScrollController,
-                physics: const AlwaysScrollableScrollPhysics(
-                    parent: ClampingScrollPhysics()),
-                slivers: [
-                  SliverList(
-                      delegate: SliverChildListDelegate([
-                    CustomAppTitleBar(title: 'WETEAM'),
-                    SizedBox(height: 22.0.h),
-                    Text(
-                      '${controller.getUserName()}님이 진행중이신 팀플이에요!',
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontSize: 14.0.sp,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 11.0),
-                    // TODO : 배너 이미지
-                    Image.asset(
-                      ImagePath.tpBanner,
-                      width: 330.w,
-                      height: 205.h,
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(height: 24.0.h),
-                  ])),
-                  if (controller.tpList.value == null ||
-                      controller.tpList.value!.projectList.isEmpty)
-                    _noTeamProject()
-                  else
-                    _teamProjectList(tpPadding)
-                ],
-              ))),
+          child: Column(
+            children: [
+              const CustomTitleBar(strongFont: true, useNavController: true),
+              Expanded(child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: Obx(() => CustomScrollView(
+                  controller: controller.tpScrollController,
+                  physics: const AlwaysScrollableScrollPhysics(
+                      parent: ClampingScrollPhysics()),
+                  slivers: [
+                    SliverList(
+                        delegate: SliverChildListDelegate([
+                          SizedBox(height: 22.0.h),
+                          Text(
+                            '${controller.getUserName()}님이 진행중이신 팀플이에요!',
+                            style: TextStyle(
+                                fontFamily: 'NanumGothic',
+                                fontSize: 14.0.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 11.0),
+                          // TODO : 배너 이미지
+                          Image.asset(
+                            ImagePath.tpBanner,
+                            width: 330.w,
+                            height: 205.h,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(height: 24.0.h),
+                        ])),
+                    if (controller.tpList.value == null ||
+                        controller.tpList.value!.projectList.isEmpty)
+                      _noTeamProject()
+                    else
+                      _teamProjectList(tpPadding)
+                  ],
+                )),
+              ))
+            ],
+          )),
     );
   }
 
@@ -89,65 +99,5 @@ class TeamPlay extends GetView<TeamPlayController> {
           child:
               TeamProjectWidget(controller.tpList.value!.projectList[index])),
     ));
-  }
-}
-
-class CustomAppTitleBar extends StatelessWidget {
-  final String title;
-
-  CustomAppTitleBar({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    if (Platform.isIOS) {
-      // iOS: 중앙 정렬 + 뒤로 가기 버튼
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          if (Platform.isIOS)
-            Container(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Image.asset(
-                  ImagePath.backios,
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
-            ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.sp,
-                fontFamily: 'SBaggroB',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          if (Platform.isIOS)
-            SizedBox(
-              width: 30.w,
-              height: 30.h,
-            ), // 균형을 맞추기 위한 빈 박스
-        ],
-      );
-    } else {
-      // Android: 왼쪽 정렬
-      return Text(
-        'WE TEAM',
-        textAlign: TextAlign.left,
-        style: TextStyle(
-          color: AppColors.black,
-          fontSize: 16.sp,
-          fontFamily: 'SBaggroB',
-          fontWeight: FontWeight.w400,
-          height: 0,
-        ),
-      );
-    }
   }
 }

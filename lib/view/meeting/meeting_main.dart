@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../binding/meeting_create_bindings.dart';
-import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/meeting.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/meeting_listview.dart';
 import 'create/meeting_create.dart';
 
@@ -23,53 +23,62 @@ class MeetingMainPage extends GetView<MeetingController> {
     });
     return Scaffold(
       key: overlayKey,
-      body: Padding(
-        padding: EdgeInsets.only(top: 47.0.h),
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await controller.updateMeetingList();
-          },
-          child: _body(),
-        ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(top: 16.0.h),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await controller.updateMeetingList();
+            },
+            child: _body(),
+          ),
+        ) ,
       ),
     );
   }
 
   Widget _body() {
-    return Padding(
-      padding: EdgeInsets.only(left: 15.w, right: 15.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _head(),
-          Expanded(
-            child: Obx(() {
-              if (controller.meetingList.value == null ||
-                  controller.meetingList.value!.isEmpty) {
-                return _noMeetingWidget();
-              } else {
-                List<Meeting> meetingList = controller.meetingList.value!;
-                return MeetingListView(meetingList,
-                    scrollController: controller.meetingScrollController);
-              }
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 25.h),
-            child: GestureDetector(
-                onTap: () {
-                  Get.to(() => const MeetingCreate(),
-                      binding: MeetingCreateBindings());
-                },
-                child: _newMeetingButton()),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _head(),
+        SizedBox(height: 9.h),
+        Expanded(child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Obx(() {
+                  if (controller.meetingList.value == null ||
+                      controller.meetingList.value!.isEmpty) {
+                    return _noMeetingWidget();
+                  } else {
+                    List<Meeting> meetingList = controller.meetingList.value!;
+                    return MeetingListView(meetingList,
+                        scrollController: controller.meetingScrollController);
+                  }
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 25.h),
+                child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const MeetingCreate(),
+                          binding: MeetingCreateBindings());
+                    },
+                    child: _newMeetingButton()),
+              )
+            ],
           )
-        ],
-      ),
+          ,
+        ))
+      ],
     );
   }
 
   Widget _head() {
-    return CustomTitleBar(title: '언제보까');
+    return const CustomTitleBar(title: '언제보까');
   }
 
   Widget _noMeetingWidget() {

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../controller/backios_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
@@ -17,6 +16,7 @@ import '../dialog/custom_check_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
 import '../my/mypage.dart';
 import '../widget/custom_text_field.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/normal_button.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
@@ -28,20 +28,20 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Column(
-            children: [
-              SizedBox(height: 15.h),
-              CustomTitleBar(title: '팀플방'),
-              SizedBox(height: 15.h),
-              Expanded(
+        child: Column(
+          children: [
+            SizedBox(height: 15.h),
+            const CustomTitleBar(title: '팀플방'),
+            SizedBox(height: 15.h),
+            Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const _CustomDivider(),
-                    Obx(() => Stack(children: [
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const _CustomDivider(),
+                        Obx(() => Stack(children: [
                           TeamProjectWidget(controller.tp.value),
                           Positioned(
                               top: 0,
@@ -69,7 +69,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                           denyName: '아니요',
                                           denyCallback: () => Get.back(),
                                           admitCallback:
-                                              exitOrDeleteTeamProject));
+                                          exitOrDeleteTeamProject));
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 14.h),
@@ -77,10 +77,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                     children: [
                                       Image.asset(
                                           controller.tp.value.host.id ==
-                                                  Get.find<AuthService>()
-                                                      .user
-                                                      .value!
-                                                      .id
+                                              Get.find<AuthService>()
+                                                  .user
+                                                  .value!
+                                                  .id
                                               ? ImagePath.icHostOutGray
                                               : ImagePath.icGuestOutGray,
                                           width: 21.w,
@@ -91,52 +91,52 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 10.sp,
                                             color:
-                                                controller.tp.value.host.id ==
-                                                        Get.find<AuthService>()
-                                                            .user
-                                                            .value!
-                                                            .id
-                                                    ? AppColors.g3
-                                                    : AppColors.g5),
+                                            controller.tp.value.host.id ==
+                                                Get.find<AuthService>()
+                                                    .user
+                                                    .value!
+                                                    .id
+                                                ? AppColors.g3
+                                                : AppColors.g5),
                                       ),
                                     ],
                                   ),
                                 ),
                               ))
                         ])),
-                    const _CustomDivider(),
-                    Obx(() {
-                      if (controller.userList.isEmpty) {
-                        return const CircularProgressIndicator();
-                      } else {
-                        return _UserListView();
-                      }
-                    }),
-                    Obx(() => Visibility(
-                        visible: controller.isKickMode.isFalse &&
-                            controller.isChangeHostMode.isFalse,
-                        child: _BottomWidget())),
-                    Obx(() => Visibility(
-                        visible: controller.isKickMode.isTrue,
-                        child: _CancelOrActionBottomPanel(
-                            message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
-                            actionButtonText: '퇴출하기',
-                            action: controller.showKickDialog,
-                            cancelAction: () =>
+                        const _CustomDivider(),
+                        Obx(() {
+                          if (controller.userList.isEmpty) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            return _UserListView();
+                          }
+                        }),
+                        Obx(() => Visibility(
+                            visible: controller.isKickMode.isFalse &&
+                                controller.isChangeHostMode.isFalse,
+                            child: _BottomWidget())),
+                        Obx(() => Visibility(
+                            visible: controller.isKickMode.isTrue,
+                            child: _CancelOrActionBottomPanel(
+                                message: '강제 퇴장 시킬 팀원을 선택하고 있습니다.',
+                                actionButtonText: '퇴출하기',
+                                action: controller.showKickDialog,
+                                cancelAction: () =>
                                 controller.isKickMode.value = false))),
-                    Obx(() => Visibility(
-                        visible: controller.isChangeHostMode.isTrue,
-                        child: _CancelOrActionBottomPanel(
-                            message: '호스트 권한을 넘기고 있습니다.',
-                            actionButtonText: '호스트넘기기',
-                            action: controller.showChangeHostDialog,
-                            cancelAction: () =>
+                        Obx(() => Visibility(
+                            visible: controller.isChangeHostMode.isTrue,
+                            child: _CancelOrActionBottomPanel(
+                                message: '호스트 권한을 넘기고 있습니다.',
+                                actionButtonText: '호스트넘기기',
+                                action: controller.showChangeHostDialog,
+                                cancelAction: () =>
                                 controller.isChangeHostMode.value = false)))
-                  ],
-                ),
-              )),
-            ],
-          ),
+                      ],
+                    ),
+                  ),
+                )),
+          ],
         ),
       ),
     );

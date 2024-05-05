@@ -15,6 +15,7 @@ import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../widget/app_title_widget.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
 import 'profile.dart';
@@ -125,8 +126,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
   Widget _head() {
     return Padding(
-      padding: EdgeInsets.only(left: 15.0.w, top: 25.0.h),
-      child: CustomAppTitleBar(title: 'WETEAM'),
+      padding: EdgeInsets.only(top: 25.0.h),
+      child: CustomTitleBar(useNavController: !(widget.isOtherUser),
+      strongFont: true),
     );
   }
 
@@ -247,62 +249,3 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 }
 
-class CustomAppTitleBar extends StatelessWidget {
-  final String title;
-
-  CustomAppTitleBar({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    if (Platform.isIOS) {
-      // iOS: 중앙 정렬 + 뒤로 가기 버튼
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          if (Platform.isIOS)
-            Container(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Image.asset(
-                  ImagePath.backios,
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
-            ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.sp,
-                fontFamily: 'SBaggroB',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          if (Platform.isIOS)
-            SizedBox(
-              width: 30.w,
-              height: 30.h,
-            ), // 균형을 맞추기 위한 빈 박스
-        ],
-      );
-    } else {
-      // Android: 왼쪽 정렬
-      return Text(
-        'WE TEAM',
-        textAlign: TextAlign.left,
-        style: TextStyle(
-          color: AppColors.black,
-          fontSize: 16.sp,
-          fontFamily: 'SBaggroB',
-          fontWeight: FontWeight.w400,
-          height: 0,
-        ),
-      );
-    }
-  }
-}

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/backios_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../controller/meeting/meeting_schedule_controller.dart';
 import '../../data/app_colors.dart';
 import '../../util/weteam_utils.dart';
+import '../widget/custom_title_bar.dart';
 import '../widget/normal_button.dart';
 import '../widget/meeting_widget.dart';
 import '../widget/meeting_schedule_widget.dart';
@@ -54,8 +54,13 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.only(top: 21.0.h),
-        child: _body(),
+        padding: EdgeInsets.only(top: 16.0.h),
+        child: Column(
+          children: [
+            _head(),
+            Expanded(child: _body())
+          ],
+        ),
       )),
     );
   }
@@ -66,10 +71,7 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _head(),
-          SizedBox(
-            height: 16.h,
-          ),
+          SizedBox(height: 11.h),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,6 +120,6 @@ class _MeetingSelectTimeState extends State<MeetingSelectTime> {
   }
 
   Widget _head() {
-    return CustomTitleBar(title: '내 시간 입력');
+    return const CustomTitleBar(title: '내 시간 입력');
   }
 }
