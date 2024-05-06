@@ -31,13 +31,13 @@ class CustomTitleBar extends StatelessWidget {
   }
 
   Widget _androidAppBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 15.w),
-        _titleWidget(),
-      ],
-    );
+    if (strongFont) {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [SizedBox(width: 15.w), _titleWidget()]);
+    } else {
+      return _titleWidget();
+    }
   }
 
   Row _iosAppBar() {
@@ -75,7 +75,7 @@ class CustomTitleBar extends StatelessWidget {
   }
 
   Widget _titleWidget() {
-    return Text(
+    Text t = Text(
       title,
       textAlign: TextAlign.center,
       style: TextStyle(
@@ -85,5 +85,14 @@ class CustomTitleBar extends StatelessWidget {
         fontWeight: strongFont ? FontWeight.w600 : FontWeight.bold,
       ),
     );
+    if (strongFont) {
+      return t;
+    } else {
+      return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Expanded(child: Container()),
+        t,
+        Expanded(child: Container())
+      ]);
+    }
   }
 }
