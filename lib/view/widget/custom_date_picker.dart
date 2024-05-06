@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'dart:math' as math;
 
 import '../../data/app_colors.dart';
 
@@ -38,6 +39,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
+    AutoSizeGroup asGroup = AutoSizeGroup();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -56,6 +58,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               );
               _updateCurrentDate(updatedDate);
             },
+              asGroup
           ),
         ),
         Flexible(
@@ -71,6 +74,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               );
               _updateCurrentDate(updatedDate);
             },
+              asGroup
           ),
         ),
         Flexible(
@@ -81,6 +85,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               (int v) {
                 _updateCurrentDate(_current.value.copyWith(day: v + 1));
               },
+                asGroup
             ),
           ),
         ),
@@ -115,11 +120,12 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 }
 
 class _CustomPicker extends StatelessWidget {
+  final asGroup;
   late final FixedExtentScrollController? scrollController;
   final List<String> items;
   final Function(int value) onChanged;
 
-  _CustomPicker(this.items, int init, this.onChanged) {
+  _CustomPicker(this.items, int init, this.onChanged, this.asGroup) {
     scrollController = FixedExtentScrollController(initialItem: init);
   }
 
@@ -145,8 +151,9 @@ class _CustomPicker extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 height: 0,
               ),
-              presetFontSizes: [13.sp], // 고정 폰트 크기 목록. 이 예제에서는 16.sp를 사용
+              maxFontSize: 16.sp.floor() * 1.0,
               textAlign: TextAlign.center, // 텍스트를 중앙 정렬
+              group: asGroup,
             );
           },
         ));
