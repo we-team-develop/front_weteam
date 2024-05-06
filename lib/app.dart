@@ -7,6 +7,9 @@ import 'controller/bottom_nav_controller.dart';
 import 'controller/mainpage/home_controller.dart';
 import 'data/app_colors.dart';
 import 'data/image_data.dart';
+import 'model/meeting.dart';
+import 'model/team_project.dart';
+import 'model/weteam_user.dart';
 import 'service/api_service.dart';
 import 'service/auth_service.dart';
 import 'util/weteam_utils.dart';
@@ -30,6 +33,8 @@ class App extends GetView<BottomNavController> {
       String path = uri.path;
       Map<String, String> query = uri.queryParameters;
 
+      WeteamUser? user = Get.find<AuthService>().user.value;
+
       try {
         // 예외 처리되지 않은 오류 핸들링
         if (host == "projects") {
@@ -37,7 +42,44 @@ class App extends GetView<BottomNavController> {
             String hashedId = query['id'] ?? '-1';
             if (!isLoggedIn) return;
 
+            GetTeamProjectListResult? notDoneProjects = await Get.find<
+                ApiService>().getTeamProjectList(
+                0, false, 'DESC', 'DONE', user!.id);
+
+            if (notDoneProjects == null) {
+              WeteamUtils.snackbar("", '팀플 가입 여부를 확인하지 못했어요',
+                  icon: SnackbarIcon.fail);
+              return;
+            }
+
+            for (TeamProject tp in notDoneProjects.projectList) {
+              if (tp.hashedId == hashedId) {
+                WeteamUtils.snackbar("", '이미 가입한 팀플이에요',
+                    icon: SnackbarIcon.fail);
+                return;
+              }
+            }
+
+            GetTeamProjectListResult? doneProjects = await Get.find<
+                ApiService>().getTeamProjectList(
+                0, true, 'DESC', 'DONE', user!.id);
+
+            if (doneProjects == null) {
+              WeteamUtils.snackbar("", '팀플 가입 여부를 확인하지 못했어요.',
+                  icon: SnackbarIcon.fail);
+              return;
+            }
+
+            for (TeamProject tp in doneProjects.projectList) {
+              if (tp.hashedId == hashedId) {
+                WeteamUtils.snackbar("", '이미 가입한 팀플이에요',
+                    icon: SnackbarIcon.fail);
+                return;
+              }
+            }
+
             bool success = await api.acceptProjectInvite(hashedId);
+
             if (success) {
               Get.find<HomeController>().updateTeamProjectList();
               WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요',
