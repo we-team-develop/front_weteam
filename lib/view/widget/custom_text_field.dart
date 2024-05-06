@@ -60,8 +60,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hoverColor: AppColors.mainOrange,
           iconColor: AppColors.mainOrange,
 
-          // hint와 underline 사이의 공간 제거
-          contentPadding: EdgeInsets.zero,
+          // hint와 underline 사이의 공간 5만큼
+          contentPadding: EdgeInsets.only(bottom: 5.h),
           isDense: true,
 
           // Underline의 색을 변경합니다

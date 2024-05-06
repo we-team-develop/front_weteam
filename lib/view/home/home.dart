@@ -359,7 +359,7 @@ class _DDayWidgetState extends State<DDayWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 13.h, top: 7.w),
+                  padding: EdgeInsets.only(right: 13.w, top: 13.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -410,13 +410,14 @@ class _DDayWidgetState extends State<DDayWidget> {
                                             });
                                       },
                                       child: SizedBox(
-                                        height: 25.h,
+                                        height: 27.5.h,
                                         child: Center(
                                           child: Text(
                                             '수정하기',
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: AppColors.black,
-                                              fontSize: 8.sp,
+                                              fontSize: 9.sp,
                                               fontFamily: 'NanumSquareNeo',
                                               fontWeight: FontWeight.w400,
                                               height: 0,
@@ -444,13 +445,14 @@ class _DDayWidgetState extends State<DDayWidget> {
                                         });
                                       },
                                       child: SizedBox(
-                                          height: 25.h,
+                                          height: 27.5.h,
                                           child: Center(
                                             child: Text(
                                               '삭제하기',
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: AppColors.red,
-                                                fontSize: 8.sp,
+                                                fontSize: 9.sp,
                                                 fontFamily: 'NanumSquareNeo',
                                                 fontWeight: FontWeight.w400,
                                                 height: 0,
