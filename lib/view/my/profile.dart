@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,13 +40,13 @@ class Profile extends GetView<ProfileController> {
     return Column(
       children: [
         SizedBox(height: 47.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Stack(
           children: [
-            const Expanded(child: CustomTitleBar(title: '내 정보 관리')),
+            const CustomTitleBar(title: '내 정보 관리'),
             // 저장 버튼
-            _saveButton(),
-            SizedBox(width: 15.w)
+            Positioned(
+              right: 15.w,
+                child: _saveButton())
           ],
         ),
         Expanded(
