@@ -32,7 +32,6 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
           children: [
             SizedBox(height: 15.h),
             const CustomTitleBar(title: '팀플방'),
-            SizedBox(height: 15.h),
             _body(context),
           ],
         ),

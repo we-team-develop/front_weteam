@@ -15,7 +15,7 @@ class AppTitleWidget extends StatelessWidget {
         color: AppColors.black,
         fontSize: 16.sp,
         fontFamily: 'SBaggroB',
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
         height: 0,
       ),
     );
