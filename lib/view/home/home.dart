@@ -355,19 +355,21 @@ class _DDayWidgetState extends State<DDayWidget> {
         child: Stack(
           children: [
             Positioned(
-                right: 13.w, top: 13.h,
+                right: 13.w,
+                top: 13.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _kebabButton(),
-                Visibility(
-                  visible: showPopupMenu,
-                  child: _kebabMenu(),
-                )
-              ],
-            )),
+                  children: [
+                    _kebabButton(),
+                    Visibility(
+                      visible: showPopupMenu,
+                      child: _kebabMenu(),
+                    )
+                  ],
+                )),
             Positioned(
-                bottom: 11.h, left: 19.w,
+                bottom: 11.h,
+                left: 19.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -410,105 +412,102 @@ class _DDayWidgetState extends State<DDayWidget> {
 
   GestureDetector _kebabButton() {
     return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showPopupMenu = !showPopupMenu; // 활성화 상태 반전
-                        });
-                      },
-                      child: Image.asset(ImagePath.icKebabWhite,
-                          width: 24.w, height: 24.h),
-                    );
+      onTap: () {
+        setState(() {
+          showPopupMenu = !showPopupMenu; // 활성화 상태 반전
+        });
+      },
+      child: Image.asset(ImagePath.icKebabWhite, width: 24.w, height: 24.h),
+    );
   }
 
   Container _kebabMenu() {
     return Container(
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r)),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x23000000),
-                                blurRadius: 4,
-                                spreadRadius: 1,
-                              )
-                            ],
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+          shadows: const [
+            BoxShadow(
+              color: Color(0x23000000),
+              blurRadius: 4,
+              spreadRadius: 1,
+            )
+          ],
+        ),
+        child: IntrinsicHeight(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  // 여백 터치 안 되는 문제 수정
+                  onTap: () {
+                    setState(() {
+                      showPopupMenu = false;
+                    });
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return DDayDialog(
+                              dDayData: Get.find<HomeController>()
+                                  .dDayData
+                                  .value); // TODO: D-Day 수정 Dialog 만들기
+                        });
+                  },
+                  child: SizedBox(
+                    height: 27.5.h,
+                    child: Center(
+                      child: Text(
+                        '수정하기',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontSize: 9.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  )),
+              Container(
+                width: 80.w,
+                height: 0.50.h,
+                decoration: const BoxDecoration(color: AppColors.g2),
+              ),
+              GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  // 여백 터치 안 되는 문제 수정
+                  onTap: () {
+                    setState(() {
+                      showPopupMenu = false;
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const CheckRemoveDdayDialog();
+                          });
+                    });
+                  },
+                  child: SizedBox(
+                      height: 27.5.h,
+                      child: Center(
+                        child: Text(
+                          '삭제하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.red,
+                            fontSize: 9.sp,
+                            fontFamily: 'NanumSquareNeo',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
                           ),
-                          child: IntrinsicHeight(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    // 여백 터치 안 되는 문제 수정
-                                    onTap: () {
-                                      setState(() {
-                                        showPopupMenu = false;
-                                      });
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return DDayDialog(
-                                                dDayData: Get.find<
-                                                        HomeController>()
-                                                    .dDayData
-                                                    .value); // TODO: D-Day 수정 Dialog 만들기
-                                          });
-                                    },
-                                    child: SizedBox(
-                                      height: 27.5.h,
-                                      child: Center(
-                                        child: Text(
-                                          '수정하기',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: AppColors.black,
-                                            fontSize: 9.sp,
-                                            fontFamily: 'NanumSquareNeo',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                                Container(
-                                  width: 80.w,
-                                  height: 0.50.h,
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.g2),
-                                ),
-                                GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    // 여백 터치 안 되는 문제 수정
-                                    onTap: () {
-                                      setState(() {
-                                        showPopupMenu = false;
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return const CheckRemoveDdayDialog();
-                                            });
-                                      });
-                                    },
-                                    child: SizedBox(
-                                        height: 27.5.h,
-                                        child: Center(
-                                          child: Text(
-                                            '삭제하기',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: AppColors.red,
-                                              fontSize: 9.sp,
-                                              fontFamily: 'NanumSquareNeo',
-                                              fontWeight: FontWeight.w400,
-                                              height: 0,
-                                            ),
-                                          ),
-                                        ))),
-                              ],
-                            ),
-                          ));
+                        ),
+                      ))),
+            ],
+          ),
+        ));
   }
 
   Widget _noDDayWidget() {
