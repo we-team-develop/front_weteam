@@ -167,13 +167,17 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
           Expanded(
             child: Obx(
               () => ListView.builder(
+                scrollDirection: Axis.horizontal, // 가로 스크롤
                 itemCount:
                     controller.joinedUserList.length, // 참여한 유저 수만큼 아이템을 생성합니다.
                 itemBuilder: (context, index) {
                   var user = controller.joinedUserList[index]; // 참여한 유저를 가져옵니다.
-                  return Align(
-                      alignment: Alignment.centerLeft,
-                      child: _joinedUser(user));
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5.w),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: _joinedUser(user)),
+                  );
                 },
               ),
             ),
@@ -235,6 +239,7 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
           Expanded(
             child: Obx(
               () => ListView.builder(
+                scrollDirection: Axis.horizontal, // 가로 스크롤
                 itemCount: controller
                     .notJoinedUserList.length, // 참여한 유저 수만큼 아이템을 생성합니다.
                 itemBuilder: (context, index) {
