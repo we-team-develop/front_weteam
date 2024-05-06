@@ -101,6 +101,21 @@ class App extends GetView<BottomNavController> {
               return;
             }
 
+            GetMeetingListResult? meetings = await api.getMeetingList(0, 'DESC', 'STARTED_AT');
+            if (meetings == null) {
+              WeteamUtils.snackbar('언제보까에 참여할 수 없어요', '잠시 후 다시 시도해주세요',
+                  icon: SnackbarIcon.fail);
+              return;
+            }
+
+            for (Meeting mt in meetings.meetingList) {
+              if (mt.hashedId == hashedId) {
+                WeteamUtils.snackbar("", '이미 가입한 언제보까예요',
+                    icon: SnackbarIcon.fail);
+                return;
+              }
+            }
+
             bool success = await api.acceptMeetingInvite(hashedId);
             if (success) {
               WeteamUtils.snackbar("", '언제보까 초대를 성공적으로 수락했어요',

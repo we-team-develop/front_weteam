@@ -79,15 +79,6 @@ class MeetingController extends GetxController {
         await Get.find<ApiService>().getMeetingList(0, 'DESC', 'STARTED_AT');
     if (result != null) {
       meetingList.value = result.meetingList;
-    } else {
-      meetingList.value = [
-        Meeting(
-            id: 1,
-            title: 'title',
-            startedAt: DateTime.now(),
-            endedAt: DateTime.now(),
-            project: Get.find<HomeController>().oldTpList[0])
-      ];
     }
   }
 }
