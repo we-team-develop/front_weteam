@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -201,125 +202,130 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        if (controller.isKickMode.isTrue && !amIHost()) {
-          kickSelected.value = !kickSelected.value;
-          controller.selectedKickUser.value =
-              kickSelected.value ? projectUser : null;
-        }
-
-        if (controller.isKickMode.isFalse &&
-            controller.isChangeHostMode.isFalse) {
-          if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
-            Get.to(() =>
-                UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          if (controller.isKickMode.isTrue && !amIHost()) {
+            kickSelected.value = !kickSelected.value;
+            controller.selectedKickUser.value =
+            kickSelected.value ? projectUser : null;
           }
-        }
-      },
-      child: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 48.49.w,
-                  height: 48.49.h,
-                  child: ProfileImageWidget(
-                      id: projectUser.user.profile?.imageIdx ?? 0),
-                ),
-                SizedBox(height: 7.h),
-                Text(
-                  "${projectUser.user.username}",
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 10.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w700,
+
+          if (controller.isKickMode.isFalse &&
+              controller.isChangeHostMode.isFalse) {
+            if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
+              Get.to(() =>
+                  UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+            }
+          }
+        },
+        child: Stack(
+          children: [
+          SizedBox(
+          width: 75.w,
+          height: 100.h,
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 48.49.w,
+                    height: 48.49.h,
+                    child: ProfileImageWidget(
+                        id: projectUser.user.profile?.imageIdx ?? 0),
                   ),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  projectUser.role ?? "미입력",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.g5,
-                    fontSize: 9.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w400,
+                  SizedBox(height: 7.h),
+                  Text(
+                    "${projectUser.user.username}",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontSize: 10.sp,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Visibility(
-              visible: amIHost(),
-              child: Positioned(
-                  right: 0,
-                  left: 0,
-                  child: Image.asset(ImagePath.icSolarCrownBold,
-                      width: 16.w, height: 16.h))),
-          Obx(() => Visibility(
-              visible: controller.isKickMode.value && !amIHost(),
-              child: Positioned(
-                right: 10.w,
-                top: 10.h,
-                child: kickSelected.value
-                    ? Image.asset(ImagePath.icCheckWhiteActivated,
-                        width: 14.w, height: 14.h)
-                    : Image.asset(ImagePath.icCheckWhite,
-                        width: 14.w, height: 14.h),
-              ))),
-          Obx(() => Visibility(
-                visible: controller.isChangeHostMode.value && !amIHost(),
+                  SizedBox(height: 2.h),
+                  Expanded(child: AutoSizeText(
+                    projectUser.role ?? "미입력",
+                    textAlign: TextAlign.center,
+                    maxFontSize: 9.sp.floor() * 1.0,
+                    minFontSize: 1,
+                    style: TextStyle(
+                      color: AppColors.g5,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                  )
+                ],
+              ),
+            )),
+            Visibility(
+                visible: amIHost(),
                 child: Positioned(
-                  top: 25.h,
-                  left: 5.w,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      controller.selectedNewHost.value = projectUser.user.id;
-                    },
-                    child: Container(
-                      width: 60.w,
-                      height: 20.h,
-                      decoration: ShapeDecoration(
-                        color: controller.selectedNewHost.value ==
-                                projectUser.user.id
-                            ? AppColors.orange3
-                            : Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.r)),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 0),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          '호스트 넘기기',
-                          style: TextStyle(
-                            color: controller.selectedNewHost.value ==
-                                    projectUser.user.id
-                                ? Colors.white
-                                : AppColors.black,
-                            fontSize: 8.sp,
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.w400,
-                          ),
+                    right: 0,
+                    left: 0,
+                    child: Image.asset(ImagePath.icSolarCrownBold,
+                        width: 16.w, height: 16.h))),
+            Obx(() => Visibility(
+                visible: controller.isKickMode.value && !amIHost(),
+                child: Positioned(
+                  right: 10.w,
+                  top: 10.h,
+                  child: kickSelected.value
+                      ? Image.asset(ImagePath.icCheckWhiteActivated,
+                      width: 14.w, height: 14.h)
+                      : Image.asset(ImagePath.icCheckWhite,
+                      width: 14.w, height: 14.h),
+                ))),
+            Obx(() => Visibility(
+              visible: controller.isChangeHostMode.value && !amIHost(),
+              child: Positioned(
+                top: 25.h,
+                left: 5.w,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    controller.selectedNewHost.value = projectUser.user.id;
+                  },
+                  child: Container(
+                    width: 60.w,
+                    height: 20.h,
+                    decoration: ShapeDecoration(
+                      color: controller.selectedNewHost.value ==
+                          projectUser.user.id
+                          ? AppColors.orange3
+                          : Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.r)),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        '호스트 넘기기',
+                        style: TextStyle(
+                          color: controller.selectedNewHost.value ==
+                              projectUser.user.id
+                              ? Colors.white
+                              : AppColors.black,
+                          fontSize: 8.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
                   ),
                 ),
-              )),
-        ],
-      ),
+              ),
+            )),
+          ],
+        ),
     );
   }
 }
