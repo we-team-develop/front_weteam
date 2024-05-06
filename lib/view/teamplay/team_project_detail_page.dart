@@ -75,7 +75,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
                 visible: controller.isChangeHostMode.isTrue,
                 child: _CancelOrActionBottomPanel(
                     message: '호스트 권한을 넘기고 있습니다.',
-                    actionButtonText: '호스트넘기기',
+                    actionButtonText: '호스트 넘기기',
                     action: controller.showChangeHostDialog,
                     cancelAction: () =>
                         controller.isChangeHostMode.value = false)))
@@ -89,7 +89,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
     return GestureDetector(
       onTap: _exitButtonOnTap,
       child: Padding(
-        padding: EdgeInsets.only(top: 14.h),
+        padding: EdgeInsets.only(top: 10.h, right: 5.w),
         child: Column(
           children: [
             Image.asset(
@@ -275,14 +275,14 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                 visible: controller.isChangeHostMode.value && !amIHost(),
                 child: Positioned(
                   top: 25.h,
-                  left: 10.w,
+                  left: 5.w,
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
                       controller.selectedNewHost.value = projectUser.user.id;
                     },
                     child: Container(
-                      width: 55.w,
+                      width: 60.w,
                       height: 20.h,
                       decoration: ShapeDecoration(
                         color: controller.selectedNewHost.value ==

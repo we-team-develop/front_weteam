@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -148,34 +149,34 @@ class _UserInfoPageState extends State<UserInfoPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.ideographic,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                      child: Text(
-                    '${widget.user.value!.username}님 ',
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 16.sp,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.ellipsis,
-                      height: 1,
-                    ),
-                  )),
-                  Visibility(
-                      visible: !widget.isOtherUser,
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => const Profile());
-                        },
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const Profile());
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.ideographic,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                        child: Text(
+                      '${widget.user.value!.username}님 ',
+                      style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 16.sp,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                        overflow: TextOverflow.ellipsis,
+                        height: 1,
+                      ),
+                    )),
+                    Visibility(
+                        visible: !widget.isOtherUser,
                         child: Image.asset(ImagePath.icRightGray30,
-                            width: 15.w, height: 15.h),
-                      ))
-                ],
+                            width: 15.w, height: 15.h))
+                  ],
+                ),
               ),
               SizedBox(height: 5.h),
               Obx(() => Text(
