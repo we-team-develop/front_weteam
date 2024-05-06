@@ -523,7 +523,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     ),
                     SizedBox(height: 14.h),
                     _TextButton(
-                        text: '내 역할 변경하기',
+                        text: '내 역할 수정하기',
                         onTap: () {
                           showDialog(
                               context: context,
