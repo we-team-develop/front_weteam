@@ -85,6 +85,13 @@ class CustomTitleBar extends StatelessWidget {
         fontWeight: strongFont ? FontWeight.w600 : FontWeight.bold,
       ),
     );
+
+    if (Platform.isIOS) {
+      return Expanded(
+        child: t,
+      );
+    }
+
     if (strongFont) {
       return t;
     } else {

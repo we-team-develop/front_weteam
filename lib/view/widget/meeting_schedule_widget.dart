@@ -265,17 +265,20 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
             if (populationSize == 0) {
               color = AppColors.g2;
             } else {
-              double percent = populationSize / controller.maxPopulation.value;
+              const List<Color> colors = [
+                Color.fromARGB(255, 237, 247, 255),
+                Color.fromARGB(255, 224, 242, 255),
+                Color.fromARGB(255, 199, 229, 252),
+                Color.fromARGB(255, 163, 214, 255),
+                Color.fromARGB(255, 123, 200, 255),
+                Color.fromARGB(255, 64, 171, 255),
+                Color.fromARGB(255, 0, 142, 255),
+                Color.fromARGB(255, 0, 120, 215),
+                Color.fromARGB(255, 2, 105, 179),
+                Color.fromARGB(255, 0, 85, 152),
+              ];
+              color = colors[(populationSize - 1).clamp(0, 9)];
 
-              if (percent >= 0.75) {
-                color = AppColors.blue7;
-              } else if (percent >= 0.5) {
-                color = AppColors.blue6;
-              } else if (percent >= 0.25) {
-                color = AppColors.blue5;
-              } else {
-                color = AppColors.blue4;
-              }
             }
           }
 
