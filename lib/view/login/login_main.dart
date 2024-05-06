@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,16 +62,21 @@ class LoginMain extends StatelessWidget {
                 ),
               ),
               SizedBox(height: padding),
-              // 임시 회원
-              GestureDetector(
-                onTap: () => login(AppleAuthHelper(), context),
-                child: Image.asset(
-                  ImagePath.appleLogin,
-                  width: 302.w,
-                  height: 39.h,
-                ),
-              ),
-              SizedBox(height: padding),
+              Visibility(
+                visible: Platform.isIOS,
+                  child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => login(AppleAuthHelper(), context),
+                    child: Image.asset(
+                      ImagePath.appleLogin,
+                      width: 302.w,
+                      height: 39.h,
+                    ),
+                  ),
+                  SizedBox(height: padding),
+                ],
+              )),
               GestureDetector(
                 child: Image.asset(
                   ImagePath.naverLogin,
