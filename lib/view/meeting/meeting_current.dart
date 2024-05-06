@@ -75,10 +75,14 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
                   ),
                   SizedBox(height: 15.h),
                   // 이미지 경로를 동적으로 변경
-                  Image.asset(
-                    controller.getImagePathForUserCount(), // 동적 이미지 경로
-                    height: controller.getImageHeightForUserCount(),
-                  ),
+                  Obx(() {
+                    controller.joinedUserList;
+                    controller.notJoinedUserList;
+                    return Image.asset(
+                      controller.getImagePathForUserCount(), // 동적 이미지 경로
+                      height: controller.getImageHeightForUserCount(),
+                    );
+                  }),
                   SizedBox(height: 22.h),
                 ],
               ),
