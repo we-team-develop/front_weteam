@@ -30,7 +30,7 @@ class TeamPlay extends GetView<TeamPlayController> {
               const CustomTitleBar(strongFont: true, useNavController: true),
               Expanded(
                   child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 25.h),
                 child: Obx(() => CustomScrollView(
                       controller: controller.tpScrollController,
                       physics: const AlwaysScrollableScrollPhysics(
