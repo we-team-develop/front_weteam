@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,7 @@ class TeamPlay extends GetView<TeamPlayController> {
       padding: EdgeInsets.only(top: 25.0.h),
       child: RefreshIndicator(
           onRefresh: () async {
+            HapticFeedback.mediumImpact();
             await controller.updateTeamProjectList();
           },
           child: Column(
@@ -33,8 +35,7 @@ class TeamPlay extends GetView<TeamPlayController> {
                 padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 25.h),
                 child: Obx(() => CustomScrollView(
                       controller: controller.tpScrollController,
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: ClampingScrollPhysics()),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       slivers: [
                         SliverList(
                             delegate: SliverChildListDelegate([

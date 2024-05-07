@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -91,8 +92,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Widget _body() {
     return RefreshIndicator(
         child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-              parent: ClampingScrollPhysics()),
+          physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
             SliverList(
                 delegate: SliverChildListDelegate([
@@ -114,6 +114,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
           ],
         ),
         onRefresh: () async {
+          HapticFeedback.mediumImpact();
           await updateTeamProjectLists();
         });
   }

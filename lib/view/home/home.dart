@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +35,7 @@ class Home extends GetView<HomeController> {
   Widget _body() {
     return RefreshIndicator(
       onRefresh: () async {
+        HapticFeedback.mediumImpact();
         await controller.updateTeamProjectList();
       },
       child: Column(
@@ -46,8 +48,7 @@ class Home extends GetView<HomeController> {
             return CustomScrollView(
               controller: controller.scrollController,
               // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
-              physics: const AlwaysScrollableScrollPhysics(
-                  parent: ClampingScrollPhysics()),
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
