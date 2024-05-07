@@ -59,6 +59,7 @@ class MeetingWidget extends StatelessWidget {
                   ),
                   if (showlink)
                     GestureDetector(
+                      behavior: HitTestBehavior.translucent,
                       onTap: () async {
                         String? inviteLink = await Get.find<ApiService>()
                             .getMeetingInviteDeepLink(meeting.id);
@@ -77,10 +78,14 @@ class MeetingWidget extends StatelessWidget {
                         Share.share(
                             '${currentUser.username}님이 [${meeting.title}] 언제보까에 초대했어요!\n$inviteLink');
                       },
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset(ImagePath.meetingLink,
-                              width: 13.5.w, height: 15.h)),
+                      child: SizedBox(
+                        width: 30.w,
+                        height: 30.h,
+                        child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Image.asset(ImagePath.meetingLink,
+                                width: 13.5.w, height: 15.h)),
+                      ),
                     ),
                 ],
               ),
