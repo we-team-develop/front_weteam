@@ -7,10 +7,12 @@ import '../controller/mainpage/tp_controller.dart';
 import '../controller/profile_controller.dart';
 import '../service/api_service.dart';
 import '../service/auth_service.dart';
+import '../service/team_project_service.dart';
 
 class MainBindings implements Bindings {
   @override
   void dependencies() {
+    Get.put(TeamProjectService());
     Get.put(AuthService());
     Get.put(ApiService());
 

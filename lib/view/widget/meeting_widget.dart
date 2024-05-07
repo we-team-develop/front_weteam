@@ -18,17 +18,17 @@ import '../../util/weteam_utils.dart';
 import '../meeting/meeting_current.dart';
 
 class MeetingWidget extends StatelessWidget {
-  final Meeting team;
+  final Meeting meeting;
   final bool showlink;
 
-  const MeetingWidget(this.team, {super.key, this.showlink = true});
+  const MeetingWidget(this.meeting, {super.key, this.showlink = true});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(() => GetBuilder(
           builder: (controller) => MeetingCurrent(),
-          init: CurrentMeetingController(team))),
+          init: CurrentMeetingController(meeting))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
@@ -37,16 +37,22 @@ class MeetingWidget extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  _meetingImgWidget(),
+                  Obx(() {
+                    meeting.rxProject; // 리스너에 가입
+                    return _meetingImgWidget();
+                  }),
                   SizedBox(width: 14.w),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _meetingTitleWidget(team.title),
-                        if (team.project != null)
-                          _meetingTeamWidget(team.project!),
+                        _meetingTitleWidget(meeting.title),
+                        Visibility(
+                          visible: meeting.rxProject != null,
+                            replacement: const SizedBox.shrink(),
+                            child: Obx(() => _meetingTeamWidget(meeting.rxProject!.value)),
+                        ),
                         _dateWidget(),
                       ],
                     ),
@@ -55,7 +61,7 @@ class MeetingWidget extends StatelessWidget {
                     GestureDetector(
                       onTap: () async {
                         String? inviteLink = await Get.find<ApiService>()
-                            .getMeetingInviteDeepLink(team.id);
+                            .getMeetingInviteDeepLink(meeting.id);
                         WeteamUser currentUser =
                             Get.find<AuthService>().user.value!;
 
@@ -69,7 +75,7 @@ class MeetingWidget extends StatelessWidget {
                             Get.find<ApiService>().convertDeepLink(inviteLink);
 
                         Share.share(
-                            '${currentUser.username}님이 [${team.title}] 언제보까에 초대했어요!\n$inviteLink');
+                            '${currentUser.username}님이 [${meeting.title}] 언제보까에 초대했어요!\n$inviteLink');
                       },
                       child: Align(
                           alignment: Alignment.centerRight,
@@ -89,8 +95,8 @@ class MeetingWidget extends StatelessWidget {
     TeamPlayController controller = Get.find<TeamPlayController>();
 
     int imageIndex = 0;
-    if (team.project != null) {
-      imageIndex = team.project!.imageId;
+    if (meeting.rxProject != null) {
+      imageIndex = meeting.rxProject!.value.imageId;
     } else {
       imageIndex = Random().nextInt(controller.imagePaths.length);
     }
@@ -137,7 +143,7 @@ class MeetingWidget extends StatelessWidget {
 
   Widget _dateWidget() {
     return Text(
-      "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
+      "${_formattedDateTime(meeting.startedAt)} ~ ${_formattedDateTime(meeting.endedAt)}",
       style: TextStyle(
         color: AppColors.g4,
         fontSize: 9.sp,

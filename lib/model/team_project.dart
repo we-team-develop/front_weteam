@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+
+import '../service/team_project_service.dart';
 import 'weteam_user.dart';
 
 class TeamProject {
@@ -44,7 +47,7 @@ class TeamProject {
       required this.host});
 
   factory TeamProject.fromJson(Map data) {
-    return TeamProject(
+    TeamProject tp = TeamProject(
         hashedId: data['hashedId'] ?? "",
         id: data['id'],
         title: data['name'],
@@ -56,6 +59,27 @@ class TeamProject {
         memberSize: data['headCount'],
         done: data['done'],
         host: WeteamUser.fromJson(data['host'] ?? {}));
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    RxTeamProject? rtp = tpService.getTeamProjectById(data['id']);
+
+    if (rtp != null) {
+      tpService.updateEntry(tp);
+    }
+
+    return tp;
+  }
+
+  factory TeamProject.fromJsonAndUpdate(Map data) {
+    TeamProject tp = TeamProject.fromJson(data);
+
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    RxTeamProject? rtp = tpService.getTeamProjectById(data['id']);
+
+    if (rtp == null) {
+      tpService.updateEntry(tp);
+    }
+
+    return tp;
   }
 
   @override

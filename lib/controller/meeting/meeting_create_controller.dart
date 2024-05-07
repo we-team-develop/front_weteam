@@ -8,6 +8,7 @@ import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../service/team_project_service.dart';
 import '../../util/weteam_utils.dart';
 import '../../view/meeting/create/meeting_create_finish.dart';
 import '../custom_calendar_controller.dart';
@@ -20,7 +21,7 @@ class MeetingCreateController extends GetxController {
   String? searchWait;
 
   final Rxn<TeamProject> selectedTeamProject = Rxn();
-  final RxList<TeamProject> tpList = RxList();
+  final RxTeamProjectList tpList = RxTeamProjectList();
   RxString selectedTpList = '진행중인 팀플'.obs;
 
   final TextEditingController nameInputController = TextEditingController();
@@ -45,7 +46,7 @@ class MeetingCreateController extends GetxController {
         .getTeamProjectList(0, done, 'DESC', 'DONE', user.id);
 
     if (result != null) {
-      tpList.addAll(result.projectList);
+      tpList.addAll(result.rxProjectList);
     } else {
       WeteamUtils.snackbar('', '팀플 목록을 불러오지 못했어요', icon: SnackbarIcon.fail);
     }

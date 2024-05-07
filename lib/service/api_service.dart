@@ -15,6 +15,7 @@ import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../util/custom_get_connect.dart';
 import '../util/weteam_utils.dart';
+import 'team_project_service.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
   final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
@@ -78,15 +79,18 @@ class ApiService extends CustomGetConnect implements GetxService {
 
   /// 팀플 단건 조회 API
   ///
-  /// return: 성공시  TeamProject, 실패시 null
-  Future<TeamProject?> getTeamProject(int projectId) async {
+  /// return: 성공시  RxTeamProject, 실패시 null
+  Future<RxTeamProject?> getTeamProject(int projectId) async {
     Response rp = await get('/api/projects/$projectId');
     if (rp.hasError) return null;
 
     String json = rp.bodyString ?? "{}";
     Map data = jsonDecode(json);
 
-    return TeamProject.fromJson(data);
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    RxTeamProject rtp = tpService.updateEntry(TeamProject.fromJson(data));
+
+    return rtp;
   }
 
   /// 팀플 삭제 API
@@ -454,20 +458,22 @@ class ApiService extends CustomGetConnect implements GetxService {
 class GetTeamProjectListResult {
   final int totalPages;
   final int totalElements;
-  final List<TeamProject> projectList;
+  final List<RxTeamProject> rxProjectList;
 
   const GetTeamProjectListResult(
       {required this.totalPages,
       required this.totalElements,
-      required this.projectList});
+      required this.rxProjectList});
 
   factory GetTeamProjectListResult.fromJson(Map data) {
     List tpList = data['projectList'];
+    TeamProjectService tps = Get.find<TeamProjectService>();
+
     return GetTeamProjectListResult(
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
-        projectList: List<TeamProject>.generate(
-            tpList.length, (index) => TeamProject.fromJson(tpList[index])));
+        rxProjectList: List<RxTeamProject>.generate(
+            tpList.length, (index) => tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(tpList[index]).id)!));
   }
 }
 

@@ -10,6 +10,7 @@ import '../../model/team_project.dart';
 import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../service/team_project_service.dart';
 import '../../view/widget/team_project_widget.dart';
 
 class HomeController extends GetxController {
@@ -17,8 +18,6 @@ class HomeController extends GetxController {
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
   final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
   final RxBool hasNewAlarm = RxBool(false);
-
-  List<TeamProject> oldTpList = [];
 
   @override
   void onInit() {
@@ -32,7 +31,6 @@ class HomeController extends GetxController {
     if (tpListCache != null) {
       GetTeamProjectListResult gtplResult =
           GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
-      oldTpList = gtplResult.projectList;
       tpWidgetList.value = _generateTpwList(gtplResult);
       tpWidgetList.refresh();
     }
@@ -44,12 +42,12 @@ class HomeController extends GetxController {
   }
 
   List<Widget> _generateTpwList(GetTeamProjectListResult result) {
-    List<TeamProject> tpList = result.projectList;
+    List<RxTeamProject> rxTpList = result.rxProjectList;
     EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
     return List<Widget>.generate(
-        tpList.length,
+        rxTpList.length,
         (index) =>
-            Padding(padding: padding, child: TeamProjectWidget(tpList[index])));
+            Padding(padding: padding, child: TeamProjectWidget(rxTpList[index])));
   }
 
   Future<void> checkNewAlarm() async {
@@ -79,8 +77,8 @@ class HomeController extends GetxController {
         .getTeamProjectList(
             0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectListJson);
-    if (result != null && !listEquals(oldTpList, result.projectList)) {
-      oldTpList = result.projectList;
+
+    if (result != null) {
       tpWidgetList.value = _generateTpwList(result);
       tpWidgetList.refresh();
     }

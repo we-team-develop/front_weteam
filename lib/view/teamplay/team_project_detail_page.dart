@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,12 +28,15 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 15.h),
-            const CustomTitleBar(title: '팀플방'),
-            _body(context),
-          ],
+        child: RefreshIndicator(
+          onRefresh: () async { await controller.fetchTeamProject(); },
+          child: Column(
+            children: [
+              SizedBox(height: 15.h),
+              const CustomTitleBar(title: '팀플방'),
+              _body(context),
+            ],
+          ),
         ),
       ),
     );
@@ -43,12 +47,13 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _CustomDivider(),
             Obx(() => Stack(children: [
-                  TeamProjectWidget(controller.tp.value),
+                  TeamProjectWidget(controller.rxTp),
                   Positioned(
                       top: 0, bottom: 0, right: 0, child: _exitButton(context))
                 ])),
@@ -93,7 +98,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         child: Column(
           children: [
             Image.asset(
-                controller.tp.value.host.id ==
+                controller.rxTp.value.host.id ==
                         Get.find<AuthService>().user.value!.id
                     ? ImagePath.icHostOutGray
                     : ImagePath.icGuestOutGray,
@@ -104,7 +109,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 10.sp,
-                  color: controller.tp.value.host.id ==
+                  color: controller.rxTp.value.host.id ==
                           Get.find<AuthService>().user.value!.id
                       ? AppColors.g3
                       : AppColors.g5),
@@ -116,8 +121,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   void _exitButtonOnTap() {
-    if (controller.tp.value.memberSize > 1 &&
-        controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+    if (controller.rxTp.value.memberSize > 1 &&
+        controller.rxTp.value.host.id == Get.find<AuthService>().user.value!.id) {
       WeteamUtils.snackbar('', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
           icon: SnackbarIcon.fail);
       return;
@@ -134,10 +139,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   Future<void> exitOrDeleteTeamProject() async {
-    if (controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+    if (controller.rxTp.value.host.id == Get.find<AuthService>().user.value!.id) {
       // 팀플 삭제
       bool success = await Get.find<ApiService>()
-          .deleteTeamProject(controller.tp.value.id);
+          .deleteTeamProject(controller.rxTp.value.id);
       if (success) {
         await updateTeamProjectLists();
         await WeteamUtils.closeSnackbarNow();
@@ -151,7 +156,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
     } else {
       // 팀플 탈퇴
       bool success =
-          await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
+          await Get.find<ApiService>().exitTeamProject(controller.rxTp.value.id);
       if (success) {
         await updateTeamProjectLists();
         await WeteamUtils.closeSnackbarNow();
@@ -195,131 +200,140 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
   }
 
   bool amIHost() {
-    return controller.tp.value.host.id == projectUser.user.id;
+    return controller.rxTp.value.host.id == projectUser.user.id;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        if (controller.isKickMode.isTrue && !amIHost()) {
-          kickSelected.value = !kickSelected.value;
-          controller.selectedKickUser.value =
-              kickSelected.value ? projectUser : null;
-        }
-
-        if (controller.isKickMode.isFalse &&
-            controller.isChangeHostMode.isFalse) {
-          if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
-            Get.to(() =>
-                UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          if (controller.isKickMode.isTrue && !amIHost()) {
+            kickSelected.value = !kickSelected.value;
+            controller.selectedKickUser.value =
+            kickSelected.value ? projectUser : null;
           }
-        }
-      },
-      child: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 48.49.w,
-                  height: 48.49.h,
-                  child: ProfileImageWidget(
-                      id: projectUser.user.profile?.imageIdx ?? 0),
-                ),
-                SizedBox(height: 7.h),
-                Text(
-                  "${projectUser.user.username}",
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 10.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w700,
+
+          if (controller.isKickMode.isFalse &&
+              controller.isChangeHostMode.isFalse) {
+            if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
+              Get.to(() =>
+                  UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+            }
+          }
+        },
+        child: Stack(
+          children: [
+          SizedBox(
+          width: 75.w,
+          height: 100.h,
+          child: Padding(
+              padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 48.49.w,
+                    height: 48.49.h,
+                    child: ProfileImageWidget(
+                        id: projectUser.user.profile?.imageIdx ?? 0),
                   ),
+                  SizedBox(height: 7.h),
+              SizedBox(height: 12.h,
+              child: AutoSizeText(
+                "${projectUser.user.username}",
+                maxFontSize: 10.sp.floor() * 1.0,
+                minFontSize: 1,
+                maxLines: 1,
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontFamily: 'NanumSquareNeo',
+                  fontWeight: FontWeight.w700,
                 ),
-                SizedBox(height: 2.h),
-                Text(
-                  projectUser.role ?? "미입력",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.g5,
-                    fontSize: 9.sp,
-                    fontFamily: 'NanumSquareNeo',
-                    fontWeight: FontWeight.w400,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Visibility(
-              visible: amIHost(),
-              child: Positioned(
-                  right: 0,
-                  left: 0,
-                  child: Image.asset(ImagePath.icSolarCrownBold,
-                      width: 16.w, height: 16.h))),
-          Obx(() => Visibility(
-              visible: controller.isKickMode.value && !amIHost(),
-              child: Positioned(
-                right: 10.w,
-                top: 10.h,
-                child: kickSelected.value
-                    ? Image.asset(ImagePath.icCheckWhiteActivated,
-                        width: 14.w, height: 14.h)
-                    : Image.asset(ImagePath.icCheckWhite,
-                        width: 14.w, height: 14.h),
-              ))),
-          Obx(() => Visibility(
-                visible: controller.isChangeHostMode.value && !amIHost(),
+              )),
+                  SizedBox(height: 2.h),
+                  Expanded(child: AutoSizeText(
+                    projectUser.role ?? "미입력",
+                    textAlign: TextAlign.center,
+                    maxFontSize: 9.sp.floor() * 1.0,
+                    minFontSize: 1,
+                    style: TextStyle(
+                      color: AppColors.g5,
+                      fontFamily: 'NanumSquareNeo',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                  )
+                ],
+              ),
+            )),
+            Visibility(
+                visible: amIHost(),
                 child: Positioned(
-                  top: 25.h,
-                  left: 5.w,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      controller.selectedNewHost.value = projectUser.user.id;
-                    },
-                    child: Container(
-                      width: 60.w,
-                      height: 20.h,
-                      decoration: ShapeDecoration(
-                        color: controller.selectedNewHost.value ==
-                                projectUser.user.id
-                            ? AppColors.orange3
-                            : Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.r)),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 0),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          '호스트 넘기기',
-                          style: TextStyle(
-                            color: controller.selectedNewHost.value ==
-                                    projectUser.user.id
-                                ? Colors.white
-                                : AppColors.black,
-                            fontSize: 8.sp,
-                            fontFamily: 'NanumSquareNeo',
-                            fontWeight: FontWeight.w400,
-                          ),
+                    right: 0,
+                    left: 0,
+                    top: 0,
+                    child: Image.asset(ImagePath.icSolarCrownBold,
+                        width: 16.w, height: 16.h))),
+            Obx(() => Visibility(
+                visible: controller.isKickMode.value && !amIHost(),
+                child: Positioned(
+                  right: 15.w,
+                  top: 0.h,
+                  child: kickSelected.value
+                      ? Image.asset(ImagePath.icCheckWhiteActivated,
+                      width: 14.w, height: 14.h)
+                      : Image.asset(ImagePath.icCheckWhite,
+                      width: 14.w, height: 14.h),
+                ))),
+            Obx(() => Visibility(
+              visible: controller.isChangeHostMode.value && !amIHost(),
+              child: Positioned(
+                top: 15.h,
+                left: 8.w,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    controller.selectedNewHost.value = projectUser.user.id;
+                  },
+                  child: Container(
+                    width: 60.w,
+                    height: 20.h,
+                    decoration: ShapeDecoration(
+                      color: controller.selectedNewHost.value ==
+                          projectUser.user.id
+                          ? AppColors.orange3
+                          : Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.r)),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        '호스트 넘기기',
+                        style: TextStyle(
+                          color: controller.selectedNewHost.value ==
+                              projectUser.user.id
+                              ? Colors.white
+                              : AppColors.black,
+                          fontSize: 8.sp,
+                          fontFamily: 'NanumSquareNeo',
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
                   ),
                 ),
-              )),
-        ],
-      ),
+              ),
+            )),
+          ],
+        ),
     );
   }
 }
@@ -351,7 +365,7 @@ class _UserListViewState extends State<_UserListView> {
     List<_UserContainer> newUserContainerList = [];
     WeteamProjectUser? host;
     for (WeteamProjectUser projectUser in userList) {
-      if (projectUser.user.id == controller.tp.value.host.id) {
+      if (projectUser.user.id == controller.rxTp.value.host.id) {
         host = projectUser;
         continue;
       }
@@ -392,7 +406,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-                visible: !controller.tp.value.done,
+                visible: !controller.rxTp.value.done,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -402,10 +416,10 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         ApiService service = Get.find<ApiService>();
                         Future invUrlFuture =
                             service.getTeamProjectInviteDeepLink(
-                                controller.tp.value.id);
+                                controller.rxTp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
-                        String teamProjectName = controller.tp.value.title;
+                        String teamProjectName = controller.rxTp.value.title;
 
                         String? invUrl = await invUrlFuture;
                         if (invUrl != null) {
@@ -431,7 +445,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
             SizedBox(height: 24.h),
             Visibility(
                 // 어드민 전용 설정
-                visible: controller.tp.value.host.id ==
+                visible: controller.rxTp.value.host.id ==
                     Get.find<AuthService>().user.value!.id,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -447,7 +461,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     ),
                     SizedBox(height: 14.h),
                     Visibility(
-                        visible: controller.tp.value.done,
+                        visible: controller.rxTp.value.done,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -460,12 +474,12 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                           TeamProjectDialog(
                                               mode:
                                                   TeamProjectDialogMode.revive,
-                                              teamData: controller.tp.value));
+                                              teamData: controller.rxTp.value));
                                 }),
                           ],
                         )),
                     Visibility(
-                        visible: !controller.tp.value.done,
+                        visible: !controller.rxTp.value.done,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -476,14 +490,14 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return TeamProjectDialog(
-                                            teamData: controller.tp.value,
+                                            teamData: controller.rxTp.value,
                                             mode: TeamProjectDialogMode.edit);
                                       });
                                 }),
                             _TextButton(
                                 text: '강제 퇴장 시키기',
                                 onTap: () {
-                                  if (controller.tp.value.memberSize == 1) {
+                                  if (controller.rxTp.value.memberSize == 1) {
                                     WeteamUtils.snackbar("", '강제 퇴장할 팀원이 없습니다');
                                     return;
                                   }
@@ -493,7 +507,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                             _TextButton(
                                 text: '호스트 권한 넘기기',
                                 onTap: () {
-                                  if (controller.tp.value.memberSize == 1) {
+                                  if (controller.rxTp.value.memberSize == 1) {
                                     WeteamUtils.snackbar(
                                         "", '호스트를 넘겨 받을 팀원이 없습니다');
                                     return;
@@ -508,7 +522,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 )),
             Visibility(
                 // 공통
-                visible: !controller.tp.value.done,
+                visible: !controller.rxTp.value.done,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -669,7 +683,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       return;
     }
     bool result = await Get.find<ApiService>()
-        .changeUserTeamProjectRole(controller.tp.value, newRole);
+        .changeUserTeamProjectRole(controller.rxTp.value, newRole);
     if (result) {
       Get.back();
       controller.fetchUserList();

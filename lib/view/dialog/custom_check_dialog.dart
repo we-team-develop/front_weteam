@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import '../../data/app_colors.dart';
 
 class CustomCheckDialog extends StatelessWidget {
-  final String? title; // 예시: 정말 로그아웃 하시겠습니까?
-  final String? content; // 예시: 다시 돌아올 거라 믿어요😢
+  final String title; // 예시: 정말 로그아웃 하시겠습니까?
+  final String content; // 예시: 다시 돌아올 거라 믿어요😢
   final String denyName;
   final String admitName;
   final int denyColorInt;
@@ -16,8 +16,8 @@ class CustomCheckDialog extends StatelessWidget {
 
   const CustomCheckDialog(
       {super.key,
-      this.title,
-      this.content,
+      this.title = '',
+      this.content = '',
       this.denyName = '아니오',
       this.admitName = '네',
       this.denyColorInt = 0xFF333333, // (약) 검정

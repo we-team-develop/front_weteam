@@ -113,14 +113,14 @@ class _NotificationContainerState extends State<NotificationContainer> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         Get.find<ApiService>().readAlarm(widget.notification.id);
-        if (widget.notification.project != null) {
+        if (widget.notification.rxProject != null) {
           setState(() {
             widget.notification.read = true;
           });
           Get.to(() => GetBuilder(
               builder: (controller) => const TeamProjectDetailPage(),
               init: TeamProjectDetailPageController(
-                  widget.notification.project!)));
+                  widget.notification.rxProject!)));
         }
       },
       child: Container(

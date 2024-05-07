@@ -57,7 +57,7 @@ class TeamPlay extends GetView<TeamPlayController> {
                           SizedBox(height: 24.0.h),
                         ])),
                         if (controller.tpList.value == null ||
-                            controller.tpList.value!.projectList.isEmpty)
+                            controller.tpList.value!.rxProjectList.isEmpty)
                           _noTeamProject()
                         else
                           _teamProjectList(tpPadding)
@@ -90,11 +90,11 @@ class TeamPlay extends GetView<TeamPlayController> {
   Widget _teamProjectList(EdgeInsets padding) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
-      childCount: controller.tpList.value!.projectList.length,
+      childCount: controller.tpList.value!.rxProjectList.length,
       (context, index) => Padding(
           padding: padding,
           child:
-              TeamProjectWidget(controller.tpList.value!.projectList[index])),
+              TeamProjectWidget(controller.tpList.value!.rxProjectList[index])),
     ));
   }
 }

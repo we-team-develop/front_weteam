@@ -14,6 +14,7 @@ import '../../model/team_project.dart';
 import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../service/team_project_service.dart';
 import '../widget/custom_title_bar.dart';
 import '../widget/profile_image_widget.dart';
 import '../widget/team_project_widget.dart';
@@ -47,8 +48,7 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class _UserInfoPageState extends State<UserInfoPage> {
-  final Rx<List<TeamProject>> tpList = Rx<List<TeamProject>>([]);
-  List<TeamProject> _oldTpList = [];
+  final RxTeamProjectList rxTpList = RxTeamProjectList();
 
   @override
   void initState() {
@@ -69,28 +69,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
       String? json = sharedPreferences
           .getString(SharedPreferencesKeys.teamProjectDoneListJson);
       if (json != null) {
-        tpList.value =
-            GetTeamProjectListResult.fromJson(jsonDecode(json)).projectList;
-        _oldTpList = tpList.value;
+        rxTpList.value =
+            GetTeamProjectListResult.fromJson(jsonDecode(json)).rxProjectList;
       }
 
       result = await Get.find<ApiService>().getTeamProjectList(
           0, true, 'DESC', 'DONE', widget.user.value!.id,
           cacheKey: SharedPreferencesKeys.teamProjectDoneListJson);
     }
-
-    if (result != null && !listEquals(result.projectList, _oldTpList)) {
-      _oldTpList = tpList.value;
-      tpList.value = result.projectList;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: _body(),
-    ));
+    return Scaffold(
+      body: SafeArea(
+        child: _body(),
+      ),
+    );
   }
 
   Widget _body() {
@@ -113,7 +108,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 )),
             SliverPadding(
                 padding: EdgeInsets.only(left: 15.0.w, right: 16.0.w),
-                sliver: (tpList.value.isNotEmpty)
+                sliver: (rxTpList.value.isNotEmpty)
                     ? _teamProjectList()
                     : _noTeamProject())
           ],
@@ -213,14 +208,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Widget _teamProjectList() {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
-      childCount: tpList.value.length + 1,
+      childCount: rxTpList.value.length + 1,
       (context, index) {
         if (index == 0) {
           return SizedBox(height: 24.h);
         }
         return Padding(
             padding: EdgeInsets.only(bottom: 12.h),
-            child: TeamProjectWidget(tpList.value[index - 1]));
+            child: TeamProjectWidget(rxTpList.value[index - 1]));
       },
     ));
   }
@@ -229,7 +224,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     return Obx(() {
       String text;
 
-      if (tpList.value.isNotEmpty) {
+      if (rxTpList.value.isNotEmpty) {
         text = "${widget.user.value?.username}님이 완료한 팀플들이에요!";
       } else {
         text = "${widget.user.value?.username}님은 완료한 팀플이 없어요!";
