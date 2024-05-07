@@ -123,10 +123,16 @@ class _CopyLinkButton extends GetView<MeetingCreateController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        String? inviteLink = await Get.find<ApiService>()
+            .getMeetingInviteDeepLink(controller.meeting!.id);
+        if (inviteLink == null) {
+          WeteamUtils.snackbar('', '링크를 불러오지 못했어요', icon: SnackbarIcon.fail);
+          return;
+        }
         Clipboard.setData(ClipboardData(
             text: Get.find<ApiService>()
-                .convertDeepLink('weteam://meeting/add?id=0')));
+                .convertDeepLink(inviteLink!)));
         WeteamUtils.snackbar('', '언제보까 링크를 복사했어요', icon: SnackbarIcon.success);
       },
       child: Container(
