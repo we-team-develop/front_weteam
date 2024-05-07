@@ -232,8 +232,8 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
               child: Column(
                 children: [
                   SizedBox(
-                    width: 48.49.w,
-                    height: 48.49.h,
+                    width: 48.49.r,
+                    height: 48.49.r,
                     child: ProfileImageWidget(
                         id: projectUser.user.profile?.imageIdx ?? 0),
                   ),

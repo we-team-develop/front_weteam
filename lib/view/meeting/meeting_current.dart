@@ -195,8 +195,8 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
     return Column(
       children: [
         SizedBox(
-          width: 26.w,
-          height: 26.h,
+          width: 26.r,
+          height: 26.r,
           child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
         ),
         Text(
