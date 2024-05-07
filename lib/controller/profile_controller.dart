@@ -10,24 +10,14 @@ import '../service/auth_service.dart';
 
 class ProfileController extends GetxController {
   /// 프로필 티미 이미지 목록
-  final RxList<String> imagePaths = RxList<String>([
+  final List<String> imagePaths = [
     ImagePath.profile1,
     ImagePath.profile2,
     ImagePath.profile3,
     ImagePath.profile4,
     ImagePath.profile5,
     ImagePath.profile6,
-  ]);
-
-  /// 프로필 배경 목록
-  final RxList<Color> backgroundColors = RxList<Color>([
-    AppColors.purple,
-    AppColors.blue2,
-    AppColors.pink1,
-    AppColors.blue1,
-    AppColors.yellow1,
-    AppColors.pink2,
-  ]);
+  ];
 
   /// 프로필 선택 여부 리스트
   var isSelectedList = List.generate(6, (index) => false).obs;

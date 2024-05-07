@@ -69,18 +69,18 @@ class ProfileImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
       builder: (controller) {
-        Color backgroundColor = controller.backgroundColors[id];
         return Container(
           width: circleSize,
           height: circleSize,
           padding: EdgeInsets.all(4.r),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: backgroundColor,
           ),
-          child: Image.asset(
-            controller.imagePaths[id],
-            fit: BoxFit.cover,
+          child: ClipOval(
+            child: Image.asset(
+              controller.imagePaths[id],
+              fit: BoxFit.cover,
+            ),
           ),
         );
       },
