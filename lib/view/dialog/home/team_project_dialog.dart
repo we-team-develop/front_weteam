@@ -332,7 +332,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       return;
     }
 
-    if (endTime.isBefore(DateTime.now())) {
+    if (endTime.isBefore(WeteamUtils.onlyDate(DateTime.now()))) {
       setState(() {
         WeteamUtils.snackbar('', '종료일은 오늘 이전일 수 없어요', icon: SnackbarIcon.info);
       });
