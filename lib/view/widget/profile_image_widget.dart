@@ -72,7 +72,6 @@ class ProfileImageWidget extends StatelessWidget {
         return Container(
           width: circleSize,
           height: circleSize,
-          padding: EdgeInsets.all(4.r),
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
           ),
