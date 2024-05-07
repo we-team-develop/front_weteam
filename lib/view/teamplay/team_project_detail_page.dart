@@ -224,7 +224,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
           width: 75.w,
           height: 100.h,
           child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
               child: Column(
                 children: [
                   SizedBox(
@@ -264,13 +264,14 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                 child: Positioned(
                     right: 0,
                     left: 0,
+                    top: 0,
                     child: Image.asset(ImagePath.icSolarCrownBold,
                         width: 16.w, height: 16.h))),
             Obx(() => Visibility(
                 visible: controller.isKickMode.value && !amIHost(),
                 child: Positioned(
-                  right: 10.w,
-                  top: 10.h,
+                  right: 15.w,
+                  top: 0.h,
                   child: kickSelected.value
                       ? Image.asset(ImagePath.icCheckWhiteActivated,
                       width: 14.w, height: 14.h)
@@ -280,8 +281,8 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
             Obx(() => Visibility(
               visible: controller.isChangeHostMode.value && !amIHost(),
               child: Positioned(
-                top: 25.h,
-                left: 5.w,
+                top: 15.h,
+                left: 8.w,
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
