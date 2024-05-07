@@ -10,7 +10,6 @@ class AppTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'WE TEAM',
-      textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.black,
         fontSize: 16.sp,

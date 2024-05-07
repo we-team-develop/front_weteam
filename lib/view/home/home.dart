@@ -107,8 +107,10 @@ class Home extends GetView<HomeController> {
   Widget _head() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [const AppTitleWidget(), _bellIcon()],
+      children: [
+        const AppTitleWidget(),
+        _bellIcon(),
+      ],
     );
   }
 

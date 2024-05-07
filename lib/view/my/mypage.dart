@@ -178,7 +178,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     widget.user.value?.organization ?? '미입력',
                     style: TextStyle(
                       color: AppColors.g4,
-                      fontSize: 10.sp,
+                      fontSize: 12.sp,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w400,
                     ),
