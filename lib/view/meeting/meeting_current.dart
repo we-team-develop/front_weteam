@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -37,25 +39,17 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 11.h),
-          Divider(
-            height: 1.h,
-            color: AppColors.g1,
-          ),
-          SizedBox(height: 14.h),
-          SizedBox(
-            height: 57.h,
-            child: Obx(
-              () => PageView(
-                controller: pageController,
-                children: [
-                  _teamInfo(), // 첫 번째 페이지: 해당 팀플 정보
-                  _participantsPage(), // 두 번째 페이지: 참여자 확인 페이지
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 14.h),
-          Divider(height: 1.h, color: AppColors.g1),
+SizedBox(
+  height: 57.h + 1.h + 14.h + 1.h + 14.h,
+  child:           Obx(
+      () => PageView(
+    controller: pageController,
+    children: [
+      _teamInfo(), // 첫 번째 페이지: 해당 팀플 정보
+      _participantsPage(), // 두 번째 페이지: 참여자 확인 페이지
+    ],
+  ),
+),),
           Padding(
             padding: EdgeInsets.only(left: 4.w, top: 6.h),
             child: Center(
@@ -106,51 +100,69 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
   }
 
   Widget _teamInfo() {
-    return Stack(
+    return Column(
       children: [
-        MeetingWidget(
-          controller.meeting.value,
-          showlink: false,
-        ),
-        Positioned(
-          right: 0,
-          bottom: 0,
-          child: GestureDetector(
-            // 텍스트 위젯을 GestureDetector로 랩하여 탭 처리
-            onTap: () {
-              pageController.animateToPage(
-                1, //
-                duration: const Duration(milliseconds: 300), //
-                curve: Curves.easeInOut, // Animation curve
-              );
-            },
-            child: Text(
-              '참여자 확인>',
-              style: TextStyle(
-                  fontFamily: 'NanumSquareNeo',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 9.sp),
-            ),
+      Divider(
+      height: 1.h,
+      color: AppColors.g1,
+    ),
+    SizedBox(height: 14.h),
+        SizedBox(
+          height: 57.h,
+          child: Stack(
+            children: [
+              MeetingWidget(
+                controller.meeting.value,
+                showlink: false,
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: GestureDetector(
+                  // 텍스트 위젯을 GestureDetector로 랩하여 탭 처리
+                  onTap: () {
+                    pageController.animateToPage(
+                      1, //
+                      duration: const Duration(milliseconds: 300), //
+                      curve: Curves.easeInOut, // Animation curve
+                    );
+                  },
+                  child: Text(
+                    '참여자 확인>',
+                    style: TextStyle(
+                        fontFamily: 'NanumSquareNeo',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9.sp),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        SizedBox(height: 14.h),
+        Divider(height: 1.h, color: AppColors.g1),
       ],
     );
   }
 
   Widget _participantsPage() {
-    return Row(
-      children: [
-        Expanded(
-          child: _participant(),
-        ),
-        VerticalDivider(
-          width: 1.w,
-          color: AppColors.g2,
-        ),
-        Expanded(
-          child: _nonParticipant(),
-        ),
-      ],
+    return SizedBox(
+      height: 57.h,
+      child: Row(
+        children: [
+          Expanded(
+            child: _participant(),
+          ),
+          Container(
+            height: 52.h,
+            width: 1.w,
+            color: AppColors.g2,
+          ),
+          Expanded(
+            child: _nonParticipant(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -176,12 +188,9 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
                     controller.joinedUserList.length, // 참여한 유저 수만큼 아이템을 생성합니다.
                 itemBuilder: (context, index) {
                   var user = controller.joinedUserList[index]; // 참여한 유저를 가져옵니다.
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: _joinedUser(user)),
-                  );
+                  return Align(
+                      alignment: Alignment.centerLeft,
+                      child: _joinedUser(user));
                 },
               ),
             ),
@@ -192,18 +201,29 @@ class MeetingCurrent extends GetView<CurrentMeetingController> {
   }
 
   Widget _joinedUser(user) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 26.r,
-          height: 26.r,
-          child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      child: SizedBox(
+        width: 26.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 8.h),
+            SizedBox(
+              height: 26.r,
+              child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
+            ),
+            SizedBox(height: 3.h),
+            AutoSizeText(
+              user.username,
+              maxFontSize: 10.sp.floorToDouble(),
+              minFontSize: 1,
+              maxLines: 1,
+              style: const TextStyle(fontFamily: 'NanumSquareNeoBold'),
+            ),
+          ],
         ),
-        Text(
-          user.username,
-          style: TextStyle(fontFamily: 'NanumSquareNeoBold', fontSize: 10.sp),
-        ),
-      ],
+      ),
     );
   }
 
