@@ -238,15 +238,18 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                         id: projectUser.user.profile?.imageIdx ?? 0),
                   ),
                   SizedBox(height: 7.h),
-                  Text(
-                    "${projectUser.user.username}",
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 10.sp,
-                      fontFamily: 'NanumSquareNeo',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+              SizedBox(height: 12.h,
+              child: AutoSizeText(
+                "${projectUser.user.username}",
+                maxFontSize: 10.sp.floor() * 1.0,
+                minFontSize: 1,
+                maxLines: 1,
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontFamily: 'NanumSquareNeo',
+                  fontWeight: FontWeight.w700,
+                ),
+              )),
                   SizedBox(height: 2.h),
                   Expanded(child: AutoSizeText(
                     projectUser.role ?? "미입력",
