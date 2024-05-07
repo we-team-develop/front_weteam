@@ -7,11 +7,12 @@ import '../main.dart';
 import '../model/team_project.dart';
 import '../model/weteam_project_user.dart';
 import '../service/api_service.dart';
+import '../service/team_project_service.dart';
 import '../util/weteam_utils.dart';
 import '../view/dialog/custom_check_dialog.dart';
 
 class TeamProjectDetailPageController extends GetxController {
-  late final Rx<TeamProject> tp;
+  late final RxTeamProject rxTp;
   RxList<WeteamProjectUser> userList = RxList<WeteamProjectUser>();
   RxList<Widget> userContainerList = RxList<Widget>();
   RxBool isKickMode = RxBool(false);
@@ -19,8 +20,7 @@ class TeamProjectDetailPageController extends GetxController {
   RxBool isChangeHostMode = RxBool(false);
   Rx<int> selectedNewHost = Rx<int>(-1);
 
-  TeamProjectDetailPageController(TeamProject team) {
-    tp = team.obs;
+  TeamProjectDetailPageController(this.rxTp) {
     fetchUserList();
     isChangeHostMode.listen((p0) {
       if (p0 == false) selectedNewHost.value = -1; // 호스트 변경모드 꺼지면 -1로 초기화
@@ -31,16 +31,13 @@ class TeamProjectDetailPageController extends GetxController {
 
   Future<void> fetchTeamProject() async {
     ApiService service = Get.find<ApiService>();
-    TeamProject? tp = await service.getTeamProject(this.tp.value.id);
-    if (tp != null) {
-      this.tp.value = tp;
-    }
+    await service.getTeamProject(rxTp.value.id);
   }
 
   // 성공 여부 반환
   Future<bool> fetchUserList() async {
     List<WeteamProjectUser>? list =
-        await Get.find<ApiService>().getProjectUsers(tp.value.id);
+        await Get.find<ApiService>().getProjectUsers(rxTp.value.id);
     if (list == null || list.isEmpty) return false; // 비어있으면 서버 오류로 판단
 
     userList.clear();
@@ -69,7 +66,7 @@ class TeamProjectDetailPageController extends GetxController {
 
   Future<void> changeHost() async {
     bool success = await Get.find<ApiService>()
-        .changeTeamProjectHost(tp.value.id, selectedNewHost.value);
+        .changeTeamProjectHost(rxTp.value.id, selectedNewHost.value);
     if (success) {
       await updateTeamProjectLists();
       isChangeHostMode.value = false;

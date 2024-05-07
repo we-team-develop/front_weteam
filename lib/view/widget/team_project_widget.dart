@@ -7,55 +7,63 @@ import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../model/team_project.dart';
+import '../../service/team_project_service.dart';
 import '../teamplay/team_project_detail_page.dart';
 
 class TeamProjectWidget extends StatelessWidget {
-  final TeamProject team;
+  final RxTeamProject rxTeam;
 
-  const TeamProjectWidget(this.team, {super.key});
+  const TeamProjectWidget(this.rxTeam, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    if (rxTeam.isDestroyed()) {
+      return const SizedBox.shrink();
+    }
+
     return GestureDetector(
       onTap: () => Get.to(() => GetBuilder(
           builder: (controller) => const TeamProjectDetailPage(),
-          init: TeamProjectDetailPageController(team))),
+          init: TeamProjectDetailPageController(rxTeam))),
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 53.h,
-        child: Column(
-          children: [
-            Expanded(
-                child: Row(
-              children: [
-                _teamImgWidget(),
-                SizedBox(width: 16.w),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        _teamTitleWidget(team.title),
-                        SizedBox(width: 8.w),
-                        _teamMemberCountWidget(team.memberSize),
-                      ],
-                    ),
-                    _teamDescriptionWidget(team.description),
-                    _dateWidget()
-                  ],
-                )
-              ],
-            )),
-          ],
-        ),
+        child: Obx(() {
+          TeamProject team = rxTeam.value;
+          return Column(
+            children: [
+              Expanded(
+                  child: Row(
+                    children: [
+                      _teamImgWidget(),
+                      SizedBox(width: 16.w),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              _teamTitleWidget(team.title),
+                              SizedBox(width: 8.w),
+                              _teamMemberCountWidget(team.memberSize),
+                            ],
+                          ),
+                          _teamDescriptionWidget(team.description),
+                          _dateWidget()
+                        ],
+                      )
+                    ],
+                  )),
+            ],
+          );
+        }),
       ),
     );
   }
 
   Widget _teamImgWidget() {
     TeamPlayController controller = Get.find<TeamPlayController>();
-    String randomImagePath = controller.imagePaths[team.imageId];
+    String randomImagePath = controller.imagePaths[rxTeam.value.imageId];
 
     return SizedBox(
       width: 50.w,
@@ -112,7 +120,7 @@ class TeamProjectWidget extends StatelessWidget {
 
   Widget _dateWidget() {
     return Text(
-      "${_formattedDateTime(team.startedAt)} ~ ${_formattedDateTime(team.endedAt)}",
+      "${_formattedDateTime(rxTeam.value.startedAt)} ~ ${_formattedDateTime(rxTeam.value.endedAt)}",
       style: TextStyle(
         color: AppColors.g4,
         fontSize: 9.sp,

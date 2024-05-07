@@ -8,6 +8,7 @@ import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
 import '../../../data/image_data.dart';
 import '../../../model/team_project.dart';
+import '../../../service/team_project_service.dart';
 import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
 import '../../widget/team_project_widget.dart';
@@ -63,18 +64,19 @@ class MeetingCreate extends GetView<MeetingCreateController> {
             child: ListView.builder(
               itemCount: controller.tpList.length,
               itemBuilder: (_, index) => Obx(() {
-                TeamProject tp = controller.tpList[index];
+                TeamProjectService tps = Get.find<TeamProjectService>();
+                RxTeamProject rxTp = tps.getTeamProjectById(controller.tpList[index].value.id)!;
                 String searchText = controller.searchText.value;
 
                 // 검색어에 본인이 포함되지 않을 경우
-                if (searchText.isNotEmpty && !tp.title.contains(searchText)) {
+                if (searchText.isNotEmpty && !rxTp.value.title.contains(searchText)) {
                   return const SizedBox.shrink();
                 }
 
                 return GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      controller.selectedTeamProject.value = tp;
+                      controller.selectedTeamProject.value = rxTp.value;
                     },
                     child: Padding(
                         padding: EdgeInsets.only(bottom: 12.h),
@@ -82,12 +84,12 @@ class MeetingCreate extends GetView<MeetingCreateController> {
                           // IgnorePointer를 사용하여 터치시 팀플 화면이 나오는 걸 방지
                           Expanded(
                               child:
-                                  IgnorePointer(child: TeamProjectWidget(tp))),
+                                  IgnorePointer(child: TeamProjectWidget(rxTp))),
                           SizedBox(width: 16.w),
                           Obx(() {
                             bool isSelected =
                                 controller.selectedTeamProject.value?.id ==
-                                    tp.id;
+                                    rxTp.value.id;
                             return _SelectButton(isSelected);
                           })
                         ])));

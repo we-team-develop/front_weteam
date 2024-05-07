@@ -49,7 +49,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
           children: [
             const _CustomDivider(),
             Obx(() => Stack(children: [
-                  TeamProjectWidget(controller.tp.value),
+                  TeamProjectWidget(controller.rxTp),
                   Positioned(
                       top: 0, bottom: 0, right: 0, child: _exitButton(context))
                 ])),
@@ -94,7 +94,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         child: Column(
           children: [
             Image.asset(
-                controller.tp.value.host.id ==
+                controller.rxTp.value.host.id ==
                         Get.find<AuthService>().user.value!.id
                     ? ImagePath.icHostOutGray
                     : ImagePath.icGuestOutGray,
@@ -105,7 +105,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 10.sp,
-                  color: controller.tp.value.host.id ==
+                  color: controller.rxTp.value.host.id ==
                           Get.find<AuthService>().user.value!.id
                       ? AppColors.g3
                       : AppColors.g5),
@@ -117,8 +117,8 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   void _exitButtonOnTap() {
-    if (controller.tp.value.memberSize > 1 &&
-        controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+    if (controller.rxTp.value.memberSize > 1 &&
+        controller.rxTp.value.host.id == Get.find<AuthService>().user.value!.id) {
       WeteamUtils.snackbar('', '호스트 권한을 넘겨야 방에서 나갈 수 있습니다!',
           icon: SnackbarIcon.fail);
       return;
@@ -135,10 +135,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   Future<void> exitOrDeleteTeamProject() async {
-    if (controller.tp.value.host.id == Get.find<AuthService>().user.value!.id) {
+    if (controller.rxTp.value.host.id == Get.find<AuthService>().user.value!.id) {
       // 팀플 삭제
       bool success = await Get.find<ApiService>()
-          .deleteTeamProject(controller.tp.value.id);
+          .deleteTeamProject(controller.rxTp.value.id);
       if (success) {
         await updateTeamProjectLists();
         await WeteamUtils.closeSnackbarNow();
@@ -152,7 +152,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
     } else {
       // 팀플 탈퇴
       bool success =
-          await Get.find<ApiService>().exitTeamProject(controller.tp.value.id);
+          await Get.find<ApiService>().exitTeamProject(controller.rxTp.value.id);
       if (success) {
         await updateTeamProjectLists();
         await WeteamUtils.closeSnackbarNow();
@@ -196,7 +196,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
   }
 
   bool amIHost() {
-    return controller.tp.value.host.id == projectUser.user.id;
+    return controller.rxTp.value.host.id == projectUser.user.id;
   }
 
   @override
@@ -358,7 +358,7 @@ class _UserListViewState extends State<_UserListView> {
     List<_UserContainer> newUserContainerList = [];
     WeteamProjectUser? host;
     for (WeteamProjectUser projectUser in userList) {
-      if (projectUser.user.id == controller.tp.value.host.id) {
+      if (projectUser.user.id == controller.rxTp.value.host.id) {
         host = projectUser;
         continue;
       }
@@ -399,7 +399,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-                visible: !controller.tp.value.done,
+                visible: !controller.rxTp.value.done,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -409,10 +409,10 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                         ApiService service = Get.find<ApiService>();
                         Future invUrlFuture =
                             service.getTeamProjectInviteDeepLink(
-                                controller.tp.value.id);
+                                controller.rxTp.value.id);
                         String? userName =
                             Get.find<AuthService>().user.value?.username;
-                        String teamProjectName = controller.tp.value.title;
+                        String teamProjectName = controller.rxTp.value.title;
 
                         String? invUrl = await invUrlFuture;
                         if (invUrl != null) {
@@ -438,7 +438,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
             SizedBox(height: 24.h),
             Visibility(
                 // 어드민 전용 설정
-                visible: controller.tp.value.host.id ==
+                visible: controller.rxTp.value.host.id ==
                     Get.find<AuthService>().user.value!.id,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -454,7 +454,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                     ),
                     SizedBox(height: 14.h),
                     Visibility(
-                        visible: controller.tp.value.done,
+                        visible: controller.rxTp.value.done,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -467,12 +467,12 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                           TeamProjectDialog(
                                               mode:
                                                   TeamProjectDialogMode.revive,
-                                              teamData: controller.tp.value));
+                                              teamData: controller.rxTp.value));
                                 }),
                           ],
                         )),
                     Visibility(
-                        visible: !controller.tp.value.done,
+                        visible: !controller.rxTp.value.done,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -483,14 +483,14 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return TeamProjectDialog(
-                                            teamData: controller.tp.value,
+                                            teamData: controller.rxTp.value,
                                             mode: TeamProjectDialogMode.edit);
                                       });
                                 }),
                             _TextButton(
                                 text: '강제 퇴장 시키기',
                                 onTap: () {
-                                  if (controller.tp.value.memberSize == 1) {
+                                  if (controller.rxTp.value.memberSize == 1) {
                                     WeteamUtils.snackbar("", '강제 퇴장할 팀원이 없습니다');
                                     return;
                                   }
@@ -500,7 +500,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                             _TextButton(
                                 text: '호스트 권한 넘기기',
                                 onTap: () {
-                                  if (controller.tp.value.memberSize == 1) {
+                                  if (controller.rxTp.value.memberSize == 1) {
                                     WeteamUtils.snackbar(
                                         "", '호스트를 넘겨 받을 팀원이 없습니다');
                                     return;
@@ -515,7 +515,7 @@ class _BottomWidget extends GetView<TeamProjectDetailPageController> {
                 )),
             Visibility(
                 // 공통
-                visible: !controller.tp.value.done,
+                visible: !controller.rxTp.value.done,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -676,7 +676,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
       return;
     }
     bool result = await Get.find<ApiService>()
-        .changeUserTeamProjectRole(controller.tp.value, newRole);
+        .changeUserTeamProjectRole(controller.rxTp.value, newRole);
     if (result) {
       Get.back();
       controller.fetchUserList();

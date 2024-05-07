@@ -8,6 +8,7 @@ import '../../../data/app_colors.dart';
 import '../../../main.dart';
 import '../../../model/team_project.dart';
 import '../../../service/api_service.dart';
+import '../../../service/team_project_service.dart';
 import '../../../util/weteam_utils.dart';
 import '../../widget/custom_date_picker.dart';
 import '../../widget/custom_text_field.dart';
@@ -376,14 +377,11 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       widget.teamData!.startedAt = startTime;
       widget.teamData!.endedAt = endTime;*/
       success = await Get.find<ApiService>().editTeamProject(newTp);
-      if (success) {
-        Get.find<TeamProjectDetailPageController>().tp.value = newTp;
-      }
+      Get.find<TeamProjectService>().updateEntry(newTp);
     }
     if (success) {
       await updateTeamProjectLists();
-      Get.back();
-      Get.find<TeamPlayController>().updateTeamProjectList();
+      Get.back(closeOverlays: true);
     } else {
       setState(() {
         WeteamUtils.snackbar('', '저장하지 못했어요', icon: SnackbarIcon.fail);

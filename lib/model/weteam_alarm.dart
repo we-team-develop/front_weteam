@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+
+import '../service/team_project_service.dart';
 import 'team_project.dart';
 import 'weteam_user.dart';
 
@@ -9,7 +12,7 @@ class WeteamAlarm {
 
   final WeteamUser? user;
   final WeteamUser? targetUser;
-  final TeamProject? project;
+  final RxTeamProject? rxProject;
 
   WeteamAlarm(
       {required this.id,
@@ -18,9 +21,11 @@ class WeteamAlarm {
       required this.read,
       this.user,
       this.targetUser,
-      this.project});
+      this.rxProject});
 
   factory WeteamAlarm.fromJson(Map data) {
+    TeamProjectService tps = Get.find<TeamProjectService>();
+
     return WeteamAlarm(
       id: data['id'],
       status: data['status'],
@@ -28,25 +33,26 @@ class WeteamAlarm {
       read: data['read'],
       user: data['user'] != null ? WeteamUser.fromJson(data['user']) : null,
       targetUser: data['targetUser'] != null ? WeteamUser.fromJson(data['targetUser']) : null,
-      project: data['project'] != null
-          ? TeamProject.fromJson(data['project'])
+      rxProject: data['project'] != null
+          ? tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(data['project']).id)!
           : null,
     );
   }
 
   String getTitle() {
+    TeamProject tp = rxProject!.value;
     if (status == "JOIN") {
-      return "[${project?.title}]에 ${targetUser?.username}님이 참가했습니다!";
+      return "[${tp.title}]에 ${targetUser?.username}님이 참가했습니다!";
     } else if (status == "EXIT") {
-      return "[${project?.title}]에 ${targetUser?.username}님이 퇴장했습니다.";
+      return "[${tp.title}]에 ${targetUser?.username}님이 퇴장했습니다.";
     } else if (status == "CHANGE_HOST") {
-      return "[${project?.title}]의 호스트가 ${targetUser?.username}님으로 변경되었습니다.";
+      return "[${tp.title}]의 호스트가 ${targetUser?.username}님으로 변경되었습니다.";
     } else if (status == "UPDATE_PROJECT") {
-      return "[${project?.title}]의 정보가 변경되었습니다! 확인해주세요!";
+      return "[${tp.title}]의 정보가 변경되었습니다! 확인해주세요!";
     } else if (status == "KICK") {
-      return "[${project?.title}]의 ${targetUser?.username}님이 퇴출되었어요.";
+      return "[${tp.title}]의 ${targetUser?.username}님이 퇴출되었어요.";
     } else if (status == "DONE") {
-      return "[${project?.title}]의 진행 상태가 변경되었어요.";
+      return "[${tp.title}]의 진행 상태가 변경되었어요.";
     }
 
     return "";

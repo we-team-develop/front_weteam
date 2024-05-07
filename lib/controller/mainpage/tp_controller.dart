@@ -30,9 +30,6 @@ class TeamPlayController extends GetxController {
     ImagePath.tpImage10,
   ]);
 
-  /// 마지막으로 업데이트된 팀플 목록. 팀플 목록 업데이트시 변경사항이 있는지 확인할 때 사용합니다.
-  List<TeamProject> _oldTpList = [];
-
   @override
   void onInit() {
     if (Get.find<AuthService>().user.value != null) {
@@ -61,7 +58,6 @@ class TeamPlayController extends GetxController {
     if (json != null) {
       // 데이터가 있는 경우
       tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json));
-      _oldTpList = tpList.value!.projectList;
     }
 
     // api호출 및 결과
@@ -70,10 +66,6 @@ class TeamPlayController extends GetxController {
             0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
             cacheKey: SharedPreferencesKeys.teamProjectNotDoneListJson);
 
-    // 팀플 목록에 수정사항이 있는지 확인
-    if (result != null && !listEquals(_oldTpList, result.projectList)) {
-      _oldTpList = result.projectList;
-      tpList.value = result;
-    }
+    tpList.value = result;
   }
 }

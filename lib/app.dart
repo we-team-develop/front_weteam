@@ -12,6 +12,7 @@ import 'model/team_project.dart';
 import 'model/weteam_user.dart';
 import 'service/api_service.dart';
 import 'service/auth_service.dart';
+import 'service/team_project_service.dart';
 import 'util/weteam_utils.dart';
 import 'view/home/home.dart';
 import 'view/my/mypage.dart';
@@ -52,8 +53,8 @@ class App extends GetView<BottomNavController> {
               return;
             }
 
-            for (TeamProject tp in notDoneProjects.projectList) {
-              if (tp.hashedId == hashedId) {
+            for (RxTeamProject rxTp in notDoneProjects.rxProjectList) {
+              if (rxTp.value.hashedId == hashedId) {
                 WeteamUtils.snackbar("", '이미 가입한 팀플이에요',
                     icon: SnackbarIcon.fail);
                 return;
@@ -70,8 +71,8 @@ class App extends GetView<BottomNavController> {
               return;
             }
 
-            for (TeamProject tp in doneProjects.projectList) {
-              if (tp.hashedId == hashedId) {
+            for (RxTeamProject rxTp in doneProjects.rxProjectList) {
+              if (rxTp.value.hashedId == hashedId) {
                 WeteamUtils.snackbar("", '이미 가입한 팀플이에요',
                     icon: SnackbarIcon.fail);
                 return;
