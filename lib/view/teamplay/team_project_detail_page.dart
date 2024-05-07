@@ -28,12 +28,15 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 15.h),
-            const CustomTitleBar(title: '팀플방'),
-            _body(context),
-          ],
+        child: RefreshIndicator(
+          onRefresh: () async { await controller.fetchTeamProject(); },
+          child: Column(
+            children: [
+              SizedBox(height: 15.h),
+              const CustomTitleBar(title: '팀플방'),
+              _body(context),
+            ],
+          ),
         ),
       ),
     );
@@ -44,6 +47,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
