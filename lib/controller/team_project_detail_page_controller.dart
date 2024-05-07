@@ -103,7 +103,9 @@ class TeamProjectDetailPageController extends GetxController {
 
     if (success) {
       WeteamUtils.snackbar("", "팀원을 퇴출했어요", icon: SnackbarIcon.success);
-      fetchUserList();
+      Future tpf = fetchTeamProject();
+      await fetchUserList();
+      await tpf;
       isKickMode.value = false;
     } else {
       WeteamUtils.snackbar("", "팀원을 퇴출하지 못했어요", icon: SnackbarIcon.fail);
