@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:front_weteam/view/teamplay/team_project_detail_page.dart';
 import 'package:get/get.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'controller/bottom_nav_controller.dart';
 import 'controller/mainpage/home_controller.dart';
+import 'controller/team_project_detail_page_controller.dart';
 import 'data/app_colors.dart';
 import 'data/image_data.dart';
 import 'model/meeting.dart';
@@ -82,9 +84,15 @@ class App extends GetView<BottomNavController> {
             bool success = await api.acceptProjectInvite(hashedId);
 
             if (success) {
-              Get.find<HomeController>().updateTeamProjectList();
+              TeamProjectService tps = Get.find<TeamProjectService>();
+              await Get.find<HomeController>().updateTeamProjectList();
+              
               WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요',
                   icon: SnackbarIcon.success);
+              Get.to(() => GetBuilder(
+                  builder: (controller) => const TeamProjectDetailPage(),
+                  init: TeamProjectDetailPageController(
+                      tps.getTeamProjectByHashedId(hashedId)!)));
             } else {
               WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요',
                   icon: SnackbarIcon.fail);
