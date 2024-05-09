@@ -108,4 +108,8 @@ class WeteamUtils {
   static DateTime onlyDate(DateTime dt) {
     return DateTime(dt.year, dt.month, dt.day);
   }
+
+  static void closeDialog() {
+    Get.back(closeOverlays: true, canPop: false);
+  }
 }

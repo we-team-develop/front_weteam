@@ -36,21 +36,3 @@ class CustomBigDialog extends StatelessWidget {
     );
   }
 }
-
-/*class DateText extends StatelessWidget {
-  const DateText({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '____년   __월 __일',
-      style: TextStyle(
-        color: Colors.black.withOpacity(0.5),
-        fontSize: 12,
-        fontFamily: 'NanumSquareNeo',
-        fontWeight: FontWeight.w400,
-      ),
-    );
-  }
-
-}*/

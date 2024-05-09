@@ -173,6 +173,6 @@ class _DDayDialogState extends State<DDayDialog> {
     HomeController hc = Get.find<HomeController>();
     hc.updateDDay();
     hc.update();
-    Get.back();
+    WeteamUtils.closeDialog();
   }
 }

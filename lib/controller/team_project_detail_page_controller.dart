@@ -59,7 +59,7 @@ class TeamProjectDetailPageController extends GetxController {
               admitCallback: changeHost,
               denyCallback: () async {
                 await WeteamUtils.closeSnackbarNow();
-                Get.back();
+                WeteamUtils.closeDialog();
               },
             ));
   }
@@ -92,7 +92,7 @@ class TeamProjectDetailPageController extends GetxController {
               admitCallback: kickSelectedUser,
               denyCallback: () async {
                 await WeteamUtils.closeSnackbarNow();
-                Get.back();
+                WeteamUtils.closeDialog();
               },
             ));
   }
@@ -104,9 +104,7 @@ class TeamProjectDetailPageController extends GetxController {
 
     if (success) {
       WeteamUtils.snackbar("", "팀원을 퇴출했어요", icon: SnackbarIcon.success);
-      Future tpf = fetchTeamProject();
-      await fetchUserList();
-      await tpf;
+      Future.wait([fetchUserList(), fetchTeamProject()]);
       isKickMode.value = false;
     } else {
       WeteamUtils.snackbar("", "팀원을 퇴출하지 못했어요", icon: SnackbarIcon.fail);

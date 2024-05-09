@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/mainpage/home_controller.dart';
 import '../../../main.dart';
+import '../../../util/weteam_utils.dart';
 import '../custom_check_dialog.dart';
 
 class CheckRemoveDdayDialog extends StatelessWidget {
@@ -18,9 +19,9 @@ class CheckRemoveDdayDialog extends StatelessWidget {
       admitCallback: () async {
         await sharedPreferences.remove(SharedPreferencesKeys.dDayData);
         Get.find<HomeController>().updateDDay();
-        Get.back();
+        WeteamUtils.closeDialog();
       },
-      denyCallback: () => Get.back(),
+      denyCallback: () => WeteamUtils.closeDialog(),
     );
   }
 }

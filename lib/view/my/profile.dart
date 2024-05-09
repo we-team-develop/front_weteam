@@ -136,7 +136,7 @@ class Profile extends GetView<ProfileController> {
                 denyName: '취소',
                 admitName: '탈퇴',
                 denyCallback: () {
-                  Get.back();
+                  WeteamUtils.closeDialog();
                 },
                 admitCallback: () async {
                   await withdrawal();
@@ -168,7 +168,7 @@ class Profile extends GetView<ProfileController> {
                 denyName: '아니오',
                 admitName: '로그아웃',
                 denyCallback: () {
-                  Get.back();
+                  WeteamUtils.closeDialog();
                 },
                 admitCallback: () async {
                   await logout();

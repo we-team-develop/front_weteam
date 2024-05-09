@@ -137,7 +137,7 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
             content: '팀플 목록에서 완전히 삭제됩니다.',
             admitName: '나가기',
             denyName: '아니요',
-            denyCallback: () => Get.back(),
+            denyCallback: () => WeteamUtils.closeDialog(),
             admitCallback: exitOrDeleteTeamProject));
   }
 
@@ -149,9 +149,9 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       if (success) {
         await updateTeamProjectLists();
         await WeteamUtils.closeSnackbarNow();
+        WeteamUtils.closeDialog();
         Get.back();
-        Get.back();
-        WeteamUtils.snackbar("", '팀플이 성공적으로 삭제되었어요',
+        WeteamUtils.snackbar("", '팀플을 나갔어요',
             icon: SnackbarIcon.success);
       } else {
         WeteamUtils.snackbar("", '팀플을 삭제하지 못했어요', icon: SnackbarIcon.fail);
@@ -688,7 +688,7 @@ class _ChangeRoleDialog extends GetView<TeamProjectDetailPageController> {
     bool result = await Get.find<ApiService>()
         .changeUserTeamProjectRole(controller.rxTp.value, newRole);
     if (result) {
-      Get.back();
+      WeteamUtils.closeDialog();
       controller.fetchUserList();
     } else {
       WeteamUtils.snackbar("", "역할을 저장하지 못했어요", icon: SnackbarIcon.fail);
