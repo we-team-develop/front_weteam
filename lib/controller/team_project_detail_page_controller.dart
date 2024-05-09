@@ -69,6 +69,7 @@ class TeamProjectDetailPageController extends GetxController {
         .changeTeamProjectHost(rxTp.value.id, selectedNewHost.value);
     if (success) {
       await updateTeamProjectLists();
+      await fetchUserList();
       isChangeHostMode.value = false;
       Get.back();
       WeteamUtils.snackbar("", "호스트 권한을 넘겼어요", icon: SnackbarIcon.success);
