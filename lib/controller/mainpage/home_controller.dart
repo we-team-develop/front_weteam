@@ -34,6 +34,8 @@ class HomeController extends GetxController {
       tpWidgetList.value = _generateTpwList(gtplResult);
       tpWidgetList.refresh();
     }
+
+    Get.find<ApiService>().setFCMToken();
   }
 
   void scrollUp() {
