@@ -29,7 +29,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () async { await controller.fetchTeamProject(); },
+          onRefresh: () async {
+            await controller.fetchTeamProject();
+            await controller.fetchUserList();
+            },
           child: Column(
             children: [
               SizedBox(height: 15.h),
