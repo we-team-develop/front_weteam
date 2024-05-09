@@ -295,7 +295,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
               fontSize: 12.sp,
               onTap: () async {
                 try {
-                  updateTeamProject();
+                  await updateTeamProject();
                 } catch (e, st) {
                   debugPrint('$e');
                   debugPrintStack(stackTrace: st);
