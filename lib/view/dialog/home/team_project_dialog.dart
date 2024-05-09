@@ -381,7 +381,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
     }
     if (success) {
       await updateTeamProjectLists();
-      Get.back(closeOverlays: true);
+      Get.back(closeOverlays: true, canPop: false);
     } else {
       setState(() {
         WeteamUtils.snackbar('', '저장하지 못했어요', icon: SnackbarIcon.fail);
