@@ -9,6 +9,7 @@ class Meeting {
   final DateTime startedAt;
   final DateTime endedAt;
   final RxTeamProject? rxProject;
+  final int imageId;
 
   const Meeting(
       {required this.id,
@@ -16,6 +17,7 @@ class Meeting {
       required this.startedAt,
       required this.endedAt,
       required this.hashedId,
+        required this.imageId,
       required this.rxProject});
 
   factory Meeting.fromJson(Map data) {
@@ -25,6 +27,7 @@ class Meeting {
         hashedId: data['hashedId'] ?? "",
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),
+        imageId: data['imageId'],
         rxProject: data['project'] != null
             ? RxTeamProject.updateOrCreate(TeamProject.fromJson(data['project']))
             : null);

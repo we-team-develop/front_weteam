@@ -63,12 +63,12 @@ class TeamProjectWidget extends StatelessWidget {
 
   Widget _teamImgWidget() {
     TeamPlayController controller = Get.find<TeamPlayController>();
-    String randomImagePath = controller.imagePaths[rxTeam.value.imageId];
+    String imagePath = controller.imagePaths[rxTeam.value.imageId];
 
     return SizedBox(
       width: 50.w,
       height: 50.h,
-      child: Image.asset(randomImagePath),
+      child: Image.asset(imagePath),
     );
   }
 

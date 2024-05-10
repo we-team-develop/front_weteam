@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -99,12 +97,7 @@ class MeetingWidget extends StatelessWidget {
   Widget _meetingImgWidget() {
     TeamPlayController controller = Get.find<TeamPlayController>();
 
-    int imageIndex = 0;
-    if (meeting.rxProject != null) {
-      imageIndex = meeting.rxProject!.value.imageId;
-    } else {
-      imageIndex = Random().nextInt(controller.imagePaths.length);
-    }
+    int imageIndex = meeting.imageId;
 
     return Container(
       width: 50.w,
