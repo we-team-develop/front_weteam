@@ -412,8 +412,9 @@ class ApiService extends CustomGetConnect implements GetxService {
   Future<List<WeteamAlarm>?> getAlarms(int page) async {
     Map<String, dynamic> query = {
       'page': page.toString(),
-      'size': 20.toString(),
-      'sort': 'desc'
+      'size': 10.toString(),
+      'direction': 'DESC',
+      'field': 'ALARM_DATE',
     };
 
     Response rp = await get('/api/alarms', query: query);
