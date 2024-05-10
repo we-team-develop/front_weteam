@@ -154,6 +154,11 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.isOk;
   }
 
+  Future<bool> togglePushAlarmStatus() async {
+    Response rp = await patch('/api/users', {});
+    return rp.isOk;
+  }
+
   /**
    * MEETING
    */

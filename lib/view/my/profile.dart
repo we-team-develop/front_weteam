@@ -248,10 +248,10 @@ class Profile extends GetView<ProfileController> {
                   fontSize: 15.0.sp,
                   color: AppColors.black),
             ),
-            CustomSwitch(
+            Obx(() => CustomSwitch(
               onChanged: toggleAlarmSwitch,
               value: controller.isPushNotificationEnabled.value,
-            ),
+            )),
           ],
         ),
       ],
@@ -377,25 +377,17 @@ class Profile extends GetView<ProfileController> {
   }
 
   Future<void> toggleAlarmSwitch(bool v) async {
-    if (v) {
-      // 비활성화 하기
-      controller.togglePushNotification(false);
-    } else {
-      // 활성화 하기
-      // 알림 권한
-      PermissionStatus notificationStatus =
-          await Permission.notification.status;
-      if (!notificationStatus.isGranted) {
-        // 권한 받기 시도
-        PermissionStatus newStatus = await Permission.notification.request();
-        if (newStatus.isGranted) {
-          controller.togglePushNotification(true);
-        } else {
-          WeteamUtils.snackbar('', '알림 권한이 거부되었어요', icon: SnackbarIcon.fail);
-        }
-      } else {
-        controller.togglePushNotification(true);
+    // 알림 권한
+    PermissionStatus notificationStatus = await Permission.notification.status;
+    if (!notificationStatus.isGranted) {
+      // 권한 받기 시도
+      PermissionStatus newStatus = await Permission.notification.request();
+      if (!newStatus.isGranted) {
+        WeteamUtils.snackbar('', '알림 권한이 거부되었어요', icon: SnackbarIcon.fail);
       }
     }
+
+    controller.togglePushNotification();
+    controller.savePushAlarmStatus();
   }
 }

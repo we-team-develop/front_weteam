@@ -35,12 +35,19 @@ class CustomSwitchState extends State<CustomSwitch> {
   bool _isSwitched = false;
 
   @override
+  void initState() {
+    super.initState();
+    _isSwitched = widget.value;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
           _isSwitched = !_isSwitched;
         });
+        widget.onChanged.call(_isSwitched);
       },
       child: SizedBox(
         width: widget.trackWidth.w,

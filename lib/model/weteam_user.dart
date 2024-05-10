@@ -6,6 +6,7 @@ class WeteamUser {
   String? email; // 서버에 말해야함
   String? organization;
   String? role;
+  bool? enablePushAlarm;
   WeteamProfile? profile;
 
   WeteamUser(
@@ -14,6 +15,7 @@ class WeteamUser {
       required this.email,
       this.organization,
       this.role,
+        this.enablePushAlarm,
       this.profile});
 
   factory WeteamUser.fromJson(Map json) {
@@ -28,6 +30,7 @@ class WeteamUser {
         email: json['email'] as String?,
         organization: json['organization'] as String?,
         role: json['role'] as String?,
+        enablePushAlarm: json['receivePermission'],
         profile: profile);
   }
 

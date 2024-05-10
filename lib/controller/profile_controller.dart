@@ -46,6 +46,11 @@ class ProfileController extends GetxController {
     isSelectedList.listen((p0) {
       changes.value = anyChanges();
     });
+
+    WeteamUser? user = Get.find<AuthService>().user.value;
+    if (user != null) {
+      isPushNotificationEnabled.value = user.enablePushAlarm ?? false;
+    }
   }
 
   @override
@@ -77,8 +82,8 @@ class ProfileController extends GetxController {
   }
 
   /// 푸시 알림 토글의 값을 변경합니다.
-  void togglePushNotification(bool value) {
-    isPushNotificationEnabled.value = value;
+  void togglePushNotification() {
+    isPushNotificationEnabled.value = !isPushNotificationEnabled.value;
   }
 
   /// 현재 유저의 소속을 얻습니다.
@@ -116,6 +121,21 @@ class ProfileController extends GetxController {
     // 서버에 프로필을 저장합니다.
     // TODO: api 요청 실패에 대한 예외처리
     await Get.find<ApiService>().changeUserProfiles(id);
+  }
+
+  Future<bool> savePushAlarmStatus() async {
+    ApiService apiService = Get.find<ApiService>();
+    Rxn<WeteamUser> rxUser = Get.find<AuthService>().user;
+
+    bool success = await apiService.togglePushAlarmStatus();
+    if (!success) return false;
+
+    WeteamUser? updatedUser = await apiService.getCurrentUser();
+    if (updatedUser == null) return false;
+    rxUser.value?.enablePushAlarm = updatedUser.enablePushAlarm;
+
+    isPushNotificationEnabled.value = rxUser.value?.enablePushAlarm ?? true;
+    return true;
   }
 
   /// checkAnyChanges
