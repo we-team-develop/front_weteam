@@ -29,6 +29,10 @@ class AlarmController extends GetxController {
         }
 
         _pagingController.appendPage(newList, ++currentPage);
+
+        if (currentPage == 1) {
+          Get.find<ApiService>().readAlarmsAll();
+        }
       } catch (e) {
         log("$e");
       }

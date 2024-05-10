@@ -20,7 +20,6 @@ class AlarmListPage extends GetView<AlarmController> {
     return super.createElement();
   }
 
-  //ios andorid 구분
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,51 +49,6 @@ class AlarmListPage extends GetView<AlarmController> {
       ),
     );
   }
-/*
-  Widget iosTitle(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬을 유지
-      children: <Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          child: IconButton(
-            icon: Image.asset(ImagePath.backios), // 뒤로가기 버튼 이미지
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            '알림',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        Container(), // 균형 유지를 위한 빈 컨테이너
-      ],
-    );
-  }
-
-  Widget androidTitle() {
-    return Center(
-      child: Text(
-        '알림',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 14.sp,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w600,
-          height: 0,
-        ),
-      ),
-    );
-  }
-  */
 }
 
 class NotificationContainer extends StatefulWidget {
