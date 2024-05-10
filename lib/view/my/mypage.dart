@@ -174,9 +174,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
         if (index == 0) {
           return SizedBox(height: 24.h);
         }
+
+        TeamProjectWidget tpWidget = TeamProjectWidget(controller.rxTpList[index - 1]);
+
         return Padding(
             padding: EdgeInsets.only(bottom: 12.h),
-            child: TeamProjectWidget(controller.rxTpList[index - 1]));
+            child: controller.isOtherUser()
+                ? IgnorePointer(child: tpWidget)
+                : tpWidget);
       },
     ));
   }
