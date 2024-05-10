@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:front_weteam/view/teamplay/team_project_detail_page.dart';
 import 'package:get/get.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'controller/bottom_nav_controller.dart';
-import 'controller/mainpage/home_controller.dart';
 import 'controller/meeting/meeting_current_controller.dart';
 import 'controller/team_project_detail_page_controller.dart';
 import 'data/app_colors.dart';
 import 'data/image_data.dart';
 import 'model/meeting.dart';
-import 'model/team_project.dart';
 import 'model/weteam_user.dart';
 import 'service/api_service.dart';
 import 'service/auth_service.dart';
@@ -20,6 +17,7 @@ import 'util/weteam_utils.dart';
 import 'view/home/home.dart';
 import 'view/meeting/meeting_current.dart';
 import 'view/my/mypage.dart';
+import 'view/teamplay/team_project_detail_page.dart';
 import 'view/teamplay/teamplay.dart';
 
 class App extends GetView<BottomNavController> {
@@ -67,7 +65,7 @@ class App extends GetView<BottomNavController> {
 
             GetTeamProjectListResult? doneProjects = await Get.find<
                 ApiService>().getTeamProjectList(
-                0, true, 'DESC', 'DONE', user!.id);
+                0, true, 'DESC', 'DONE', user.id);
 
             if (doneProjects == null) {
               WeteamUtils.snackbar("", '팀플 가입 여부를 확인하지 못했어요.',
@@ -87,7 +85,7 @@ class App extends GetView<BottomNavController> {
 
             if (success) {
               TeamProjectService tps = Get.find<TeamProjectService>();
-              await Get.find<HomeController>().updateTeamProjectList();
+              tps.updateLists();
               
               WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요',
                   icon: SnackbarIcon.success);

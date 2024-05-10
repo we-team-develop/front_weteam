@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../controller/meeting/meeting_create_controller.dart';
 import '../../../data/app_colors.dart';
 import '../../../data/image_data.dart';
-import '../../../model/team_project.dart';
 import '../../../service/team_project_service.dart';
 import '../../widget/meeting_app_title_bar.dart';
 import '../../widget/normal_button.dart';
@@ -19,7 +18,7 @@ class MeetingCreate extends GetView<MeetingCreateController> {
 
   @override
   StatelessElement createElement() {
-    controller.setSelectedTpList('진행중인 팀플');
+    controller.setSelectedTpList(false);
     return super.createElement();
   }
 
@@ -42,18 +41,16 @@ class MeetingCreate extends GetView<MeetingCreateController> {
           padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
           child: const _Search(),
         ),
-        Obx(() => Row(
-              children: [
-                Expanded(
-                    child: _tplist("진행중인 팀플",
-                        controller.selectedTpList.value == "진행중인 팀플")),
-                Expanded(
-                    child: _tplist(
-                        "완료된 팀플", controller.selectedTpList.value == "완료된 팀플")),
-              ],
-            )),
+        Row(
+          children: [
+            Expanded(
+                child: _tpTypeSelectButton("진행중인 팀플", false)),
+            Expanded(
+                child: _tpTypeSelectButton("완료된 팀플", true)),
+          ],
+        ),
         Expanded(child: Obx(() {
-          if (controller.tpList.isEmpty) {
+          if (controller.tpList.value.isEmpty) {
             return Center(
                 child: Text('표시할 팀플이 없어요',
                     style: TextStyle(color: AppColors.black, fontSize: 12.sp)));
@@ -62,10 +59,10 @@ class MeetingCreate extends GetView<MeetingCreateController> {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 15.w),
             child: ListView.builder(
-              itemCount: controller.tpList.length,
+              itemCount: controller.tpList.value.length,
               itemBuilder: (_, index) => Obx(() {
                 TeamProjectService tps = Get.find<TeamProjectService>();
-                RxTeamProject rxTp = tps.getTeamProjectById(controller.tpList[index].value.id)!;
+                RxTeamProject rxTp = tps.getTeamProjectById(controller.tpList.value[index].value.id)!;
                 String searchText = controller.searchText.value;
 
                 // 검색어에 본인이 포함되지 않을 경우
@@ -117,29 +114,31 @@ class MeetingCreate extends GetView<MeetingCreateController> {
     return const MeetingAppTitleBar(title: '어떤 팀플의 약속인가요?');
   }
 
-  Widget _tplist(String text, bool isSelected) {
-    return GestureDetector(
-      onTap: () => controller.setSelectedTpList(text),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 8.h),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isSelected ? AppColors.mainOrange : Colors.transparent,
-              width: 2.r,
+  Widget _tpTypeSelectButton(String text, bool isDoneList) {
+    return Obx(() {
+      bool isSelected = controller.showingDoneList.value == isDoneList;
+      return GestureDetector(
+        onTap: () => controller.setSelectedTpList(isDoneList),
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(bottom: 8.h),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: isSelected ? AppColors.mainOrange : Colors.transparent,
+                width: 2.r,
+              ),
             ),
           ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.bold,
-              color: isSelected ? AppColors.mainOrange : AppColors.g2),
-        ),
-      ),
-    );
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+                color: isSelected ? AppColors.mainOrange : AppColors.g2),
+          ),
+        ));
+    });
   }
 
   Widget _checkBox() {
@@ -253,7 +252,7 @@ class _Search extends GetView<MeetingCreateController> {
 class CustomTitleBAR extends StatelessWidget {
   final String title;
 
-  CustomTitleBAR({required this.title});
+  const CustomTitleBAR({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

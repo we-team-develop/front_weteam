@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 
 import '../service/team_project_service.dart';
 import 'team_project.dart';
@@ -24,8 +23,6 @@ class WeteamAlarm {
       this.rxProject});
 
   factory WeteamAlarm.fromJson(Map data) {
-    TeamProjectService tps = Get.find<TeamProjectService>();
-
     return WeteamAlarm(
       id: data['id'],
       status: data['status'],
@@ -34,7 +31,7 @@ class WeteamAlarm {
       user: data['user'] != null ? WeteamUser.fromJson(data['user']) : null,
       targetUser: data['targetUser'] != null ? WeteamUser.fromJson(data['targetUser']) : null,
       rxProject: data['project'] != null
-          ? tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(data['project']).id)!
+          ? RxTeamProject.updateOrCreate(TeamProject.fromJson(data['project']))
           : null,
     );
   }

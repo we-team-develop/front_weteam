@@ -13,7 +13,6 @@ class MainBindings implements Bindings {
   @override
   void dependencies() {
     Get.put(TeamProjectService());
-    Get.put(AuthService());
     Get.put(ApiService());
 
     Get.put(BottomNavController());
@@ -21,6 +20,6 @@ class MainBindings implements Bindings {
     Get.put(HomeController());
     Get.put(ProfileController());
     Get.put(TeamPlayController());
-    Get.put(MyPageController());
+    Get.put(MyInfoController(Get.find<AuthService>().user));
   }
 }

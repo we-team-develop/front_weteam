@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../controller/mainpage/my_page_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
-import '../../main.dart';
 import '../../model/weteam_project_user.dart';
 import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../service/team_project_service.dart';
 import '../../util/weteam_utils.dart';
 import '../dialog/custom_big_dialog.dart';
 import '../dialog/custom_check_dialog.dart';
@@ -142,12 +144,15 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
   }
 
   Future<void> exitOrDeleteTeamProject() async {
+    TeamProjectService tps = Get.find<TeamProjectService>();
+
     if (controller.rxTp.value.host.id == Get.find<AuthService>().user.value!.id) {
       // 팀플 삭제
       bool success = await Get.find<ApiService>()
           .deleteTeamProject(controller.rxTp.value.id);
       if (success) {
-        await updateTeamProjectLists();
+        tps.removeEntry(controller.rxTp.value.id);
+        await tps.updateLists();
         await WeteamUtils.closeSnackbarNow();
         WeteamUtils.closeDialog();
         Get.back();
@@ -161,9 +166,10 @@ class TeamProjectDetailPage extends GetView<TeamProjectDetailPageController> {
       bool success =
           await Get.find<ApiService>().exitTeamProject(controller.rxTp.value.id);
       if (success) {
-        await updateTeamProjectLists();
+        tps.removeEntry(controller.rxTp.value.id);
+        await tps.updateLists();
         await WeteamUtils.closeSnackbarNow();
-        Get.back();
+        WeteamUtils.closeDialog();
         Get.back();
         WeteamUtils.snackbar("", '팀플을 탈퇴했어요', icon: SnackbarIcon.success);
       } else {
@@ -221,7 +227,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
               controller.isChangeHostMode.isFalse) {
             if (projectUser.user.id != Get.find<AuthService>().user.value?.id) {
               Get.to(() =>
-                  UserInfoPage(user: Rxn(projectUser.user), isOtherUser: true));
+                  UserInfoPage(Get.put(OtherUserInfoController(Rxn(projectUser.user)))));
             }
           }
         },
@@ -247,7 +253,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                 maxFontSize: 10.sp.floor() * 1.0,
                 minFontSize: 1,
                 maxLines: 1,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.black,
                   fontFamily: 'NanumSquareNeo',
                   fontWeight: FontWeight.w700,
@@ -259,7 +265,7 @@ class _UserContainer extends GetView<TeamProjectDetailPageController> {
                     textAlign: TextAlign.center,
                     maxFontSize: 9.sp.floor() * 1.0,
                     minFontSize: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.g5,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,

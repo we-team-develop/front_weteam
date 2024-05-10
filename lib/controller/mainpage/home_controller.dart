@@ -1,39 +1,22 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../main.dart';
-import '../../model/team_project.dart';
 import '../../model/weteam_alarm.dart';
 import '../../service/api_service.dart';
-import '../../service/auth_service.dart';
-import '../../service/team_project_service.dart';
-import '../../view/widget/team_project_widget.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final Rxn<DDayData> dDayData = Rxn<DDayData>();
-  final Rxn<List<Widget>> tpWidgetList = Rxn<List<Widget>>();
   final RxBool hasNewAlarm = RxBool(false);
 
   @override
   void onInit() {
     super.onInit();
-    tpListUpdateRequiredListenerList.add(updateTeamProjectList);
     updateDDay();
     checkNewAlarm();
-
-    String? tpListCache =
-        sharedPreferences.getString(SharedPreferencesKeys.teamProjectListJson);
-    if (tpListCache != null) {
-      GetTeamProjectListResult gtplResult =
-          GetTeamProjectListResult.fromJson(jsonDecode(tpListCache));
-      tpWidgetList.value = _generateTpwList(gtplResult);
-      tpWidgetList.refresh();
-    }
 
     Get.find<ApiService>().setFCMToken();
   }
@@ -41,15 +24,6 @@ class HomeController extends GetxController {
   void scrollUp() {
     scrollController.animateTo(0,
         duration: const Duration(milliseconds: 700), curve: Curves.easeIn);
-  }
-
-  List<Widget> _generateTpwList(GetTeamProjectListResult result) {
-    List<RxTeamProject> rxTpList = result.rxProjectList;
-    EdgeInsets padding = EdgeInsets.only(bottom: 12.h);
-    return List<Widget>.generate(
-        rxTpList.length,
-        (index) =>
-            Padding(padding: padding, child: TeamProjectWidget(rxTpList[index])));
   }
 
   Future<void> checkNewAlarm() async {
@@ -72,18 +46,6 @@ class HomeController extends GetxController {
     DDayData dDayData = DDayData.fromJson(data);
     this.dDayData.value = dDayData;
     this.dDayData.refresh();
-  }
-
-  Future<void> updateTeamProjectList() async {
-    GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(
-            0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
-            cacheKey: SharedPreferencesKeys.teamProjectListJson);
-
-    if (result != null) {
-      tpWidgetList.value = _generateTpwList(result);
-      tpWidgetList.refresh();
-    }
   }
 
 /*  bool isTeamListEmpty() {

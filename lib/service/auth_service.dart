@@ -27,37 +27,40 @@ class AuthService extends GetxService {
     dynamic userJson = MemCache.get(MemCacheKey.weteamUserJson);
 
     // 로그인 정보가 있는지 확인합니다.
-    // 만약 있다면, 로그인이 된 상태로 간주합니다.
-    if (firebaseIdToken != null && userJson != null) {
-      token = firebaseIdToken;
-      // 토큰 디버그용 로깅
-      log("$token");
-      // 위팀 유저 데이터를 로드합니다.
-      user.value = WeteamUser.fromJson(jsonDecode(userJson));
+    // 만약 없다면, 로그인이 안 된 상태로 간주합니다.
+    if (firebaseIdToken == null || userJson == null) {
+      super.onInit();
+      return;
+    }
 
-      // 프로필이 있는지 확인합니다.
-      // 만약, 프로필 데이터가 없다면 정상적인 로그인이 아니거나, 데이터가 손상되었거나,
-      // 회원가입이 완료된 상태가 아닐 수 있기에 로그인 상태를 해제합니다.
-      if (user.value!.profile == null) {
-        user.value = null; // 로그인 취소
-        return;
-      }
+    token = firebaseIdToken;
+    // 토큰 디버그용 로깅
+    log("$token");
+    // 위팀 유저 데이터를 로드합니다.
+    user.value = WeteamUser.fromJson(jsonDecode(userJson));
 
-      // 어떤 플랫폼으로 로그인되었는지 확인하기 위해 firebase uid를 불러옵니다.
-      // 또한, 로그인 핼퍼를 초기화합니다.
-      var FbUser = FirebaseAuth.instance.currentUser!;
-      String uid = FbUser.uid;
-      if (uid.startsWith('naver')) {
-        helper = NaverAuthHelper();
-      } else if (uid.startsWith('kakao')) {
-        helper = KakaoAuthHelper();
+    // 프로필이 있는지 확인합니다.
+    // 만약, 프로필 데이터가 없다면 정상적인 로그인이 아니거나, 데이터가 손상되었거나,
+    // 회원가입이 완료된 상태가 아닐 수 있기에 로그인 상태를 해제합니다.
+    if (user.value!.profile == null) {
+      user.value = null; // 로그인 취소
+      return;
+    }
+
+    // 어떤 플랫폼으로 로그인되었는지 확인하기 위해 firebase uid를 불러옵니다.
+    // 또한, 로그인 핼퍼를 초기화합니다.
+    var FbUser = FirebaseAuth.instance.currentUser!;
+    String uid = FbUser.uid;
+    if (uid.startsWith('naver')) {
+      helper = NaverAuthHelper();
+    } else if (uid.startsWith('kakao')) {
+      helper = KakaoAuthHelper();
+    } else {
+      String provider = FbUser.providerData[0].providerId;
+      if (provider.contains("google")) {
+        helper = GoogleAuthHelper();
       } else {
-        String provider = FbUser.providerData[0].providerId;
-        if (provider.contains("google")) {
-          helper = GoogleAuthHelper();
-        } else {
-          helper = AppleAuthHelper();
-        }
+        helper = AppleAuthHelper();
       }
     }
 

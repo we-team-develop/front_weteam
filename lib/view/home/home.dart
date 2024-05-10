@@ -9,22 +9,18 @@ import '../../binding/meeting_bindings.dart';
 import '../../controller/mainpage/home_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
+import '../../service/team_project_service.dart';
 import '../dialog/home/check_remove_dday_dialog.dart';
 import '../dialog/home/dday_dialog.dart';
 import '../dialog/home/team_project_dialog.dart';
 import '../meeting/meeting_main.dart';
 import '../widget/app_title_widget.dart';
 import '../widget/normal_button.dart';
+import '../widget/team_project_widget.dart';
 import 'alarm_list_page.dart';
 
 class Home extends GetView<HomeController> {
   const Home({super.key});
-
-  @override
-  StatelessElement createElement() {
-    controller.updateTeamProjectList();
-    return super.createElement();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,76 +29,84 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _body() {
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    RxTeamProjectList tpList = tpService.notDoneList;
     return RefreshIndicator(
       onRefresh: () async {
         HapticFeedback.mediumImpact();
-        await controller.updateTeamProjectList();
+        await tpService.updateNotDoneList();
       },
       child: Column(
         children: [
           _head(),
-          SizedBox(
-            height: 12.h,
-          ),
-          Expanded(child: Obx(() {
-            return CustomScrollView(
-              controller: controller.scrollController,
-              // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
-              physics: const AlwaysScrollableScrollPhysics(),
-              slivers: [
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  Obx(() => DDayWidget(dDayData: controller.dDayData.value))
-                ])),
-                if (!(controller.tpWidgetList.value == null ||
-                    controller.tpWidgetList.value!.isEmpty))
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      SizedBox(height: 15.h),
-                      const SizedBox(
-                        height: 0.7,
-                        width: double.infinity,
-                        child: ColoredBox(
-                          color: AppColors.g2,
-                        ),
+          SizedBox(height: 12.h),
+          Expanded(child: Obx(() => CustomScrollView(
+            controller: controller.scrollController,
+            // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Obx(() => DDayWidget(dDayData: controller.dDayData.value)),
+              ),
+              Visibility(
+                visible: tpList.isNotEmpty,
+                replacement: const SliverToBoxAdapter(),
+                child: _teamProjectListArea(tpList),
+              ),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Expanded(child: Visibility(
+                      visible: tpList.isNotEmpty,
+                      replacement: _noTeamProjectWidget(),
+                      child: Column(
+                        children: [
+                          // 최소 16.h 만큼의 세로 빈 공간을 채움
+                          SizedBox(height: 16.h),
+                          // 남은 공간이 있다면 빈 공간으로 채움
+                          const Expanded(child: SizedBox()),
+                          // 팀플 추가하기 버튼
+                          _addTeamProjectBigButton(),
+                          // 하단 여백
+                          SizedBox(height: 16.h)
+                        ],
                       ),
-                      SizedBox(height: 15.h),
-                      ...controller.tpWidgetList.value ?? [],
-                    ]),
-                  ),
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: [
-                      (controller.tpWidgetList.value == null ||
-                              controller.tpWidgetList.value!.isEmpty)
-                          ? Expanded(child: _noTeamProjectWidget())
-                          : Expanded(
-                              child: Column(
-                              children: [
-                                SizedBox(height: 16.h),
-                                // 팀플 추가하기 버튼
-                                const Expanded(child: SizedBox()),
-                                _addTeamProjectBigButton(),
-                                SizedBox(height: 16.h)
-                              ],
-                            )),
-                      GestureDetector(
-                          onTap: () {
-                            Get.to(() => MeetingMainPage(),
-                                binding: MeetingBindings());
-                          },
-                          child: _bottomBanner()),
-                      SizedBox(height: 15.h)
-                    ],
-                  ),
+                    )),
+                    GestureDetector(
+                        onTap: () {
+                          Get.to(() => MeetingMainPage(),
+                              binding: MeetingBindings());
+                        },
+                        child: _bottomBanner()),
+                    SizedBox(height: 15.h)
+                  ],
                 ),
-              ],
-            );
-          }))
+              ),
+            ],
+          )))
         ],
       ),
     );
+  }
+
+  SliverList _teamProjectListArea(RxTeamProjectList tpList) {
+    return SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(height: 15.h),
+                    const SizedBox(
+                      height: 0.7,
+                      width: double.infinity,
+                      child: ColoredBox(color: AppColors.g2),
+                    ),
+                      SizedBox(height: 15.h),
+                      ...List<Widget>.generate(
+                          tpList.length,
+                          (index) => Padding(
+                              padding: EdgeInsets.only(bottom: 12.h),
+                              child: TeamProjectWidget(tpList[index]))),
+                    ]),
+                  );
   }
 
   Widget _head() {

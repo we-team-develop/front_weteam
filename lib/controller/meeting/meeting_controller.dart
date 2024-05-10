@@ -7,7 +7,6 @@ import '../../model/meeting.dart';
 import '../../service/api_service.dart';
 import '../../service/meeting_overlay_service.dart';
 import '../../view/widget/tutorial_overlay_widget.dart';
-import '../mainpage/home_controller.dart';
 
 class MeetingController extends GetxController {
   final Rx<OverlayEntry?> _overlayEntry = Rx<OverlayEntry?>(null);

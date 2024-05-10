@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../main.dart';
-import '../model/team_project.dart';
 import '../model/weteam_project_user.dart';
 import '../service/api_service.dart';
 import '../service/team_project_service.dart';
@@ -45,6 +43,12 @@ class TeamProjectDetailPageController extends GetxController {
     return true;
   }
 
+  Future<bool> refreshScreen() async {
+    await fetchTeamProject();
+    bool usr = await fetchUserList();
+    return usr;
+  }
+
   void showChangeHostDialog() {
     if (selectedNewHost.value == -1) {
       WeteamUtils.snackbar('', '호스트 권한을 받을 팀원을 선택하세요');
@@ -67,9 +71,8 @@ class TeamProjectDetailPageController extends GetxController {
   Future<void> changeHost() async {
     bool success = await Get.find<ApiService>()
         .changeTeamProjectHost(rxTp.value.id, selectedNewHost.value);
+
     if (success) {
-      await updateTeamProjectLists();
-      await fetchUserList();
       isChangeHostMode.value = false;
       Get.back();
       WeteamUtils.snackbar("", "호스트 권한을 넘겼어요", icon: SnackbarIcon.success);

@@ -15,6 +15,7 @@ import '../model/weteam_project_user.dart';
 import '../model/weteam_user.dart';
 import '../util/custom_get_connect.dart';
 import '../util/weteam_utils.dart';
+import 'auth_service.dart';
 import 'team_project_service.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
@@ -54,7 +55,10 @@ class ApiService extends CustomGetConnect implements GetxService {
       sharedPreferences.setString(cacheKey, rp.bodyString!);
     }
 
-    return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!));
+    WeteamUser? user = Get.find<AuthService>().user.value;
+    bool isMyTeamProject = user?.id == userId;
+
+    return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!), isMyTeamProject);
   }
 
   /// 팀플 생성 API
@@ -88,9 +92,14 @@ class ApiService extends CustomGetConnect implements GetxService {
     Map data = jsonDecode(json);
 
     TeamProjectService tpService = Get.find<TeamProjectService>();
-    RxTeamProject rtp = tpService.updateEntry(TeamProject.fromJson(data));
+    RxTeamProject? oldRxTp = tpService.getTeamProjectById(projectId);
+    TeamProject tp = TeamProject.fromJson(data);
 
-    return rtp;
+    if (oldRxTp != null) {
+      return tpService.updateEntry(tp);
+    } else {
+      return RxTeamProject(tp);
+    }
   }
 
   /// 팀플 삭제 API
@@ -460,13 +469,15 @@ class GetTeamProjectListResult {
   final int totalPages;
   final int totalElements;
   final List<RxTeamProject> rxProjectList;
+  final bool myTeamProject;
 
   const GetTeamProjectListResult(
       {required this.totalPages,
       required this.totalElements,
-      required this.rxProjectList});
+      required this.rxProjectList,
+      required this.myTeamProject});
 
-  factory GetTeamProjectListResult.fromJson(Map data) {
+  factory GetTeamProjectListResult.fromJson(Map data, bool myTeamProject) {
     List tpList = data['projectList'];
     TeamProjectService tps = Get.find<TeamProjectService>();
 
@@ -474,7 +485,11 @@ class GetTeamProjectListResult {
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
         rxProjectList: List<RxTeamProject>.generate(
-            tpList.length, (index) => tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(tpList[index]).id)!));
+            tpList.length, (index) => myTeamProject
+              ? tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(tpList[index]).id)!
+              : RxTeamProject.updateOrCreate(TeamProject.fromJson(tpList[index]))),
+        myTeamProject: myTeamProject
+    );
   }
 }
 

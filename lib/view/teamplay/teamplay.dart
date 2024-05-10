@@ -33,12 +33,12 @@ class TeamPlay extends GetView<TeamPlayController> {
               Expanded(
                   child: Padding(
                 padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 25.h),
-                child: Obx(() => CustomScrollView(
-                      controller: controller.tpScrollController,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      slivers: [
-                        SliverList(
-                            delegate: SliverChildListDelegate([
+                child: CustomScrollView(
+                  controller: controller.tpScrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverList(
+                        delegate: SliverChildListDelegate([
                           SizedBox(height: 22.0.h),
                           Text(
                             '${controller.getUserName()}님이 진행중이신 팀플이에요!',
@@ -48,7 +48,7 @@ class TeamPlay extends GetView<TeamPlayController> {
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 11.0),
-                          // TODO : 배너 이미지
+                          // 배너 이미지
                           Image.asset(
                             ImagePath.tpBanner,
                             width: 330.w,
@@ -57,13 +57,13 @@ class TeamPlay extends GetView<TeamPlayController> {
                           ),
                           SizedBox(height: 24.0.h),
                         ])),
-                        if (controller.tpList.value == null ||
-                            controller.tpList.value!.rxProjectList.isEmpty)
-                          _noTeamProject()
-                        else
-                          _teamProjectList(tpPadding)
-                      ],
-                    )),
+                    Obx(() => Visibility(
+                        visible: controller.tpList.isNotEmpty,
+                        replacement: _noTeamProject(),
+                        child: _teamProjectList(tpPadding))
+                    )
+                  ],
+                ),
               ))
             ],
           )),
@@ -91,11 +91,11 @@ class TeamPlay extends GetView<TeamPlayController> {
   Widget _teamProjectList(EdgeInsets padding) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
-      childCount: controller.tpList.value!.rxProjectList.length,
+      childCount: controller.tpList.length,
       (context, index) => Padding(
           padding: padding,
           child:
-              TeamProjectWidget(controller.tpList.value!.rxProjectList[index])),
+              TeamProjectWidget(controller.tpList[index])),
     ));
   }
 }

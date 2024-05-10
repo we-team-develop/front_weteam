@@ -91,7 +91,6 @@ class TutorialOverlay extends GetView<MeetingController> {
 
 class _SecondPage extends StatelessWidget {
   const _SecondPage({
-    super.key,
     required this.controller,
   });
 
@@ -222,9 +221,7 @@ class _SecondPage extends StatelessWidget {
 }
 
 class _FirstPage extends StatelessWidget {
-  const _FirstPage({
-    super.key,
-  });
+  const _FirstPage();
 
   @override
   Widget build(BuildContext context) {

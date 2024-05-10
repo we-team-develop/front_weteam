@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 
 import '../../model/meeting.dart';
 import '../../model/team_project.dart';
-import '../../model/weteam_user.dart';
 import '../../service/api_service.dart';
-import '../../service/auth_service.dart';
 import '../../service/team_project_service.dart';
 import '../../util/weteam_utils.dart';
 import '../../view/meeting/create/meeting_create_finish.dart';
@@ -21,8 +19,8 @@ class MeetingCreateController extends GetxController {
   String? searchWait;
 
   final Rxn<TeamProject> selectedTeamProject = Rxn();
-  final RxTeamProjectList tpList = RxTeamProjectList();
-  RxString selectedTpList = '진행중인 팀플'.obs;
+  RxBool showingDoneList = RxBool(false);
+  late Rx<RxTeamProjectList> tpList;
 
   final TextEditingController nameInputController = TextEditingController();
   final Rx<String> nameInputText = Rx("");
@@ -30,25 +28,22 @@ class MeetingCreateController extends GetxController {
   DateTime? startedAt;
   DateTime? endedAt;
 
-  // meeting_create.dart
-  void setSelectedTpList(String tpList) {
-    selectedTpList.value = tpList;
-    bool done = tpList == "완료된 팀플";
-    updateTeamProject(done);
-    selectedTeamProject.value = null;
-    selectedTeamProject.refresh();
+  @override
+  void onInit() {
+    super.onInit();
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    tpList = Rx(tpService.notDoneList);
   }
 
-  Future<void> updateTeamProject(bool done) async {
-    WeteamUser user = Get.find<AuthService>().user.value!;
-    tpList.clear();
-    GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(0, done, 'DESC', 'DONE', user.id);
+  // meeting_create.dart
+  void setSelectedTpList(bool showDoneList) {
+    showingDoneList.value = showDoneList;
 
-    if (result != null) {
-      tpList.addAll(result.rxProjectList);
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    if (showDoneList) {
+      tpList.value = tpService.doneList;
     } else {
-      WeteamUtils.snackbar('', '팀플 목록을 불러오지 못했어요', icon: SnackbarIcon.fail);
+      tpList.value = tpService.notDoneList;
     }
   }
 

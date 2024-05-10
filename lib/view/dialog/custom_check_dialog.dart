@@ -47,13 +47,13 @@ class CustomCheckDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
               children: [
                 Visibility(
-                  visible: title != null && title!.isNotEmpty,
+                  visible: title.isNotEmpty,
                   replacement: SizedBox(height: 24.h),
                   child: Column(
                     children: [
                       SizedBox(height: 24.h),
                       Text(
-                        title!,
+                        title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.black,
@@ -66,12 +66,12 @@ class CustomCheckDialog extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                    visible: content != null && content!.isNotEmpty,
+                    visible: content.isNotEmpty,
                     replacement: SizedBox(height: 24.h),
                     child: Column(
                       children: [
                         Text(
-                          content!,
+                          content,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.black,

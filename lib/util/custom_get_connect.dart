@@ -15,7 +15,8 @@ class CustomGetConnect extends GetConnect {
   Future<void> _printResponseInfo(Response rp) async {
     // 출력을 원하지 않는 경우 아래 변수의 값을 false로 변경하세요.
     bool enabled = true;
-    bool logOnlyError = true;
+    bool logOnlyError = false;
+    bool hideResponse = true;
     // 디버그 상태 체크
     if (!kDebugMode || !enabled) {
       return;
@@ -40,6 +41,10 @@ class CustomGetConnect extends GetConnect {
     String? bodyString = rp.bodyString; // 응답 bodyString
     bool isOk = rp.isOk;
     String? method = rp.request?.method;
+
+    if (hideResponse) {
+      bodyString = "(숨겨짐)";
+    }
 
     log("=========== ($method) $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
         name: 'API 요청 정보', time: DateTime.now());

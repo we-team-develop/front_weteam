@@ -16,15 +16,17 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
+import 'binding/login_bindings.dart';
 import 'binding/main_bindings.dart';
+import 'controller/team_project_detail_page_controller.dart';
 import 'data/app_colors.dart';
 import 'firebase_options.dart';
 import 'service/auth_service.dart';
+import 'service/team_project_service.dart';
 import 'util/mem_cache.dart';
 import 'view/login/login_main.dart';
 
 late SharedPreferences sharedPreferences;
-List<Function()> tpListUpdateRequiredListenerList = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +62,27 @@ Future<void> main() async {
   };
 
   Permission.notification.request();
+  FirebaseMessaging.onMessage.listen((event) async {
+    String? title = event.notification?.title;
+    String? body = event.notification?.body;
+    if (title == null || body == null) {
+      return;
+    }
+
+    if (!(body.contains("환영") || body.contains("멤버와는") || body.contains("응원") || body.contains("가세요"))) {
+       return;
+    }
+
+    TeamProjectService service = Get.find<TeamProjectService>();
+    service.updateLists();
+
+    try {
+      TeamProjectDetailPageController controller = Get.find<
+          TeamProjectDetailPageController>();
+      controller.fetchUserList();
+    } catch (_) {
+    }
+  });
 
   await _initApp();
 
@@ -74,14 +97,17 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   late Widget home;
   String lastPage = '';
+  Bindings? bindings;
 
   MyApp({super.key});
 
   @override
   StatelessElement createElement() {
     Get.put(AuthService());
-    home =
-        Get.find<AuthService>().user.value != null ? const App() : LoginMain();
+    bool loggedIn = Get.find<AuthService>().user.value != null;
+    home = loggedIn ? const App() : LoginMain();
+    bindings = loggedIn ? MainBindings() : LoginBindings();
+
     return super.createElement();
   }
 
@@ -103,7 +129,7 @@ class MyApp extends StatelessWidget {
                       const BottomNavigationBarThemeData()),
               home: home,
               debugShowCheckedModeBanner: false, // Debug 배너 없애기
-              initialBinding: MainBindings(),
+              initialBinding: bindings,
             ));
   }
 }
@@ -152,22 +178,7 @@ Future<void> _initApp() async {
 Future<void> resetApp() async {
   Get.deleteAll(force: true);
   MemCache.clear();
-  tpListUpdateRequiredListenerList.clear();
   await _initApp();
   Phoenix.rebirth(Get.context!);
   Get.reset();
-}
-
-/// 팀플 목록을 업데이트합니다
-/// 업데이트 되는 대상은 tpListUpdateRequiredListenerList에 등록된 것들입니다.
-Future<void> updateTeamProjectLists() async {
-  List<Future> futures = [];
-  for (Function() func in tpListUpdateRequiredListenerList) {
-    dynamic ret = func.call();
-    if (ret is Future) futures.add(ret);
-  }
-
-  for (Future ft in futures) {
-    await ft;
-  }
 }

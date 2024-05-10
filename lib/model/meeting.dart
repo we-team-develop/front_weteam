@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 
 import '../service/team_project_service.dart';
 import 'team_project.dart';
@@ -20,8 +19,6 @@ class Meeting {
       required this.rxProject});
 
   factory Meeting.fromJson(Map data) {
-    TeamProjectService tps = Get.find<TeamProjectService>();
-
     return Meeting(
         id: data['id'],
         title: data['title'],
@@ -29,7 +26,7 @@ class Meeting {
         startedAt: DateTime.parse(data['startedAt']),
         endedAt: DateTime.parse(data['endedAt']),
         rxProject: data['project'] != null
-            ? tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(data['project']).id)!
+            ? RxTeamProject.updateOrCreate(TeamProject.fromJson(data['project']))
             : null);
   }
 

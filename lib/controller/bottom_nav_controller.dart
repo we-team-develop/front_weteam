@@ -28,7 +28,7 @@ class BottomNavController extends GetxController {
             Get.find<HomeController>().scrollUp();
             break;
           case Page.myPage:
-            Get.find<MyPageController>().scrollUp();
+            Get.find<MyInfoController>().scrollUp();
             break;
         }
       }

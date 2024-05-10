@@ -1,20 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/image_data.dart';
-import '../../main.dart';
-import '../../model/team_project.dart';
-import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
+import '../../service/team_project_service.dart';
 
 class TeamPlayController extends GetxController {
   final ScrollController tpScrollController = ScrollController();
 
   // 팀플 목록
-  final Rxn<GetTeamProjectListResult> tpList = Rxn<GetTeamProjectListResult>();
+  late RxTeamProjectList tpList;
 
   // 팀플 이미지
   final RxList<String> imagePaths = RxList<String>([
@@ -32,10 +27,8 @@ class TeamPlayController extends GetxController {
 
   @override
   void onInit() {
-    if (Get.find<AuthService>().user.value != null) {
-      updateTeamProjectList();
-    }
-    tpListUpdateRequiredListenerList.add(updateTeamProjectList);
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    tpList = tpService.notDoneList;
     super.onInit();
   }
 
@@ -50,22 +43,8 @@ class TeamPlayController extends GetxController {
     return Get.find<AuthService>().user.value?.username ?? "";
   }
 
-  /// 팀플 목록을 업데이트합니다.
-  Future<void> updateTeamProjectList() async {
-    // 캐시된 데이터 가져오기
-    String? json = sharedPreferences
-        .getString(SharedPreferencesKeys.teamProjectNotDoneListJson);
-    if (json != null) {
-      // 데이터가 있는 경우
-      tpList.value = GetTeamProjectListResult.fromJson(jsonDecode(json));
-    }
-
-    // api호출 및 결과
-    GetTeamProjectListResult? result = await Get.find<ApiService>()
-        .getTeamProjectList(
-            0, false, 'DESC', 'DONE', Get.find<AuthService>().user.value!.id,
-            cacheKey: SharedPreferencesKeys.teamProjectNotDoneListJson);
-
-    tpList.value = result;
+  Future<bool> updateTeamProjectList() async {
+    TeamProjectService tpService = Get.find<TeamProjectService>();
+    return tpService.updateNotDoneList();
   }
 }

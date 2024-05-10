@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/mainpage/tp_controller.dart';
-import '../../../controller/team_project_detail_page_controller.dart';
 import '../../../data/app_colors.dart';
-import '../../../main.dart';
 import '../../../model/team_project.dart';
 import '../../../service/api_service.dart';
 import '../../../service/team_project_service.dart';
@@ -380,7 +377,7 @@ class _TeamProjectDialogState extends State<TeamProjectDialog> {
       Get.find<TeamProjectService>().updateEntry(newTp);
     }
     if (success) {
-      await updateTeamProjectLists();
+      await Get.find<TeamProjectService>().updateLists();
       WeteamUtils.closeDialog();
     } else {
       setState(() {
