@@ -40,7 +40,7 @@ class AppleAuthHelper extends AuthHelper {
   @override
   Future<bool> logout() async {
     try {
-      await FlutterNaverLogin.logOutAndDeleteToken();
+      await FirebaseAuth.instance.signOut();
       return true;
     } catch (error) {
       return false;
