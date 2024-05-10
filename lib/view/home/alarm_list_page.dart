@@ -7,7 +7,8 @@ import '../../controller/alarm_controller.dart';
 import '../../controller/team_project_detail_page_controller.dart';
 import '../../data/app_colors.dart';
 import '../../model/weteam_alarm.dart';
-import '../../service/api_service.dart';
+import '../../service/team_project_service.dart';
+import '../../util/weteam_utils.dart';
 import '../teamplay/team_project_detail_page.dart';
 import '../widget/custom_title_bar.dart';
 
@@ -34,7 +35,7 @@ class AlarmListPage extends GetView<AlarmController> {
               pagingController: controller.getPagingController(),
               builderDelegate: PagedChildBuilderDelegate<WeteamAlarm>(
                 itemBuilder: (context, item, index) =>
-                    NotificationContainer(item),
+                    AlarmContainer(item),
                 noItemsFoundIndicatorBuilder: (context) => Center(
                   child: Text(
                     "아직 받은 알림이 없어요!",
@@ -51,26 +52,32 @@ class AlarmListPage extends GetView<AlarmController> {
   }
 }
 
-class NotificationContainer extends StatefulWidget {
+class AlarmContainer extends StatefulWidget {
   final WeteamAlarm notification;
 
-  const NotificationContainer(this.notification, {super.key});
+  const AlarmContainer(this.notification, {super.key});
 
   @override
-  State<NotificationContainer> createState() => _NotificationContainerState();
+  State<AlarmContainer> createState() => _AlarmContainerState();
 }
 
-class _NotificationContainerState extends State<NotificationContainer> {
+class _AlarmContainerState extends State<AlarmContainer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Get.find<ApiService>().readAlarm(widget.notification.id);
-        if (widget.notification.rxProject != null) {
+        RxTeamProject? rxProject = widget.notification.rxProject;
+        if (rxProject != null) {
           setState(() {
             widget.notification.read = true;
           });
+
+          TeamProjectService tpService = Get.find<TeamProjectService>();
+          if (tpService.getTeamProjectById(rxProject.value.id) == null) {
+            WeteamUtils.snackbar('', '탈퇴한 팀플입니다.', icon: SnackbarIcon.info);
+            return;
+          }
           Get.to(() => GetBuilder(
               builder: (controller) => const TeamProjectDetailPage(),
               init: TeamProjectDetailPageController(
