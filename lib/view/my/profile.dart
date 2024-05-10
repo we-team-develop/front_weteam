@@ -8,6 +8,7 @@ import '../../controller/profile_controller.dart';
 import '../../data/app_colors.dart';
 import '../../data/image_data.dart';
 import '../../main.dart';
+import '../../service/api_service.dart';
 import '../../service/auth_service.dart';
 import '../../util/helper/auth_helper.dart';
 import '../../util/weteam_utils.dart';
@@ -369,6 +370,7 @@ class Profile extends GetView<ProfileController> {
     bool result = await Get.find<AuthService>().logout();
     if (result) {
       // 로그아웃 성공
+      Get.find<ApiService>().setFCMTokenWithToken("empty");
       resetApp();
     } else {
       // 로그아웃 실패

@@ -416,6 +416,12 @@ class ApiService extends CustomGetConnect implements GetxService {
     return rp.isOk;
   }
 
+  Future<bool> setFCMTokenWithToken(String token) async {
+    Response rp = await patch('/api/fcm/$token', {});
+
+    return rp.isOk;
+  }
+
   /**
    * ALARM
    */
