@@ -8,6 +8,7 @@ import '../controller/profile_controller.dart';
 import '../service/api_service.dart';
 import '../service/auth_service.dart';
 import '../service/team_project_service.dart';
+import '../util/deep_link_handler.dart';
 
 class MainBindings implements Bindings {
   @override
@@ -21,5 +22,6 @@ class MainBindings implements Bindings {
     Get.put(ProfileController());
     Get.put(TeamPlayController());
     Get.put(MyInfoController(Get.find<AuthService>().user));
+    Get.put(DeepLinkService());
   }
 }

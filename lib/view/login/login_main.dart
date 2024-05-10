@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -17,7 +16,7 @@ import '../../util/helper/google_auth_helper.dart';
 import '../../util/helper/kakao_auth_helper.dart';
 import '../../util/helper/naver_auth_helper.dart';
 import '../../util/weteam_utils.dart';
-import '../widget/profile_image_widget.dart';
+import '../widget/loading_overlay.dart';
 import 'sign_up_completed.dart';
 
 class LoginMain extends StatelessWidget {
@@ -105,33 +104,7 @@ class LoginMain extends StatelessWidget {
 
   void _showOverlay(BuildContext context) {
     _overlayEntry.value = OverlayEntry(
-        builder: (context) => Scaffold(
-              backgroundColor: Colors.transparent,
-              body: SafeArea(
-                  child: Stack(fit: StackFit.expand, children: [
-                // 배경
-                const Opacity(
-                  opacity: 0.5,
-                  child: ModalBarrier(dismissible: true, color: Colors.black),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _AnimatedTimi(),
-                      SizedBox(height: 15.h),
-                      Text('로그인 중입니다',
-                          style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.white))
-                    ],
-                  ),
-                )
-              ])),
-            ));
+        builder: (context) => const LoadingOverlay(title: "로그인 중입니다"));
     Overlay.of(context).insert(_overlayEntry.value!);
   }
 
@@ -157,38 +130,5 @@ class LoginMain extends StatelessWidget {
     }
     _overlayEntry.value?.remove();
     _overlayEntry.value = null;
-  }
-}
-
-class _AnimatedTimi extends StatefulWidget {
-  @override
-  State<_AnimatedTimi> createState() => _AnimatedTimiState();
-}
-
-class _AnimatedTimiState extends State<_AnimatedTimi> {
-  late Timer timer;
-  int index = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      setState(() {
-        if (mounted) {
-          index = (index + 1) % 6;
-        }
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer.cancel();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ProfileImageWidget(id: index);
   }
 }
