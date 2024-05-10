@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/mainpage/my_page_controller.dart';
 import '../../controller/meeting/meeting_current_controller.dart';
 import '../../data/app_colors.dart';
+import '../../model/weteam_user.dart';
+import '../../service/auth_service.dart';
+import '../my/mypage.dart';
 import '../widget/custom_title_bar.dart';
 import '../widget/meeting_schedule_widget.dart';
 import '../widget/meeting_widget.dart';
@@ -199,28 +203,37 @@ SizedBox(
     );
   }
 
-  Widget _joinedUser(user) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
-      child: SizedBox(
-        width: 26.w,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 8.h),
-            SizedBox(
-              height: 26.r,
-              child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
-            ),
-            SizedBox(height: 3.h),
-            AutoSizeText(
-              user.username,
-              maxFontSize: 10.sp.floorToDouble(),
-              minFontSize: 1,
-              maxLines: 1,
-              style: const TextStyle(fontFamily: 'NanumSquareNeoBold'),
-            ),
-          ],
+  Widget _joinedUser(WeteamUser user) {
+    return GestureDetector(
+      onTap: () {
+        if (Get.find<AuthService>().user.value?.id != user.id) {
+          Get.to(() =>
+              UserInfoPage(Get.put(OtherUserInfoController(Rxn(user)))));
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: SizedBox(
+          width: 26.w,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 8.h),
+              SizedBox(
+                height: 26.r,
+                child: ProfileImageWidget(id: user.profile?.imageIdx ?? 0),
+              ),
+              SizedBox(height: 3.h),
+              AutoSizeText(
+                user.username ?? "",
+                maxFontSize: 10.sp.floorToDouble(),
+                minFontSize: 8.sp.floorToDouble(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontFamily: 'NanumSquareNeoBold'),
+              ),
+            ],
+          ),
         ),
       ),
     );
