@@ -18,9 +18,9 @@ import NaverThirdPartyLogin
   }
 
     override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        GeneratedPluginRegistrant.register(with: self)
+        //GeneratedPluginRegistrant.register(with: self)
         var applicationResult = false
-        app.registerForRemoteNotifications()
+
         if (!applicationResult) {
           applicationResult = NaverThirdPartyLoginConnection.getSharedInstance().application(app, open: url, options: options)
         }
@@ -28,10 +28,6 @@ import NaverThirdPartyLogin
         if (!applicationResult) {
            applicationResult = super.application(app, open: url, options: options)
         }
-
-        if #available(iOS 10.0, *) {
-                  UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
-                }
 
         return applicationResult
     }
