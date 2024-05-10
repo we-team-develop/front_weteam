@@ -85,14 +85,18 @@ class App extends GetView<BottomNavController> {
 
             if (success) {
               TeamProjectService tps = Get.find<TeamProjectService>();
-              tps.updateLists();
+              bool updateSuccess = await tps.updateLists();
               
               WeteamUtils.snackbar("", '팀플 초대를 성공적으로 수락했어요',
                   icon: SnackbarIcon.success);
-              Get.to(() => GetBuilder(
-                  builder: (controller) => const TeamProjectDetailPage(),
-                  init: TeamProjectDetailPageController(
-                      tps.getTeamProjectByHashedId(hashedId)!)));
+
+              if (updateSuccess) {
+                Get.to(() =>
+                    GetBuilder(
+                        builder: (controller) => const TeamProjectDetailPage(),
+                        init: TeamProjectDetailPageController(
+                            tps.getTeamProjectByHashedId(hashedId)!)));
+              }
             } else {
               WeteamUtils.snackbar("", '오류가 발생하여 팀플 초대를 수락하지 못했어요',
                   icon: SnackbarIcon.fail);
