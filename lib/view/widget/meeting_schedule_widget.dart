@@ -45,18 +45,14 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
   void initState() {
     super.initState();
     calendarHorizontalScrollController.addListener(() {
-      if (hOffset.value !=
-          calendarHorizontalScrollController.offset) {
-        hOffset.value =
-            calendarHorizontalScrollController.offset;
+      if (hOffset.value != calendarHorizontalScrollController.offset) {
+        hOffset.value = calendarHorizontalScrollController.offset;
       }
     });
 
     dateTextHorizontalScrollController.addListener(() {
-      if (hOffset.value !=
-          dateTextHorizontalScrollController.offset) {
-        hOffset.value =
-            dateTextHorizontalScrollController.offset;
+      if (hOffset.value != dateTextHorizontalScrollController.offset) {
+        hOffset.value = dateTextHorizontalScrollController.offset;
       }
     });
 
@@ -74,33 +70,30 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
     final double barHeight = 41.h;
     final double barWidth = 5.w;
 
-    return Obx(
-        () {
-          double offset = vOffset.value;
-          return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                var height = constraints.maxHeight; // 최대 높이
-                return SizedBox(
-                  width: barWidth,
-                  height: height,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                          top: offset / maxVerticalOffset * (height - barHeight),
-                          child: Container(
-                            width: barWidth,
-                            height: barHeight,
-                            decoration: BoxDecoration(
-                                color: AppColors.g4,
-                              borderRadius: BorderRadius.circular(20.r)
-                            ),
-                          ))
-                    ],
-                  ),
-                );
-              });
-        }
-    );
+    return Obx(() {
+      double offset = vOffset.value;
+      return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        var height = constraints.maxHeight; // 최대 높이
+        return SizedBox(
+          width: barWidth,
+          height: height,
+          child: Stack(
+            children: [
+              Positioned(
+                  top: offset / maxVerticalOffset * (height - barHeight),
+                  child: Container(
+                    width: barWidth,
+                    height: barHeight,
+                    decoration: BoxDecoration(
+                        color: AppColors.g4,
+                        borderRadius: BorderRadius.circular(20.r)),
+                  ))
+            ],
+          ),
+        );
+      });
+    });
   }
 
   @override
@@ -172,8 +165,7 @@ class _MeetingScheduleState extends State<MeetingSchedule> {
   Widget _day(BuildContext c, DateTime date) {
     late StreamSubscription listener;
     ScrollController sc = ScrollController(
-        initialScrollOffset: vOffset.value,
-        onDetach: (p) => listener.cancel());
+        initialScrollOffset: vOffset.value, onDetach: (p) => listener.cancel());
 
     sc.addListener(() {
       // 스크롤이 변경되었을 때
@@ -277,7 +269,6 @@ class _HourSelectBoxState extends State<_HourSelectBox> {
                 Color.fromARGB(255, 0, 85, 152),
               ];
               color = colors[(populationSize - 1).clamp(0, 9)];
-
             }
           }
 
@@ -534,7 +525,7 @@ class _UserNameContainer extends StatelessWidget {
       width: 56.w,
       height: 24.h,
       decoration: BoxDecoration(
-          color: colored ? AppColors.orange3 : AppColors.white,
+          color: colored ? AppColors.blue7 : AppColors.white,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: const [
             BoxShadow(
