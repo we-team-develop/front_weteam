@@ -1,8 +1,16 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
+
+Properties weteamProperties = new Properties()
+weteamProperties.load(project.rootProject.file('weteam.properties').newDataInputStream())
+def kakao_native_key = weteamProperties.getProperty('kakao_native_key')
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -23,7 +31,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.front_weteam"
+    namespace "com.login.front_weteam"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -42,13 +50,14 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.front_weteam"
+        applicationId "com.login.front_weteam"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [KAKAO_NATIVE_APP_KEY: kakao_native_key]
     }
 
     buildTypes {

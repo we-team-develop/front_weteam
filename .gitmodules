@@ -1,0 +1,3 @@
+[submodule "front_weteam_submodule"]
+	path = front_weteam_submodule
+	url = https://github.com/we-team-develop/front_weteam_submodule
