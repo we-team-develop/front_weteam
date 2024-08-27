@@ -40,51 +40,54 @@ class Home extends GetView<HomeController> {
         children: [
           _head(),
           SizedBox(height: 12.h),
-          Expanded(child: Obx(() => CustomScrollView(
-            controller: controller.scrollController,
-            // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
-                child: Obx(() => DDayWidget(dDayData: controller.dDayData.value)),
-              ),
-              Visibility(
-                visible: tpList.isNotEmpty,
-                replacement: const SliverToBoxAdapter(),
-                child: _teamProjectListArea(tpList),
-              ),
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    Expanded(child: Visibility(
-                      visible: tpList.isNotEmpty,
-                      replacement: _noTeamProjectWidget(),
-                      child: Column(
-                        children: [
-                          // 최소 16.h 만큼의 세로 빈 공간을 채움
-                          SizedBox(height: 16.h),
-                          // 남은 공간이 있다면 빈 공간으로 채움
-                          const Expanded(child: SizedBox()),
-                          // 팀플 추가하기 버튼
-                          _addTeamProjectBigButton(),
-                          // 하단 여백
-                          SizedBox(height: 16.h)
-                        ],
+          Expanded(
+              child: Obx(() => CustomScrollView(
+                    controller: controller.scrollController,
+                    // 항상 스크롤 가능하도록 설정, 안드로이드 스타일 스크롤 방식
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Obx(() =>
+                            DDayWidget(dDayData: controller.dDayData.value)),
                       ),
-                    )),
-                    GestureDetector(
-                        onTap: () {
-                          Get.to(() => MeetingMainPage(),
-                              binding: MeetingBindings());
-                        },
-                        child: _bottomBanner()),
-                    SizedBox(height: 15.h)
-                  ],
-                ),
-              ),
-            ],
-          )))
+                      Visibility(
+                        visible: tpList.isNotEmpty,
+                        replacement: const SliverToBoxAdapter(),
+                        child: _teamProjectListArea(tpList),
+                      ),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Column(
+                          children: [
+                            Expanded(
+                                child: Visibility(
+                              visible: tpList.isNotEmpty,
+                              replacement: _noTeamProjectWidget(),
+                              child: Column(
+                                children: [
+                                  // 최소 16.h 만큼의 세로 빈 공간을 채움
+                                  SizedBox(height: 16.h),
+                                  // 남은 공간이 있다면 빈 공간으로 채움
+                                  const Expanded(child: SizedBox()),
+                                  // 팀플 추가하기 버튼
+                                  _addTeamProjectBigButton(),
+                                  // 하단 여백
+                                  SizedBox(height: 16.h)
+                                ],
+                              ),
+                            )),
+                            GestureDetector(
+                                onTap: () {
+                                  Get.to(() => MeetingMainPage(),
+                                      binding: MeetingBindings());
+                                },
+                                child: _bottomBanner()),
+                            SizedBox(height: 15.h)
+                          ],
+                        ),
+                      ),
+                    ],
+                  )))
         ],
       ),
     );
@@ -92,21 +95,21 @@ class Home extends GetView<HomeController> {
 
   SliverList _teamProjectListArea(RxTeamProjectList tpList) {
     return SliverList(
-                  delegate: SliverChildListDelegate([
-                    SizedBox(height: 15.h),
-                    const SizedBox(
-                      height: 0.7,
-                      width: double.infinity,
-                      child: ColoredBox(color: AppColors.g2),
-                    ),
-                      SizedBox(height: 15.h),
-                      ...List<Widget>.generate(
-                          tpList.length,
-                          (index) => Padding(
-                              padding: EdgeInsets.only(bottom: 12.h),
-                              child: TeamProjectWidget(tpList[index]))),
-                    ]),
-                  );
+      delegate: SliverChildListDelegate([
+        SizedBox(height: 15.h),
+        const SizedBox(
+          height: 0.7,
+          width: double.infinity,
+          child: ColoredBox(color: AppColors.g2),
+        ),
+        SizedBox(height: 15.h),
+        ...List<Widget>.generate(
+            tpList.length,
+            (index) => Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: TeamProjectWidget(tpList[index]))),
+      ]),
+    );
   }
 
   Widget _head() {
@@ -204,7 +207,7 @@ class Home extends GetView<HomeController> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.black,
-                    fontSize: 11.sp,
+                    fontSize: 13.sp,
                     fontFamily: 'NanumSquareNeo',
                     fontWeight: FontWeight.w400,
                     height: 1.5,
@@ -539,7 +542,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                     text: '중요한 일정을 ',
                     style: TextStyle(
                       color: AppColors.black,
-                      fontSize: 11.sp,
+                      fontSize: 15.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -549,7 +552,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                     text: '추가',
                     style: TextStyle(
                       color: AppColors.black,
-                      fontSize: 11.sp,
+                      fontSize: 15.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w700,
                       height: 0,
@@ -559,7 +562,7 @@ class _DDayWidgetState extends State<DDayWidget> {
                     text: '해보세요!\n언제든 수정가능합니다:)',
                     style: TextStyle(
                       color: AppColors.black,
-                      fontSize: 11.sp,
+                      fontSize: 15.sp,
                       fontFamily: 'NanumSquareNeo',
                       fontWeight: FontWeight.w400,
                       height: 1.5,
