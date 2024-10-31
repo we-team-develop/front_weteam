@@ -31,20 +31,20 @@ class CustomGetConnect extends GetConnect {
     requestHeader.addAll(rp.request?.headers ?? {}); // 요청 헤더
 
     // 요청 헤더에 토큰이 있다면 생략시킵니다. (스팸 방지)
-    String? authorization = requestHeader['Authorization'];
-    if (authorization != null && authorization.length > 10) {
-      requestHeader['Authorization'] =
-          "${(authorization).substring(0, 10)}...(생략됨)";
-    }
+    // String? authorization = requestHeader['Authorization'];
+    // if (authorization != null && authorization.length > 10) {
+    //   requestHeader['Authorization'] =
+    //       "${(authorization).substring(0, 10)}...(생략됨)";
+    // }
 
     int? statusCode = rp.statusCode; // 응답 코드
     String? bodyString = rp.bodyString; // 응답 bodyString
     bool isOk = rp.isOk;
     String? method = rp.request?.method;
 
-    if (hideResponse) {
-      bodyString = "(숨겨짐)";
-    }
+    // if (hideResponse) {
+    //   bodyString = "(숨겨짐)";
+    // }
 
     log("=========== ($method) $url ===========\n요청 헤더: $requestHeader\n\n응답 코드 : $statusCode (${isOk ? '성공' : '오류'})\n응답 내용 : $bodyString\n\n=========== END OF API 요청 정보 ===========",
         name: 'API 요청 정보', time: DateTime.now());

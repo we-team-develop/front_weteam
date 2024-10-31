@@ -19,7 +19,8 @@ import 'auth_service.dart';
 import 'team_project_service.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
-  final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
+  final String _baseUrl =
+      "https://port-0-weteam-m1zyv1jnef3942e8.sel4.cloudtype.app"; // baseUrl 주소
 
   @override
   void onInit() {
@@ -58,7 +59,8 @@ class ApiService extends CustomGetConnect implements GetxService {
     WeteamUser? user = Get.find<AuthService>().user.value;
     bool isMyTeamProject = user?.id == userId;
 
-    return GetTeamProjectListResult.fromJson(jsonDecode(rp.bodyString!), isMyTeamProject);
+    return GetTeamProjectListResult.fromJson(
+        jsonDecode(rp.bodyString!), isMyTeamProject);
   }
 
   /// 팀플 생성 API
@@ -496,11 +498,13 @@ class GetTeamProjectListResult {
         totalPages: data['totalPages'],
         totalElements: data['totalElements'],
         rxProjectList: List<RxTeamProject>.generate(
-            tpList.length, (index) => myTeamProject
-              ? tps.getTeamProjectById(TeamProject.fromJsonAndUpdate(tpList[index]).id)!
-              : RxTeamProject.updateOrCreate(TeamProject.fromJson(tpList[index]))),
-        myTeamProject: myTeamProject
-    );
+            tpList.length,
+            (index) => myTeamProject
+                ? tps.getTeamProjectById(
+                    TeamProject.fromJsonAndUpdate(tpList[index]).id)!
+                : RxTeamProject.updateOrCreate(
+                    TeamProject.fromJson(tpList[index]))),
+        myTeamProject: myTeamProject);
   }
 }
 
