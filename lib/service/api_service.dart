@@ -19,7 +19,7 @@ import 'auth_service.dart';
 import 'team_project_service.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
-  final String _baseUrl = "http://15.164.221.170:9090"; // baseUrl 주소
+  final String _baseUrl = "http://klaus9267.iptime.org:8080"; // baseUrl 주소
 
   @override
   void onInit() {
