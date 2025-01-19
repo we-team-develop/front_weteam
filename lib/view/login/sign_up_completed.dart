@@ -53,6 +53,7 @@ class _SignUpCompletedState extends State<SignUpCompleted> {
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: NormalButton(
+              height: 44.h,
               onTap: () => Get.to(() => ProfileSettingPage()),
               text: '다음',
             )),

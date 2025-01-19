@@ -19,8 +19,7 @@ import 'auth_service.dart';
 import 'team_project_service.dart';
 
 class ApiService extends CustomGetConnect implements GetxService {
-  final String _baseUrl =
-      "https://port-0-weteam-m1zyv1jnef3942e8.sel4.cloudtype.app"; // baseUrl 주소
+  final String _baseUrl = "http://klaus9267.iptime.org:8080"; // baseUrl 주소
 
   @override
   void onInit() {

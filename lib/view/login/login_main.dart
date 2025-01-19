@@ -49,6 +49,7 @@ class LoginMain extends StatelessWidget {
               ),
             ),
           ),
+          // MARK: - Login Image
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -57,30 +58,30 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(
                   ImagePath.googleLogin,
                   width: 302.w,
-                  height: 39.h,
+                  height: 44.h,
                 ),
               ),
               SizedBox(height: padding),
               Visibility(
-                visible: Platform.isIOS,
+                  visible: Platform.isIOS,
                   child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => login(AppleAuthHelper(), context),
-                    child: Image.asset(
-                      ImagePath.appleLogin,
-                      width: 302.w,
-                      height: 39.h,
-                    ),
-                  ),
-                  SizedBox(height: padding),
-                ],
-              )),
+                    children: [
+                      GestureDetector(
+                        onTap: () => login(AppleAuthHelper(), context),
+                        child: Image.asset(
+                          ImagePath.appleLogin,
+                          width: 302.w,
+                          height: 44.h,
+                        ),
+                      ),
+                      SizedBox(height: padding),
+                    ],
+                  )),
               GestureDetector(
                 child: Image.asset(
                   ImagePath.naverLogin,
                   width: 302.w,
-                  height: 39.h,
+                  height: 44.h,
                 ),
                 onTap: () => login(NaverAuthHelper(), context),
               ),
@@ -90,7 +91,7 @@ class LoginMain extends StatelessWidget {
                 child: Image.asset(
                   ImagePath.kakaoLogin,
                   width: 302.w,
-                  height: 39.h,
+                  height: 44.h,
                 ),
               ),
               SizedBox(height: padding),

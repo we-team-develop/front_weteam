@@ -65,6 +65,7 @@ class ProfileSettingPage extends StatelessWidget {
               child: Obx(() {
                 controller.isSelectedList; // 리스너에 등록
                 return NormalButton(
+                  height: 44.h,
                   text: 'WE TEAM 시작하기',
                   enable: controller.getSelectedProfileId() != null,
                   onTap: setProfile,
